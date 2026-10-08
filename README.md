@@ -26,7 +26,7 @@ This section is rewritten by the portal itself after every hourly refresh.
 
 <!-- LIVE:START (auto-generated, do not edit by hand) -->
 
-**Last updated: Oct 8, 2026 at 1:15 PM EDT** · refreshed automatically every hour
+**Last updated: Oct 8, 2026 at 1:45 PM EDT** · refreshed automatically every hour
 
 | Right now in the portal | |
 |---|---|
@@ -34,7 +34,7 @@ This section is rewritten by the portal itself after every hourly refresh.
 | 🇮🇳 India | **8,533** |
 | 🌍 Other countries | **12,037** |
 | 🎓 University jobs | **5,970** |
-| 🆕 Posted in the last 24 hours | **3,214** |
+| 🆕 Posted in the last 24 hours | **3,195** |
 | ✅ US jobs at employers with H-1B history | **44,506 (80%)** |
 | 💻 Software Engineering | **14,779** |
 | 📊 Data Science & ML | **8,901** |
@@ -45,21 +45,21 @@ This section is rewritten by the portal itself after every hourly refresh.
 
 | Company | Role | Location | Posted | H-1B approvals (FY23) | |
 |---|---|---|---|---|---|
-| **IMC Trading** | Machine Learning Engineer Intern - Summer 2027 | New York, United States | 32 min ago | 2 | [Apply ↗](https://job-boards.eu.greenhouse.io/imc/jobs/4962456101) |
+| **IMC Trading** | Machine Learning Engineer Intern - Summer 2027 | New York, United States | 1h ago | 2 | [Apply ↗](https://job-boards.eu.greenhouse.io/imc/jobs/4962456101) |
 | **Roblox** | [2027] Data Scientist - PhD Intern | San Mateo, CA, United States | 1h ago | 48 | [Apply ↗](https://careers.roblox.com/jobs/8242619?gh_jid=8242619) |
 | **TikTok** | Software Engineer Intern (Ads Infrastructure) - 2027 Summ… | San Jose, California, Unite… | 2h ago | 475 | [Apply ↗](https://lifeattiktok.com/search/7668581636242016565) |
 | **DoorDash** | Software Engineer Intern | SF · Sunnyvale, CA | 10h ago | 147 | [Apply ↗](https://job-boards.greenhouse.io/doordashusa/jobs/8263774) |
-| **Tesla** | Data Analyst Intern - People Products | Palo Alto, CA · Austin, TX | 10h ago | 497 | [Apply ↗](https://www.tesla.com/careers/search/job/286085) |
+| **Tesla** | Data Analyst Intern - People Products | Palo Alto, CA · Austin, TX | 11h ago | 497 | [Apply ↗](https://www.tesla.com/careers/search/job/286085) |
 | **Meta** | Manufacturing Test Engineer Intern | Sunnyvale, CA | 11h ago | 1,540 | [Apply ↗](https://www.metacareers.com/jobs/1866862250969693) |
-| **Chalk** | Software Engineer New Grad | SF · NYC | 15h ago | 1 | [Apply ↗](https://jobs.ashbyhq.com/chalk/927c74a5-1b40-490d-b3be-a29baec4db6f/application?embed=true) |
+| **Chalk** | Software Engineer New Grad | SF · NYC | 16h ago | 1 | [Apply ↗](https://jobs.ashbyhq.com/chalk/927c74a5-1b40-490d-b3be-a29baec4db6f/application?embed=true) |
 | **Amazon** | Business Intelligence Engineer Intern | Seattle, WA | 16h ago | 6,126 | [Apply ↗](https://amazon.jobs/en/jobs/10553765/business-intelligence-engineer-internship-2027-us) |
 | **Gordon Food Service** | Software Engineer Intern - Transportation Routing | Wyoming, MI | 17h ago | 10 | [Apply ↗](https://gfs.wd5.myworkdayjobs.com/usjobs-gen-gfs/job/Wyoming-Michigan/Software-Engineer-Intern--Transportation-Routing--_R-58374) |
 | **Leidos** | Systems Integration and Software Engineer Intern | Atlantic City, NJ | 17h ago | 26 | [Apply ↗](https://leidos.wd5.myworkdayjobs.com/External/job/Atlantic-City-NJ/Systems--Integration-and-Software-Engineer-Intern_R-00194152) |
 | **American University** | Geospatial Research Lab Assistant | Washington, DC | 17h ago | 2 | [Apply ↗](https://american.wd1.myworkdayjobs.com/au/job/Main-Campus-Washington-DC/Geospatial-Research-Lab-Assistant--Student-_R5073) |
-| **IXL Learning** | Software Engineer New Grad | Raleigh, NC | 18h ago | 5 | [Apply ↗](https://www.ixl.com/company/jobs?gh_jid=8862049002) |
-| **Illinois Tool Works** | Software Engineer Intern - Application Software | Eden Prairie, MN | 18h ago | 10 | [Apply ↗](https://careers.itw.com/global/en/job/JR10491) |
-| **ASSYST** | Full Stack Developer | Sterling, VA | 18h ago | 1 | [Apply ↗](https://job-boards.greenhouse.io/assystinc/jobs/4436912009) |
-| **Cisco** | Machine Learning Engineer | SF | 18h ago | 831 | [Apply ↗](https://careers.cisco.com/global/en/job/2026806) |
+| **IXL Learning** | Software Engineer New Grad | Raleigh, NC | 19h ago | 5 | [Apply ↗](https://www.ixl.com/company/jobs?gh_jid=8862049002) |
+| **Illinois Tool Works** | Software Engineer Intern - Application Software | Eden Prairie, MN | 19h ago | 10 | [Apply ↗](https://careers.itw.com/global/en/job/JR10491) |
+| **ASSYST** | Full Stack Developer | Sterling, VA | 19h ago | 1 | [Apply ↗](https://job-boards.greenhouse.io/assystinc/jobs/4436912009) |
+| **Cisco** | Machine Learning Engineer | SF | 19h ago | 831 | [Apply ↗](https://careers.cisco.com/global/en/job/2026806) |
 
 <!-- LIVE:END -->
 
