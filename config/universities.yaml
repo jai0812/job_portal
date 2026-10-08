@@ -1,0 +1,122 @@
+# Top universities for the "Universities" page. University employers are usually H-1B cap-exempt.
+#
+# feed types (pulled directly from the university's own job system):
+#   workday:         {tenant, wd, site}        e.g. https://yale.wd1.myworkdayjobs.com/external_career_site
+#   smartrecruiters: {company}                 e.g. api.smartrecruiters.com/v1/companies/HarvardUniversity
+#   oracle:          {host, site}              Oracle HCM Candidate Experience sites
+# No feed = link only; jobs from GitHub/Apify/manual that match `match` still show on the page.
+# `match` = names used to recognise this university in job listings from other sources.
+
+universities:
+  - name: Harvard University
+    short: Harvard
+    careers_url: https://careers.harvard.edu/jobs
+    feed: {type: smartrecruiters, company: HarvardUniversity}
+    match: [Harvard]
+  - name: Massachusetts Institute of Technology
+    short: MIT
+    careers_url: https://hr.mit.edu/jobs/search
+    match: [Massachusetts Institute of Technology, MIT, MIT Lincoln Laboratory]
+  - name: Stanford University
+    short: Stanford
+    careers_url: https://careersearch.stanford.edu/
+    feed: {type: oracle, host: careersearch.stanford.edu, site: stanford}
+    match: [Stanford]
+  - name: Yale University
+    short: Yale
+    careers_url: https://careers.yale.edu/us/en
+    feed: {type: workday, tenant: yale, wd: wd1, site: external_career_site}
+    match: [Yale]
+  - name: Princeton University
+    short: Princeton
+    careers_url: https://careers.princeton.edu/
+    match: [Princeton University, Princeton Plasma Physics]
+  - name: Columbia University
+    short: Columbia
+    careers_url: https://opportunities.columbia.edu/jobs/search
+    match: [Columbia University]
+  - name: University of Pennsylvania
+    short: UPenn
+    careers_url: https://wd1.myworkdaysite.com/recruiting/upenn/careers-at-penn
+    feed: {type: workday, tenant: upenn, wd: wd1, site: careers-at-penn}
+    match: [University of Pennsylvania, UPenn, Penn Medicine]
+  - name: California Institute of Technology
+    short: Caltech
+    careers_url: https://jobs.caltech.edu/
+    match: [Caltech, California Institute of Technology, Jet Propulsion Laboratory]
+  - name: University of Chicago
+    short: UChicago
+    careers_url: https://uchicago.wd5.myworkdayjobs.com/External
+    feed: {type: workday, tenant: uchicago, wd: wd5, site: External}
+    match: [University of Chicago, UChicago]
+  - name: Carnegie Mellon University
+    short: CMU
+    careers_url: https://cmu.wd115.myworkdayjobs.com/CMU
+    feed: {type: workday, tenant: cmu, wd: wd115, site: CMU}
+    match: [Carnegie Mellon]
+  - name: Cornell University
+    short: Cornell
+    careers_url: https://cornell.wd1.myworkdayjobs.com/CornellCareerPage
+    feed: {type: workday, tenant: cornell, wd: wd1, site: CornellCareerPage}
+    match: [Cornell]
+  - name: Johns Hopkins University
+    short: JHU
+    careers_url: https://jobs.jhu.edu/
+    match: [Johns Hopkins]
+  - name: Duke University
+    short: Duke
+    careers_url: https://careers.duke.edu/
+    match: [Duke University, Duke Health]
+  - name: Northwestern University
+    short: Northwestern
+    careers_url: https://careers.northwestern.edu/
+    match: [Northwestern University]
+  - name: Brown University
+    short: Brown
+    careers_url: https://hr.brown.edu/careers
+    match: [Brown University]
+  - name: Dartmouth College
+    short: Dartmouth
+    careers_url: https://careers.dartmouth.edu/
+    match: [Dartmouth]
+  - name: University of California, Berkeley
+    short: UC Berkeley
+    careers_url: https://careerspub.universityofcalifornia.edu/psp/ucb/EMPLOYEE/HRMS/c/HRS_HRAM.HRS_APP_SCHJOB.GBL
+    match: [UC Berkeley, University of California, Berkeley, Lawrence Berkeley]
+  - name: New York University
+    short: NYU
+    careers_url: https://www.nyu.edu/employees/resources-and-services/career-and-employment/employment-opportunities.html
+    match: [New York University, NYU]
+  - name: Northeastern University
+    short: Northeastern
+    careers_url: https://northeastern.wd1.myworkdayjobs.com/careers
+    feed: {type: workday, tenant: northeastern, wd: wd1, site: careers}
+    match: [Northeastern University]
+  - name: University of Washington
+    short: UW
+    careers_url: https://uw.wd5.myworkdayjobs.com/UWHires
+    feed: {type: workday, tenant: uw, wd: wd5, site: UWHires}
+    match: [University of Washington]
+  - name: University of Texas at Austin
+    short: UT Austin
+    careers_url: https://utaustin.wd1.myworkdayjobs.com/UTstaff
+    feed: {type: workday, tenant: utaustin, wd: wd1, site: UTstaff}
+    match: [University of Texas at Austin, UT Austin]
+  - name: University of Maryland
+    short: UMD
+    careers_url: https://umd.wd1.myworkdayjobs.com/UMCP
+    feed: {type: workday, tenant: umd, wd: wd1, site: UMCP}
+    match: [University of Maryland]
+  - name: University of Rochester
+    short: Rochester
+    careers_url: https://rochester.wd5.myworkdayjobs.com/UR_Staff
+    feed: {type: workday, tenant: rochester, wd: wd5, site: UR_Staff}
+    match: [University of Rochester]
+  - name: Georgia Institute of Technology
+    short: Georgia Tech
+    careers_url: https://careers.gatech.edu/
+    match: [Georgia Tech, Georgia Institute of Technology]
+  - name: University of Michigan
+    short: Michigan
+    careers_url: https://careers.umich.edu/
+    match: [University of Michigan]

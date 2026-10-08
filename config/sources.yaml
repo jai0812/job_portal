@@ -1,0 +1,108 @@
+# Job sources for the portal. Edit freely, or add/remove GitHub links from the Settings tab.
+#
+# GitHub sources: paste any repo URL. The fetcher first looks for a SimplifyJobs-style
+# `.github/scripts/listings.json`, and if there isn't one it parses the Markdown tables in README.md.
+# `level` is a hint used when a job title doesn't say (internship | early_career | experienced).
+
+github:
+  - name: Simplify New Grad
+    url: https://github.com/SimplifyJobs/New-Grad-Positions
+    level: early_career
+  - name: Simplify Summer 2027 Internships
+    url: https://github.com/SimplifyJobs/Summer2027-Internships
+    level: internship
+  - name: vanshb03 Summer 2027 Internships
+    url: https://github.com/vanshb03/Summer2027-Internships
+    level: internship
+  - name: SpeedyApply 2026 SWE College Jobs
+    url: https://github.com/speedyapply/2026-SWE-College-Jobs
+    level: early_career
+  - name: SpeedyApply AI & ML College Jobs
+    url: https://github.com/speedyapply/2026-AI-College-Jobs
+    level: early_career
+    category: data
+  - name: JobRight SWE New Grad
+    url: https://github.com/jobright-ai/2026-Software-Engineer-New-Grad
+    level: early_career
+    category: swe
+  - name: JobRight Data Analysis New Grad
+    url: https://github.com/jobright-ai/2026-Data-Analysis-New-Grad
+    level: early_career
+    category: data
+  - name: JobRight Accounting & Finance New Grad
+    url: https://github.com/jobright-ai/2026-Account-New-Grad
+    level: early_career
+    category: finance
+  - name: JobRight Business Analyst New Grad
+    url: https://github.com/jobright-ai/2026-Business-Analyst-New-Grad
+    level: early_career
+  - name: JobRight SWE Internships
+    url: https://github.com/jobright-ai/2026-Software-Engineer-Internship
+    level: internship
+    category: swe
+  - name: JobRight Data Analysis Internships
+    url: https://github.com/jobright-ai/2026-Data-Analysis-Internship
+    level: internship
+    category: data
+  - name: JobRight Accounting & Finance Internships
+    url: https://github.com/jobright-ai/2026-Account-Internship
+    level: internship
+    category: finance
+  - name: NU Fintech Quant Internships 2027
+    url: https://github.com/northwesternfintech/2027QuantInternships
+    level: internship
+    category: finance
+
+# Apify (LinkedIn and others). Needs APIFY_TOKEN in .env. Each search is one actor run, billed by Apify.
+apify:
+  enabled: true
+  actor: curious_coder/linkedin-jobs-scraper
+  searches:
+    - keywords: software engineer new grad
+      location: United States
+      datePosted: past24Hours
+      limitPerSource: 100
+    - keywords: data scientist machine learning engineer entry level
+      location: United States
+      datePosted: past24Hours
+      limitPerSource: 100
+    - keywords: quantitative analyst software engineer bank
+      location: United States
+      datePosted: past24Hours
+      limitPerSource: 50
+    # Google, Meta, Apple and Uber: their own sites can't be read, so search LinkedIn by company id
+    - keywords: software engineer OR data scientist OR machine learning
+      location: United States
+      companyIds: ["1441", "10667", "162479", "1815218"]
+      datePosted: pastWeek
+      limitPerSource: 200
+    # India
+    - keywords: data scientist machine learning engineer
+      location: India
+      datePosted: past24Hours
+      limitPerSource: 100
+    - keywords: financial analyst quantitative analyst investment banking
+      location: India
+      datePosted: past24Hours
+      limitPerSource: 50
+
+# Only keep jobs posted within this many days.
+max_age_days: 45
+
+# Employers' own career sites (config/finance_firms.yaml + config/more_companies.yaml): jobs posted in the
+# last N days, for these tabs: us = Jobs, india = India, other = Other countries.
+company_feeds: true
+company_max_age_days: 30
+company_regions: [us, india, other]
+
+# Refresh all sources automatically while the portal is running (minutes, 0 = off).
+# Apify is excluded from auto-refresh because it costs money; use the "Fetch LinkedIn (Apify)" button.
+auto_refresh_minutes: 60
+
+# JobRight AI has no public API, so the portal links out. {q} is replaced with "title company".
+jobright_url: https://jobright.ai/jobs/search?value={q}
+
+# README.md "Live snapshot": rewritten after every refresh. If this folder is a git repository with a GitHub
+# remote, the portal also commits and pushes README.md (only that file), at most once every N hours.
+readme_auto_push: true
+readme_push_hours: 6

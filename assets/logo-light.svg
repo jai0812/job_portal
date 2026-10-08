@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 140" width="560" height="140" role="img" aria-label="SharmaJai Job Portal">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3a62e6"/><stop offset="1" stop-color="#1c2c8c"/>
+    </linearGradient>
+  </defs>
+  <!-- icon: briefcase with a "new job" arrow -->
+  <rect x="10" y="10" width="120" height="120" rx="27" fill="url(#g)"/>
+  <rect x="55" y="38" width="30" height="16" rx="6" fill="none" stroke="#fff" stroke-width="6"/>
+  <rect x="34" y="50" width="72" height="52" rx="9" fill="#fff"/>
+  <rect x="34" y="70" width="72" height="5" fill="#2840af"/>
+  <rect x="63" y="65" width="14" height="14" rx="3" fill="#fff" stroke="#2840af" stroke-width="3"/>
+  <circle cx="106" cy="36" r="13" fill="#5fcf96"/>
+  <path d="M106 28 l7 8 h-4 v7 h-6 v-7 h-4 z" fill="#fff"/>
+  <!-- wordmark -->
+  <text x="152" y="72" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Helvetica, Arial, sans-serif" font-size="44" font-weight="700" letter-spacing="-1" fill="#1d1d1b">SharmaJai</text>
+  <text x="154" y="108" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Helvetica, Arial, sans-serif" font-size="25" font-weight="500" letter-spacing="3" fill="#4a5ad0">JOB PORTAL</text>
+</svg>

@@ -1,0 +1,241 @@
+# Company lists used to tag jobs. Matching is case-insensitive and on substrings of the company name,
+# so "Goldman" matches "Goldman Sachs & Co". Add your own freely.
+
+top_companies:
+  - Google
+  - Alphabet
+  - DeepMind
+  - Meta
+  - Apple
+  - Amazon
+  - AWS
+  - Microsoft
+  - Netflix
+  - Nvidia
+  - OpenAI
+  - Anthropic
+  - Stripe
+  - Databricks
+  - Snowflake
+  - Salesforce
+  - Adobe
+  - Uber
+  - Airbnb
+  - LinkedIn
+  - Oracle
+  - IBM
+  - Intel
+  - AMD
+  - Qualcomm
+  - Tesla
+  - SpaceX
+  - Palantir
+  - Bloomberg
+  - Coinbase
+  - Robinhood
+  - Ramp
+  - Figma
+  - Pinterest
+  - Snap
+  - DoorDash
+  - Instacart
+  - Shopify
+  - Atlassian
+  - Cisco
+  - ServiceNow
+  - Workday
+  - Intuit
+  - PayPal
+  - Visa
+  - Mastercard
+  - Jane Street
+  - Citadel
+  - Two Sigma
+  - Hudson River Trading
+  - Jump Trading
+  - D. E. Shaw
+  - DE Shaw
+  - Optiver
+  - IMC
+  - SIG
+  - Susquehanna
+  - Goldman Sachs
+  - JPMorgan
+  - JP Morgan
+  - Morgan Stanley
+  - BlackRock
+
+# Companies whose jobs also show under "Finance & Banks", whatever the role.
+finance_companies:
+  - JPMorgan
+  - JP Morgan
+  - Chase
+  - Goldman Sachs
+  - Morgan Stanley
+  - Citi
+  - Citigroup
+  - Bank of America
+  - Wells Fargo
+  - Capital One
+  - U.S. Bank
+  - US Bank
+  - PNC
+  - Truist
+  - American Express
+  - Barclays
+  - HSBC
+  - Deutsche Bank
+  - UBS
+  - BNY
+  - State Street
+  - Northern Trust
+  - Charles Schwab
+  - Fidelity
+  - Vanguard
+  - BlackRock
+  - T. Rowe Price
+  - Nomura
+  - Mizuho
+  - MUFG
+  - RBC
+  - TD Bank
+  - BMO
+  - Jane Street
+  - Citadel
+  - Two Sigma
+  - Hudson River Trading
+  - Jump Trading
+  - D. E. Shaw
+  - DE Shaw
+  - Optiver
+  - IMC Trading
+  - Susquehanna
+  - Virtu
+  - Akuna
+  - DRW
+  - Point72
+  - Millennium
+  - Bridgewater
+  - AQR
+  - Renaissance
+  - Bloomberg
+  - Visa
+  - Mastercard
+  - PayPal
+  - Stripe
+  - Discover
+  - Synchrony
+  - Ally
+  - Nasdaq
+  - CME Group
+  - ICE
+  - Intercontinental Exchange
+  - Moody's
+  - S&P Global
+  - MSCI
+
+# Frequent H-1B sponsors (based on public USCIS / DOL filing data). Used only when the posting
+# itself says nothing; shown as "Likely" rather than "Yes".
+h1b_sponsors:
+  - Amazon
+  - Google
+  - Microsoft
+  - Meta
+  - Apple
+  - Nvidia
+  - Intel
+  - Oracle
+  - IBM
+  - Salesforce
+  - Adobe
+  - Cisco
+  - Qualcomm
+  - Uber
+  - Walmart
+  - Tesla
+  - Deloitte
+  - Accenture
+  - Ernst & Young
+  - EY
+  - PwC
+  - KPMG
+  - Capgemini
+  - Cognizant
+  - Infosys
+  - Tata Consultancy
+  - TCS
+  - Wipro
+  - HCL
+  - Tech Mahindra
+  - LTIMindtree
+  - JPMorgan
+  - JP Morgan
+  - Goldman Sachs
+  - Morgan Stanley
+  - Citi
+  - Bank of America
+  - Wells Fargo
+  - Capital One
+  - American Express
+  - Barclays
+  - Deutsche Bank
+  - BlackRock
+  - Bloomberg
+  - Visa
+  - Mastercard
+  - PayPal
+  - Intuit
+  - ServiceNow
+  - Workday
+  - VMware
+  - Broadcom
+  - AMD
+  - Micron
+  - Texas Instruments
+  - Snowflake
+  - Databricks
+  - LinkedIn
+  - Stripe
+  - Airbnb
+  - DoorDash
+  - Jane Street
+  - Citadel
+  - Two Sigma
+  - Hudson River Trading
+
+# Employers that are usually H-1B cap-exempt (universities, affiliated nonprofits, research orgs).
+# Keywords are matched against the company name.
+cap_exempt_keywords:
+  - university
+  - college
+  - institute of technology
+  - school of medicine
+  - medical center
+  - health system
+  - hospital
+  - children's
+  - research institute
+  - research foundation
+  - national laboratory
+  - national lab
+  - cancer center
+  - clinic
+cap_exempt_companies:
+  - Mayo Clinic
+  - Cleveland Clinic
+  - MITRE
+  - Battelle
+  - Broad Institute
+  - Howard Hughes Medical Institute
+  - Fred Hutch
+  - Memorial Sloan Kettering
+  - Lawrence Livermore
+  - Los Alamos
+  - Argonne
+  - Oak Ridge
+  - Sandia
+  - Brookhaven
+  - Fermilab
+  - Jet Propulsion Laboratory
+  - NIH
+  - Smithsonian

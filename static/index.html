@@ -1,0 +1,253 @@
+<!doctype html>
+<!-- ===== JAI SHARMA watermark =====
+    ,,,,,,,    ,,,    ,,,,,,         ,,,,,   ,,   ,,    ,,,    ,,,,,,   ,,   ,,    ,,,
+        ,,    ,, ,,     ,,          ,,   ,,  ,,   ,,   ,, ,,   ,,   ,,  ,,, ,,,   ,, ,,
+        ,,   ,,   ,,    ,,          ,,       ,,   ,,  ,,   ,,  ,,   ,,  ,,,,,,,  ,,   ,,
+        ,,   ,,   ,,    ,,           ,,,,,   ,,,,,,,  ,,   ,,  ,,,,,,   ,, , ,,  ,,   ,,
+        ,,   ,,,,,,,    ,,               ,,  ,,   ,,  ,,,,,,,  ,, ,,    ,,   ,,  ,,,,,,,
+    ,,  ,,   ,,   ,,    ,,          ,,   ,,  ,,   ,,  ,,   ,,  ,,  ,,   ,,   ,,  ,,   ,,
+     ,,,,    ,,   ,,  ,,,,,,         ,,,,,   ,,   ,,  ,,   ,,  ,,   ,,  ,,   ,,  ,,   ,,
+
+                                                     J       A
+                        IS                           HA     RM
+                      AJAISH                         ARMAJAISHAR
+                    MAJAISHARM                      AJAI00SHARMAJAI
+                  SHARMAJAISHARM                   AJAISHARMAJAISHARMAJ
+                AISHARMAJAISHARMAJ                AISHARMAJAISHARMAJAISHAR
+              MAJAISHARMAJAISHARMAJA             ISHARMAJAISHARMA  JA  IS H
+            ARMAJAISHARMAJAISHARMAJAIS          HARMAJAISHAR   MA  JA
+          ISHARMAJAISHARMAJAISHARMAJAISH       ARMAJAISHAR
+              MAJAISHARMAJAISHARMAJAISHARM    AJAISHARMA
+     J           AISHARMAJAISHARMAJAISHARMAJAISHARM
+     AJ        AISHARMAJAISHARMAJAISHARMAJAISHARMA
+     JAI     SHARMAJAISHARMAJAISHARMAJAISHARMAJA
+      ISHA  RMAJAISHARMAJAISHARMAJAISHARMAJAISH
+       ARMAJAISHARMAJAISHARMAJAISHARMAJAISHAR
+         MAJAISHARMAJAISHARMAJAISHARMAJAISH
+            ARMAJAISHAR  MAJAISHA   RMAJAISH
+                         ARMAJ      AISHA
+                         RMAJAI     SHARMA
+                        JAI SHAR   MAJ AISH
+
+                ~ built by JAI SHARMA ~
+     ============================== -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SharmaJai Job Portal</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand"><img src="logo-mark.svg" alt="" width="22" height="22">SharmaJai Job Portal</div>
+  <nav id="tabs">
+    <button data-tab="jobs" class="active">🇺🇸 Jobs</button>
+    <button data-tab="india">🇮🇳 India</button>
+    <button data-tab="world">🌍 Other countries</button>
+    <button data-tab="analytics">📊 Analytics</button>
+    <button data-tab="unis">Universities</button>
+    <button data-tab="ask">Ask All LLMs</button>
+    <button data-tab="settings">Settings</button>
+  </nav>
+  <div id="llm-pills" class="pills"></div>
+</header>
+
+<main>
+<!-- ============================ JOBS ============================ -->
+<section id="tab-jobs" class="tab active">
+  <div class="region-head" id="region-head"></div>
+  <div class="toolbar">
+    <input id="q" type="search" placeholder="Search company, role, location…">
+    <button id="btn-refresh" class="primary">Refresh now</button>
+    <button id="btn-apify">Fetch LinkedIn (Apify)</button>
+    <button id="btn-add-job">+ Add job</button>
+    <a class="btn" href="https://jobright.ai/jobs" target="_blank" rel="noopener">Open JobRight ↗</a>
+    <span id="refresh-state" class="muted"></span>
+  </div>
+
+  <div class="filters">
+    <div class="chips" id="f-cat"></div>
+    <div class="chips" id="f-level"></div>
+    <div class="chips" id="f-age"></div>
+    <div class="chips" id="f-stype"></div>
+    <div class="chips" id="f-fin"></div>
+    <div class="chips" id="f-place"></div>
+    <div class="row">
+      <label>H-1B
+        <select id="f-h1b">
+          <option value="">Any</option>
+          <option value="sponsor">Has sponsored H-1B (USCIS data or posting)</option>
+          <option value="yes">Posting says it sponsors</option>
+          <option value="not-no">Hide "no sponsorship" / citizens only</option>
+        </select>
+      </label>
+      <label class="check"><input type="checkbox" id="f-cap"> Cap-exempt only</label>
+      <label class="check"><input type="checkbox" id="f-top"> Top companies only</label>
+      <label>Source <select id="f-source"><option value="">All</option></select></label>
+      <label>Status
+        <select id="f-status">
+          <option value="active">Not hidden</option>
+          <option value="todo">Not applied yet</option>
+          <option value="applied-any">Applied (any stage)</option>
+          <option value="saved">Saved</option>
+          <option value="interviewing">Interviewing</option>
+          <option value="offer">Offer</option>
+          <option value="rejected">Rejected</option>
+          <option value="hidden">Hidden</option>
+        </select>
+      </label>
+      <span id="count" class="muted"></span>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table id="jobs">
+      <thead><tr>
+        <th class="cb-col" title="Tick when you've applied">Applied</th>
+        <th data-sort="posted">Posted</th>
+        <th data-sort="company">Company</th>
+        <th data-sort="fin">Finance firm</th>
+        <th data-sort="title">Role</th>
+        <th data-sort="location">Location</th>
+        <th>Category</th>
+        <th data-sort="level">Level</th>
+        <th data-sort="h1b">H-1B</th>
+        <th data-sort="source">Source</th>
+        <th>Actions</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+    <button id="more" class="hidden">Show more</button>
+  </div>
+</section>
+
+<!-- ============================ ANALYTICS ============================ -->
+<section id="tab-analytics" class="tab">
+  <div id="an" class="an"></div>
+</section>
+
+<!-- ============================ UNIVERSITIES ============================ -->
+<section id="tab-unis" class="tab">
+  <div class="uni-head">
+    <div>
+      <h2>Top universities</h2>
+      <p class="muted">Jobs pulled straight from the universities' own career sites, plus matching postings from your other sources.
+      Universities and their affiliated nonprofits are usually <b>H-1B cap-exempt</b>, meaning no lottery, and they can file at any time of year.</p>
+    </div>
+  </div>
+  <div id="uni-cards" class="uni-cards"></div>
+  <div class="toolbar">
+    <input id="uq" type="search" placeholder="Search role or keyword (e.g. software, data, research)…">
+    <span id="uni-count" class="muted"></span>
+  </div>
+  <div class="filters">
+    <div class="chips" id="u-type"></div>
+    <div class="chips" id="u-age"></div>
+  </div>
+  <div class="table-wrap">
+    <table id="uni-table">
+      <thead><tr><th class="cb-col">Applied</th><th>Posted</th><th>University</th><th>Role</th><th>Location</th><th>Type</th><th>Source</th><th>Actions</th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <button id="u-more" class="hidden">Show more</button>
+  </div>
+</section>
+
+<!-- ============================ ASK ALL ============================ -->
+<section id="tab-ask" class="tab">
+  <div class="ask">
+    <div class="templates" id="templates"></div>
+    <textarea id="ask-system" rows="2" placeholder="System prompt (optional)"></textarea>
+    <textarea id="ask-prompt" rows="7" placeholder="Ask ChatGPT, Claude and the others the same thing…"></textarea>
+    <div class="row">
+      <div id="ask-providers" class="row"></div>
+      <button id="ask-go" class="primary">Ask all</button>
+    </div>
+    <div id="ask-out" class="grid"></div>
+  </div>
+</section>
+
+<!-- ============================ SETTINGS ============================ -->
+<section id="tab-settings" class="tab">
+  <div class="settings">
+    <h3>AI models</h3>
+    <div id="set-llms"></div>
+    <p class="muted">Keys live in <code>.env</code> in the project folder (restart the portal after editing). ChatGPT Plus / Claude Pro don't include API access — without keys, use the copy &amp; paste mode.</p>
+
+    <h3>GitHub job lists</h3>
+    <ul id="set-sources" class="list"></ul>
+    <div class="row">
+      <input id="src-url" placeholder="https://github.com/owner/repo">
+      <input id="src-name" placeholder="Name (optional)">
+      <select id="src-level">
+        <option value="early_career">New grad / early career</option>
+        <option value="internship">Internships</option>
+        <option value="experienced">Experienced</option>
+      </select>
+      <button id="src-add" class="primary">Add</button>
+    </div>
+
+    <h3>Apify (LinkedIn)</h3>
+    <div id="set-apify"></div>
+
+    <h3>Finance firms</h3>
+    <p class="muted">Edit the list in <code>config/finance_firms.yaml</code>. H-1B numbers are initial + continuing approvals from the
+      <a href="https://www.uscis.gov/tools/reports-and-studies/h-1b-employer-data-hub" target="_blank" rel="noopener">USCIS H-1B Employer Data Hub</a>, FY2023 (latest published).</p>
+    <div class="table-wrap"><table class="small" id="set-firms"><thead><tr><th>Firm</th><th>Category</th><th>H-1B FY23</th><th>Career site</th></tr></thead><tbody></tbody></table></div>
+
+    <h3>Tech companies</h3>
+    <p class="muted">FAANG / MAANG, big tech, top tech and India tech, read from their own career sites. Edit the list in <code>config/more_companies.yaml</code>.
+      Google, Meta, Apple and Uber can't be read directly; they come from the GitHub lists and the LinkedIn (Apify) company search.</p>
+    <div class="table-wrap"><table class="small" id="set-companies"><thead><tr><th>Company</th><th>Group</th><th>H-1B FY23</th><th>Career site</th></tr></thead><tbody></tbody></table></div>
+
+    <h3>Last fetch</h3>
+    <table class="small" id="set-log"><tbody></tbody></table>
+  </div>
+</section>
+</main>
+
+<dialog id="dlg-job">
+  <form method="dialog" id="add-job-form">
+    <h3>Add a job</h3>
+    <input name="company" placeholder="Company" required>
+    <input name="title" placeholder="Title" required>
+    <input name="location" placeholder="Location">
+    <input name="url" placeholder="Apply link">
+    <input name="source" placeholder="Where you found it (LinkedIn, JobRight, referral…)">
+    <textarea name="description" rows="6" placeholder="Job description (optional — helps H-1B detection and tailoring)"></textarea>
+    <div class="row"><button value="cancel" formnovalidate>Cancel</button><button value="ok" class="primary">Add</button></div>
+  </form>
+</dialog>
+
+<!-- quick-copy bar: slides up when you scroll -->
+<div id="qbar" class="qbar">
+  <div class="qpanel hidden" id="qpanel">
+    <div class="qcol">
+      <h4>Links <span class="muted">click a value in the bar to copy it</span></h4>
+      <div id="q-links"></div>
+      <button class="link-btn" id="q-add-link">+ add link</button>
+    </div>
+    <div class="qcol">
+      <h4>Saved answers</h4>
+      <div id="q-snips"></div>
+      <button class="link-btn" id="q-add-snip">+ add answer</button>
+    </div>
+    <div class="qcol grow">
+      <h4>Notes <span class="muted" id="q-saved"></span></h4>
+      <textarea id="q-notes" placeholder="Paste or write anything: referral names, recruiter emails, application IDs, answers you reuse…"></textarea>
+    </div>
+  </div>
+  <div class="qstrip">
+    <div id="q-chips" class="qchips"></div>
+    <button id="q-toggle" class="qbtn">Notes &amp; edit ▴</button>
+    <button id="q-pin" class="qbtn" title="Keep the bar visible">📌</button>
+  </div>
+</div>
+<button id="q-fab" class="qfab" title="Links & notes">📋</button>
+
+<div id="viz-tip" class="viz-tip" role="tooltip"></div>
+<div id="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+# More employers pulled straight from their career sites (same feed format as finance_firms.yaml).
+# regions: which tabs to collect for — us, india, other (default: all three).
+# tech_only: true keeps only IT / software / data / ML job titles (for employers that aren't tech companies).
+# uscis:   the company's legal name(s) in the USCIS H-1B data, when it differs from the everyday name.
+
+companies:
+  # ---------------- India tech, fintech & analytics
+  - {name: Paytm, group: India tech & fintech, feeds: [{type: lever, company: paytm}]}
+  - {name: Meesho, group: India tech & fintech, feeds: [{type: lever, company: meesho}]}
+  - {name: CRED, group: India tech & fintech, feeds: [{type: lever, company: cred}]}
+  - {name: Groww, group: India tech & fintech, feeds: [{type: greenhouse, board: groww}]}
+  - {name: Navi, group: India tech & fintech, feeds: [{type: ashby, board: navi}]}
+  - {name: Zeta, group: India tech & fintech, feeds: [{type: lever, company: zeta}]}
+  - {name: Sarvam AI, group: India tech & fintech, feeds: [{type: ashby, board: sarvam}]}
+  - {name: InMobi, group: India tech & fintech, feeds: [{type: greenhouse, board: inmobi}]}
+  - {name: HighRadius, group: India tech & fintech, feeds: [{type: greenhouse, board: highradius}]}
+  - {name: Sigmoid, group: India tech & fintech, feeds: [{type: greenhouse, board: sigmoid}]}
+  - {name: Druva, group: India tech & fintech, feeds: [{type: greenhouse, board: druva}]}
+  - {name: Zenoti, group: India tech & fintech, feeds: [{type: greenhouse, board: zenoti}]}
+  - {name: Mindtickle, group: India tech & fintech, feeds: [{type: lever, company: mindtickle}]}
+  - {name: Observe.AI, group: India tech & fintech, feeds: [{type: greenhouse, board: observeai}]}
+  - {name: Atlan, group: India tech & fintech, feeds: [{type: ashby, board: atlan}]}
+  - {name: HackerRank, group: India tech & fintech, feeds: [{type: greenhouse, board: hackerrank}]}
+
+  # ---------------- FAANG / MAANG (Meta, Apple and Google can't be read directly: see the Apify search in sources.yaml)
+  - {name: Amazon, group: FAANG / MAANG, uscis: [AMAZON], feeds: [{type: amazon, country: USA, categories: [software-development, machine-learning-science, data-science, research-science, business-intelligence, economics, finance-accounting, solutions-architect, systems-quality-security-engineering, hardware-development, project-program-product-management-technical]}, {type: amazon, country: IND}]}
+  - {name: Microsoft, group: FAANG / MAANG, regions: [us, india], uscis: [MICROSOFT], feeds: [{type: microsoft, locations: [United States, India]}]}
+  - {name: Netflix, group: FAANG / MAANG, uscis: [NETFLIX], feeds: [{type: eightfold, host: explore.jobs.netflix.net, domain: netflix.com}]}
+  - {name: NVIDIA, group: FAANG / MAANG, uscis: [NVIDIA], feeds: [{type: workday, tenant: nvidia, wd: wd5, site: NVIDIAExternalCareerSite}]}
+
+  # ---------------- Big tech (all have USCIS FY2023 H-1B approvals)
+  - {name: Salesforce, group: Big tech, regions: [us, india], feeds: [{type: workday, tenant: salesforce, wd: wd12, site: External_Career_Site}]}
+  - {name: Adobe, group: Big tech, regions: [us, india], feeds: [{type: workday, tenant: adobe, wd: wd5, site: external_experienced}]}
+  - {name: Intel, group: Big tech, regions: [us, india], feeds: [{type: workday, tenant: intel, wd: wd1, site: External}]}
+  - {name: Cisco, group: Big tech, regions: [us, india], feeds: [{type: workday, tenant: cisco, wd: wd5, site: Cisco_Careers}]}
+  - {name: Broadcom, group: Big tech, regions: [us, india], feeds: [{type: workday, tenant: broadcom, wd: wd1, site: External_Career}]}
+  - {name: eBay, group: Big tech, regions: [us, india], feeds: [{type: workday, tenant: ebay, wd: wd5, site: apply}]}
+  - {name: Expedia, group: Big tech, regions: [us, india], feeds: [{type: workday, tenant: expedia, wd: wd108, site: search}]}
+  - {name: HP, group: Big tech, regions: [us, india], uscis: [HP INC], feeds: [{type: workday, tenant: hp, wd: wd5, site: ExternalCareerSite}]}
+  - {name: Hewlett Packard Enterprise, group: Big tech, regions: [us, india], uscis: [HEWLETT PACKARD ENTERPRISE], feeds: [{type: workday, tenant: hpe, wd: wd5, site: Jobsathpe}]}
+  - {name: Micron, group: Big tech, regions: [us, india], feeds: [{type: workday, tenant: micron, wd: wd1, site: External}]}
+  - {name: Marvell, group: Big tech, regions: [us, india], feeds: [{type: workday, tenant: marvell, wd: wd1, site: MarvellCareers}]}
+  - {name: KLA, group: Big tech, regions: [us, india], feeds: [{type: workday, tenant: kla, wd: wd1, site: Search}]}
+  - {name: NXP, group: Big tech, regions: [us, india], feeds: [{type: workday, tenant: nxp, wd: wd3, site: careers}]}
+  - {name: Samsung, group: Big tech, regions: [us, india], feeds: [{type: workday, tenant: sec, wd: wd3, site: Samsung_Careers}]}
+  - {name: Snap, group: Big tech, regions: [us, india], feeds: [{type: workday, tenant: snapchat, wd: wd1, site: snap}]}
+  - {name: Workday, group: Big tech, regions: [us, india], feeds: [{type: workday, tenant: workday, wd: wd5, site: Workday}]}
+  - {name: Zoom, group: Big tech, regions: [us, india], feeds: [{type: workday, tenant: zoom, wd: wd5, site: Zoom}]}
+  - {name: Red Hat, group: Big tech, regions: [us, india], feeds: [{type: workday, tenant: redhat, wd: wd5, site: jobs}]}
+  - {name: Equinix, group: Big tech, regions: [us, india], feeds: [{type: workday, tenant: equinix, wd: wd1, site: External}]}
+  - {name: Sony, group: Big tech, regions: [us, india], uscis: [SONY], feeds: [{type: workday, tenant: sonyglobal, wd: wd1, site: SonyGlobalCareers}]}
+  - {name: Autodesk, group: Big tech, regions: [us, india], feeds: [{type: workday, tenant: autodesk, wd: wd1, site: Ext}]}
+  - {name: Analog Devices, group: Big tech, regions: [us, india], feeds: [{type: workday, tenant: analogdevices, wd: wd1, site: External}]}
+  - {name: Applied Materials, group: Big tech, regions: [us, india], feeds: [{type: workday, tenant: amat, wd: wd1, site: External}]}
+  - {name: General Motors, group: Big tech, regions: [us, india], uscis: [GENERAL MOTORS], feeds: [{type: workday, tenant: generalmotors, wd: wd5, site: Careers_GM}]}
+  - {name: LinkedIn, group: Big tech, feeds: [{type: smartrecruiters, company: LinkedIn3}]}
+  - {name: ServiceNow, group: Big tech, feeds: [{type: smartrecruiters, company: ServiceNow}]}
+  - {name: Western Digital, group: Big tech, feeds: [{type: smartrecruiters, company: WesternDigital}]}
+  - {name: TikTok, group: Big tech, regions: [us, india], uscis: [TIKTOK, BYTEDANCE], feeds: [{type: tiktok}]}
+  - {name: Target, group: Big tech, regions: [india], feeds: [{type: workday, tenant: target, wd: wd5, site: targetcareers}]}
+
+  # ---------------- Top tech companies (all have USCIS FY2023 H-1B approvals)
+  - {name: Airbnb, group: Top tech, feeds: [{type: greenhouse, board: airbnb}]}
+  - {name: Databricks, group: Top tech, feeds: [{type: greenhouse, board: databricks}]}
+  - {name: Snowflake, group: Top tech, feeds: [{type: ashby, board: snowflake}]}
+  - {name: DoorDash, group: Top tech, feeds: [{type: greenhouse, board: doordashusa}]}
+  - {name: Instacart, group: Top tech, uscis: [MAPLEBEAR], feeds: [{type: greenhouse, board: instacart}]}
+  - {name: Pinterest, group: Top tech, feeds: [{type: greenhouse, board: pinterest}]}
+  - {name: Lyft, group: Top tech, feeds: [{type: greenhouse, board: lyft}]}
+  - {name: Reddit, group: Top tech, feeds: [{type: greenhouse, board: reddit}]}
+  - {name: Roblox, group: Top tech, feeds: [{type: greenhouse, board: roblox}]}
+  - {name: Dropbox, group: Top tech, feeds: [{type: greenhouse, board: dropbox}]}
+  - {name: Twilio, group: Top tech, feeds: [{type: greenhouse, board: twilio}]}
+  - {name: Okta, group: Top tech, feeds: [{type: greenhouse, board: okta}]}
+  - {name: Cloudflare, group: Top tech, feeds: [{type: greenhouse, board: cloudflare}]}
+  - {name: Datadog, group: Top tech, feeds: [{type: greenhouse, board: datadog}]}
+  - {name: MongoDB, group: Top tech, feeds: [{type: greenhouse, board: mongodb}]}
+  - {name: Figma, group: Top tech, feeds: [{type: greenhouse, board: figma}]}
+  - {name: Notion, group: Top tech, uscis: [NOTION LABS], feeds: [{type: ashby, board: notion}]}
+  - {name: Asana, group: Top tech, feeds: [{type: greenhouse, board: asana}]}
+  - {name: Box, group: Top tech, uscis: [BOX INC], feeds: [{type: greenhouse, board: boxinc}]}
+  - {name: Discord, group: Top tech, feeds: [{type: greenhouse, board: discord}]}
+  - {name: Duolingo, group: Top tech, feeds: [{type: greenhouse, board: duolingo}]}
+  - {name: Coursera, group: Top tech, feeds: [{type: greenhouse, board: coursera}]}
+  - {name: Twitch, group: Top tech, feeds: [{type: greenhouse, board: twitch}]}
+  - {name: Epic Games, group: Top tech, feeds: [{type: greenhouse, board: epicgames}]}
+  - {name: Zscaler, group: Top tech, feeds: [{type: greenhouse, board: zscaler}]}
+  - {name: Pure Storage, group: Top tech, feeds: [{type: greenhouse, board: purestorage}]}
+  - {name: Samsara, group: Top tech, feeds: [{type: greenhouse, board: samsara}]}
+  - {name: Verkada, group: Top tech, feeds: [{type: greenhouse, board: verkada}]}
+  - {name: Flexport, group: Top tech, feeds: [{type: greenhouse, board: flexport}]}
+  - {name: Gusto, group: Top tech, feeds: [{type: greenhouse, board: gusto}]}
+  - {name: Faire, group: Top tech, feeds: [{type: greenhouse, board: faire}]}
+  - {name: Checkr, group: Top tech, feeds: [{type: greenhouse, board: checkr}]}
+  - {name: Toast, group: Top tech, uscis: [TOAST INC], feeds: [{type: greenhouse, board: toast}]}
+  - {name: Squarespace, group: Top tech, feeds: [{type: greenhouse, board: squarespace}]}
+  - {name: Nextdoor, group: Top tech, feeds: [{type: greenhouse, board: nextdoor}]}
+  - {name: New Relic, group: Top tech, feeds: [{type: greenhouse, board: newrelic}]}
+  - {name: PagerDuty, group: Top tech, feeds: [{type: greenhouse, board: pagerduty}]}
+  - {name: Peloton, group: Top tech, feeds: [{type: greenhouse, board: peloton}]}
+  - {name: Elastic, group: Top tech, uscis: [ELASTICSEARCH], feeds: [{type: greenhouse, board: elastic}]}
+  - {name: Palantir, group: Top tech, feeds: [{type: lever, company: palantir}]}
+  - {name: Spotify, group: Top tech, feeds: [{type: lever, company: spotify}]}
+  - {name: Zoox, group: Top tech, feeds: [{type: lever, company: zoox}]}
+  - {name: Waymo, group: Top tech, feeds: [{type: greenhouse, board: waymo}]}
+  - {name: Nuro, group: Top tech, feeds: [{type: greenhouse, board: nuro}]}
+  - {name: Lucid Motors, group: Top tech, uscis: [LUCID], feeds: [{type: greenhouse, board: lucidmotors}]}
+  - {name: Vercel, group: Top tech, feeds: [{type: greenhouse, board: vercel}]}
+  - {name: Glean, group: Top tech, uscis: [GLEAN TECHNOLOGIES], feeds: [{type: greenhouse, board: gleanwork}]}
+  - {name: Scale AI, group: Top tech, uscis: [SCALE AI], feeds: [{type: greenhouse, board: scaleai}]}
+  - {name: Harvey, group: Top tech, feeds: [{type: ashby, board: harvey}]}
+  - {name: Sierra, group: Top tech, feeds: [{type: ashby, board: sierra}]}
+  - {name: Skydio, group: Top tech, feeds: [{type: ashby, board: skydio}]}
+  - {name: Cohere, group: Top tech, feeds: [{type: ashby, board: cohere}]}
+  - {name: Benchling, group: Top tech, feeds: [{type: ashby, board: benchling}]}
+  - {name: Abridge, group: Top tech, feeds: [{type: ashby, board: abridge}]}
+  - {name: Vanta, group: Top tech, feeds: [{type: ashby, board: vanta}]}
+  - {name: Replit, group: Top tech, feeds: [{type: ashby, board: replit}]}
+  - {name: Anyscale, group: Top tech, feeds: [{type: ashby, board: anyscale}]}
+  - {name: Baseten, group: Top tech, feeds: [{type: ashby, board: baseten}]}
+  - {name: Airwallex, group: Top tech, feeds: [{type: ashby, board: airwallex}]}
+  - {name: SambaNova, group: Top tech, feeds: [{type: greenhouse, board: sambanovasystems}]}
+  - {name: Anthropic, group: Top tech, uscis: [ANTHROPIC], feeds: [{type: greenhouse, board: anthropic}]}
+
+  # ---------------- Newer AI labs: no USCIS FY2023 record (most barely existed then), so sponsorship is NOT verified.
+  # They show as "Unknown" in the H-1B column unless the posting itself says they sponsor.
+  - {name: OpenAI, group: AI labs (H-1B not verified), regions: [us], feeds: [{type: ashby, board: openai}]}
+  - {name: xAI, group: AI labs (H-1B not verified), regions: [us], feeds: [{type: greenhouse, board: xai}]}
+  - {name: Perplexity, group: AI labs (H-1B not verified), regions: [us], feeds: [{type: ashby, board: perplexity}]}
+  - {name: Cursor, group: AI labs (H-1B not verified), regions: [us], feeds: [{type: ashby, board: cursor}]}
+  - {name: CoreWeave, group: AI labs (H-1B not verified), regions: [us], feeds: [{type: greenhouse, board: coreweave}]}
+  - {name: ElevenLabs, group: AI labs (H-1B not verified), regions: [us], feeds: [{type: ashby, board: elevenlabs}]}
+  - {name: Cognition, group: AI labs (H-1B not verified), regions: [us], feeds: [{type: ashby, board: cognition}]}
+  - {name: Together AI, group: AI labs (H-1B not verified), regions: [us], feeds: [{type: greenhouse, board: togetherai}]}
+  - {name: Decagon, group: AI labs (H-1B not verified), regions: [us], feeds: [{type: ashby, board: decagon}]}
+
+  # ---------------- Big employers outside tech that sponsor H-1Bs: only their IT / software / data / ML roles are kept (tech_only)
+  - {name: Nike, group: Other H-1B sponsors (tech roles only), tech_only: true, regions: [us, india], feeds: [{type: workday, tenant: nike, wd: wd1, site: nke}]}
+  - {name: Disney, group: Other H-1B sponsors (tech roles only), tech_only: true, regions: [us, india], uscis: [DISNEY, WALT DISNEY], feeds: [{type: workday, tenant: disney, wd: wd5, site: disneycareer}]}
+  - {name: Verizon, group: Other H-1B sponsors (tech roles only), tech_only: true, regions: [us, india], feeds: [{type: workday, tenant: verizon, wd: wd12, site: verizon-careers}]}
+  - {name: T-Mobile, group: Other H-1B sponsors (tech roles only), tech_only: true, regions: [us, india], uscis: [T MOBILE, T-MOBILE], feeds: [{type: workday, tenant: tmobile, wd: wd1, site: External}]}
+  - {name: Medtronic, group: Other H-1B sponsors (tech roles only), tech_only: true, regions: [us, india], feeds: [{type: workday, tenant: medtronic, wd: wd1, site: MedtronicCareers}]}
+  - {name: Pfizer, group: Other H-1B sponsors (tech roles only), tech_only: true, regions: [us, india], feeds: [{type: workday, tenant: pfizer, wd: wd1, site: PfizerCareers}]}
+  - {name: Moderna, group: Other H-1B sponsors (tech roles only), tech_only: true, regions: [us, india], uscis: [MODERNA], feeds: [{type: workday, tenant: modernatx, wd: wd1, site: M_tx}]}
+  - {name: Illumina, group: Other H-1B sponsors (tech roles only), tech_only: true, regions: [us, india], feeds: [{type: workday, tenant: illumina, wd: wd1, site: illumina-careers}]}
+  - {name: Motorola Solutions, group: Other H-1B sponsors (tech roles only), tech_only: true, regions: [us, india], uscis: [MOTOROLA SOLUTIONS], feeds: [{type: workday, tenant: motorolasolutions, wd: wd5, site: Careers}]}
+  - {name: Thomson Reuters, group: Other H-1B sponsors (tech roles only), tech_only: true, regions: [us, india], feeds: [{type: workday, tenant: thomsonreuters, wd: wd5, site: External_Career_Site}]}
+  - {name: Warner Bros. Discovery, group: Other H-1B sponsors (tech roles only), tech_only: true, regions: [us, india], uscis: [WARNER BROS, WARNERMEDIA, DISCOVERY COMMUNICATIONS], feeds: [{type: workday, tenant: warnerbros, wd: wd5, site: global}]}
+  - {name: Experian, group: Other H-1B sponsors (tech roles only), tech_only: true, regions: [us, india], feeds: [{type: smartrecruiters, company: Experian}]}
+  - {name: Intuitive, group: Other H-1B sponsors (tech roles only), tech_only: true, regions: [us, india], uscis: [INTUITIVE SURGICAL], feeds: [{type: smartrecruiters, company: Intuitive}]}
+  - {name: NBCUniversal, group: Other H-1B sponsors (tech roles only), tech_only: true, regions: [us, india], uscis: [NBCUNIVERSAL], feeds: [{type: smartrecruiters, company: NBCUniversal3}]}

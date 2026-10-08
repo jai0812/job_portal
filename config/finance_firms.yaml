@@ -1,0 +1,213 @@
+# Finance firms shown in the "Finance firm" column on the Jobs tab.
+#
+# match:   names used to recognise the firm in job listings from any source (case-insensitive, whole words;
+#          "=Name" means the company name must be exactly that, for generic names like =Ramp or =Block)
+# exclude: names that contain a match word but are a different company
+# uscis:   the firm's legal entity names in the USCIS H-1B Employer Data Hub (FY2023); approvals are summed
+# feeds:   the firm's own career site, pulled directly every hour (US, India and other countries). Types:
+#            workday {tenant, wd, site} · oracle {host, site_number, site} · greenhouse {board}
+#            lever {company} · ashby {board} · phenom {host}
+# careers: link for firms whose career site can't be read automatically
+
+segments:
+  broad_banks: Broad banks
+  global_banks: Global banks
+  ib_markets: Investment banking & markets
+  asset_managers: Asset managers
+  private_markets: Private markets
+  hedge_quant: Hedge funds / quant
+  market_makers: Market makers / prop trading
+  exchanges: Exchanges & market infrastructure
+  payments: Payments
+  fin_data: Financial data & analytics
+  fintech: Fintech & brokers
+
+firms:
+  # ---------------- Broad banks
+  - {name: JPMorgan Chase, segment: broad_banks, match: [JPMorgan, JP Morgan, J.P. Morgan, JPMorganChase, =Chase],
+     uscis: [JPMORGAN CHASE], feeds: [{type: oracle, host: jpmc.fa.oraclecloud.com, site_number: CX_1001, site: CX_1001}],
+     careers: https://careers.jpmorgan.com}
+  - {name: Bank of America, segment: broad_banks, match: [Bank of America, BofA, Merrill Lynch, Merrill],
+     uscis: [BANK OF AMERICA, MERRILL LYNCH], feeds: [{type: workday, tenant: ghr, wd: wd1, site: Lateral-US}],
+     careers: https://careers.bankofamerica.com}
+  - {name: Citi, segment: broad_banks, match: [Citi, Citigroup, Citibank],
+     uscis: [CITIBANK, CITIGROUP], feeds: [{type: workday, tenant: citi, wd: wd5, site: "2"}], careers: https://jobs.citi.com}
+  - {name: Wells Fargo, segment: broad_banks, match: [Wells Fargo],
+     uscis: [WELLS FARGO], feeds: [{type: workday, tenant: wf, wd: wd1, site: WellsFargoJobs}], careers: https://www.wellsfargojobs.com}
+  - {name: Capital One, segment: broad_banks, match: [Capital One],
+     uscis: [CAPITAL ONE], feeds: [{type: workday, tenant: capitalone, wd: wd12, site: Capital_One}], careers: https://www.capitalonecareers.com}
+  - {name: U.S. Bank, segment: broad_banks, match: [U.S. Bank, US Bank, U.S. Bancorp],
+     uscis: [US BANK NATIONAL], feeds: [{type: workday, tenant: usbank, wd: wd1, site: US_Bank_Careers}], careers: https://careers.usbank.com}
+  - {name: PNC, segment: broad_banks, match: [PNC],
+     uscis: [PNC], feeds: [{type: workday, tenant: pnc, wd: wd5, site: External}], careers: https://careers.pnc.com}
+  - {name: Truist, segment: broad_banks, match: [Truist],
+     uscis: [TRUIST], feeds: [{type: workday, tenant: truist, wd: wd1, site: Careers}], careers: https://careers.truist.com}
+
+  # ---------------- Global banks
+  - {name: HSBC, segment: global_banks, match: [HSBC], uscis: [HSBC], careers: https://mycareer.hsbc.com}
+  - {name: Barclays, segment: global_banks, match: [Barclays],
+     uscis: [BARCLAYS], feeds: [{type: workday, tenant: barclays, wd: wd3, site: External_Career_Site_Barclays}], careers: https://search.jobs.barclays}
+  - {name: Deutsche Bank, segment: global_banks, match: [Deutsche Bank], uscis: [DEUTSCHE BANK],
+     feeds: [{type: workday, tenant: db, wd: wd3, site: DBWebsite}], careers: https://careers.db.com}
+  - {name: BNP Paribas, segment: global_banks, match: [BNP Paribas], uscis: [BNP PARIBAS], careers: https://group.bnpparibas/en/careers}
+  - {name: UBS, segment: global_banks, match: [UBS], uscis: [UBS BUSINESS SOLUTIONS, UBS SECURITIES, UBS FINANCIAL], careers: https://www.ubs.com/global/en/careers.html}
+  - {name: MUFG, segment: global_banks, match: [MUFG],
+     uscis: [MUFG], feeds: [{type: workday, tenant: mufgub, wd: wd3, site: MUFG-Careers}], careers: https://careers.mufgamericas.com}
+  - {name: Mizuho, segment: global_banks, match: [Mizuho], exclude: [Mizuho Orthopedic], uscis: [MIZUHO SERVICES, MIZUHO SECURITIES, MIZUHO BANK], careers: https://www.mizuhogroup.com/americas/careers}
+  - {name: Nomura, segment: global_banks, match: [Nomura], uscis: [NOMURA], careers: https://www.nomura.com/americas/careers}
+  - {name: RBC, segment: global_banks, match: [RBC, Royal Bank of Canada], uscis: [RBC CAPITAL MARKETS, ROYAL BANK OF CANADA], careers: https://jobs.rbc.com}
+  - {name: TD, segment: global_banks, match: [TD Bank, TD Securities, Toronto-Dominion],
+     uscis: [TD BANK, TD SECURITIES, TORONTO DOMINION], feeds: [{type: workday, tenant: td, wd: wd3, site: TD_Bank_Careers}], careers: https://jobs.td.com}
+  - {name: BMO, segment: global_banks, match: [BMO, Bank of Montreal],
+     uscis: [BMO HARRIS, BANK OF MONTREAL], feeds: [{type: workday, tenant: bmo, wd: wd3, site: External}], careers: https://jobs.bmo.com}
+  - {name: Santander, segment: global_banks, match: [Santander], uscis: [SANTANDER], careers: https://www.santandercareers.com}
+
+  # ---------------- Investment banking & markets
+  - {name: Goldman Sachs, segment: ib_markets, match: [Goldman Sachs], uscis: [GOLDMAN SACHS], careers: https://higher.gs.com}
+  - {name: Morgan Stanley, segment: ib_markets, match: [Morgan Stanley],
+     uscis: [MORGAN STANLEY], feeds: [{type: workday, tenant: ms, wd: wd5, site: External}], careers: https://www.morganstanley.com/careers}
+  - {name: Lazard, segment: ib_markets, match: [Lazard],
+     uscis: [LAZARD], feeds: [{type: oracle, host: icbpjb.fa.ocs.oraclecloud.com, site_number: LazardProfessionalCareers, site: LazardProfessionalCareers}],
+     careers: https://www.lazard.com/careers}
+  - {name: Evercore, segment: ib_markets, match: [Evercore], uscis: [EVERCORE], careers: https://www.evercore.com/careers}
+  - {name: Jefferies, segment: ib_markets, match: [Jefferies], uscis: [JEFFERIES], careers: https://www.jefferies.com/careers}
+  - {name: Houlihan Lokey, segment: ib_markets, match: [Houlihan Lokey],
+     uscis: [HOULIHAN LOKEY], feeds: [{type: workday, tenant: hl, wd: wd1, site: campus}], careers: https://hl.com/careers}
+  - {name: Moelis, segment: ib_markets, match: [Moelis], uscis: [MOELIS], careers: https://www.moelis.com/careers}
+  - {name: PJT Partners, segment: ib_markets, match: [PJT Partners, PJT],
+     uscis: [PJT PARTNERS], feeds: [{type: workday, tenant: pjtpartners, wd: wd1, site: Careers}], careers: https://www.pjtpartners.com/careers}
+  - {name: Centerview Partners, segment: ib_markets, match: [Centerview], uscis: [CENTERVIEW], careers: https://www.centerviewpartners.com/careers}
+  - {name: Raymond James, segment: ib_markets, match: [Raymond James],
+     uscis: [RAYMOND JAMES], feeds: [{type: workday, tenant: raymondjames, wd: wd1, site: RaymondJamesCareers}], careers: https://www.raymondjames.com/careers}
+
+  # ---------------- Asset managers
+  - {name: BlackRock, segment: asset_managers, match: [BlackRock],
+     uscis: [BLACKROCK], feeds: [{type: workday, tenant: blackrock, wd: wd1, site: BlackRock_Professional}], careers: https://careers.blackrock.com}
+  - {name: Vanguard, segment: asset_managers, match: [=Vanguard, Vanguard Group, The Vanguard Group],
+     uscis: [THE VANGUARD GROUP], feeds: [{type: workday, tenant: vanguard, wd: wd5, site: vanguard_external}], careers: https://www.vanguardjobs.com}
+  - {name: Fidelity Investments, segment: asset_managers, match: [Fidelity Investments, =Fidelity, =FMR],
+     uscis: [FIDELITY INVESTMENTS, FMR], feeds: [{type: workday, tenant: fmr, wd: wd1, site: FidelityCareers}], careers: https://jobs.fidelity.com}
+  - {name: State Street, segment: asset_managers, match: [State Street],
+     uscis: [STATE STREET], feeds: [{type: workday, tenant: statestreet, wd: wd1, site: Global}], careers: https://careers.statestreet.com}
+  - {name: Capital Group, segment: asset_managers, match: [=Capital Group, Capital Group Companies, American Funds],
+     uscis: [CAPITAL GROUP COMPANIES, CAPITAL RESEARCH AND MANAGEMENT], feeds: [{type: workday, tenant: capgroup, wd: wd1, site: capitalgroupcareers}],
+     careers: https://www.capitalgroup.com/about-us/careers.html}
+  - {name: Franklin Templeton, segment: asset_managers, match: [Franklin Templeton, Franklin Resources],
+     uscis: [FRANKLIN TEMPLETON, FRANKLIN RESOURCES], feeds: [{type: phenom, host: careers.franklintempleton.com}], careers: https://careers.franklintempleton.com}
+  - {name: T. Rowe Price, segment: asset_managers, match: [T. Rowe Price, T Rowe Price],
+     uscis: [T ROWE PRICE], feeds: [{type: workday, tenant: troweprice, wd: wd5, site: TRowePrice}], careers: https://www.troweprice.com/careers}
+  - {name: Invesco, segment: asset_managers, match: [Invesco],
+     uscis: [INVESCO], feeds: [{type: workday, tenant: invesco, wd: wd1, site: IVZ}], careers: https://careers.invesco.com}
+  - {name: PIMCO, segment: asset_managers, match: [PIMCO, Pacific Investment Management],
+     uscis: [PACIFIC INVESTMENT MANAGEMENT], feeds: [{type: workday, tenant: pimco, wd: wd1, site: pimco-careers}], careers: https://www.pimco.com/careers}
+  - {name: Northern Trust, segment: asset_managers, match: [Northern Trust],
+     uscis: [NORTHERN TRUST, THE NORTHERN TRUST], feeds: [{type: workday, tenant: ntrs, wd: wd1, site: northerntrust}], careers: https://careers.northerntrust.com}
+  - {name: Charles Schwab, segment: asset_managers, match: [Charles Schwab, Schwab], uscis: [CHARLES SCHWAB], careers: https://www.schwabjobs.com}
+
+  # ---------------- Private markets
+  - {name: Blackstone, segment: private_markets, match: [Blackstone],
+     uscis: [BLACKSTONE], feeds: [{type: workday, tenant: blackstone, wd: wd1, site: Blackstone_Careers}, {type: workday, tenant: blackstone, wd: wd1, site: Blackstone_Campus_Careers}],
+     careers: https://www.blackstone.com/careers}
+  - {name: KKR, segment: private_markets, match: [KKR], uscis: [KKR], careers: https://www.kkr.com/careers}
+  - {name: Apollo, segment: private_markets, match: [Apollo Global, Apollo Management, =Apollo],
+     uscis: [APOLLO MANAGEMENT, APOLLO GLOBAL], careers: https://www.apollo.com/careers}
+  - {name: Carlyle, segment: private_markets, match: [Carlyle], uscis: [THE CARLYLE GROUP, CARLYLE],
+     feeds: [{type: workday, tenant: carlyle, wd: wd1, site: carlyle}], careers: https://www.carlyle.com/careers}
+  - {name: Brookfield, segment: private_markets, match: [=Brookfield, Brookfield Asset Management, Brookfield Properties, Brookfield Renewable],
+     uscis: [BROOKFIELD ASSET MANAGEMENT], feeds: [{type: workday, tenant: brookfield, wd: wd5, site: brookfield}], careers: https://www.brookfield.com/careers}
+  - {name: Ares Management, segment: private_markets, match: [Ares Management, Ares Capital],
+     uscis: [ARES OPERATIONS, ARES MANAGEMENT], feeds: [{type: workday, tenant: aresmgmt, wd: wd1, site: External}], careers: https://www.aresmgmt.com/careers}
+  - {name: TPG, segment: private_markets, match: [TPG], exclude: [TPG Telecom], uscis: [TPG GLOBAL], careers: https://www.tpg.com/careers}
+  - {name: Bain Capital, segment: private_markets, match: [Bain Capital], uscis: [BAIN CAPITAL], careers: https://www.baincapital.com/careers}
+
+  # ---------------- Hedge funds / quant
+  - {name: Citadel, segment: hedge_quant, match: [Citadel], exclude: [Citadel Securities, Citadel Federal, Citadel Credit Union],
+     uscis: [CITADEL AMERICAS SERVICES, CITADEL ENTERPRISE, CITADEL INFORMATION], careers: https://www.citadel.com/careers}
+  - {name: Two Sigma, segment: hedge_quant, match: [Two Sigma], uscis: [TWO SIGMA], careers: https://www.twosigma.com/careers}
+  - {name: D. E. Shaw, segment: hedge_quant, match: [D. E. Shaw, D.E. Shaw, DE Shaw], uscis: [D E SHAW], careers: https://www.deshaw.com/careers}
+  - {name: Renaissance Technologies, segment: hedge_quant, match: [Renaissance Technologies], uscis: [RENAISSANCE TECHNOLOGIES], careers: https://www.rentec.com}
+  - {name: Millennium, segment: hedge_quant, match: [Millennium Management, Millennium Partners], uscis: [MILLENNIUM MANAGEMENT], careers: https://www.mlp.com/careers}
+  - {name: Point72, segment: hedge_quant, match: [Point72], uscis: [POINT72], feeds: [{type: greenhouse, board: point72}], careers: https://careers.point72.com}
+  - {name: Bridgewater, segment: hedge_quant, match: [Bridgewater Associates, Bridgewater], exclude: [Bridgewater College],
+     uscis: [BRIDGEWATER ASSOCIATES], feeds: [{type: greenhouse, board: bridgewater89}], careers: https://www.bridgewater.com/working-at-bridgewater}
+  - {name: AQR, segment: hedge_quant, match: [AQR], uscis: [AQR CAPITAL], careers: https://careers.aqr.com}
+  - {name: Balyasny, segment: hedge_quant, match: [Balyasny], uscis: [BALYASNY], careers: https://www.bamfunds.com/careers}
+  - {name: Man Group, segment: hedge_quant, match: [Man Group], uscis: [MAN INVESTMENTS], feeds: [{type: greenhouse, board: mangroup}], careers: https://www.man.com/careers}
+
+  # ---------------- Market makers / prop trading
+  - {name: Citadel Securities, segment: market_makers, match: [Citadel Securities], uscis: [CITADEL SECURITIES], careers: https://www.citadelsecurities.com/careers}
+  - {name: Jane Street, segment: market_makers, match: [Jane Street], uscis: [JANE STREET], feeds: [{type: greenhouse, board: janestreet}], careers: https://www.janestreet.com/join-jane-street}
+  - {name: Hudson River Trading, segment: market_makers, match: [Hudson River Trading, HRT],
+     uscis: [HUDSON RIVER TRADING], feeds: [{type: greenhouse, board: wehrtyou}], careers: https://www.hudsonrivertrading.com/careers}
+  - {name: Optiver, segment: market_makers, match: [Optiver], uscis: [OPTIVER], feeds: [{type: greenhouse, board: optiverus}], careers: https://optiver.com/working-at-optiver}
+  - {name: IMC Trading, segment: market_makers, match: [IMC Trading, IMC Financial Markets, =IMC],
+     uscis: [IMC AMERICAS], feeds: [{type: greenhouse, board: imc}], careers: https://www.imc.com/careers}
+  - {name: Susquehanna (SIG), segment: market_makers, match: [Susquehanna International, Susquehanna, SIG], exclude: [Susquehanna Health, Susquehanna Physician, Susquehanna Bank],
+     uscis: [SUSQUEHANNA INTERNATIONAL], careers: https://careers.sig.com}
+  - {name: Jump Trading, segment: market_makers, match: [Jump Trading], uscis: [JUMP OPERATIONS, JUMP TRADING], feeds: [{type: greenhouse, board: jumptrading}], careers: https://www.jumptrading.com/careers}
+  - {name: DRW, segment: market_makers, match: [DRW], uscis: [DRW], feeds: [{type: greenhouse, board: drweng}], careers: https://drw.com/work-at-drw}
+  - {name: Virtu Financial, segment: market_makers, match: [Virtu Financial, Virtu], exclude: [Virtusa, Virtuoso, Virtue],
+     uscis: [VIRTU FINANCIAL, VIRTU AMERICAS], feeds: [{type: greenhouse, board: virtu}], careers: https://www.virtu.com/careers}
+  - {name: Akuna Capital, segment: market_makers, match: [Akuna], uscis: [AKUNA], feeds: [{type: greenhouse, board: akunacapital}], careers: https://akunacapital.com/careers}
+  - {name: Tower Research, segment: market_makers, match: [Tower Research], uscis: [TOWER RESEARCH], feeds: [{type: greenhouse, board: towerresearchcapital}], careers: https://www.tower-research.com/open-positions}
+  - {name: Five Rings, segment: market_makers, match: [Five Rings], uscis: [FIVE RINGS], feeds: [{type: greenhouse, board: fiveringsllc}], careers: https://fiverings.com/careers}
+  - {name: Belvedere Trading, segment: market_makers, match: [Belvedere Trading], uscis: [BELVEDERE TRADING], feeds: [{type: lever, company: belvederetrading}], careers: https://www.belvederetrading.com/careers}
+  - {name: Clear Street, segment: market_makers, match: [Clear Street], uscis: [CLEAR STREET], feeds: [{type: greenhouse, board: clearstreet}], careers: https://clearstreet.io/careers}
+
+  # ---------------- Exchanges & market infrastructure
+  - {name: ICE / NYSE, segment: exchanges, match: [Intercontinental Exchange, NYSE, ICE], exclude: [ICE Mortgage],
+     uscis: [INTERCONTINENTAL EXCHANGE, NEW YORK STOCK EXCHANGE], careers: https://careers.ice.com}
+  - {name: Nasdaq, segment: exchanges, match: [Nasdaq], uscis: [NASDAQ], feeds: [{type: workday, tenant: nasdaq, wd: wd1, site: Global_External_Site}], careers: https://www.nasdaq.com/about/careers}
+  - {name: CME Group, segment: exchanges, match: [CME Group, Chicago Mercantile Exchange],
+     uscis: [CHICAGO MERCANTILE, CME GROUP], feeds: [{type: workday, tenant: cmegroup, wd: wd1, site: cme_careers}], careers: https://www.cmegroup.com/careers.html}
+  - {name: Cboe, segment: exchanges, match: [Cboe], uscis: [CBOE], feeds: [{type: workday, tenant: cboe, wd: wd1, site: External_Career_CBOE}], careers: https://www.cboe.com/about/careers}
+  - {name: DTCC, segment: exchanges, match: [DTCC, Depository Trust],
+     uscis: [DEPOSITORY TRUST], feeds: [{type: oracle, host: ebxr.fa.us2.oraclecloud.com, site_number: CX_1, site: CX_1}], careers: https://www.dtcc.com/careers}
+
+  # ---------------- Payments
+  - {name: Visa, segment: payments, match: [Visa Inc, =Visa],
+     uscis: [VISA TECHNOLOGY, VISA U S A, VISA USA, VISA INC], feeds: [{type: workday, tenant: visa, wd: wd5, site: Visa}, {type: workday, tenant: visa, wd: wd5, site: visa_early_careers}],
+     careers: https://corporate.visa.com/en/jobs}
+  - {name: Mastercard, segment: payments, match: [Mastercard],
+     uscis: [MASTERCARD], feeds: [{type: workday, tenant: mastercard, wd: wd1, site: CorporateCareers}, {type: workday, tenant: mastercard, wd: wd1, site: Campus}],
+     careers: https://careers.mastercard.com}
+  - {name: American Express, segment: payments, match: [American Express, Amex],
+     uscis: [AMERICAN EXPRESS], feeds: [{type: oracle, host: egug.fa.us2.oraclecloud.com, site_number: CX_1, site: CX_1}], careers: https://www.americanexpress.com/en-us/careers}
+  - {name: Stripe, segment: payments, match: [=Stripe, Stripe Inc], uscis: [STRIPE], feeds: [{type: greenhouse, board: stripe}], careers: https://stripe.com/jobs}
+  - {name: Adyen, segment: payments, match: [Adyen], uscis: [ADYEN], feeds: [{type: greenhouse, board: adyen}], careers: https://careers.adyen.com}
+  - {name: Fiserv, segment: payments, match: [Fiserv], uscis: [FISERV], feeds: [{type: workday, tenant: fiserv, wd: wd5, site: EXT}], careers: https://careers.fiserv.com}
+  - {name: "Block (Square, Cash App)", segment: payments, match: [Block Inc, "Block, Inc", Cash App, =Block, =Square],
+     uscis: [BLOCK INC], feeds: [{type: greenhouse, board: block}], careers: https://block.xyz/careers}
+  - {name: PayPal, segment: payments, match: [PayPal, Venmo], uscis: [PAYPAL], feeds: [{type: workday, tenant: paypal, wd: wd1, site: jobs}], careers: https://careers.pypl.com}
+  - {name: FIS, segment: payments, match: [FIS, Fidelity National Information Services, Worldpay],
+     uscis: [FIS MANAGEMENT, FIDELITY NATIONAL INFORMATION], feeds: [{type: workday, tenant: fis, wd: wd5, site: searchjobs}], careers: https://careers.fisglobal.com}
+  - {name: Global Payments, segment: payments, match: [Global Payments, TSYS],
+     uscis: [TOTAL SYSTEM SERVICES, GLOBAL PAYMENTS], feeds: [{type: workday, tenant: tsys, wd: wd1, site: TSYS}], careers: https://jobs.globalpayments.com}
+  - {name: Discover, segment: payments, match: [Discover Financial, Discover Bank, =Discover],
+     uscis: [DISCOVER PRODUCTS, DISCOVER BANK], careers: https://jobs.discover.com}
+  - {name: Synchrony, segment: payments, match: [Synchrony],
+     uscis: [SYNCHRONY], feeds: [{type: workday, tenant: synchronyfinancial, wd: wd5, site: careers}], careers: https://www.synchronycareers.com}
+
+  # ---------------- Financial data & analytics
+  - {name: Bloomberg, segment: fin_data, match: [=Bloomberg, Bloomberg LP, Bloomberg L.P.], uscis: [BLOOMBERG], careers: https://www.bloomberg.com/company/what-we-do/careers}
+  - {name: S&P Global, segment: fin_data, match: [S&P Global, "S&P"], uscis: ["S&P GLOBAL", STANDARD POORS],
+     feeds: [{type: workday, tenant: spgi, wd: wd5, site: SPGI_Careers}], careers: https://careers.spglobal.com}
+  - {name: MSCI, segment: fin_data, match: [MSCI], uscis: [MSCI], careers: https://careers.msci.com}
+  - {name: Moody's, segment: fin_data, match: ["Moody's", Moodys], uscis: [MOODYS, "MOODY'S"], careers: https://careers.moodys.com}
+  - {name: FactSet, segment: fin_data, match: [FactSet], uscis: [FACTSET], careers: https://www.factset.com/careers}
+  - {name: LSEG, segment: fin_data, match: [LSEG, London Stock Exchange, Refinitiv],
+     uscis: [LONDON STOCK EXCHANGE, REFINITIV], feeds: [{type: workday, tenant: lseg, wd: wd3, site: Careers}], careers: https://www.lseg.com/en/careers}
+  - {name: Morningstar, segment: fin_data, match: [Morningstar], uscis: [MORNINGSTAR], feeds: [{type: workday, tenant: morningstar, wd: wd5, site: Americas}], careers: https://careers.morningstar.com}
+
+  # ---------------- Fintech & brokers
+  - {name: Robinhood, segment: fintech, match: [Robinhood], uscis: [ROBINHOOD], feeds: [{type: greenhouse, board: robinhood}], careers: https://careers.robinhood.com}
+  - {name: Coinbase, segment: fintech, match: [Coinbase], uscis: [COINBASE], feeds: [{type: greenhouse, board: coinbase}], careers: https://www.coinbase.com/careers}
+  - {name: SoFi, segment: fintech, match: [SoFi, Social Finance], uscis: [SOCIAL FINANCE], feeds: [{type: greenhouse, board: sofi}], careers: https://www.sofi.com/careers}
+  - {name: Affirm, segment: fintech, match: [=Affirm, Affirm Holdings], uscis: [AFFIRM INC], feeds: [{type: greenhouse, board: affirm}], careers: https://www.affirm.com/careers}
+  - {name: Chime, segment: fintech, match: [=Chime, Chime Financial], uscis: [CHIME FINANCIAL], feeds: [{type: greenhouse, board: chime}], careers: https://careers.chime.com}
+  - {name: Brex, segment: fintech, match: [Brex], uscis: [BREX], feeds: [{type: greenhouse, board: brex}], careers: https://www.brex.com/careers}
+  - {name: Ramp, segment: fintech, match: [=Ramp, Ramp Business], uscis: [RAMP BUSINESS], feeds: [{type: ashby, board: ramp}], careers: https://ramp.com/careers}
+  - {name: Plaid, segment: fintech, match: [=Plaid, Plaid Inc], uscis: [PLAID], feeds: [{type: ashby, board: plaid}], careers: https://plaid.com/careers}
+  - {name: Mercury, segment: fintech, match: [Mercury Technologies, =Mercury],
+     uscis: [MERCURY TECHNOLOGIES], feeds: [{type: greenhouse, board: mercury}], careers: https://mercury.com/jobs}
+  - {name: Ally Financial, segment: fintech, match: [Ally Financial, Ally Bank, =Ally], uscis: [ALLY BANK, ALLY FINANCIAL], careers: https://www.ally.com/about/careers}

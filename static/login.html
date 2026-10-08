@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Sign in · SharmaJai Job Portal</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="login-body">
+<form id="login" class="login-card" autocomplete="on">
+  <div class="brand"><img src="logo-mark.svg" alt="" width="26" height="26">SharmaJai Job Portal</div>
+  <p class="muted">Private. Sign in to continue.</p>
+  <label class="lbl" for="password">Password</label>
+  <input id="password" type="password" autocomplete="current-password" required autofocus>
+  <label class="lbl" for="code">Authenticator code <span class="muted">(if you turned on 2-step)</span></label>
+  <input id="code" inputmode="numeric" autocomplete="one-time-code" maxlength="7" placeholder="123 456">
+  <button class="primary" id="go">Sign in</button>
+  <p id="msg" class="flag" role="alert"></p>
+</form>
+<script src="login.js"></script>
+</body>
+</html>
