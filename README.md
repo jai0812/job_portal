@@ -98,8 +98,8 @@ flowchart LR
 ## 🚀 Quick start (macOS)
 
 ```bash
-git clone https://github.com/<your-username>/sharmajai-job-portal.git
-cd sharmajai-job-portal
+git clone https://github.com/jai0812/job_portal.git
+cd job_portal
 ./run.sh
 ```
 
