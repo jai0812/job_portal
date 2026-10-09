@@ -26,40 +26,40 @@ This section is rewritten by the portal itself after every hourly refresh.
 
 <!-- LIVE:START (auto-generated, do not edit by hand) -->
 
-**Last updated: Oct 8, 2026 at 9:22 PM EDT** · refreshed automatically every hour
+**Last updated: Oct 9, 2026 at 8:42 AM EDT** · refreshed automatically every hour
 
 | Right now in the portal | |
 |---|---|
-| 🇺🇸 United States | **57,804** |
-| 🇮🇳 India | **8,554** |
-| 🌍 Other countries | **12,214** |
-| 🎓 University jobs | **6,016** |
-| 🆕 Posted in the last 24 hours | **5,133** |
-| ✅ US jobs at employers with H-1B history | **46,015 (80%)** |
-| 💻 Software Engineering | **15,152** |
-| 📊 Data Science & ML | **9,096** |
-| 🏦 Finance & Banks | **43,959** |
+| 🇺🇸 United States | **58,111** |
+| 🇮🇳 India | **8,713** |
+| 🌍 Other countries | **12,365** |
+| 🎓 University jobs | **3,820** |
+| 🆕 Posted in the last 24 hours | **1,701** |
+| ✅ US jobs at employers with H-1B history | **46,180 (79%)** |
+| 💻 Software Engineering | **15,281** |
+| 📊 Data Science & ML | **9,161** |
+| 🏦 Finance & Banks | **44,218** |
 | 🔌 Sources | **13 GitHub lists · 207 company career sites · 12 universities · LinkedIn (Apify)** |
 
 **Freshest early-career tech & data roles at employers with H-1B history**
 
 | Company | Role | Location | Posted | H-1B approvals (FY23) | |
 |---|---|---|---|---|---|
-| **Uber** | PhD Software Engineer 2 | Sunnyvale, CA | 49 min ago | 268 | [Apply ↗](https://iaziqy.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/job/300813) |
-| **Brain Corp** | Embedded Software Engineer 1 - Firmware | San Diego, CA | 2h ago | 4 | [Apply ↗](https://www.braincorp.com/open-positions?gh_jid=8879726002) |
-| **Veryable** | Data Engineer | Dallas, TX | 2h ago | 1 | [Apply ↗](https://ats.rippling.com/veryable-careers/jobs/71ecdaea-d356-46b0-9b5e-1325cadb0a48) |
-| **Replit** | Software Engineer Intern | Foster City, CA | 2h ago | 1 | [Apply ↗](https://jobs.ashbyhq.com/replit/7c3c9d29-cec2-4367-8564-eadaed165aea/application?embed=true) |
-| **Peraton** | Software Development Intern | Topeka, KS | 2h ago | 2 | [Apply ↗](https://careers-peraton.icims.com/jobs/172061/job?mobile=true&needsRedirect=false) |
-| **DocuSign** | Software Engineer Intern | Seattle, WA | 3h ago | 71 | [Apply ↗](https://careers.docusign.com/jobs/30478?icims=1) |
-| **Keysight Technologies** | R&D Software Engineer Intern | Calabasas, CA | 3h ago | 26 | [Apply ↗](https://jobs.keysight.com/jobs/54640?icims=1) |
-| **TikTok** | Machine Learning Engineer New Grad - E-Commerce User Grow… | San Jose, CA | 3h ago | 475 | [Apply ↗](https://lifeattiktok.com/search/7694352871949682997) |
-| **Meta** | Production Systems Engineering Intern | Menlo Park, CA | 3h ago | 1,540 | [Apply ↗](https://www.metacareers.com/jobs/1144327871507763) |
-| **Tesla** | Software Integration Engineer Intern - Service Tooling | Fremont, CA | 3h ago | 497 | [Apply ↗](https://www.tesla.com/careers/search/job/286127) |
-| **Pinterest** | Solutions Engineer Intern 2027 (USA) | San Francisco, CA, US; Remo… | 5h ago | 53 | [Apply ↗](https://www.pinterestcareers.com/jobs/?gh_jid=8214788) |
-| **ServiceNow** | Associate Software Engineer | Kirkland, Washington, US | 5h ago | 185 | [Apply ↗](https://jobs.smartrecruiters.com/ServiceNow/744000154515244) |
-| **Waymo** | 2027 Summer Intern, PhD, Machine Learning, Planning/Predi… | Mountain View, CA, USA | 6h ago | 87 | [Apply ↗](https://careers.withwaymo.com/jobs?gh_jid=8262154) |
-| **Twitch** | Software Engineer I | San Francisco, CA | 7h ago | 26 | [Apply ↗](https://job-boards.greenhouse.io/twitch/jobs/8879673002) |
-| **IMC Trading** | Machine Learning Engineer Intern - Summer 2027 | New York, United States | 8h ago | 2 | [Apply ↗](https://job-boards.eu.greenhouse.io/imc/jobs/4962456101) |
+| **TikTok** | Machine Learning Engineer Intern - E-Commerce User Growth | San Jose, CA | 6h ago | 475 | [Apply ↗](https://lifeattiktok.com/search/7694354937320868149) |
+| **Snowflake** | Software Engineer - Customer Experience Engineering | Menlo Park, CA | 11h ago | 110 | [Apply ↗](https://jobs.ashbyhq.com/snowflake/5ca0fa74-9e43-4468-8f1c-0a3aa0a993ec/application?embed=true) |
+| **Uber** | PhD Software Engineer 2 | Sunnyvale, CA | 12h ago | 268 | [Apply ↗](https://iaziqy.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/job/300813) |
+| **Denver** | Data Analytics College Intern - Analytics and Innovation | Denver, CO | 12h ago | 19 | [Apply ↗](https://denver.wd1.myworkdayjobs.com/CCD-denver-denvergov-CSC_Jobs-Civil_service_jobs-Police_Jobs-Fire_Jobs/job/Denver-International-Airport/Data-Analytics-and-Innovation-College-Internship---Analytics-and-Innovation---Denver-International-Airport--4-months-_R0083221-1) |
+| **Brain Corp** | Embedded Software Engineer 1 - Firmware | San Diego, CA | 13h ago | 4 | [Apply ↗](https://www.braincorp.com/open-positions?gh_jid=8879726002) |
+| **Veryable** | Data Engineer | Dallas, TX | 14h ago | 1 | [Apply ↗](https://ats.rippling.com/veryable-careers/jobs/71ecdaea-d356-46b0-9b5e-1325cadb0a48) |
+| **Replit** | Software Engineer Intern | Foster City, CA | 14h ago | 1 | [Apply ↗](https://jobs.ashbyhq.com/replit/7c3c9d29-cec2-4367-8564-eadaed165aea/application?embed=true) |
+| **Peraton** | Software Development Intern | Topeka, KS | 14h ago | 2 | [Apply ↗](https://careers-peraton.icims.com/jobs/172061/job?mobile=true&needsRedirect=false) |
+| **DocuSign** | Software Engineer Intern | Seattle, WA | 14h ago | 71 | [Apply ↗](https://careers.docusign.com/jobs/30478?icims=1) |
+| **Keysight Technologies** | R&D Software Engineer Intern | Calabasas, CA | 14h ago | 26 | [Apply ↗](https://jobs.keysight.com/jobs/54640?icims=1) |
+| **Meta** | Production Systems Engineering Intern | Menlo Park, CA | 14h ago | 1,540 | [Apply ↗](https://www.metacareers.com/jobs/1144327871507763) |
+| **Tesla** | Software Integration Engineer Intern - Service Tooling | Fremont, CA | 14h ago | 497 | [Apply ↗](https://www.tesla.com/careers/search/job/286127) |
+| **Pinterest** | Solutions Engineer Intern 2027 (USA) | San Francisco, CA, US; Remo… | 16h ago | 53 | [Apply ↗](https://www.pinterestcareers.com/jobs/?gh_jid=8214788) |
+| **ServiceNow** | Associate Software Engineer | Kirkland, Washington, US | 17h ago | 185 | [Apply ↗](https://jobs.smartrecruiters.com/ServiceNow/744000154515244) |
+| **Waymo** | 2027 Summer Intern, PhD, Machine Learning, Planning/Predi… | Mountain View, CA, USA | 18h ago | 87 | [Apply ↗](https://careers.withwaymo.com/jobs?gh_jid=8262154) |
 
 <!-- LIVE:END -->
 
