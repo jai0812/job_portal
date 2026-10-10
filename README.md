@@ -26,40 +26,40 @@ This section is rewritten by the portal itself after every hourly refresh.
 
 <!-- LIVE:START (auto-generated, do not edit by hand) -->
 
-**Last updated: Oct 10, 2026 at 3:21 AM EDT** · refreshed automatically every hour
+**Last updated: Oct 10, 2026 at 3:21 PM EDT** · refreshed automatically every hour
 
 | Right now in the portal | |
 |---|---|
-| 🇺🇸 United States | **60,710** |
-| 🇮🇳 India | **9,000** |
-| 🌍 Other countries | **12,758** |
-| 🎓 University jobs | **3,824** |
-| 🆕 Posted in the last 24 hours | **414** |
-| ✅ US jobs at employers with H-1B history | **48,155 (79%)** |
-| 💻 Software Engineering | **15,844** |
-| 📊 Data Science & ML | **9,427** |
-| 🏦 Finance & Banks | **46,183** |
+| 🇺🇸 United States | **61,407** |
+| 🇮🇳 India | **9,006** |
+| 🌍 Other countries | **12,860** |
+| 🎓 University jobs | **3,831** |
+| 🆕 Posted in the last 24 hours | **388** |
+| ✅ US jobs at employers with H-1B history | **48,542 (79%)** |
+| 💻 Software Engineering | **16,047** |
+| 📊 Data Science & ML | **9,587** |
+| 🏦 Finance & Banks | **46,547** |
 | 🔌 Sources | **13 GitHub lists · 207 company career sites · 12 universities · LinkedIn (Apify)** |
 
 **Freshest early-career tech & data roles at employers with H-1B history**
 
 | Company | Role | Location | Posted | H-1B approvals (FY23) | |
 |---|---|---|---|---|---|
-| **TikTok** | Machine Learning Engineer Graduate (Conversational AI) -… | Seattle, Washington, United… | 3h ago | 475 | [Apply ↗](https://lifeattiktok.com/search/7670685495206857013) |
-| **Coinbase** | Forward Deployed Engineer Intern (HR Technology) | Hybrid - New York, NY | 14h ago | 44 | [Apply ↗](https://www.coinbase.com/careers/positions/8175510?gh_jid=8175510) |
-| **Microsoft** | AI Software Engineering Intern | Redmond, Washington, United… | 14h ago | 2,066 | [Apply ↗](https://apply.careers.microsoft.com/careers/job/1970393556962891) |
-| **Schonfeld** | Quantitative Developer Intern | Austin, TX | 16h ago | 12 | [Apply ↗](https://job-boards.greenhouse.io/schonfeld/jobs/8267092) |
-| **General Dynamics** | Entry Level Engineer - Embedded Software / Systems | New London, CT | 17h ago | 12 | [Apply ↗](https://careers-gdeb.icims.com/jobs/21062/job?mobile=true&needsRedirect=false) |
-| **AmTrust Financial** | Software Engineer 1 | Florida | 17h ago | 5 | [Apply ↗](https://careers-amtrustgroup.icims.com/jobs/21073/job?mobile=true&needsRedirect=false) |
-| **Meta** | Research Scientist Intern - Audio - Machine Learning and… | Burlingame, CA · Redmond, WA | 17h ago | 1,540 | [Apply ↗](https://www.metacareers.com/jobs/2211974449401350) |
-| **Ford Motor Company** | Accounting Technology Analyst | Dearborn, MI | 17h ago | 262 | [Apply ↗](https://efds.fa.em5.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/job/72451) |
-| **Snowflake** | Software Engineer - Customer Experience Engineering | Menlo Park, CA | 1d ago | 110 | [Apply ↗](https://jobs.ashbyhq.com/snowflake/5ca0fa74-9e43-4468-8f1c-0a3aa0a993ec/application?embed=true) |
-| **Uber** | PhD Software Engineer 2 | Sunnyvale, CA | 1d ago | 268 | [Apply ↗](https://iaziqy.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/job/300813) |
-| **Denver** | Data Analytics College Intern - Analytics and Innovation | Denver, CO | 1d ago | 19 | [Apply ↗](https://denver.wd1.myworkdayjobs.com/CCD-denver-denvergov-CSC_Jobs-Civil_service_jobs-Police_Jobs-Fire_Jobs/job/Denver-International-Airport/Data-Analytics-and-Innovation-College-Internship---Analytics-and-Innovation---Denver-International-Airport--4-months-_R0083221-1) |
-| **Aptiv** | Compiler Intern - Compiler Team | Walnut Creek, CA | 1d ago | 71 | [Apply ↗](https://aptiv.wd5.myworkdayjobs.com/aptiv_careers/job/USA-Walnut-Creek-CA---WR/Intern---Compiler-Team_J000704385) |
-| **LSEG** | Business New Grad - Data and Analytics | NYC | 1d ago | 22 | [Apply ↗](https://lseg.wd3.myworkdayjobs.com/Graduate_Careers/job/New-York-City-United-States/Business-Graduate-Programme--Data-and-Analytics-_R0123714-2) |
-| **Barry-Wehmiller** | Software Engineer Intern | Dallas, TX | 1d ago | 1 | [Apply ↗](https://barrywehmiller.wd1.myworkdayjobs.com/BWConfidential/job/Dallas-TX/Software-Engineering-Intern---DAL_R023133) |
-| **Parsons** | Software Engineer Co-op | Centreville, VA | 1d ago | 17 | [Apply ↗](https://parsons.wd5.myworkdayjobs.com/en-US/search/job/US---VA-Centreville/Software-Engineer-Co-Op---TS-SCI_R187147) |
+| **TikTok** | Machine Learning Engineer Intern (Conversational AI) - 20… | Seattle, Washington, United… | 18h ago | 475 | [Apply ↗](https://lifeattiktok.com/search/7670689681491364101) |
+| **DocuSign** | Software Engineer Intern | Seattle, WA | 18h ago | 71 | [Apply ↗](https://careers.docusign.com/jobs/30499?icims=1) |
+| **Arizona State University** | Student Web Developer & Content Specialist Intern | Tempe, AZ | 19h ago | 58 | [Apply ↗](https://asuep.wd5.myworkdayjobs.com/ASUEP/job/Tempe-AZ/Student-Web-Developer---Content-Specialist_R1546) |
+| **Boston Consulting Group** | Talent Acquisition Assistant - Analytics | Seattle, WA | 20h ago | 108 | [Apply ↗](https://careers.bcg.com/global/en/job/60105) |
+| **Arcesium** | Software Engineer Intern | NYC | 21h ago | 2 | [Apply ↗](https://job-boards.greenhouse.io/arcesiumllc/jobs/5257176007) |
+| **Faire** | Applied AI/ML Scientist Intern | SF | 21h ago | 7 | [Apply ↗](https://boards.greenhouse.io/faire/jobs/8870975002) |
+| **Lennox International** | Business Compliance Intern | Richardson, TX | 21h ago | 14 | [Apply ↗](https://uscareers-lennox.icims.com/jobs/55590/job?mobile=true&needsRedirect=false) |
+| **Meta** | Research Scientist Intern - Spatial Audio Capture and Rep… | Redmond, WA | 21h ago | 1,540 | [Apply ↗](https://www.metacareers.com/jobs/1674394627579563) |
+| **PointClickCare** | Marketing Data Analytics Engineer | Remote in USA | 21h ago | 9 | [Apply ↗](https://jobs.lever.co/pointclickcare/96d77b19-2396-4f9e-9513-59471b3e28ed/apply) |
+| **Stifel** | Developer – Credit Analytics | St. Louis, MO | 21h ago | 3 | [Apply ↗](https://careers-stifel.icims.com/jobs/10047/job?mobile=true&needsRedirect=false) |
+| **SageSure** | Software Product Management Intern | Chicago, IL · Jersey City,… | 21h ago | 1 | [Apply ↗](https://www.sagesure.com/careers/current-job-openings/?gh_jid=4719520006) |
+| **Panasonic Holdings** | Panasonic Transformation Group Intern | Sparks, NV | 21h ago | 40 | [Apply ↗](https://careers.na.panasonic.com/jobs/51646?icims=1) |
+| **Texas Instruments** | Software Engineer Intern | Longmont, CO | 21h ago | 51 | [Apply ↗](https://edbz.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX/job/25012948) |
+| **Coinbase** | Forward Deployed Engineer Intern - HR Technology | NYC | 21h ago | 44 | [Apply ↗](https://boards.greenhouse.io/embed/job_app?token=8175510) |
+| **Capstone Investment Advisors** | Tech Execution Intern | NYC | 21h ago | 1 | [Apply ↗](https://job-boards.greenhouse.io/capstoneinvestmentadvisors/jobs/8882130002) |
 
 <!-- LIVE:END -->
 
