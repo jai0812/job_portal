@@ -26,26 +26,27 @@ This section is rewritten by the portal itself after every hourly refresh.
 
 <!-- LIVE:START (auto-generated, do not edit by hand) -->
 
-**Last updated: Oct 10, 2026 at 11:14 PM EDT** · refreshed automatically every hour
+**Last updated: Oct 11, 2026 at 3:04 PM EDT** · refreshed automatically every hour
 
 | Right now in the portal | |
 |---|---|
-| 🇺🇸 United States | **61,775** |
-| 🇮🇳 India | **9,011** |
-| 🌍 Other countries | **12,915** |
-| 🎓 University jobs | **3,862** |
-| 🆕 Posted in the last 24 hours | **457** |
-| ✅ US jobs at employers with H-1B history | **48,817 (79%)** |
-| 💻 Software Engineering | **16,085** |
-| 📊 Data Science & ML | **9,616** |
-| 🏦 Finance & Banks | **46,899** |
+| 🇺🇸 United States | **61,846** |
+| 🇮🇳 India | **9,017** |
+| 🌍 Other countries | **12,923** |
+| 🎓 University jobs | **3,789** |
+| 🆕 Posted in the last 24 hours | **50** |
+| ✅ US jobs at employers with H-1B history | **48,866 (79%)** |
+| 💻 Software Engineering | **16,115** |
+| 📊 Data Science & ML | **9,629** |
+| 🏦 Finance & Banks | **46,934** |
 | 🔌 Sources | **13 GitHub lists · 207 company career sites · 12 universities · LinkedIn (Apify)** |
 
 **Freshest early-career tech & data roles at employers with H-1B history**
 
 | Company | Role | Location | Posted | H-1B approvals (FY23) | |
 |---|---|---|---|---|---|
-| **TikTok** | Machine Learning Engineer Intern (Conversational AI) - 20… | Seattle, Washington, United… | 1d ago | 475 | [Apply ↗](https://lifeattiktok.com/search/7670689681491364101) |
+| **Microsoft** | Software Engineer | Redmond, WA | 1d ago | 2,066 | [Apply ↗](https://apply.careers.microsoft.com/careers/job/1970393557037774) |
+| **TikTok** | Machine Learning Engineer Intern - Conversational AI | Seattle, WA | 1d ago | 475 | [Apply ↗](https://lifeattiktok.com/search/7670689681491364101) |
 | **DocuSign** | Software Engineer Intern | Seattle, WA | 1d ago | 71 | [Apply ↗](https://careers.docusign.com/jobs/30499?icims=1) |
 | **Arizona State University** | Student Web Developer & Content Specialist Intern | Tempe, AZ | 1d ago | 58 | [Apply ↗](https://asuep.wd5.myworkdayjobs.com/ASUEP/job/Tempe-AZ/Student-Web-Developer---Content-Specialist_R1546) |
 | **Boston Consulting Group** | Talent Acquisition Assistant - Analytics | Seattle, WA | 1d ago | 108 | [Apply ↗](https://careers.bcg.com/global/en/job/60105) |
@@ -59,7 +60,6 @@ This section is rewritten by the portal itself after every hourly refresh.
 | **Panasonic Holdings** | Panasonic Transformation Group Intern | Sparks, NV | 1d ago | 40 | [Apply ↗](https://careers.na.panasonic.com/jobs/51646?icims=1) |
 | **Texas Instruments** | Software Engineer Intern | Longmont, CO | 1d ago | 51 | [Apply ↗](https://edbz.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX/job/25012948) |
 | **Coinbase** | Forward Deployed Engineer Intern - HR Technology | NYC | 1d ago | 44 | [Apply ↗](https://boards.greenhouse.io/embed/job_app?token=8175510) |
-| **Capstone Investment Advisors** | Tech Execution Intern | NYC | 1d ago | 1 | [Apply ↗](https://job-boards.greenhouse.io/capstoneinvestmentadvisors/jobs/8882130002) |
 
 <!-- LIVE:END -->
 
