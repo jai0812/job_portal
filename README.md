@@ -26,40 +26,40 @@ This section is rewritten by the portal itself after every hourly refresh.
 
 <!-- LIVE:START (auto-generated, do not edit by hand) -->
 
-**Last updated: Oct 10, 2026 at 3:21 PM EDT** · refreshed automatically every hour
+**Last updated: Oct 10, 2026 at 11:14 PM EDT** · refreshed automatically every hour
 
 | Right now in the portal | |
 |---|---|
-| 🇺🇸 United States | **61,407** |
-| 🇮🇳 India | **9,006** |
-| 🌍 Other countries | **12,860** |
-| 🎓 University jobs | **3,831** |
-| 🆕 Posted in the last 24 hours | **388** |
-| ✅ US jobs at employers with H-1B history | **48,542 (79%)** |
-| 💻 Software Engineering | **16,047** |
-| 📊 Data Science & ML | **9,587** |
-| 🏦 Finance & Banks | **46,547** |
+| 🇺🇸 United States | **61,775** |
+| 🇮🇳 India | **9,011** |
+| 🌍 Other countries | **12,915** |
+| 🎓 University jobs | **3,862** |
+| 🆕 Posted in the last 24 hours | **457** |
+| ✅ US jobs at employers with H-1B history | **48,817 (79%)** |
+| 💻 Software Engineering | **16,085** |
+| 📊 Data Science & ML | **9,616** |
+| 🏦 Finance & Banks | **46,899** |
 | 🔌 Sources | **13 GitHub lists · 207 company career sites · 12 universities · LinkedIn (Apify)** |
 
 **Freshest early-career tech & data roles at employers with H-1B history**
 
 | Company | Role | Location | Posted | H-1B approvals (FY23) | |
 |---|---|---|---|---|---|
-| **TikTok** | Machine Learning Engineer Intern (Conversational AI) - 20… | Seattle, Washington, United… | 18h ago | 475 | [Apply ↗](https://lifeattiktok.com/search/7670689681491364101) |
-| **DocuSign** | Software Engineer Intern | Seattle, WA | 18h ago | 71 | [Apply ↗](https://careers.docusign.com/jobs/30499?icims=1) |
-| **Arizona State University** | Student Web Developer & Content Specialist Intern | Tempe, AZ | 19h ago | 58 | [Apply ↗](https://asuep.wd5.myworkdayjobs.com/ASUEP/job/Tempe-AZ/Student-Web-Developer---Content-Specialist_R1546) |
-| **Boston Consulting Group** | Talent Acquisition Assistant - Analytics | Seattle, WA | 20h ago | 108 | [Apply ↗](https://careers.bcg.com/global/en/job/60105) |
-| **Arcesium** | Software Engineer Intern | NYC | 21h ago | 2 | [Apply ↗](https://job-boards.greenhouse.io/arcesiumllc/jobs/5257176007) |
-| **Faire** | Applied AI/ML Scientist Intern | SF | 21h ago | 7 | [Apply ↗](https://boards.greenhouse.io/faire/jobs/8870975002) |
-| **Lennox International** | Business Compliance Intern | Richardson, TX | 21h ago | 14 | [Apply ↗](https://uscareers-lennox.icims.com/jobs/55590/job?mobile=true&needsRedirect=false) |
-| **Meta** | Research Scientist Intern - Spatial Audio Capture and Rep… | Redmond, WA | 21h ago | 1,540 | [Apply ↗](https://www.metacareers.com/jobs/1674394627579563) |
-| **PointClickCare** | Marketing Data Analytics Engineer | Remote in USA | 21h ago | 9 | [Apply ↗](https://jobs.lever.co/pointclickcare/96d77b19-2396-4f9e-9513-59471b3e28ed/apply) |
-| **Stifel** | Developer – Credit Analytics | St. Louis, MO | 21h ago | 3 | [Apply ↗](https://careers-stifel.icims.com/jobs/10047/job?mobile=true&needsRedirect=false) |
-| **SageSure** | Software Product Management Intern | Chicago, IL · Jersey City,… | 21h ago | 1 | [Apply ↗](https://www.sagesure.com/careers/current-job-openings/?gh_jid=4719520006) |
-| **Panasonic Holdings** | Panasonic Transformation Group Intern | Sparks, NV | 21h ago | 40 | [Apply ↗](https://careers.na.panasonic.com/jobs/51646?icims=1) |
-| **Texas Instruments** | Software Engineer Intern | Longmont, CO | 21h ago | 51 | [Apply ↗](https://edbz.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX/job/25012948) |
-| **Coinbase** | Forward Deployed Engineer Intern - HR Technology | NYC | 21h ago | 44 | [Apply ↗](https://boards.greenhouse.io/embed/job_app?token=8175510) |
-| **Capstone Investment Advisors** | Tech Execution Intern | NYC | 21h ago | 1 | [Apply ↗](https://job-boards.greenhouse.io/capstoneinvestmentadvisors/jobs/8882130002) |
+| **TikTok** | Machine Learning Engineer Intern (Conversational AI) - 20… | Seattle, Washington, United… | 1d ago | 475 | [Apply ↗](https://lifeattiktok.com/search/7670689681491364101) |
+| **DocuSign** | Software Engineer Intern | Seattle, WA | 1d ago | 71 | [Apply ↗](https://careers.docusign.com/jobs/30499?icims=1) |
+| **Arizona State University** | Student Web Developer & Content Specialist Intern | Tempe, AZ | 1d ago | 58 | [Apply ↗](https://asuep.wd5.myworkdayjobs.com/ASUEP/job/Tempe-AZ/Student-Web-Developer---Content-Specialist_R1546) |
+| **Boston Consulting Group** | Talent Acquisition Assistant - Analytics | Seattle, WA | 1d ago | 108 | [Apply ↗](https://careers.bcg.com/global/en/job/60105) |
+| **Arcesium** | Software Engineer Intern | New York City, NY | 1d ago | 2 | [Apply ↗](https://job-boards.greenhouse.io/arcesiumllc/jobs/5257176007) |
+| **Faire** | Applied AI/ML Scientist Intern | SF | 1d ago | 7 | [Apply ↗](https://boards.greenhouse.io/faire/jobs/8870975002) |
+| **Lennox International** | Business Compliance Intern | Richardson, TX | 1d ago | 14 | [Apply ↗](https://uscareers-lennox.icims.com/jobs/55590/job?mobile=true&needsRedirect=false) |
+| **Meta** | Research Scientist Intern - Spatial Audio Capture and Rep… | Redmond, WA | 1d ago | 1,540 | [Apply ↗](https://www.metacareers.com/jobs/1674394627579563) |
+| **PointClickCare** | Marketing Data Analytics Engineer | Remote in USA | 1d ago | 9 | [Apply ↗](https://jobs.lever.co/pointclickcare/96d77b19-2396-4f9e-9513-59471b3e28ed/apply) |
+| **Stifel** | Developer – Credit Analytics | St. Louis, MO | 1d ago | 3 | [Apply ↗](https://careers-stifel.icims.com/jobs/10047/job?mobile=true&needsRedirect=false) |
+| **SageSure** | Software Product Management Intern | Chicago, IL +3 | 1d ago | 1 | [Apply ↗](https://www.sagesure.com/careers/current-job-openings/?gh_jid=4719520006) |
+| **Panasonic Holdings** | Panasonic Transformation Group Intern | Sparks, NV | 1d ago | 40 | [Apply ↗](https://careers.na.panasonic.com/jobs/51646?icims=1) |
+| **Texas Instruments** | Software Engineer Intern | Longmont, CO | 1d ago | 51 | [Apply ↗](https://edbz.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX/job/25012948) |
+| **Coinbase** | Forward Deployed Engineer Intern - HR Technology | NYC | 1d ago | 44 | [Apply ↗](https://boards.greenhouse.io/embed/job_app?token=8175510) |
+| **Capstone Investment Advisors** | Tech Execution Intern | NYC | 1d ago | 1 | [Apply ↗](https://job-boards.greenhouse.io/capstoneinvestmentadvisors/jobs/8882130002) |
 
 <!-- LIVE:END -->
 
