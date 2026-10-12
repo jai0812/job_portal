@@ -26,28 +26,29 @@ This section is rewritten by the portal itself after every hourly refresh.
 
 <!-- LIVE:START (auto-generated, do not edit by hand) -->
 
-**Last updated: Oct 11, 2026 at 11:12 PM EDT** · refreshed automatically every hour
+**Last updated: Oct 12, 2026 at 11:49 AM EDT** · refreshed automatically every hour
 
 | Right now in the portal | |
 |---|---|
-| 🇺🇸 United States | **62,071** |
-| 🇮🇳 India | **9,044** |
-| 🌍 Other countries | **12,988** |
-| 🎓 University jobs | **3,789** |
-| 🆕 Posted in the last 24 hours | **390** |
-| ✅ US jobs at employers with H-1B history | **48,997 (79%)** |
-| 💻 Software Engineering | **16,178** |
-| 📊 Data Science & ML | **9,644** |
-| 🏦 Finance & Banks | **47,136** |
+| 🇺🇸 United States | **62,353** |
+| 🇮🇳 India | **9,276** |
+| 🌍 Other countries | **13,090** |
+| 🎓 University jobs | **3,742** |
+| 🆕 Posted in the last 24 hours | **546** |
+| ✅ US jobs at employers with H-1B history | **49,233 (79%)** |
+| 💻 Software Engineering | **16,323** |
+| 📊 Data Science & ML | **9,694** |
+| 🏦 Finance & Banks | **47,271** |
 | 🔌 Sources | **13 GitHub lists · 207 company career sites · 12 universities · LinkedIn (Apify)** |
 
 **Freshest early-career tech & data roles at employers with H-1B history**
 
 | Company | Role | Location | Posted | H-1B approvals (FY23) | |
 |---|---|---|---|---|---|
-| **Pearson** | Data Analyst - Measurement | Remote in USA | 2h ago | 11 | [Apply ↗](https://hccz.fa.em3.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_2/job/26228) |
+| **Pearson** | Data Analyst - Measurement | Remote in USA | 14h ago | 11 | [Apply ↗](https://hccz.fa.em3.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_2/job/26228) |
 | **C&S Wholesale Grocers** | IS Intern - Data Analytics & Data Science | Edison, NJ | 1d ago | 5 | [Apply ↗](https://cswg.wd1.myworkdayjobs.com/cs_careers/job/Edison-NJ/IS-Internship---Data-Analytics---Data-Science_R-268963) |
 | **NVIDIA** | Software Engineer New Grad - DL Kernel Libraries | Santa Clara, CA | 1d ago | 394 | [Apply ↗](https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite/job/US-CA-Santa-Clara/Software-Engineer--DL-Kernel-Libraries---New-College-Grad-2027_JR2027337) |
+| **Tencent** | Data Science Intern | Palo Alto, CA | 1d ago | 10 | [Apply ↗](https://tencent.wd1.myworkdayjobs.com/Tencent_Careers/job/US-California-Palo-Alto/Data-Science-Intern_R108213) |
 | **TikTok** | Machine Learning Engineer Intern (Conversational AI) - 20… | Seattle, Washington, United… | 2d ago | 475 | [Apply ↗](https://lifeattiktok.com/search/7670689681491364101) |
 | **DocuSign** | Software Engineer Intern | Seattle, WA | 2d ago | 71 | [Apply ↗](https://careers.docusign.com/jobs/30499?icims=1) |
 | **Arizona State University** | Student Web Developer & Content Specialist Intern | Tempe, AZ | 2d ago | 58 | [Apply ↗](https://asuep.wd5.myworkdayjobs.com/ASUEP/job/Tempe-AZ/Student-Web-Developer---Content-Specialist_R1546) |
@@ -59,7 +60,6 @@ This section is rewritten by the portal itself after every hourly refresh.
 | **PointClickCare** | Marketing Data Analytics Engineer | Remote in USA | 2d ago | 9 | [Apply ↗](https://jobs.lever.co/pointclickcare/96d77b19-2396-4f9e-9513-59471b3e28ed/apply) |
 | **Stifel** | Developer – Credit Analytics | St. Louis, MO | 2d ago | 3 | [Apply ↗](https://careers-stifel.icims.com/jobs/10047/job?mobile=true&needsRedirect=false) |
 | **SageSure** | Software Product Management Intern | Chicago, IL +3 | 2d ago | 1 | [Apply ↗](https://www.sagesure.com/careers/current-job-openings/?gh_jid=4719520006) |
-| **Panasonic Holdings** | Panasonic Transformation Group Intern | Sparks, NV | 2d ago | 40 | [Apply ↗](https://careers.na.panasonic.com/jobs/51646?icims=1) |
 
 <!-- LIVE:END -->
 
