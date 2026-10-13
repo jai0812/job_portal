@@ -26,40 +26,40 @@ This section is rewritten by the portal itself after every hourly refresh.
 
 <!-- LIVE:START (auto-generated, do not edit by hand) -->
 
-**Last updated: Oct 12, 2026 at 8:56 PM EDT** · refreshed automatically every hour
+**Last updated: Oct 13, 2026 at 8:54 AM EDT** · refreshed automatically every hour
 
 | Right now in the portal | |
 |---|---|
-| 🇺🇸 United States | **63,410** |
-| 🇮🇳 India | **9,499** |
-| 🌍 Other countries | **13,337** |
-| 🎓 University jobs | **3,811** |
-| 🆕 Posted in the last 24 hours | **1,974** |
-| ✅ US jobs at employers with H-1B history | **50,050 (79%)** |
-| 💻 Software Engineering | **16,632** |
-| 📊 Data Science & ML | **9,843** |
-| 🏦 Finance & Banks | **48,189** |
+| 🇺🇸 United States | **64,544** |
+| 🇮🇳 India | **9,572** |
+| 🌍 Other countries | **13,478** |
+| 🎓 University jobs | **3,643** |
+| 🆕 Posted in the last 24 hours | **503** |
+| ✅ US jobs at employers with H-1B history | **50,726 (79%)** |
+| 💻 Software Engineering | **16,941** |
+| 📊 Data Science & ML | **10,030** |
+| 🏦 Finance & Banks | **48,863** |
 | 🔌 Sources | **13 GitHub lists · 207 company career sites · 12 universities · LinkedIn (Apify)** |
 
 **Freshest early-career tech & data roles at employers with H-1B history**
 
 | Company | Role | Location | Posted | H-1B approvals (FY23) | |
 |---|---|---|---|---|---|
-| **TikTok** | Frontend Software Engineer Intern (Ads Measurement Signal… | San Jose, California, Unite… | 3 min ago | 475 | [Apply ↗](https://lifeattiktok.com/search/7668584161852229893) |
-| **Snowflake** | AI Associate, Office of the CEO | US-CA-Menlo Park, United St… | 2h ago | 110 | [Apply ↗](https://jobs.ashbyhq.com/snowflake/88348d29-0ec4-475f-a54e-c6b247cbc6a8) |
-| **Western Digital** | Spring Co-op - Recording Electronics Data Analytics & Opt… | Rochester, MN, US | 4h ago | 56 | [Apply ↗](https://jobs.smartrecruiters.com/WesternDigital/744000155109379) |
-| **Microsoft** | Cloud Network Engineering Internship Oportunities | Redmond, Washington, United… | 7h ago | 2,066 | [Apply ↗](https://apply.careers.microsoft.com/careers/job/1970393557037856) |
-| **Duolingo** | AI Research Engineer, New PhD Graduate | New York, NY; Pittsburgh, PA | 8h ago | 5 | [Apply ↗](https://careers.duolingo.com/jobs/8881612002?gh_jid=8881612002) |
-| **Wolverine Trading** | Early Career C++ Software Engineer | Chicago, IL | 10h ago | 1 | [Apply ↗](https://wolve.pinpointhq.com/en/postings/4b0e86a1-db36-4490-9a98-17782ffcc648?ats=pinpointhq) |
-| **Google** | Forward Deployed Engineer Intern | NYC · Sunnyvale, CA | 10h ago | 2,460 | [Apply ↗](https://www.google.com/about/careers/applications/jobs/results/75665705386549958) |
-| **Tower Research Capital** | Venture Capital Intern | NYC | 10h ago | 9 | [Apply ↗](https://www.tower-research.com/open-positions/?gh_jid=7368106) |
-| **Pearson** | Data Analyst - Measurement | Remote in USA | 23h ago | 11 | [Apply ↗](https://hccz.fa.em3.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_2/job/26228) |
-| **Aderant** | Associate Software Engineer | Atlanta, GA | 1d ago | 1 | [Apply ↗](https://aderant.wd5.myworkdayjobs.com/Aderant_External_Careers/job/Atlanta-Georgia/Associate-Software-Engineer_REQ_100000484) |
-| **C&S Wholesale Grocers** | IS Intern - Data Analytics & Data Science | Edison, NJ | 2d ago | 5 | [Apply ↗](https://cswg.wd1.myworkdayjobs.com/cs_careers/job/Edison-NJ/IS-Internship---Data-Analytics---Data-Science_R-268963) |
-| **NVIDIA** | Software Engineer New Grad - DL Kernel Libraries | Santa Clara, CA | 2d ago | 394 | [Apply ↗](https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite/job/US-CA-Santa-Clara/Software-Engineer--DL-Kernel-Libraries---New-College-Grad-2027_JR2027337) |
-| **Tencent** | Data Science Intern | Palo Alto, CA | 2d ago | 10 | [Apply ↗](https://tencent.wd1.myworkdayjobs.com/Tencent_Careers/job/US-California-Palo-Alto/Data-Science-Intern_R108213) |
-| **DocuSign** | Software Engineer Intern | Seattle, WA | 2d ago | 71 | [Apply ↗](https://careers.docusign.com/jobs/30499?icims=1) |
-| **Arizona State University** | Student Web Developer & Content Specialist Intern | Tempe, AZ | 3d ago | 58 | [Apply ↗](https://asuep.wd5.myworkdayjobs.com/ASUEP/job/Tempe-AZ/Student-Web-Developer---Content-Specialist_R1546) |
+| **Experian** | Associate Machine Learning Scientist | Sofia, BG | 6h ago | 36 | [Apply ↗](https://jobs.smartrecruiters.com/Experian/744000155170869) |
+| **Western Digital** | Junior IT Developer | Bayan Lepas, Penang, MY | 11h ago | 56 | [Apply ↗](https://jobs.smartrecruiters.com/WesternDigital/744000155153462) |
+| **TikTok** | Research Scientist Graduate | Seattle, WA | 11h ago | 475 | [Apply ↗](https://lifeattiktok.com/search/7695929967028750645) |
+| **Meta** | Research Scientist Intern - Language and Agents | Menlo Park, CA · Bellevue,… | 11h ago | 1,540 | [Apply ↗](https://www.metacareers.com/jobs/2168438160696161) |
+| **Chewy** | Business Intelligence Analyst 1 | Dayton, OH · Houston, TX ·… | 12h ago | 90 | [Apply ↗](https://wd5.myworkdaysite.com/recruiting/chewy/External/job/Clayton-IN/Business-Intelligence-Analyst-I_R31111) |
+| **General Dynamics Informatio…** | Software Developer Intern - Defense Agencies - Software D… | Falls Church, VA | 12h ago | 12 | [Apply ↗](https://gdit.wd5.myworkdayjobs.com/gdit_earlytalent/job/USA-VA-Falls-Church/XMLNAME-2027-Summer-Intern---Defense-Agencies--SW-DEV-_RQ230270) |
+| **Siemens** | Sales and Service Web Development Intern - Gscs | Mason, OH | 14h ago | 6 | [Apply ↗](https://siemens.avature.net/en_US/externaljobs/JobDetail/525502) |
+| **Momentum Engineering** | Software Engineer 0 | Annapolis Junction, MD | 14h ago | 1 | [Apply ↗](https://ats.rippling.com/momentumcareers/jobs/dbcd3c46-e2fa-4d75-8da1-ac8d15d3771e) |
+| **Ascension** | Master Data Management Intern | St. Louis, MO | 14h ago | 22 | [Apply ↗](https://jobs.ascension.org/us/en/job/2026-465180) |
+| **Brillio** | Full Stack AI Engineer | Coppell, TX | 14h ago | 142 | [Apply ↗](https://jobs.lever.co/brillio-2/3de75f8b-9ddc-4908-b67d-d6e91bafd9e2/apply) |
+| **Databricks** | Software Engineer Intern | SF · Bellevue, WA · Mountai… | 14h ago | 78 | [Apply ↗](https://boards.greenhouse.io/embed/job_app?token=6865687002) |
+| **Electronic Arts** | Data and AI Engineer Intern | Austin, TX | 14h ago | 33 | [Apply ↗](https://jobs.ea.com/en_US/careers/JobDetail/Data-AI-Engineering-Intern-Summer-2027/216238) |
+| **MEMX** | Data Engineer Intern | NYC | 14h ago | 1 | [Apply ↗](https://job-boards.greenhouse.io/memx/jobs/5450442008) |
+| **Keysight Technologies** | Test Engineering Intern Tech 3 | Santa Clara, CA | 14h ago | 26 | [Apply ↗](https://jobs.keysight.com/jobs/54786?icims=1) |
+| **STR** | Associate Embedded Systems Emulation Engineer | Woburn, MA | 14h ago | 1 | [Apply ↗](https://job-boards.greenhouse.io/systemstechnologyresearch/jobs/4721162006) |
 
 <!-- LIVE:END -->
 
