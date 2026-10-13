@@ -26,40 +26,40 @@ This section is rewritten by the portal itself after every hourly refresh.
 
 <!-- LIVE:START (auto-generated, do not edit by hand) -->
 
-**Last updated: Oct 12, 2026 at 11:49 AM EDT** · refreshed automatically every hour
+**Last updated: Oct 12, 2026 at 8:56 PM EDT** · refreshed automatically every hour
 
 | Right now in the portal | |
 |---|---|
-| 🇺🇸 United States | **62,353** |
-| 🇮🇳 India | **9,276** |
-| 🌍 Other countries | **13,090** |
-| 🎓 University jobs | **3,742** |
-| 🆕 Posted in the last 24 hours | **546** |
-| ✅ US jobs at employers with H-1B history | **49,233 (79%)** |
-| 💻 Software Engineering | **16,323** |
-| 📊 Data Science & ML | **9,694** |
-| 🏦 Finance & Banks | **47,271** |
+| 🇺🇸 United States | **63,410** |
+| 🇮🇳 India | **9,499** |
+| 🌍 Other countries | **13,337** |
+| 🎓 University jobs | **3,811** |
+| 🆕 Posted in the last 24 hours | **1,974** |
+| ✅ US jobs at employers with H-1B history | **50,050 (79%)** |
+| 💻 Software Engineering | **16,632** |
+| 📊 Data Science & ML | **9,843** |
+| 🏦 Finance & Banks | **48,189** |
 | 🔌 Sources | **13 GitHub lists · 207 company career sites · 12 universities · LinkedIn (Apify)** |
 
 **Freshest early-career tech & data roles at employers with H-1B history**
 
 | Company | Role | Location | Posted | H-1B approvals (FY23) | |
 |---|---|---|---|---|---|
-| **Pearson** | Data Analyst - Measurement | Remote in USA | 14h ago | 11 | [Apply ↗](https://hccz.fa.em3.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_2/job/26228) |
-| **C&S Wholesale Grocers** | IS Intern - Data Analytics & Data Science | Edison, NJ | 1d ago | 5 | [Apply ↗](https://cswg.wd1.myworkdayjobs.com/cs_careers/job/Edison-NJ/IS-Internship---Data-Analytics---Data-Science_R-268963) |
-| **NVIDIA** | Software Engineer New Grad - DL Kernel Libraries | Santa Clara, CA | 1d ago | 394 | [Apply ↗](https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite/job/US-CA-Santa-Clara/Software-Engineer--DL-Kernel-Libraries---New-College-Grad-2027_JR2027337) |
-| **Tencent** | Data Science Intern | Palo Alto, CA | 1d ago | 10 | [Apply ↗](https://tencent.wd1.myworkdayjobs.com/Tencent_Careers/job/US-California-Palo-Alto/Data-Science-Intern_R108213) |
-| **TikTok** | Machine Learning Engineer Intern (Conversational AI) - 20… | Seattle, Washington, United… | 2d ago | 475 | [Apply ↗](https://lifeattiktok.com/search/7670689681491364101) |
+| **TikTok** | Frontend Software Engineer Intern (Ads Measurement Signal… | San Jose, California, Unite… | 3 min ago | 475 | [Apply ↗](https://lifeattiktok.com/search/7668584161852229893) |
+| **Snowflake** | AI Associate, Office of the CEO | US-CA-Menlo Park, United St… | 2h ago | 110 | [Apply ↗](https://jobs.ashbyhq.com/snowflake/88348d29-0ec4-475f-a54e-c6b247cbc6a8) |
+| **Western Digital** | Spring Co-op - Recording Electronics Data Analytics & Opt… | Rochester, MN, US | 4h ago | 56 | [Apply ↗](https://jobs.smartrecruiters.com/WesternDigital/744000155109379) |
+| **Microsoft** | Cloud Network Engineering Internship Oportunities | Redmond, Washington, United… | 7h ago | 2,066 | [Apply ↗](https://apply.careers.microsoft.com/careers/job/1970393557037856) |
+| **Duolingo** | AI Research Engineer, New PhD Graduate | New York, NY; Pittsburgh, PA | 8h ago | 5 | [Apply ↗](https://careers.duolingo.com/jobs/8881612002?gh_jid=8881612002) |
+| **Wolverine Trading** | Early Career C++ Software Engineer | Chicago, IL | 10h ago | 1 | [Apply ↗](https://wolve.pinpointhq.com/en/postings/4b0e86a1-db36-4490-9a98-17782ffcc648?ats=pinpointhq) |
+| **Google** | Forward Deployed Engineer Intern | NYC · Sunnyvale, CA | 10h ago | 2,460 | [Apply ↗](https://www.google.com/about/careers/applications/jobs/results/75665705386549958) |
+| **Tower Research Capital** | Venture Capital Intern | NYC | 10h ago | 9 | [Apply ↗](https://www.tower-research.com/open-positions/?gh_jid=7368106) |
+| **Pearson** | Data Analyst - Measurement | Remote in USA | 23h ago | 11 | [Apply ↗](https://hccz.fa.em3.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_2/job/26228) |
+| **Aderant** | Associate Software Engineer | Atlanta, GA | 1d ago | 1 | [Apply ↗](https://aderant.wd5.myworkdayjobs.com/Aderant_External_Careers/job/Atlanta-Georgia/Associate-Software-Engineer_REQ_100000484) |
+| **C&S Wholesale Grocers** | IS Intern - Data Analytics & Data Science | Edison, NJ | 2d ago | 5 | [Apply ↗](https://cswg.wd1.myworkdayjobs.com/cs_careers/job/Edison-NJ/IS-Internship---Data-Analytics---Data-Science_R-268963) |
+| **NVIDIA** | Software Engineer New Grad - DL Kernel Libraries | Santa Clara, CA | 2d ago | 394 | [Apply ↗](https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite/job/US-CA-Santa-Clara/Software-Engineer--DL-Kernel-Libraries---New-College-Grad-2027_JR2027337) |
+| **Tencent** | Data Science Intern | Palo Alto, CA | 2d ago | 10 | [Apply ↗](https://tencent.wd1.myworkdayjobs.com/Tencent_Careers/job/US-California-Palo-Alto/Data-Science-Intern_R108213) |
 | **DocuSign** | Software Engineer Intern | Seattle, WA | 2d ago | 71 | [Apply ↗](https://careers.docusign.com/jobs/30499?icims=1) |
-| **Arizona State University** | Student Web Developer & Content Specialist Intern | Tempe, AZ | 2d ago | 58 | [Apply ↗](https://asuep.wd5.myworkdayjobs.com/ASUEP/job/Tempe-AZ/Student-Web-Developer---Content-Specialist_R1546) |
-| **Boston Consulting Group** | Talent Acquisition Assistant - Analytics | Seattle, WA | 2d ago | 108 | [Apply ↗](https://careers.bcg.com/global/en/job/60105) |
-| **Arcesium** | Software Engineer Intern | New York City, NY | 2d ago | 2 | [Apply ↗](https://job-boards.greenhouse.io/arcesiumllc/jobs/5257176007) |
-| **Faire** | Applied AI/ML Scientist Intern | SF | 2d ago | 7 | [Apply ↗](https://boards.greenhouse.io/faire/jobs/8870975002) |
-| **Lennox International** | Business Compliance Intern | Richardson, TX | 2d ago | 14 | [Apply ↗](https://uscareers-lennox.icims.com/jobs/55590/job?mobile=true&needsRedirect=false) |
-| **Meta** | Research Scientist Intern - Spatial Audio Capture and Rep… | Redmond, WA | 2d ago | 1,540 | [Apply ↗](https://www.metacareers.com/jobs/1674394627579563) |
-| **PointClickCare** | Marketing Data Analytics Engineer | Remote in USA | 2d ago | 9 | [Apply ↗](https://jobs.lever.co/pointclickcare/96d77b19-2396-4f9e-9513-59471b3e28ed/apply) |
-| **Stifel** | Developer – Credit Analytics | St. Louis, MO | 2d ago | 3 | [Apply ↗](https://careers-stifel.icims.com/jobs/10047/job?mobile=true&needsRedirect=false) |
-| **SageSure** | Software Product Management Intern | Chicago, IL +3 | 2d ago | 1 | [Apply ↗](https://www.sagesure.com/careers/current-job-openings/?gh_jid=4719520006) |
+| **Arizona State University** | Student Web Developer & Content Specialist Intern | Tempe, AZ | 3d ago | 58 | [Apply ↗](https://asuep.wd5.myworkdayjobs.com/ASUEP/job/Tempe-AZ/Student-Web-Developer---Content-Specialist_R1546) |
 
 <!-- LIVE:END -->
 
