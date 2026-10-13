@@ -26,40 +26,40 @@ This section is rewritten by the portal itself after every hourly refresh.
 
 <!-- LIVE:START (auto-generated, do not edit by hand) -->
 
-**Last updated: Oct 13, 2026 at 8:54 AM EDT** · refreshed automatically every hour
+**Last updated: Oct 13, 2026 at 3:31 PM EDT** · refreshed automatically every hour
 
 | Right now in the portal | |
 |---|---|
-| 🇺🇸 United States | **64,544** |
-| 🇮🇳 India | **9,572** |
-| 🌍 Other countries | **13,478** |
-| 🎓 University jobs | **3,643** |
-| 🆕 Posted in the last 24 hours | **503** |
-| ✅ US jobs at employers with H-1B history | **50,726 (79%)** |
-| 💻 Software Engineering | **16,941** |
-| 📊 Data Science & ML | **10,030** |
-| 🏦 Finance & Banks | **48,863** |
+| 🇺🇸 United States | **66,277** |
+| 🇮🇳 India | **9,923** |
+| 🌍 Other countries | **13,978** |
+| 🎓 University jobs | **3,709** |
+| 🆕 Posted in the last 24 hours | **2,662** |
+| ✅ US jobs at employers with H-1B history | **52,046 (79%)** |
+| 💻 Software Engineering | **17,467** |
+| 📊 Data Science & ML | **10,348** |
+| 🏦 Finance & Banks | **50,346** |
 | 🔌 Sources | **13 GitHub lists · 207 company career sites · 12 universities · LinkedIn (Apify)** |
 
 **Freshest early-career tech & data roles at employers with H-1B history**
 
 | Company | Role | Location | Posted | H-1B approvals (FY23) | |
 |---|---|---|---|---|---|
-| **Experian** | Associate Machine Learning Scientist | Sofia, BG | 6h ago | 36 | [Apply ↗](https://jobs.smartrecruiters.com/Experian/744000155170869) |
-| **Western Digital** | Junior IT Developer | Bayan Lepas, Penang, MY | 11h ago | 56 | [Apply ↗](https://jobs.smartrecruiters.com/WesternDigital/744000155153462) |
-| **TikTok** | Research Scientist Graduate | Seattle, WA | 11h ago | 475 | [Apply ↗](https://lifeattiktok.com/search/7695929967028750645) |
-| **Meta** | Research Scientist Intern - Language and Agents | Menlo Park, CA · Bellevue,… | 11h ago | 1,540 | [Apply ↗](https://www.metacareers.com/jobs/2168438160696161) |
-| **Chewy** | Business Intelligence Analyst 1 | Dayton, OH · Houston, TX ·… | 12h ago | 90 | [Apply ↗](https://wd5.myworkdaysite.com/recruiting/chewy/External/job/Clayton-IN/Business-Intelligence-Analyst-I_R31111) |
-| **General Dynamics Informatio…** | Software Developer Intern - Defense Agencies - Software D… | Falls Church, VA | 12h ago | 12 | [Apply ↗](https://gdit.wd5.myworkdayjobs.com/gdit_earlytalent/job/USA-VA-Falls-Church/XMLNAME-2027-Summer-Intern---Defense-Agencies--SW-DEV-_RQ230270) |
-| **Siemens** | Sales and Service Web Development Intern - Gscs | Mason, OH | 14h ago | 6 | [Apply ↗](https://siemens.avature.net/en_US/externaljobs/JobDetail/525502) |
-| **Momentum Engineering** | Software Engineer 0 | Annapolis Junction, MD | 14h ago | 1 | [Apply ↗](https://ats.rippling.com/momentumcareers/jobs/dbcd3c46-e2fa-4d75-8da1-ac8d15d3771e) |
-| **Ascension** | Master Data Management Intern | St. Louis, MO | 14h ago | 22 | [Apply ↗](https://jobs.ascension.org/us/en/job/2026-465180) |
-| **Brillio** | Full Stack AI Engineer | Coppell, TX | 14h ago | 142 | [Apply ↗](https://jobs.lever.co/brillio-2/3de75f8b-9ddc-4908-b67d-d6e91bafd9e2/apply) |
-| **Databricks** | Software Engineer Intern | SF · Bellevue, WA · Mountai… | 14h ago | 78 | [Apply ↗](https://boards.greenhouse.io/embed/job_app?token=6865687002) |
-| **Electronic Arts** | Data and AI Engineer Intern | Austin, TX | 14h ago | 33 | [Apply ↗](https://jobs.ea.com/en_US/careers/JobDetail/Data-AI-Engineering-Intern-Summer-2027/216238) |
-| **MEMX** | Data Engineer Intern | NYC | 14h ago | 1 | [Apply ↗](https://job-boards.greenhouse.io/memx/jobs/5450442008) |
-| **Keysight Technologies** | Test Engineering Intern Tech 3 | Santa Clara, CA | 14h ago | 26 | [Apply ↗](https://jobs.keysight.com/jobs/54786?icims=1) |
-| **STR** | Associate Embedded Systems Emulation Engineer | Woburn, MA | 14h ago | 1 | [Apply ↗](https://job-boards.greenhouse.io/systemstechnologyresearch/jobs/4721162006) |
+| **Microsoft** | Research Intern - Machine Learning for Biology and Health… | Cambridge, Massachusetts, U… | 32 min ago | 2,066 | [Apply ↗](https://apply.careers.microsoft.com/careers/job/1970393557040333) |
+| **Skydio** | Embedded Software Engineer Intern - Summer 2027 | San Mateo, California, Unit… | 1h ago | 13 | [Apply ↗](https://jobs.ashbyhq.com/skydio/8994767e-fd53-4ca2-b0ef-fe0923c1e260) |
+| **Figma** | PhD Intern, Software Engineer - Graphics (2027) | San Francisco, CA • New Yor… | 3h ago | 10 | [Apply ↗](https://boards.greenhouse.io/figma/jobs/6219995004?gh_jid=6219995004) |
+| **Axtria** | AI & Data Associate | Berkeley Heights, NJ | 5h ago | 74 | [Apply ↗](https://axtriainc.applytojob.com/apply/WvWFVnBuU0/Campus-2027-AI-Data) |
+| **Vertiv** | Data Analytics Intern | Delaware, OH | 5h ago | 4 | [Apply ↗](https://egup.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX/job/20278852) |
+| **Vestmark** | Software Engineer Co-op | Boston, MA | 5h ago | 1 | [Apply ↗](https://job-boards.greenhouse.io/vestmark/jobs/8204509) |
+| **Experian** | Associate Machine Learning Scientist | Sofia, BG | 12h ago | 36 | [Apply ↗](https://jobs.smartrecruiters.com/Experian/744000155170869) |
+| **Western Digital** | Junior IT Developer | Bayan Lepas, Penang, MY | 18h ago | 56 | [Apply ↗](https://jobs.smartrecruiters.com/WesternDigital/744000155153462) |
+| **TikTok** | Research Scientist Graduate | Seattle, WA | 18h ago | 475 | [Apply ↗](https://lifeattiktok.com/search/7695929967028750645) |
+| **Meta** | Research Scientist Intern - Language and Agents | Menlo Park, CA · Bellevue,… | 18h ago | 1,540 | [Apply ↗](https://www.metacareers.com/jobs/2168438160696161) |
+| **Chewy** | Business Intelligence Analyst 1 | Dayton, OH · Houston, TX ·… | 19h ago | 90 | [Apply ↗](https://wd5.myworkdaysite.com/recruiting/chewy/External/job/Clayton-IN/Business-Intelligence-Analyst-I_R31111) |
+| **General Dynamics Informatio…** | Software Developer Intern - Defense Agencies - Software D… | Falls Church, VA | 19h ago | 12 | [Apply ↗](https://gdit.wd5.myworkdayjobs.com/gdit_earlytalent/job/USA-VA-Falls-Church/XMLNAME-2027-Summer-Intern---Defense-Agencies--SW-DEV-_RQ230270) |
+| **Siemens** | Sales and Service Web Development Intern - Gscs | Mason, OH | 21h ago | 6 | [Apply ↗](https://siemens.avature.net/en_US/externaljobs/JobDetail/525502) |
+| **Momentum Engineering** | Software Engineer 0 | Annapolis Junction, MD | 21h ago | 1 | [Apply ↗](https://ats.rippling.com/momentumcareers/jobs/dbcd3c46-e2fa-4d75-8da1-ac8d15d3771e) |
+| **Ascension** | Master Data Management Intern | St. Louis, MO | 21h ago | 22 | [Apply ↗](https://jobs.ascension.org/us/en/job/2026-465180) |
 
 <!-- LIVE:END -->
 
