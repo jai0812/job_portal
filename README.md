@@ -26,40 +26,40 @@ This section is rewritten by the portal itself after every hourly refresh.
 
 <!-- LIVE:START (auto-generated, do not edit by hand) -->
 
-**Last updated: Oct 14, 2026 at 7:57 AM EDT** · refreshed automatically every hour
+**Last updated: Oct 14, 2026 at 5:06 PM EDT** · refreshed automatically every hour
 
 | Right now in the portal | |
 |---|---|
-| 🇺🇸 United States | **67,986** |
-| 🇮🇳 India | **10,045** |
-| 🌍 Other countries | **14,233** |
-| 🎓 University jobs | **3,750** |
-| 🆕 Posted in the last 24 hours | **717** |
-| ✅ US jobs at employers with H-1B history | **53,312 (78%)** |
-| 💻 Software Engineering | **17,896** |
-| 📊 Data Science & ML | **10,638** |
-| 🏦 Finance & Banks | **51,365** |
+| 🇺🇸 United States | **70,198** |
+| 🇮🇳 India | **10,340** |
+| 🌍 Other countries | **14,639** |
+| 🎓 University jobs | **3,834** |
+| 🆕 Posted in the last 24 hours | **2,935** |
+| ✅ US jobs at employers with H-1B history | **55,034 (78%)** |
+| 💻 Software Engineering | **18,466** |
+| 📊 Data Science & ML | **10,941** |
+| 🏦 Finance & Banks | **53,186** |
 | 🔌 Sources | **13 GitHub lists · 207 company career sites · 12 universities · LinkedIn (Apify)** |
 
 **Freshest early-career tech & data roles at employers with H-1B history**
 
 | Company | Role | Location | Posted | H-1B approvals (FY23) | |
 |---|---|---|---|---|---|
-| **Cloudflare** | Infrastructure Business Operations Associate | Hybrid | 1h ago | 30 | [Apply ↗](https://boards.greenhouse.io/cloudflare/jobs/8278383?gh_jid=8278383) |
-| **TikTok** | Machine Learning Engineer Intern - E-Commerce User Growth | Seattle, WA | 10h ago | 475 | [Apply ↗](https://lifeattiktok.com/search/7694357619162532149) |
-| **Brain Co.** | Machine Learning Engineer – Applied AI Co-op Intern | SF | 10h ago | 4 | [Apply ↗](https://jobs.ashbyhq.com/brainco/b6adda4c-490c-4e9e-8354-e55c05d3c6ac/application?embed=true) |
-| **Phillips 66** | University Intern - ERI Analytical Solutions | Bartlesville, OK | 10h ago | 4 | [Apply ↗](https://careers.phillips66.com/job/Bartlesville-West-2027-University-Intern-ERI-Analytical-Solutions-OK-74004/1439555700/?ats=successfactors) |
-| **Groma** | Finance Systems Co-op | Boston, MA | 10h ago | 1 | [Apply ↗](https://job-boards.greenhouse.io/groma/jobs/4743496005) |
-| **Jabil** | AI and Data Solutions Developer - Global Supply Chain | Tampa, FL · St. Petersburg,… | 11h ago | 20 | [Apply ↗](https://jabil.wd5.myworkdayjobs.com/Jabil_Careers/job/St-PetersburgTampa-FL/AI-Solutions-Developer-Global-Supply-Chain_J2467953) |
-| **Microsoft** | Research Intern - Machine Learning and Statistics | Cambridge, MA · Redmond, WA | 12h ago | 2,066 | [Apply ↗](https://apply.careers.microsoft.com/careers/job/1970393557040502) |
-| **Boston Scientific** | Data Scientist - Data Science & Business Intelligence | Arden Hills, MN | 13h ago | 46 | [Apply ↗](https://bostonscientific.eightfold.ai/careers/job/563602813769140) |
-| **Boston Consulting Group** | Forward Deployed AI Scientist Intern | Boston, MA · LA · Chicago,… | 13h ago | 108 | [Apply ↗](https://careers.bcg.com/global/en/job/59703) |
-| **TMEIC Corporation Americas** | Associate Software Developer - AI | Houston, TX | 13h ago | 3 | [Apply ↗](https://apply.workable.com/tmeic-corporation-americas/j/C4B8B72648/apply) |
-| **Skydio** | Embedded Software Engineer Intern | San Mateo, CA | 13h ago | 13 | [Apply ↗](https://jobs.ashbyhq.com/skydio/8994767e-fd53-4ca2-b0ef-fe0923c1e260/application?embed=true) |
-| **Figure** | Data Quality Analyst | San Jose, CA | 13h ago | 1 | [Apply ↗](https://job-boards.greenhouse.io/figureai/jobs/4590702006) |
-| **Figma** | PhD Intern - Software Engineer - Graphics | SF · NYC | 13h ago | 10 | [Apply ↗](https://boards.greenhouse.io/figma/jobs/6219995004) |
-| **Netflix** | Software Engineer Intern | LA · Los Gatos, CA | 13h ago | 84 | [Apply ↗](https://explore.jobs.netflix.net/careers/job/790318904468) |
-| **Medpace** | Python Developer Intern | Cincinnati, OH | 13h ago | 6 | [Apply ↗](https://careers.medpace.com/jobs/13059?icims=1) |
+| **TikTok** | Generative AI Researcher Intern (Intelligent Creation-Vis… | San Jose, California, Unite… | 20 min ago | 475 | [Apply ↗](https://lifeattiktok.com/search/7668183035989281029) |
+| **Experian** | Especialista de Desenvolvimento de Software I | Blumenau, SC, BR | 2h ago | 36 | [Apply ↗](https://jobs.smartrecruiters.com/Experian/744000155588769) |
+| **Skydio** | Manufacturing Software Engineer Intern - Winter 2027 | San Mateo, California, Unit… | 3h ago | 13 | [Apply ↗](https://jobs.ashbyhq.com/skydio/ffc665c1-2aa6-4c2f-b04b-93a6fb7b5feb) |
+| **Twitch** | Software Engineer I | San Francisco, CA | 4h ago | 26 | [Apply ↗](https://job-boards.greenhouse.io/twitch/jobs/8887222002) |
+| **Axtria** | Decision Intelligence Analyst | Berkeley Heights, NJ | 6h ago | 74 | [Apply ↗](https://axtriainc.applytojob.com/apply/pw4tXgyRFb/Campus-2027-Decision-Intelligence-DI-Analyst) |
+| **Point72** | Data Scientist Intern | NYC | 6h ago | 21 | [Apply ↗](https://boards.greenhouse.io/point72/jobs/8885299002) |
+| **Cloudflare** | Infrastructure Business Operations Associate | Hybrid | 10h ago | 30 | [Apply ↗](https://boards.greenhouse.io/cloudflare/jobs/8278383?gh_jid=8278383) |
+| **Brain Co.** | Machine Learning Engineer – Applied AI Co-op Intern | SF | 19h ago | 4 | [Apply ↗](https://jobs.ashbyhq.com/brainco/b6adda4c-490c-4e9e-8354-e55c05d3c6ac/application?embed=true) |
+| **Phillips 66** | University Intern - ERI Analytical Solutions | Bartlesville, OK | 19h ago | 4 | [Apply ↗](https://careers.phillips66.com/job/Bartlesville-West-2027-University-Intern-ERI-Analytical-Solutions-OK-74004/1439555700/?ats=successfactors) |
+| **Groma** | Finance Systems Co-op | Boston, MA | 19h ago | 1 | [Apply ↗](https://job-boards.greenhouse.io/groma/jobs/4743496005) |
+| **Jabil** | AI and Data Solutions Developer - Global Supply Chain | Tampa, FL · St. Petersburg,… | 21h ago | 20 | [Apply ↗](https://jabil.wd5.myworkdayjobs.com/Jabil_Careers/job/St-PetersburgTampa-FL/AI-Solutions-Developer-Global-Supply-Chain_J2467953) |
+| **Parsons** | Software Engineer Intern | Huntsville, AL | 21h ago | 17 | [Apply ↗](https://parsons.wd5.myworkdayjobs.com/en-US/search/job/US---AL-Huntsville/Software-Engineering-Intern--Summer-2027-_R187299) |
+| **J.M. Smucker** | Net Revenue Optimization Intern | Orrville, OH | 21h ago | 3 | [Apply ↗](https://smucker.wd5.myworkdayjobs.com/US_External_Careers/job/Orrville-OH/Net-Revenue-Optimization-Intern--Summer-2027_116006) |
+| **Microsoft** | Research Intern - Machine Learning and Statistics | Cambridge, MA +1 | 21h ago | 2,066 | [Apply ↗](https://apply.careers.microsoft.com/careers/job/1970393557040502) |
+| **Boston Scientific** | Data Scientist - Data Science & Business Intelligence | Arden Hills, MN | 22h ago | 46 | [Apply ↗](https://bostonscientific.eightfold.ai/careers/job/563602813769140) |
 
 <!-- LIVE:END -->
 
