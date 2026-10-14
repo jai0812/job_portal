@@ -26,40 +26,40 @@ This section is rewritten by the portal itself after every hourly refresh.
 
 <!-- LIVE:START (auto-generated, do not edit by hand) -->
 
-**Last updated: Oct 13, 2026 at 11:15 PM EDT** · refreshed automatically every hour
+**Last updated: Oct 14, 2026 at 7:57 AM EDT** · refreshed automatically every hour
 
 | Right now in the portal | |
 |---|---|
-| 🇺🇸 United States | **67,502** |
-| 🇮🇳 India | **9,935** |
-| 🌍 Other countries | **14,159** |
-| 🎓 University jobs | **3,753** |
-| 🆕 Posted in the last 24 hours | **3,684** |
-| ✅ US jobs at employers with H-1B history | **52,952 (78%)** |
-| 💻 Software Engineering | **17,805** |
-| 📊 Data Science & ML | **10,569** |
-| 🏦 Finance & Banks | **50,951** |
+| 🇺🇸 United States | **67,986** |
+| 🇮🇳 India | **10,045** |
+| 🌍 Other countries | **14,233** |
+| 🎓 University jobs | **3,750** |
+| 🆕 Posted in the last 24 hours | **717** |
+| ✅ US jobs at employers with H-1B history | **53,312 (78%)** |
+| 💻 Software Engineering | **17,896** |
+| 📊 Data Science & ML | **10,638** |
+| 🏦 Finance & Banks | **51,365** |
 | 🔌 Sources | **13 GitHub lists · 207 company career sites · 12 universities · LinkedIn (Apify)** |
 
 **Freshest early-career tech & data roles at employers with H-1B history**
 
 | Company | Role | Location | Posted | H-1B approvals (FY23) | |
 |---|---|---|---|---|---|
-| **TikTok** | Machine Learning Engineer Intern - E-Commerce User Growth | Seattle, WA | 1h ago | 475 | [Apply ↗](https://lifeattiktok.com/search/7694357619162532149) |
-| **Brain Co.** | Machine Learning Engineer – Applied AI Co-op Intern | SF | 1h ago | 4 | [Apply ↗](https://jobs.ashbyhq.com/brainco/b6adda4c-490c-4e9e-8354-e55c05d3c6ac/application?embed=true) |
-| **Phillips 66** | University Intern - ERI Analytical Solutions | Bartlesville, OK | 1h ago | 4 | [Apply ↗](https://careers.phillips66.com/job/Bartlesville-West-2027-University-Intern-ERI-Analytical-Solutions-OK-74004/1439555700/?ats=successfactors) |
-| **Groma** | Finance Systems Co-op | Boston, MA | 2h ago | 1 | [Apply ↗](https://job-boards.greenhouse.io/groma/jobs/4743496005) |
-| **Microsoft** | Research Intern - Machine Learning and Statistics | Cambridge, Massachusetts, U… | 3h ago | 2,066 | [Apply ↗](https://apply.careers.microsoft.com/careers/job/1970393557040502) |
-| **Boston Scientific** | Data Scientist - Data Science & Business Intelligence | Arden Hills, MN | 4h ago | 46 | [Apply ↗](https://bostonscientific.eightfold.ai/careers/job/563602813769140) |
-| **Boston Consulting Group** | Forward Deployed AI Scientist Intern | Boston, MA · LA · Chicago,… | 4h ago | 108 | [Apply ↗](https://careers.bcg.com/global/en/job/59703) |
-| **TMEIC Corporation Americas** | Associate Software Developer - AI | Houston, TX | 4h ago | 3 | [Apply ↗](https://apply.workable.com/tmeic-corporation-americas/j/C4B8B72648/apply) |
-| **Skydio** | Embedded Software Engineer Intern | San Mateo, CA | 4h ago | 13 | [Apply ↗](https://jobs.ashbyhq.com/skydio/8994767e-fd53-4ca2-b0ef-fe0923c1e260/application?embed=true) |
-| **Figure** | Data Quality Analyst | San Jose, CA | 4h ago | 1 | [Apply ↗](https://job-boards.greenhouse.io/figureai/jobs/4590702006) |
-| **Figma** | PhD Intern - Software Engineer - Graphics | SF · NYC | 4h ago | 10 | [Apply ↗](https://boards.greenhouse.io/figma/jobs/6219995004) |
-| **Netflix** | Software Engineer Intern | LA · Los Gatos, CA | 5h ago | 84 | [Apply ↗](https://explore.jobs.netflix.net/careers/job/790318904468) |
-| **Medpace** | Python Developer Intern | Cincinnati, OH | 5h ago | 6 | [Apply ↗](https://careers.medpace.com/jobs/13059?icims=1) |
-| **Rhombus** | Software Engineer Intern | Sacramento, CA | 5h ago | 1 | [Apply ↗](https://jobs.lever.co/rhombus-systems/59e7a5f3-b457-491d-af08-b629ad35e380/apply) |
-| **Bose** | Embedded Audio Machine Learning Engineer Co-op | Framingham, MA | 5h ago | 19 | [Apply ↗](https://boseallaboutme.wd503.myworkdayjobs.com/Bose_Careers/job/US-MA---Framingham/Audio-Machine-Learning-Engineer-Co-op_R28719) |
+| **Cloudflare** | Infrastructure Business Operations Associate | Hybrid | 1h ago | 30 | [Apply ↗](https://boards.greenhouse.io/cloudflare/jobs/8278383?gh_jid=8278383) |
+| **TikTok** | Machine Learning Engineer Intern - E-Commerce User Growth | Seattle, WA | 10h ago | 475 | [Apply ↗](https://lifeattiktok.com/search/7694357619162532149) |
+| **Brain Co.** | Machine Learning Engineer – Applied AI Co-op Intern | SF | 10h ago | 4 | [Apply ↗](https://jobs.ashbyhq.com/brainco/b6adda4c-490c-4e9e-8354-e55c05d3c6ac/application?embed=true) |
+| **Phillips 66** | University Intern - ERI Analytical Solutions | Bartlesville, OK | 10h ago | 4 | [Apply ↗](https://careers.phillips66.com/job/Bartlesville-West-2027-University-Intern-ERI-Analytical-Solutions-OK-74004/1439555700/?ats=successfactors) |
+| **Groma** | Finance Systems Co-op | Boston, MA | 10h ago | 1 | [Apply ↗](https://job-boards.greenhouse.io/groma/jobs/4743496005) |
+| **Jabil** | AI and Data Solutions Developer - Global Supply Chain | Tampa, FL · St. Petersburg,… | 11h ago | 20 | [Apply ↗](https://jabil.wd5.myworkdayjobs.com/Jabil_Careers/job/St-PetersburgTampa-FL/AI-Solutions-Developer-Global-Supply-Chain_J2467953) |
+| **Microsoft** | Research Intern - Machine Learning and Statistics | Cambridge, MA · Redmond, WA | 12h ago | 2,066 | [Apply ↗](https://apply.careers.microsoft.com/careers/job/1970393557040502) |
+| **Boston Scientific** | Data Scientist - Data Science & Business Intelligence | Arden Hills, MN | 13h ago | 46 | [Apply ↗](https://bostonscientific.eightfold.ai/careers/job/563602813769140) |
+| **Boston Consulting Group** | Forward Deployed AI Scientist Intern | Boston, MA · LA · Chicago,… | 13h ago | 108 | [Apply ↗](https://careers.bcg.com/global/en/job/59703) |
+| **TMEIC Corporation Americas** | Associate Software Developer - AI | Houston, TX | 13h ago | 3 | [Apply ↗](https://apply.workable.com/tmeic-corporation-americas/j/C4B8B72648/apply) |
+| **Skydio** | Embedded Software Engineer Intern | San Mateo, CA | 13h ago | 13 | [Apply ↗](https://jobs.ashbyhq.com/skydio/8994767e-fd53-4ca2-b0ef-fe0923c1e260/application?embed=true) |
+| **Figure** | Data Quality Analyst | San Jose, CA | 13h ago | 1 | [Apply ↗](https://job-boards.greenhouse.io/figureai/jobs/4590702006) |
+| **Figma** | PhD Intern - Software Engineer - Graphics | SF · NYC | 13h ago | 10 | [Apply ↗](https://boards.greenhouse.io/figma/jobs/6219995004) |
+| **Netflix** | Software Engineer Intern | LA · Los Gatos, CA | 13h ago | 84 | [Apply ↗](https://explore.jobs.netflix.net/careers/job/790318904468) |
+| **Medpace** | Python Developer Intern | Cincinnati, OH | 13h ago | 6 | [Apply ↗](https://careers.medpace.com/jobs/13059?icims=1) |
 
 <!-- LIVE:END -->
 
