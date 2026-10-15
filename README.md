@@ -26,40 +26,40 @@ This section is rewritten by the portal itself after every hourly refresh.
 
 <!-- LIVE:START (auto-generated, do not edit by hand) -->
 
-**Last updated: Oct 15, 2026 at 9:14 AM EDT** · refreshed automatically every hour
+**Last updated: Oct 15, 2026 at 3:24 PM EDT** · refreshed automatically every hour
 
 | Right now in the portal | |
 |---|---|
-| 🇺🇸 United States | **70,871** |
-| 🇮🇳 India | **10,189** |
-| 🌍 Other countries | **14,759** |
-| 🎓 University jobs | **3,838** |
-| 🆕 Posted in the last 24 hours | **598** |
-| ✅ US jobs at employers with H-1B history | **55,382 (78%)** |
-| 💻 Software Engineering | **18,590** |
-| 📊 Data Science & ML | **10,987** |
-| 🏦 Finance & Banks | **53,361** |
+| 🇺🇸 United States | **72,199** |
+| 🇮🇳 India | **10,477** |
+| 🌍 Other countries | **15,108** |
+| 🎓 University jobs | **3,887** |
+| 🆕 Posted in the last 24 hours | **2,258** |
+| ✅ US jobs at employers with H-1B history | **56,410 (78%)** |
+| 💻 Software Engineering | **18,977** |
+| 📊 Data Science & ML | **11,162** |
+| 🏦 Finance & Banks | **54,598** |
 | 🔌 Sources | **13 GitHub lists · 207 company career sites · 12 universities · LinkedIn (Apify)** |
 
 **Freshest early-career tech & data roles at employers with H-1B history**
 
 | Company | Role | Location | Posted | H-1B approvals (FY23) | |
 |---|---|---|---|---|---|
-| **TikTok** | Research Engineer Intern - Video and Edge - Multimedia Lab | San Diego, CA | 11h ago | 475 | [Apply ↗](https://lifeattiktok.com/search/7696664743112788277) |
-| **Cvent** | Software Engineer 1 | Tysons, VA | 14h ago | 14 | [Apply ↗](https://careers.cvent.com/jobs/8265?icims=1) |
-| **JP Morgan Chase** | AI Research Associate Program Intern | NYC | 14h ago | 1,525 | [Apply ↗](https://jpmc.fa.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001/job/210800354) |
-| **AGCO** | AI & Data Science Intern | Champaign, IL | 14h ago | 9 | [Apply ↗](https://careers.agcocorp.com/job/Champaign-AI-&-Data-Science-Intern-Spring-2027-IL/1440146300/?ats=successfactors) |
-| **Figure** | Embedded Software Engineer Intern - Platform | San Jose, CA | 14h ago | 1 | [Apply ↗](https://job-boards.greenhouse.io/figureai/jobs/4722086006) |
-| **Qualcomm** | Compiler Toolchain Engineer - Compiler Toolchain Software | Austin, TX | 14h ago | 22 | [Apply ↗](https://qualcomm.eightfold.ai/careers/job/446721572291) |
-| **Meta** | Computer Vision Engineer Intern - Advanced Manufacturing… | Sunnyvale, CA | 14h ago | 1,540 | [Apply ↗](https://www.metacareers.com/jobs/1758435721926913) |
-| **Analog Devices** | Associate Software Engineer | Wilmington, MA | 14h ago | 41 | [Apply ↗](https://analogdevices.wd1.myworkdayjobs.com/External/job/US-MA-Wilmington/Android-Mobile-Developer_R262556) |
-| **National Life** | Data Science Intern | Montpelier, VT · Addison, TX | 14h ago | 1 | [Apply ↗](https://job-boards.greenhouse.io/nationallifeinsurancecompany/jobs/4449670009) |
-| **CLEAR** | Software Development Engineer 1 | Austin, TX | 14h ago | 14 | [Apply ↗](https://job-boards.greenhouse.io/clear/jobs/8241829) |
-| **AECOM** | Engineering/Data Analytics Intern | Atlanta, GA | 14h ago | 74 | [Apply ↗](https://jobs.smartrecruiters.com/AECOM2/744000155565444) |
-| **Keysight Technologies** | R&D Software Engineer - Electronic Measurement Systems | Colorado Springs, CO | 14h ago | 26 | [Apply ↗](https://jobs.keysight.com/jobs/55077?icims=1) |
-| **Truveta** | Software Engineer - Security & Trust | Seattle, WA | 15h ago | 8 | [Apply ↗](https://job-boards.greenhouse.io/truveta/jobs/6224827004) |
-| **Businessolver** | Business Intelligence Analyst Intern - Innovation & Data… | Remote in USA | 15h ago | 1 | [Apply ↗](https://www.businessolver.com/careers/openings/?gh_jid=8281727) |
-| **Skydio** | Software Engineer Intern | San Mateo, CA | 15h ago | 13 | [Apply ↗](https://jobs.ashbyhq.com/skydio/79fdda46-4ff5-42c7-b208-55f2084cdb8c/application?embed=true) |
+| **Airbnb** | Strategic Finance & Analytics Intern | United States | 4h ago | 71 | [Apply ↗](https://careers.airbnb.com/positions/8285171?gh_jid=8285171) |
+| **Deloitte** | Audit & Assurance Intern - AI and Data Science | LA | 4h ago | 2 | [Apply ↗](https://apply.deloitte.com/en_US/careers/JobDetail/Audit-Assurance-Intern-AI-and-Data-Science-Winter-2027/361857) |
+| **Palantir** | Meritocracy Fellow | NYC | 4h ago | 24 | [Apply ↗](https://jobs.lever.co/palantir/7fa0ceca-c30e-48de-9b27-f98469c374f3/apply) |
+| **TikTok** | Backend Engineer Graduate - Social Foundation | San Jose, CA | 9h ago | 475 | [Apply ↗](https://lifeattiktok.com/search/7696782198126545157) |
+| **Symbotic** | Robot Manipulation Co-op | Wilmington, MA | 19h ago | 18 | [Apply ↗](https://symbotic.wd504.myworkdayjobs.com/Symbotic/job/USA-Wilmington--MA---HQ/Co-op--Robot-Manipulation_R8257) |
+| **Autodesk** | PhD Researcher Intern - Agentic 3D Modeling in Immersive… | Boston, MA · NYC | 19h ago | 108 | [Apply ↗](https://autodesk.wd1.myworkdayjobs.com/uni/job/New-York-USA---Remote/PhD-Researcher--Agentic-3D-Modeling-in-Immersive-Environments_26WD101374) |
+| **Western Alliance** | Engineer 1 | Dallas, TX · Phoenix, AZ | 19h ago | 40 | [Apply ↗](https://wd5.myworkdaysite.com/recruiting/westernalliancebank/WAB/job/Dallas-TX/Engineer-I_R14052) |
+| **Cvent** | Software Engineer 1 | Tysons, VA | 20h ago | 14 | [Apply ↗](https://careers.cvent.com/jobs/8265?icims=1) |
+| **JPMorgan Chase** | 2027 AI Research Associate Program - Internship | New York, NY, United States | 20h ago | 1,525 | [Apply ↗](https://jpmc.fa.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001/job/210800354) |
+| **AGCO** | AI & Data Science Intern | Champaign, IL | 20h ago | 9 | [Apply ↗](https://careers.agcocorp.com/job/Champaign-AI-&-Data-Science-Intern-Spring-2027-IL/1440146300/?ats=successfactors) |
+| **Figure** | Embedded Software Engineer Intern - Platform | San Jose, CA | 20h ago | 1 | [Apply ↗](https://job-boards.greenhouse.io/figureai/jobs/4722086006) |
+| **Qualcomm** | Compiler Toolchain Engineer - Compiler Toolchain Software | Austin, TX | 20h ago | 22 | [Apply ↗](https://qualcomm.eightfold.ai/careers/job/446721572291) |
+| **Meta** | Computer Vision Engineer Intern - Advanced Manufacturing… | Sunnyvale, CA | 20h ago | 1,540 | [Apply ↗](https://www.metacareers.com/jobs/1758435721926913) |
+| **Analog Devices** | Associate Software Engineer | Wilmington, MA | 20h ago | 41 | [Apply ↗](https://analogdevices.wd1.myworkdayjobs.com/External/job/US-MA-Wilmington/Android-Mobile-Developer_R262556) |
+| **National Life** | Data Science Intern | Montpelier, VT · Addison, TX | 20h ago | 1 | [Apply ↗](https://job-boards.greenhouse.io/nationallifeinsurancecompany/jobs/4449670009) |
 
 <!-- LIVE:END -->
 
