@@ -26,40 +26,40 @@ This section is rewritten by the portal itself after every hourly refresh.
 
 <!-- LIVE:START (auto-generated, do not edit by hand) -->
 
-**Last updated: Oct 15, 2026 at 3:24 PM EDT** · refreshed automatically every hour
+**Last updated: Oct 15, 2026 at 10:45 PM EDT** · refreshed automatically every hour
 
 | Right now in the portal | |
 |---|---|
-| 🇺🇸 United States | **72,199** |
-| 🇮🇳 India | **10,477** |
-| 🌍 Other countries | **15,108** |
-| 🎓 University jobs | **3,887** |
-| 🆕 Posted in the last 24 hours | **2,258** |
-| ✅ US jobs at employers with H-1B history | **56,410 (78%)** |
-| 💻 Software Engineering | **18,977** |
-| 📊 Data Science & ML | **11,162** |
-| 🏦 Finance & Banks | **54,598** |
+| 🇺🇸 United States | **73,536** |
+| 🇮🇳 India | **10,504** |
+| 🌍 Other countries | **15,269** |
+| 🎓 University jobs | **3,943** |
+| 🆕 Posted in the last 24 hours | **3,568** |
+| ✅ US jobs at employers with H-1B history | **57,376 (78%)** |
+| 💻 Software Engineering | **19,215** |
+| 📊 Data Science & ML | **11,307** |
+| 🏦 Finance & Banks | **55,446** |
 | 🔌 Sources | **13 GitHub lists · 207 company career sites · 12 universities · LinkedIn (Apify)** |
 
 **Freshest early-career tech & data roles at employers with H-1B history**
 
 | Company | Role | Location | Posted | H-1B approvals (FY23) | |
 |---|---|---|---|---|---|
-| **Airbnb** | Strategic Finance & Analytics Intern | United States | 4h ago | 71 | [Apply ↗](https://careers.airbnb.com/positions/8285171?gh_jid=8285171) |
-| **Deloitte** | Audit & Assurance Intern - AI and Data Science | LA | 4h ago | 2 | [Apply ↗](https://apply.deloitte.com/en_US/careers/JobDetail/Audit-Assurance-Intern-AI-and-Data-Science-Winter-2027/361857) |
-| **Palantir** | Meritocracy Fellow | NYC | 4h ago | 24 | [Apply ↗](https://jobs.lever.co/palantir/7fa0ceca-c30e-48de-9b27-f98469c374f3/apply) |
-| **TikTok** | Backend Engineer Graduate - Social Foundation | San Jose, CA | 9h ago | 475 | [Apply ↗](https://lifeattiktok.com/search/7696782198126545157) |
-| **Symbotic** | Robot Manipulation Co-op | Wilmington, MA | 19h ago | 18 | [Apply ↗](https://symbotic.wd504.myworkdayjobs.com/Symbotic/job/USA-Wilmington--MA---HQ/Co-op--Robot-Manipulation_R8257) |
-| **Autodesk** | PhD Researcher Intern - Agentic 3D Modeling in Immersive… | Boston, MA · NYC | 19h ago | 108 | [Apply ↗](https://autodesk.wd1.myworkdayjobs.com/uni/job/New-York-USA---Remote/PhD-Researcher--Agentic-3D-Modeling-in-Immersive-Environments_26WD101374) |
-| **Western Alliance** | Engineer 1 | Dallas, TX · Phoenix, AZ | 19h ago | 40 | [Apply ↗](https://wd5.myworkdaysite.com/recruiting/westernalliancebank/WAB/job/Dallas-TX/Engineer-I_R14052) |
-| **Cvent** | Software Engineer 1 | Tysons, VA | 20h ago | 14 | [Apply ↗](https://careers.cvent.com/jobs/8265?icims=1) |
-| **JPMorgan Chase** | 2027 AI Research Associate Program - Internship | New York, NY, United States | 20h ago | 1,525 | [Apply ↗](https://jpmc.fa.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001/job/210800354) |
-| **AGCO** | AI & Data Science Intern | Champaign, IL | 20h ago | 9 | [Apply ↗](https://careers.agcocorp.com/job/Champaign-AI-&-Data-Science-Intern-Spring-2027-IL/1440146300/?ats=successfactors) |
-| **Figure** | Embedded Software Engineer Intern - Platform | San Jose, CA | 20h ago | 1 | [Apply ↗](https://job-boards.greenhouse.io/figureai/jobs/4722086006) |
-| **Qualcomm** | Compiler Toolchain Engineer - Compiler Toolchain Software | Austin, TX | 20h ago | 22 | [Apply ↗](https://qualcomm.eightfold.ai/careers/job/446721572291) |
-| **Meta** | Computer Vision Engineer Intern - Advanced Manufacturing… | Sunnyvale, CA | 20h ago | 1,540 | [Apply ↗](https://www.metacareers.com/jobs/1758435721926913) |
-| **Analog Devices** | Associate Software Engineer | Wilmington, MA | 20h ago | 41 | [Apply ↗](https://analogdevices.wd1.myworkdayjobs.com/External/job/US-MA-Wilmington/Android-Mobile-Developer_R262556) |
-| **National Life** | Data Science Intern | Montpelier, VT · Addison, TX | 20h ago | 1 | [Apply ↗](https://job-boards.greenhouse.io/nationallifeinsurancecompany/jobs/4449670009) |
+| **TikTok** | Software Engineer Intern - Recommendation Performance Eff… | San Jose, CA | 1h ago | 475 | [Apply ↗](https://lifeattiktok.com/search/7673636206961641781) |
+| **Keysight Technologies** | R&D Software Engineer Intern | Santa Rosa, CA | 1h ago | 26 | [Apply ↗](https://jobs.keysight.com/jobs/54673?icims=1) |
+| **Apple** | SoC Machine Learning Software Engineer Intern | Sunnyvale, CA | 1h ago | 1,825 | [Apply ↗](https://jobs.apple.com/en-us/details/200689488) |
+| **Intuit** | Software Engineer 1 | Charlotte, NC · NYC · Mount… | 1h ago | 264 | [Apply ↗](https://jobs.intuit.com/job/mountain-view/software-engineer-1/27595/102012325536) |
+| **Abridge** | Member of Technical Staff Intern | SF | 1h ago | 5 | [Apply ↗](https://jobs.ashbyhq.com/abridge/aab11857-7ed3-4fc5-aab3-35256601117e/application?embed=true) |
+| **Microsoft** | Research Intern - Efficient AI Software Systems | Redmond, Washington, United… | 2h ago | 2,066 | [Apply ↗](https://apply.careers.microsoft.com/careers/job/1970393557041731) |
+| **Cisco** | Software Engineer | Milpitas, CA | 4h ago | 831 | [Apply ↗](https://cisco.wd5.myworkdayjobs.com/cisco_careers/job/Milpitas-California-US/Software-Engineer_2023271) |
+| **Royal Caribbean Group** | Guest Travel Services Intern | Miramar, FL | 4h ago | 6 | [Apply ↗](https://jobs.royalcaribbeangroup.com/job/Miramar-Intern,-Guest-Travel-Services-(Summer-2027)-FL-33132/1440504600/?ats=successfactors) |
+| **Duolingo** | Data Scientist Intern | Pittsburgh, PA · NYC | 4h ago | 5 | [Apply ↗](https://job-boards.greenhouse.io/duolingounirecruitment/jobs/8888785002) |
+| **Paccar** | Summer Intern - Product Definition Analytics | Renton, WA | 4h ago | 17 | [Apply ↗](https://jobs.paccar.com/job/Renton-Summer-Internship-Product-Definition-Analytics-WA-98055/1448230233/?ats=successfactors) |
+| **Quora** | Machine Learning Engineer New Grad | Remote in USA · Remote in C… | 4h ago | 3 | [Apply ↗](https://jobs.ashbyhq.com/quora/40659fe7-545e-4b08-b6d7-2567b18b9ed3/application?embed=true) |
+| **Qualtrics** | Software Engineer 1 | Provo, UT | 4h ago | 26 | [Apply ↗](https://www.qualtrics.com/careers/us/en/job/8264811?gh_jid=8264811) |
+| **Wikimedia Foundation** | Software Engineering Intern | Remote in USA | 4h ago | 3 | [Apply ↗](https://job-boards.greenhouse.io/wikimedia/jobs/8268853) |
+| **Rivian** | Software Engineer Intern Co-op - Machine Learning Researc… | Palo Alto, CA | 4h ago | 8 | [Apply ↗](https://careers.rivian.com/jobs/33801?icims=1) |
+| **OpenGov** | Software Engineer Intern | Boston, MA | 4h ago | 4 | [Apply ↗](https://jobs.ashbyhq.com/opengov/35c2d853-b6ab-4ba7-a6f7-ffb4cfc22f7b/application?embed=true) |
 
 <!-- LIVE:END -->
 
