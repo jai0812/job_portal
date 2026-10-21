@@ -26,40 +26,40 @@ This section is rewritten by the portal itself after every hourly refresh.
 
 <!-- LIVE:START (auto-generated, do not edit by hand) -->
 
-**Last updated: Oct 20, 2026 at 2:03 PM EDT** · refreshed automatically every hour
+**Last updated: Oct 21, 2026 at 12:38 AM EDT** · refreshed automatically every hour
 
 | Right now in the portal | |
 |---|---|
-| 🇺🇸 United States | **77,846** |
-| 🇮🇳 India | **10,710** |
-| 🌍 Other countries | **16,027** |
-| 🎓 University jobs | **3,798** |
-| 🆕 Posted in the last 24 hours | **1,806** |
-| ✅ US jobs at employers with H-1B history | **59,946 (77%)** |
-| 💻 Software Engineering | **19,972** |
-| 📊 Data Science & ML | **11,899** |
-| 🏦 Finance & Banks | **58,457** |
+| 🇺🇸 United States | **80,085** |
+| 🇮🇳 India | **10,853** |
+| 🌍 Other countries | **16,424** |
+| 🎓 University jobs | **3,911** |
+| 🆕 Posted in the last 24 hours | **609** |
+| ✅ US jobs at employers with H-1B history | **61,765 (77%)** |
+| 💻 Software Engineering | **20,481** |
+| 📊 Data Science & ML | **12,187** |
+| 🏦 Finance & Banks | **59,878** |
 | 🔌 Sources | **13 GitHub lists · 207 company career sites · 12 universities · LinkedIn (Apify)** |
 
 **Freshest early-career tech & data roles at employers with H-1B history**
 
 | Company | Role | Location | Posted | H-1B approvals (FY23) | |
 |---|---|---|---|---|---|
-| **TikTok** | Machine Learning Engineer Graduate - (TikTok Trust and Sa… | Seattle, Washington, United… | 9 min ago | 475 | [Apply ↗](https://lifeattiktok.com/search/7517107684337748242) |
-| **Texas Instruments** | Software Engineer Intern - Compiler | Sugar Land, TX · United Sta… | 3h ago | 51 | [Apply ↗](https://edbz.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX/job/25019103) |
-| **Microsoft** | Data Science – Forward Deployed Engineer: PhD Intern | Redmond, WA | 8h ago | 2,066 | [Apply ↗](https://apply.careers.microsoft.com/careers/job/1970393557040991) |
-| **The New York Times** | AI Initiatives Fellow | NYC | 8h ago | 5 | [Apply ↗](https://job-boards.greenhouse.io/thenewyorktimes/jobs/4740369005) |
-| **JPMorgan Chase** | 2027 Machine Learning Center of Excellence (NLP) - Summer… | New York, NY, United States | 8h ago | 1,525 | [Apply ↗](https://jpmc.fa.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001/job/210801790) |
-| **Boston Scientific** | R&D Software Engineer Intern | Arden Hills, MN | 16h ago | 46 | [Apply ↗](https://bostonscientific.eightfold.ai/careers/job/563602813563514) |
-| **Palantir** | Software Engineer Intern - Query Engines | NYC | 16h ago | 24 | [Apply ↗](https://jobs.lever.co/palantir/da774f81-c98c-4dcf-9b9c-949fd7d90a13/apply) |
-| **Paccar** | Dealer Development Marketing Data Analytics Intern | Kirkland, WA | 16h ago | 17 | [Apply ↗](https://jobs.paccar.com/job/Kirkland-Summer-2027-Dealer-Development-Marketing-Data-Analytics-Intern-WA-98033/1449209833/?ats=successfactors) |
-| **Constellation Brands** | AI Enablement Intern | Rochester, NY | 18h ago | 2 | [Apply ↗](https://cbrands.wd5.myworkdayjobs.com/en-US/CBI_External_Careers/job/Rochester-New-York/Intern--AI-Enablement_R-41526) |
-| **Ciena** | Software Engineer Intern - Security | Atlanta, GA | 18h ago | 9 | [Apply ↗](https://ciena.wd5.myworkdayjobs.com/Careers/job/Atlanta/Software-Engineer--Security----Intern--Winter-2027-_R031926) |
-| **Vertex Pharmaceuticals** | Commercial Analytics Co-op - Commercial Analytics | Boston, MA | 18h ago | 31 | [Apply ↗](https://vrtx.wd501.myworkdayjobs.com/vertex_careers/job/Boston-MA/Spring-Co-Op-2027--Commercial-Analytics_REQ-31112-1) |
-| **Allstate** | Software Engineer Intern | North Carolina | 18h ago | 25 | [Apply ↗](https://allstate.wd5.myworkdayjobs.com/sourcing_event/job/USA---NC-Remote/Arity---Software-Engineer-Intern_R36266) |
-| **Cigna Group** | Business Analytics Intern | Bloomfield, CT | 18h ago | 30 | [Apply ↗](https://cigna.wd5.myworkdayjobs.com/cignacareers/job/Bloomfield-CT/Business-Analytics-Intern_26012472) |
-| **Oshkosh** | Software Engineer | Oshkosh, WI | 18h ago | 1 | [Apply ↗](https://oshkoshcorporation.wd5.myworkdayjobs.com/Oshkosh/job/Oshkosh-Wisconsin-United-States/Engineer---Software_R50645) |
-| **Magna** | Junior AI Engineer | Troy, MI | 18h ago | 55 | [Apply ↗](https://wd3.myworkdaysite.com/recruiting/magna/Magna/job/Troy-Michigan-US/Junior-AI-Enigneer_R00266828-1) |
+| **Western Digital** | Internship - Software Development Engineering (Embedded) | Petaling Jaya, Selangor, MY | 56 min ago | 56 | [Apply ↗](https://jobs.smartrecruiters.com/WesternDigital/744000156706399) |
+| **DriveWealth** | AI Consulting Associate Program Product Owner Intern | Chicago, IL · NYC | 5h ago | 10 | [Apply ↗](https://boards.greenhouse.io/drivewealth/jobs/8038087003) |
+| **Stand Together** | Policy Data Analyst Intern | NYC | 5h ago | 2 | [Apply ↗](https://jobs.lever.co/standtogether/35deb481-fc0b-4513-abf5-68880006189b/apply) |
+| **Paccar** | Field Service Data Analyst Intern | Kirkland, WA | 5h ago | 17 | [Apply ↗](https://jobs.paccar.com/job/Kirkland-Summer-2027-Field-Service-Data-Analyst-Intern-WA-98033/1449526633/?ats=successfactors) |
+| **Keysight Technologies** | Quantum Physicist - Neutral Atom Platforms | Loveland, CO · Colorado Spr… | 6h ago | 26 | [Apply ↗](https://jobs.keysight.com/jobs/54857?icims=1) |
+| **WSP** | Junior Data Analyst | Newark, NJ | 6h ago | 69 | [Apply ↗](https://emit.fa.ca3.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_2001/job/97943) |
+| **AQR Capital Management** | Software Engineer | Greenwich, CT | 6h ago | 4 | [Apply ↗](https://careers.aqr.com/jobs?gh_jid=8284812&gh_jid=8284812) |
+| **Quora** | Full Stack Software Engineer New Grad | Remote in USA · Remote in C… | 6h ago | 3 | [Apply ↗](https://jobs.ashbyhq.com/quora/5494e6a1-a973-46af-b9f3-57208eb91b52/application?embed=true) |
+| **Meta** | Research Scientist Intern - Computational Imaging and Rob… | Redmond, WA | 6h ago | 1,540 | [Apply ↗](https://www.metacareers.com/jobs/2857194467985784) |
+| **Skydio** | Wireless Hardware Engineer Intern | San Mateo, CA | 6h ago | 13 | [Apply ↗](https://jobs.ashbyhq.com/skydio/1ac972b1-8094-4765-8869-63e1c4d50dea/application?embed=true) |
+| **Microsoft** | Software Engineer | Redmond, WA | 7h ago | 2,066 | [Apply ↗](https://apply.careers.microsoft.com/careers/job/1970393557043616) |
+| **SambaNova** | AI Performance Engineer - New Grad | Austin, Texas, United State… | 7h ago | 4 | [Apply ↗](https://sambanova.ai/sambanova-available-positions/?gh_jid=6224936004) |
+| **TikTok** | Machine Learning Engineer Graduate - (TikTok Trust and Sa… | Seattle, Washington, United… | 10h ago | 475 | [Apply ↗](https://lifeattiktok.com/search/7517107684337748242) |
+| **LinkedIn** | Software Engineer Intern, Undergraduate - Summer 2027 (Mo… | Mountain View, CA, US | 11h ago | 254 | [Apply ↗](https://jobs.smartrecruiters.com/LinkedIn3/744000156616169) |
+| **Texas Instruments** | Software Engineer Intern - Compiler | Sugar Land, TX · United Sta… | 14h ago | 51 | [Apply ↗](https://edbz.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX/job/25019103) |
 
 <!-- LIVE:END -->
 
