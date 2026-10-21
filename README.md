@@ -26,40 +26,40 @@ This section is rewritten by the portal itself after every hourly refresh.
 
 <!-- LIVE:START (auto-generated, do not edit by hand) -->
 
-**Last updated: Oct 21, 2026 at 12:38 AM EDT** · refreshed automatically every hour
+**Last updated: Oct 21, 2026 at 9:20 AM EDT** · refreshed automatically every hour
 
 | Right now in the portal | |
 |---|---|
-| 🇺🇸 United States | **80,085** |
-| 🇮🇳 India | **10,853** |
-| 🌍 Other countries | **16,424** |
-| 🎓 University jobs | **3,911** |
-| 🆕 Posted in the last 24 hours | **609** |
-| ✅ US jobs at employers with H-1B history | **61,765 (77%)** |
-| 💻 Software Engineering | **20,481** |
-| 📊 Data Science & ML | **12,187** |
-| 🏦 Finance & Banks | **59,878** |
+| 🇺🇸 United States | **80,496** |
+| 🇮🇳 India | **10,941** |
+| 🌍 Other countries | **16,573** |
+| 🎓 University jobs | **3,925** |
+| 🆕 Posted in the last 24 hours | **801** |
+| ✅ US jobs at employers with H-1B history | **61,919 (77%)** |
+| 💻 Software Engineering | **20,613** |
+| 📊 Data Science & ML | **12,282** |
+| 🏦 Finance & Banks | **60,237** |
 | 🔌 Sources | **13 GitHub lists · 207 company career sites · 12 universities · LinkedIn (Apify)** |
 
 **Freshest early-career tech & data roles at employers with H-1B history**
 
 | Company | Role | Location | Posted | H-1B approvals (FY23) | |
 |---|---|---|---|---|---|
-| **Western Digital** | Internship - Software Development Engineering (Embedded) | Petaling Jaya, Selangor, MY | 56 min ago | 56 | [Apply ↗](https://jobs.smartrecruiters.com/WesternDigital/744000156706399) |
-| **DriveWealth** | AI Consulting Associate Program Product Owner Intern | Chicago, IL · NYC | 5h ago | 10 | [Apply ↗](https://boards.greenhouse.io/drivewealth/jobs/8038087003) |
-| **Stand Together** | Policy Data Analyst Intern | NYC | 5h ago | 2 | [Apply ↗](https://jobs.lever.co/standtogether/35deb481-fc0b-4513-abf5-68880006189b/apply) |
-| **Paccar** | Field Service Data Analyst Intern | Kirkland, WA | 5h ago | 17 | [Apply ↗](https://jobs.paccar.com/job/Kirkland-Summer-2027-Field-Service-Data-Analyst-Intern-WA-98033/1449526633/?ats=successfactors) |
-| **Keysight Technologies** | Quantum Physicist - Neutral Atom Platforms | Loveland, CO · Colorado Spr… | 6h ago | 26 | [Apply ↗](https://jobs.keysight.com/jobs/54857?icims=1) |
-| **WSP** | Junior Data Analyst | Newark, NJ | 6h ago | 69 | [Apply ↗](https://emit.fa.ca3.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_2001/job/97943) |
-| **AQR Capital Management** | Software Engineer | Greenwich, CT | 6h ago | 4 | [Apply ↗](https://careers.aqr.com/jobs?gh_jid=8284812&gh_jid=8284812) |
-| **Quora** | Full Stack Software Engineer New Grad | Remote in USA · Remote in C… | 6h ago | 3 | [Apply ↗](https://jobs.ashbyhq.com/quora/5494e6a1-a973-46af-b9f3-57208eb91b52/application?embed=true) |
-| **Meta** | Research Scientist Intern - Computational Imaging and Rob… | Redmond, WA | 6h ago | 1,540 | [Apply ↗](https://www.metacareers.com/jobs/2857194467985784) |
-| **Skydio** | Wireless Hardware Engineer Intern | San Mateo, CA | 6h ago | 13 | [Apply ↗](https://jobs.ashbyhq.com/skydio/1ac972b1-8094-4765-8869-63e1c4d50dea/application?embed=true) |
-| **Microsoft** | Software Engineer | Redmond, WA | 7h ago | 2,066 | [Apply ↗](https://apply.careers.microsoft.com/careers/job/1970393557043616) |
-| **SambaNova** | AI Performance Engineer - New Grad | Austin, Texas, United State… | 7h ago | 4 | [Apply ↗](https://sambanova.ai/sambanova-available-positions/?gh_jid=6224936004) |
-| **TikTok** | Machine Learning Engineer Graduate - (TikTok Trust and Sa… | Seattle, Washington, United… | 10h ago | 475 | [Apply ↗](https://lifeattiktok.com/search/7517107684337748242) |
-| **LinkedIn** | Software Engineer Intern, Undergraduate - Summer 2027 (Mo… | Mountain View, CA, US | 11h ago | 254 | [Apply ↗](https://jobs.smartrecruiters.com/LinkedIn3/744000156616169) |
-| **Texas Instruments** | Software Engineer Intern - Compiler | Sugar Land, TX · United Sta… | 14h ago | 51 | [Apply ↗](https://edbz.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX/job/25019103) |
+| **Western Digital** | Internship - Software Development Engineering (Embedded) | Petaling Jaya, Selangor, MY | 9h ago | 56 | [Apply ↗](https://jobs.smartrecruiters.com/WesternDigital/744000156706399) |
+| **Wellmark** | Data Wrangler | Des Moines, IA | 11h ago | 5 | [Apply ↗](https://jobs.smartrecruiters.com/WellmarkInc/744000156421724) |
+| **Amazon** | Software Development Engineer 1 - AI/ML Network Infrastru… | Cupertino, CA | 11h ago | 6,126 | [Apply ↗](https://amazon.jobs/en/jobs/10584797/software-development-engineer-i-ai-ml-network-infrastructure-annapurna-labs) |
+| **ClickHouse** | Research Intern | Remote in Germany · SF · Re… | 11h ago | 2 | [Apply ↗](https://jobs.ashbyhq.com/clickhouse/558c0c16-5fde-407a-966b-7a2255d3531b/application?embed=true) |
+| **Meta** | Research Scientist Intern | Menlo Park, CA | 11h ago | 1,540 | [Apply ↗](https://www.metacareers.com/jobs/1510576574212840) |
+| **Paccar** | Technical Content Author Intern - Technical Content Analy… | Renton, WA | 12h ago | 17 | [Apply ↗](https://jobs.paccar.com/job/Renton-Summer-Internship-Technical-Content-Analytics-WA-98055/1449634733/?ats=successfactors) |
+| **Uber** | Software Engineer Intern | Seattle, WA · SF · Sunnyval… | 12h ago | 268 | [Apply ↗](https://iaziqy.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/job/303922) |
+| **Renesas Electronics** | Application Engineer | San Jose, CA | 12h ago | 18 | [Apply ↗](https://jobs.smartrecruiters.com/RenesasElectronics/744000156404329) |
+| **Brain Co.** | AI Platform Engineer New Grad | SF | 12h ago | 4 | [Apply ↗](https://jobs.ashbyhq.com/brainco/4d39773e-f4c3-49c1-87c3-812a9804fb15/application?embed=true) |
+| **DriveWealth** | AI Consulting Associate Program Product Owner Intern | Chicago, IL · NYC | 14h ago | 10 | [Apply ↗](https://boards.greenhouse.io/drivewealth/jobs/8038087003) |
+| **Stand Together** | Policy Data Analyst Intern | NYC | 14h ago | 2 | [Apply ↗](https://jobs.lever.co/standtogether/35deb481-fc0b-4513-abf5-68880006189b/apply) |
+| **Keysight Technologies** | Quantum Physicist - Neutral Atom Platforms | Loveland, CO · Colorado Spr… | 14h ago | 26 | [Apply ↗](https://jobs.keysight.com/jobs/54857?icims=1) |
+| **WSP** | Junior Data Analyst | Newark, NJ | 14h ago | 69 | [Apply ↗](https://emit.fa.ca3.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_2001/job/97943) |
+| **AQR Capital Management** | Software Engineer | Greenwich, CT | 14h ago | 4 | [Apply ↗](https://careers.aqr.com/jobs?gh_jid=8284812&gh_jid=8284812) |
+| **Quora** | Full Stack Software Engineer New Grad | Remote in USA · Remote in C… | 14h ago | 3 | [Apply ↗](https://jobs.ashbyhq.com/quora/5494e6a1-a973-46af-b9f3-57208eb91b52/application?embed=true) |
 
 <!-- LIVE:END -->
 
