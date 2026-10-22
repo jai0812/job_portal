@@ -26,40 +26,40 @@ This section is rewritten by the portal itself after every hourly refresh.
 
 <!-- LIVE:START (auto-generated, do not edit by hand) -->
 
-**Last updated: Oct 22, 2026 at 8:26 AM EDT** · refreshed automatically every hour
+**Last updated: Oct 22, 2026 at 2:56 PM EDT** · refreshed automatically every hour
 
 | Right now in the portal | |
 |---|---|
-| 🇺🇸 United States | **83,299** |
-| 🇮🇳 India | **11,043** |
-| 🌍 Other countries | **16,877** |
-| 🎓 University jobs | **4,021** |
-| 🆕 Posted in the last 24 hours | **466** |
-| ✅ US jobs at employers with H-1B history | **63,980 (77%)** |
-| 💻 Software Engineering | **21,229** |
-| 📊 Data Science & ML | **12,665** |
-| 🏦 Finance & Banks | **62,086** |
+| 🇺🇸 United States | **85,185** |
+| 🇮🇳 India | **11,447** |
+| 🌍 Other countries | **17,282** |
+| 🎓 University jobs | **4,101** |
+| 🆕 Posted in the last 24 hours | **2,282** |
+| ✅ US jobs at employers with H-1B history | **65,224 (77%)** |
+| 💻 Software Engineering | **21,720** |
+| 📊 Data Science & ML | **12,877** |
+| 🏦 Finance & Banks | **63,679** |
 | 🔌 Sources | **13 GitHub lists · 207 company career sites · 12 universities · LinkedIn (Apify)** |
 
 **Freshest early-career tech & data roles at employers with H-1B history**
 
 | Company | Role | Location | Posted | H-1B approvals (FY23) | |
 |---|---|---|---|---|---|
-| **Amazon** | Robotics Embedded Software Development Engineer | North Reading, MA · Westbor… | 6h ago | 6,126 | [Apply ↗](https://amazon.jobs/en/jobs/10522935/robotics-embedded-software-development-engineer) |
-| **Ascension** | Data Analyst | Nashville, TN | 10h ago | 22 | [Apply ↗](https://jobs.ascension.org/us/en/job/19659) |
-| **ByteDance** | Research Scientist | San Jose, CA | 11h ago | 204 | [Apply ↗](https://jobs.bytedance.com/en/position/7698902624003229957/detail) |
-| **Keysight Technologies** | Software Engineer Intern | Calabasas, CA | 11h ago | 26 | [Apply ↗](https://jobs.keysight.com/jobs/55115?icims=1) |
-| **Intel** | Information Security Engineer Intern | Folsom, CA | 12h ago | 1,112 | [Apply ↗](https://intel.wd1.myworkdayjobs.com/External/job/US-California-Folsom/Information-Security-Engineer-Undergraduate-Intern_JR0287588) |
-| **Cisco** | Software Engineer Intern, Embedded Systems II | San Jose, CA · Milpitas, CA… | 12h ago | 831 | [Apply ↗](https://cisco.wd5.myworkdayjobs.com/Cisco_Careers/job/San-Jose-California-US/Software-Engineer-Embedded-Systems-II--Intern----United-States_2026805) |
-| **Aptiv** | Software Development Intern | Troy, MI | 12h ago | 71 | [Apply ↗](https://aptiv.wd5.myworkdayjobs.com/aptiv_careers/job/Troy-MI---USA/Software-Development-Intern_J000704861) |
-| **Apple** | Software Engineer - SoC Level Validation Engineer | Austin, TX · Beaverton, OR… | 13h ago | 1,825 | [Apply ↗](https://jobs.apple.com/en-us/details/200690790) |
-| **Microsoft** | Software Engineer Intern, Security & Identity | Cambridge, MA | 13h ago | 2,066 | [Apply ↗](https://apply.careers.microsoft.com/careers/job/1970393557044765) |
-| **Akamai Technologies** | Software Engineer 1 | United States | 14h ago | 75 | [Apply ↗](https://fa-extu-saasfaprod1.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/job/4237) |
-| **Paccar** | Fleet Pricing Intern - Fleet Pricing | Renton, WA | 14h ago | 17 | [Apply ↗](https://jobs.paccar.com/job/Renton-Summer-Internship-Fleet-Pricing-WA-98055/1450037933/?ats=successfactors) |
-| **Meta** | Research Scientist Intern - Foundational Models for Robot… | Menlo Park, CA | 14h ago | 1,540 | [Apply ↗](https://www.metacareers.com/jobs/1078644001656413) |
-| **Pure Storage** | Junior DevOps Engineer | Santa Clara, California | 14h ago | 67 | [Apply ↗](https://job-boards.greenhouse.io/purestorage/jobs/8282746) |
-| **Affirm** | Analyst – Early Career - Full Stack | SF · Remote in USA · NYC | 15h ago | 40 | [Apply ↗](https://job-boards.greenhouse.io/affirm/jobs/8039471003) |
-| **TikTok** | Machine Learning Engineer Intern (Brand Ads) - 2027 Summer | San Jose, California, Unite… | 15h ago | 475 | [Apply ↗](https://lifeattiktok.com/search/7668654528822954245) |
+| **Experian** | Associate Machine Learning Scientist | Sofia, BG | 3h ago | 36 | [Apply ↗](https://jobs.smartrecruiters.com/Experian/744000157171739) |
+| **Meta** | Research Scientist Intern - Central Applied Science | Menlo Park, CA · NYC | 4h ago | 1,540 | [Apply ↗](https://www.metacareers.com/jobs/1582569213186235) |
+| **Mayo Clinic** | Associate Data Science Analyst | Jacksonville, FL | 4h ago | 182 | [Apply ↗](https://fa-euwp-saasfaprod1.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/job/394007) |
+| **Databricks** | Associate Forward Deployed Engineer | New York City, New York | 5h ago | 78 | [Apply ↗](https://databricks.com/company/careers/open-positions/job?gh_jid=8907988002) |
+| **Western Digital** | Internship - Software Engineering | Petaling Jaya, Selangor, MY | 10h ago | 56 | [Apply ↗](https://jobs.smartrecruiters.com/WesternDigital/744000157066549) |
+| **Microsoft** | Software Engineer: Fullstack Product (Web + Services) Int… | Redmond, Washington, United… | 11h ago | 2,066 | [Apply ↗](https://apply.careers.microsoft.com/careers/job/1970393556922922) |
+| **Amazon** | Robotics Embedded Software Development Engineer | North Reading, MA · Westbor… | 12h ago | 6,126 | [Apply ↗](https://amazon.jobs/en/jobs/10522935/robotics-embedded-software-development-engineer) |
+| **Ascension** | Data Analyst | Nashville, TN | 17h ago | 22 | [Apply ↗](https://jobs.ascension.org/us/en/job/19659) |
+| **ByteDance** | Research Scientist | San Jose, CA | 17h ago | 204 | [Apply ↗](https://jobs.bytedance.com/en/position/7698902624003229957/detail) |
+| **Keysight Technologies** | Software Engineer Intern | Calabasas, CA | 17h ago | 26 | [Apply ↗](https://jobs.keysight.com/jobs/55115?icims=1) |
+| **Intel** | Information Security Engineer Intern | Folsom, CA | 18h ago | 1,112 | [Apply ↗](https://intel.wd1.myworkdayjobs.com/External/job/US-California-Folsom/Information-Security-Engineer-Undergraduate-Intern_JR0287588) |
+| **Cisco** | Software Engineer Intern, Embedded Systems II | San Jose, CA · Milpitas, CA… | 18h ago | 831 | [Apply ↗](https://cisco.wd5.myworkdayjobs.com/Cisco_Careers/job/San-Jose-California-US/Software-Engineer-Embedded-Systems-II--Intern----United-States_2026805) |
+| **Aptiv** | Software Development Intern | Troy, MI | 18h ago | 71 | [Apply ↗](https://aptiv.wd5.myworkdayjobs.com/aptiv_careers/job/Troy-MI---USA/Software-Development-Intern_J000704861) |
+| **Uline** | Software Developer Intern | Waukegan, IL · Milwaukee, W… | 18h ago | 19 | [Apply ↗](https://uline.wd1.myworkdayjobs.com/en-US/Uline_Careers/job/Pleasant-Prairie-WI/Software-Development-Internship---Summer-2027_R268537) |
+| **Oshkosh** | Digital Manufacturing Intern | Spartanburg, SC | 18h ago | 1 | [Apply ↗](https://oshkoshcorporation.wd5.myworkdayjobs.com/Oshkosh/job/Spartanburg-South-Carolina-United-States/Digital-Manufacturing-Intern_R51065) |
 
 <!-- LIVE:END -->
 
