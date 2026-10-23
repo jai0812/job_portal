@@ -26,40 +26,40 @@ This section is rewritten by the portal itself after every hourly refresh.
 
 <!-- LIVE:START (auto-generated, do not edit by hand) -->
 
-**Last updated: Oct 22, 2026 at 9:25 PM EDT** · refreshed automatically every hour
+**Last updated: Oct 23, 2026 at 12:39 PM EDT** · refreshed automatically every hour
 
 | Right now in the portal | |
 |---|---|
-| 🇺🇸 United States | **86,446** |
-| 🇮🇳 India | **11,458** |
-| 🌍 Other countries | **17,414** |
-| 🎓 University jobs | **4,139** |
-| 🆕 Posted in the last 24 hours | **3,361** |
-| ✅ US jobs at employers with H-1B history | **66,156 (77%)** |
-| 💻 Software Engineering | **21,985** |
-| 📊 Data Science & ML | **13,039** |
-| 🏦 Finance & Banks | **64,431** |
+| 🇺🇸 United States | **87,242** |
+| 🇮🇳 India | **11,662** |
+| 🌍 Other countries | **17,653** |
+| 🎓 University jobs | **4,102** |
+| 🆕 Posted in the last 24 hours | **1,893** |
+| ✅ US jobs at employers with H-1B history | **66,643 (76%)** |
+| 💻 Software Engineering | **22,301** |
+| 📊 Data Science & ML | **13,190** |
+| 🏦 Finance & Banks | **64,982** |
 | 🔌 Sources | **13 GitHub lists · 207 company career sites · 12 universities · LinkedIn (Apify)** |
 
 **Freshest early-career tech & data roles at employers with H-1B history**
 
 | Company | Role | Location | Posted | H-1B approvals (FY23) | |
 |---|---|---|---|---|---|
-| **Toyota Research Institute** | Human Aware Interactions and Learning Intern | Cambridge, MA | 2h ago | 3 | [Apply ↗](https://jobs.lever.co/tri/71e99c38-aa29-4414-956d-cc526644b9b7/apply) |
-| **Palantir** | Forward Deployed Software Engineer New Grad | NYC | 2h ago | 24 | [Apply ↗](https://jobs.lever.co/palantir/66b495eb-aaf9-4bf9-a759-41854534add7/apply) |
-| **JPMorgan Chase** | 2027 Asset Management Data Scientist - Summer Associate | New York, NY, United States | 2h ago | 1,525 | [Apply ↗](https://jpmc.fa.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001/job/210802931) |
-| **Pattern** | AI Automation Engineer Intern | Lehi, UT | 3h ago | 1 | [Apply ↗](https://jobs.lever.co/pattern/48945dce-b5ef-43cd-9d85-f8b26ce5b43e/apply) |
-| **Stand Together** | Data Analyst Intern - Open the Books | Florida | 3h ago | 2 | [Apply ↗](https://jobs.lever.co/standtogether/f379a7ee-c2b6-47db-b1de-08283462ea6c/apply) |
-| **Skydio** | Frontend Software Engineer Intern | San Mateo, CA | 3h ago | 13 | [Apply ↗](https://jobs.ashbyhq.com/skydio/89bb6fee-3cd2-4e0b-a1c2-c73de8c1f9bd/application?embed=true) |
-| **Formlabs** | Manufacturing Test Software Intern | Somerville, MA | 3h ago | 1 | [Apply ↗](https://careers.formlabs.com/job/8256004/apply/?gh_jid=8256004) |
-| **Meta** | Research Scientist Intern - AI Alignment | Boston, MA · Seattle, WA ·… | 3h ago | 1,540 | [Apply ↗](https://www.metacareers.com/jobs/2356892281747003) |
-| **Rokt** | Junior Software Engineer Resident | NYC | 3h ago | 7 | [Apply ↗](https://apply.workable.com/rokt/j/616F2D0286/apply) |
-| **Databricks** | Data Science Intern | SF · Mountain View, CA | 3h ago | 78 | [Apply ↗](https://boards.greenhouse.io/embed/job_app?token=6866538002) |
-| **UT Southwestern Medical Cen…** | Clinical Quality Data Coordinator 1 | Dallas, TX | 3h ago | 110 | [Apply ↗](https://utsw.taleo.net/careersection/2/jobdetail.ftl?job=973896) |
-| **Ivalua** | Marketing Web Developer Intern | NYC | 3h ago | 2 | [Apply ↗](https://boards.greenhouse.io/ivalua/jobs/8293704) |
-| **STR** | Data Analyst Intern | Arlington County, Arlington… | 3h ago | 1 | [Apply ↗](https://job-boards.greenhouse.io/systemstechnologyresearch/jobs/4723980006) |
-| **Waymo** | 2027 Summer Intern, PhD, AI Foundations - Recipes | Mountain View, CA, USA | 4h ago | 87 | [Apply ↗](https://careers.withwaymo.com/jobs?gh_jid=8306841) |
-| **Twitch** | Undergrad Software Engineering Intern (Grad Year: Winter… | San Francisco, CA | 6h ago | 26 | [Apply ↗](https://job-boards.greenhouse.io/twitch/jobs/8886605002) |
+| **Microsoft** | Software Engineering Intern | Tulsa, Oklahoma, United Sta… | 29 min ago | 2,066 | [Apply ↗](https://apply.careers.microsoft.com/careers/job/1970393557044771) |
+| **NBCUniversal** | Associates Systems Engineer | Fort Worth, TEXAS, US | 1h ago | 31 | [Apply ↗](https://jobs.smartrecruiters.com/NBCUniversal3/744000157514653) |
+| **Databricks** | Associate Forward Deployed Engineer | Mountain View, California | 1h ago | 78 | [Apply ↗](https://databricks.com/company/careers/open-positions/job?gh_jid=8910846002) |
+| **MongoDB** | 2027 - Software Engineering Intern, AMER | Austin; New York City; Palo… | 3h ago | 30 | [Apply ↗](https://www.mongodb.com/careers/job/?gh_jid=8209134) |
+| **Western Digital** | Intern - Data Analytics | Biñan City, LAGUNA, PH | 11h ago | 56 | [Apply ↗](https://jobs.smartrecruiters.com/WesternDigital/744000157382148) |
+| **Amazon** | Software Development Engineer - Prime Video Personalizati… | Seattle, WA | 14h ago | 6,126 | [Apply ↗](https://amazon.jobs/en/jobs/10412948/software-dev-engineer-prime-video-personalization-discovery) |
+| **Meta** | Research Scientist Intern - Video Recommendations - PhD | Menlo Park, CA · Bellevue,… | 15h ago | 1,540 | [Apply ↗](https://www.metacareers.com/jobs/932919123033502) |
+| **TikTok** | Seller Content Project Intern | LA | 15h ago | 475 | [Apply ↗](https://lifeattiktok.com/search/7699387964317600053) |
+| **Paccar** | Aftersales Data Analyst Intern | Kirkland, WA | 15h ago | 17 | [Apply ↗](https://jobs.paccar.com/job/Kirkland-Summer-2027-AfterSales-Data-Analyst-Intern-WA-98033/1450518033/?ats=successfactors) |
+| **Toyota Research Institute** | Human Aware Interactions and Learning Intern | Cambridge, MA | 18h ago | 3 | [Apply ↗](https://jobs.lever.co/tri/71e99c38-aa29-4414-956d-cc526644b9b7/apply) |
+| **Palantir** | Forward Deployed Software Engineer New Grad | NYC | 18h ago | 24 | [Apply ↗](https://jobs.lever.co/palantir/66b495eb-aaf9-4bf9-a759-41854534add7/apply) |
+| **JPMorgan Chase** | 2027 Asset Management Data Scientist - Summer Associate | New York, NY, United States | 18h ago | 1,525 | [Apply ↗](https://jpmc.fa.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001/job/210802931) |
+| **Pattern** | AI Automation Engineer Intern | Lehi, UT | 18h ago | 1 | [Apply ↗](https://jobs.lever.co/pattern/48945dce-b5ef-43cd-9d85-f8b26ce5b43e/apply) |
+| **Stand Together** | Data Analyst Intern - Open the Books | Florida | 18h ago | 2 | [Apply ↗](https://jobs.lever.co/standtogether/f379a7ee-c2b6-47db-b1de-08283462ea6c/apply) |
+| **Skydio** | Frontend Software Engineer Intern | San Mateo, CA | 18h ago | 13 | [Apply ↗](https://jobs.ashbyhq.com/skydio/89bb6fee-3cd2-4e0b-a1c2-c73de8c1f9bd/application?embed=true) |
 
 <!-- LIVE:END -->
 
