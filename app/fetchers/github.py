@@ -40,9 +40,10 @@ def fetch(source: dict, max_age_days: int) -> list[dict]:
         raw = _get(client, owner, repo, branches, ".github/scripts/listings.json")
         if raw:
             return _from_listings(json.loads(raw), name, hint, cutoff)
-        readme = _get(client, owner, repo, branches, "README.md")
+        path = source.get("path", "README.md")  # some lists keep each category in its own file
+        readme = _get(client, owner, repo, branches, path)
         if readme is None:
-            raise RuntimeError("Found neither listings.json nor README.md")
+            raise RuntimeError(f"Found neither listings.json nor {path}")
         category = source.get("category", "")  # optional hint: swe | data | finance
         if re.search(r"^\|\s*Role\s*\|\s*Links\s*\|", readme, re.M | re.I):
             return _from_role_sections(readme, name, hint, category)
@@ -76,7 +77,8 @@ COLS = {
     "company": r"company|employer|organization",
     "title": r"role|position|title|job",
     "location": r"location",
-    "link": r"appl|link|posting|url",
+    "link": r"appl|link|posting|url|action",
+    "h1b": r"h-?1b|visa|sponsor",
     "age": r"age|date|posted",
     "salary": r"salary|pay|comp",
 }
@@ -200,11 +202,21 @@ def _from_readme(text: str, name: str, hint: str, cutoff: float, category: str =
             continue
         sponsorship = ("U.S. Citizenship is Required" if "🇺🇸" in flags
                        else "Does Not Offer Sponsorship" if "🛂" in flags else "")
+        if not sponsorship and "h1b" in colmap:  # lists with their own H-1B / visa column
+            # Only a plain yes / no counts; guesses like "Likely" / "Unlikely" are left to the USCIS data.
+            v = cell("h1b").strip().lower()
+            if re.fullmatch(r"(✅|✔️?|yes|sponsors?)\.?", v):
+                sponsorship = "Offers Sponsorship"
+            elif re.fullmatch(r"(❌|no|none|no sponsorship)\.?", v):
+                sponsorship = "Does Not Offer Sponsorship"
+            elif "citizen" in v:
+                sponsorship = "U.S. Citizenship is Required"
         jobs.append(classify.build(
             source_type="github", source_name=name,
             company=re.sub(r"[🔥🛂🇺🇸🎓🔒⭐️]", "", company).strip(),
             title=re.sub(r"[🔥🛂🇺🇸🎓🔒⭐️]", "", title).strip(),
-            location=cell("location"), url=_link(link_cell), posted_at=posted, posted_precision=precision,
+            location=cell("location"), url=_link(link_cell) or _link(cell("company", True)),  # some lists link the company cell
+            posted_at=posted, posted_precision=precision,
             salary=cell("salary"), level_hint=hint, sponsorship_text=sponsorship, source_category=category,
         ))
     return [j for j in jobs if j["title"] and j["company"]]

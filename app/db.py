@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS jobs (
     top_company  INTEGER DEFAULT 0,
     salary       TEXT,
     description  TEXT,
-    status       TEXT DEFAULT 'new',   -- new | saved | applied | interviewing | offer | rejected | hidden
+    status       TEXT DEFAULT 'new',   -- new | saved | waiting | declined | applied | interviewing | offer | rejected | hidden
     applied_at   INTEGER,              -- when you marked it applied (for analytics)
     notes        TEXT DEFAULT ''
 );
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS fetch_log (
 UPDATABLE = ["source_type", "source_name", "company", "title", "location", "url", "posted_at", "posted_precision",
              "categories", "level", "h1b", "cap_exempt", "top_company", "salary", "description"]
 NEW_COLUMNS = {"posted_precision": "TEXT DEFAULT 'exact'", "sources": "TEXT", "applied_at": "INTEGER"}
-STATUSES = ("new", "saved", "applied", "interviewing", "offer", "rejected", "hidden")
+STATUSES = ("new", "saved", "waiting", "declined", "applied", "interviewing", "offer", "rejected", "hidden")
 APPLIED_STAGES = ("applied", "interviewing", "offer", "rejected")
 
 
@@ -73,8 +73,11 @@ _TAKE_NEW = (f"(jobs.posted_at IS NULL OR (excluded.posted_at IS NOT NULL AND ({
              f" OR ({_RANK.format(t='excluded')} = {_RANK.format(t='jobs')} AND excluded.posted_at < jobs.posted_at))))")
 
 
-def upsert_jobs(jobs: list[dict]) -> int:
+def upsert_jobs(jobs: list[dict]) -> list[dict]:
+    """Insert or update jobs. Returns the jobs that weren't in the database before (used for alerts)."""
     now = int(time.time())
+    if not jobs:
+        return []
     cols = ["id", "first_seen", "sources"] + UPDATABLE
     placeholders = ",".join("?" for _ in cols)
 
@@ -91,8 +94,18 @@ def upsert_jobs(jobs: list[dict]) -> int:
         " THEN jobs.sources ELSE COALESCE(jobs.sources || '|', '') || excluded.source_name END")
     sql = f"INSERT INTO jobs ({','.join(cols)}) VALUES ({placeholders}) ON CONFLICT(id) DO UPDATE SET {updates}"
     with conn() as c:
+        ids = list({j["id"] for j in jobs})
+        existing = set()
+        for i in range(0, len(ids), 500):
+            chunk = ids[i:i + 500]
+            existing |= {r[0] for r in c.execute(f"SELECT id FROM jobs WHERE id IN ({','.join('?' * len(chunk))})", chunk)}
         c.executemany(sql, [[j["id"], now, j["source_name"]] + [j.get(f) for f in UPDATABLE] for j in jobs])
-    return len(jobs)
+    seen, new = set(), []
+    for j in jobs:
+        if j["id"] not in existing and j["id"] not in seen:
+            seen.add(j["id"])
+            new.append(j)
+    return new
 
 
 def log_fetch(source: str, count: int, error: str = "") -> None:
@@ -113,6 +126,11 @@ def list_jobs(max_age_days: int) -> list[dict]:
             "SELECT * FROM jobs WHERE COALESCE(posted_at, first_seen) >= ? OR status NOT IN ('new', 'hidden') "
             "ORDER BY COALESCE(posted_at, first_seen) DESC", (cutoff,))
         return [dict(r) for r in rows]
+
+
+def decision_counts() -> dict:
+    with conn() as c:
+        return {r[0]: r[1] for r in c.execute("SELECT status, COUNT(*) FROM jobs WHERE status IN ('waiting','declined') GROUP BY status")}
 
 
 def applied_jobs() -> list[dict]:

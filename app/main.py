@@ -40,7 +40,7 @@ from fastapi import Body, FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
-from . import auth, classify, db, finance, geo, h1b, llm, readme, refresh
+from . import alerts, auth, classify, db, finance, geo, h1b, llm, patterns, readme, refresh
 from .config import DATA_DIR, ROOT, env, load_more_companies, load_sources, load_universities, save_sources
 
 app = FastAPI(title="Job Portal", docs_url=None, redoc_url=None, openapi_url=None)
@@ -149,7 +149,7 @@ _refresh = {"running": False, "started": None, "results": []}
 def _do_refresh(include_apify: bool):
     _refresh.update(running=True, started=int(time.time()), results=[])
     try:
-        _refresh["results"] = refresh.run(include_apify=include_apify)
+        _refresh["results"] = refresh.run(include_apify=include_apify, on_new=alerts.on_new)
         try:  # keep the README's live snapshot current (and push it to GitHub when that's set up)
             readme.update()
             _refresh["readme"] = readme.push_if_due()
@@ -169,9 +169,56 @@ def _auto_refresh_loop():
         time.sleep(max(min(minutes, 10), 5) * 60)
 
 
+def _self_check_loop():
+    """If macOS takes away this process's access to its own files (it happened once after the process ran for
+    days), pages come out empty. Exit instead, so the Desktop app or the watchdog starts a healthy copy."""
+    import os
+    probe = ROOT / "static" / "login.html"
+    while True:
+        time.sleep(300)
+        try:
+            ok = len(probe.read_bytes()) > 100
+        except Exception:
+            ok = False
+        if not ok:
+            print("SELF-CHECK FAILED: can't read the portal's own files any more; exiting so it can be restarted.", flush=True)
+            os._exit(3)
+
+
+_fast = {"last": 0, "results": []}
+
+
+def _fast_lane_loop():
+    """Every few minutes, re-check the top companies' own career sites so new postings (and alerts) arrive fast."""
+    time.sleep(90)
+    while env("PORTAL_NO_REFRESH") != "1":
+        cfg = load_sources()
+        minutes = int(cfg.get("fast_lane_minutes") or 0)
+        names = cfg.get("fast_lane") or []
+        if minutes > 0 and names and not _refresh["running"]:
+            try:
+                _fast["results"] = refresh.run_fast(names, on_new=alerts.on_new)
+                _fast["last"] = int(time.time())
+            except Exception as e:
+                _fast["results"] = [{"source": "fast lane", "error": str(e)[:200]}]
+        time.sleep(max(minutes, 5) * 60)
+
+
+def _alerts_loop():
+    while True:
+        try:
+            alerts.tick()
+        except Exception:
+            pass
+        time.sleep(240)
+
+
 @app.on_event("startup")
 def _startup():
     threading.Thread(target=_auto_refresh_loop, daemon=True).start()
+    threading.Thread(target=_self_check_loop, daemon=True).start()
+    threading.Thread(target=_fast_lane_loop, daemon=True).start()
+    threading.Thread(target=_alerts_loop, daemon=True).start()
 
 
 @app.post("/api/refresh")
@@ -184,7 +231,62 @@ def start_refresh(body: dict = Body(default={})):
 
 @app.get("/api/refresh")
 def refresh_status():
-    return {**_refresh, "log": db.fetch_log()}
+    return {**_refresh, "log": db.fetch_log(), "fast_lane": _fast}
+
+
+@app.get("/api/apify")
+def apify_usage():
+    from .fetchers import apify
+    try:
+        return apify.usage()
+    except Exception as e:
+        return {"configured": True, "error": str(e)[:200]}
+
+
+@app.get("/api/patterns")
+def posting_patterns():
+    return {"timezone": "ET", "patterns": patterns.all_patterns()}
+
+
+@app.get("/api/alerts")
+def get_alerts():
+    cfg = alerts.load()
+    src = load_sources()
+    shown = {**cfg, "telegram_token": ("•••• saved" if cfg.get("telegram_token") else "")}  # never send the token back
+    return {"settings": shown, "history": alerts.history(), "fast_lane": src.get("fast_lane") or [],
+            "fast_lane_minutes": src.get("fast_lane_minutes", 0), "fast_last": _fast["last"],
+            "watch_default": [p["company"] for p in alerts._watchlist({**cfg, "watch": []})]}
+
+
+@app.post("/api/alerts")
+def save_alerts(body: dict = Body(...)):
+    current = alerts.load()
+    cfg = {**current, **{k: v for k, v in body.items() if k in alerts.DEFAULTS}}
+    if cfg.get("telegram_token", "").startswith("••••"):  # unchanged placeholder from the page
+        cfg["telegram_token"] = current.get("telegram_token", "")
+    if cfg["telegram_token"] != current.get("telegram_token"):
+        cfg["telegram_chat_id"] = ""  # new bot: connect again
+    if not str(cfg["topic"]).strip() or len(str(cfg["topic"])) < 12:
+        raise HTTPException(400, "Use a topic name of at least 12 characters (it works like a password).")
+    saved = alerts.save(cfg)
+    return {**saved, "telegram_token": "•••• saved" if saved.get("telegram_token") else ""}
+
+
+@app.post("/api/alerts/telegram")
+def connect_telegram():
+    try:
+        return alerts.telegram_connect()
+    except ValueError as e:
+        raise HTTPException(400, str(e))
+
+
+@app.post("/api/alerts/test")
+def test_alert():
+    r = alerts.send("✅ SharmaJai Job Portal alerts work", "This is a test. New-job alerts, posting-window heads-ups and "
+                    "your morning summary will arrive here.", click=alerts.load()["portal_url"], tags=["white_check_mark"], force=True)
+    if not r.get("sent"):
+        raise HTTPException(502, f"Couldn't send: {r.get('detail')}")
+    return r
 
 
 # ---------------------------------------------------------------- status & sources
@@ -269,7 +371,7 @@ def jobs():
 @app.get("/api/analytics")
 def analytics():
     """Everything you've applied to (any age), enriched like the job list."""
-    return {"now": int(time.time()), "applied": _enrich(db.applied_jobs())}
+    return {"now": int(time.time()), "applied": _enrich(db.applied_jobs()), "decisions": db.decision_counts()}
 
 
 @app.get("/api/companies")

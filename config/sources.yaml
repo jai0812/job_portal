@@ -14,11 +14,11 @@ github:
   - name: vanshb03 Summer 2027 Internships
     url: https://github.com/vanshb03/Summer2027-Internships
     level: internship
-  - name: SpeedyApply 2026 SWE College Jobs
-    url: https://github.com/speedyapply/2026-SWE-College-Jobs
+  - name: SpeedyApply 2027 SWE College Jobs
+    url: https://github.com/speedyapply/2027-SWE-College-Jobs
     level: early_career
   - name: SpeedyApply AI & ML College Jobs
-    url: https://github.com/speedyapply/2026-AI-College-Jobs
+    url: https://github.com/speedyapply/2027-AI-College-Jobs
     level: early_career
     category: data
   - name: JobRight SWE New Grad
@@ -53,38 +53,62 @@ github:
     level: internship
     category: finance
 
+  # ---- added Oct 23: lists checked to bring jobs the portal didn't have yet
+  - name: SWE Job Lists 2027 New Grad (H-1B labelled)
+    url: https://github.com/TheoXiong7/2027-New-Grad-SWE-Jobs
+    level: early_career
+    category: swe
+  - name: Zapply New Grad 2027 (all fields)
+    url: https://github.com/zapplyjobs/New-Grad-Jobs-2027
+    level: early_career
+  - name: Zapply New Grad Data Science & ML 2027
+    url: https://github.com/zapplyjobs/New-Grad-Data-Science-Jobs-2027
+    level: early_career
+    category: data
+  - name: Zapply New Grad Software Engineering 2027
+    url: https://github.com/zapplyjobs/New-Grad-Software-Engineering-Jobs-2027
+    level: early_career
+    category: swe
+  - name: Zapply Internships 2027
+    url: https://github.com/zapplyjobs/Internships-2027
+    level: internship
+  - name: ApplyGuy 2027 New Grad
+    url: https://github.com/ApplyGuy/2027-New-Grad-Jobs
+    level: early_career
+    category: swe
+  - name: Understudy Summer 2027 Tech Internships
+    url: https://github.com/Keugene11/Summer-2027-Tech-Internships
+    level: internship
+  - name: Automated Summer 2027 & Fall 2026 Internships
+    url: https://github.com/zshah101/Automated-List-Of-Summer-2027-and-Fall-2026-Tech-Internships
+    level: internship
+  - name: sndsh404 Summer 2027 Internships
+    url: https://github.com/sndsh404/summer-2027-internships
+    level: internship
+
 # Apify (LinkedIn and others). Needs APIFY_TOKEN in .env. Each search is one actor run, billed by Apify.
 apify:
   enabled: true
   actor: curious_coder/linkedin-jobs-scraper
+  # Trimmed to ≈ $0.30 per click (≈ 150 jobs × $0.002) so the free $5/month allows about 15 clicks.
+  # The free GitHub lists and company sites already cover most of LinkedIn; these fill the gaps.
   searches:
-    - keywords: software engineer new grad
-      location: United States
-      datePosted: past24Hours
-      limitPerSource: 100
-    - keywords: data scientist machine learning engineer entry level
-      location: United States
-      datePosted: past24Hours
-      limitPerSource: 100
-    - keywords: quantitative analyst software engineer bank
-      location: United States
-      datePosted: past24Hours
-      limitPerSource: 50
     # Google, Meta, Apple and Uber: their own sites can't be read, so search LinkedIn by company id
     - keywords: software engineer OR data scientist OR machine learning
       location: United States
       companyIds: ["1441", "10667", "162479", "1815218"]
       datePosted: pastWeek
-      limitPerSource: 200
-    # India
-    - keywords: data scientist machine learning engineer
-      location: India
-      datePosted: past24Hours
-      limitPerSource: 100
-    - keywords: financial analyst quantitative analyst investment banking
-      location: India
+      limitPerSource: 60
+    # Everyone else in the US, last 24 hours only
+    - keywords: software engineer OR data scientist OR machine learning engineer new grad
+      location: United States
       datePosted: past24Hours
       limitPerSource: 50
+    # India: data / ML / finance, last 24 hours
+    - keywords: data scientist OR machine learning engineer OR financial analyst
+      location: India
+      datePosted: past24Hours
+      limitPerSource: 40
 
 # Only keep jobs posted within this many days.
 max_age_days: 45
@@ -106,3 +130,10 @@ jobright_url: https://jobright.ai/jobs/search?value={q}
 # remote, the portal also commits and pushes README.md (only that file), at most once every N hours.
 readme_auto_push: true
 readme_push_hours: 6
+
+# Fast lane: these companies' own career sites are re-checked every N minutes (not just hourly), so brand-new
+# postings show up quickly and can trigger phone / email alerts (Settings → Phone & email alerts).
+fast_lane_minutes: 15
+fast_lane: [Microsoft, Amazon, NVIDIA, Netflix, Salesforce, Adobe, LinkedIn, Airbnb, Databricks, Snowflake, Stripe, DoorDash,
+            Pinterest, Roblox, Waymo, Datadog, Cloudflare, Anthropic, OpenAI, Coinbase, Robinhood, Palantir, Jane Street,
+            Hudson River Trading, JPMorgan Chase, Capital One, Visa, Mastercard, Morgan Stanley, Citi, BlackRock]

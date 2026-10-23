@@ -60,17 +60,19 @@ function toast(msg, ms = 2600) {
 let STATUS = {};
 
 // ------------------------------------------------------------------ tabs
-const REGION_TABS = { jobs: "us", india: "india", world: "other" };
+const REGION_TABS = { jobs: "us", top: "us", india: "india", world: "other" };
 function showTab(name) {
   $$("#tabs button").forEach((b) => b.classList.toggle("active", b.dataset.tab === name));
   const section = name in REGION_TABS ? "jobs" : name;
   $$(".tab").forEach((t) => t.classList.toggle("active", t.id === `tab-${section}`));
-  if (name in REGION_TABS && F.region !== REGION_TABS[name]) {
+  if (name in REGION_TABS && (F.region !== REGION_TABS[name] || F.topset !== (name === "top"))) {
     F.region = REGION_TABS[name];
+    F.topset = name === "top";
     F.place = "";
     SHOWN = 200;
     if (JOBS.length) renderJobs();
   }
+  if (name === "settings") loadAlerts();
   if (name === "analytics") loadAnalytics();
   location.hash = name;
 }
@@ -97,7 +99,8 @@ const H1B_LABEL = { yes: "Sponsors", likely: "Likely", no: "No sponsorship", cit
 const LEVEL_LABEL = { internship: "Intern", early_career: "Early career", experienced: "Experienced", unspecified: "—" };
 const CAT_LABEL = { swe: "SWE", finance: "Finance", data: "DS/ML", other: "Other" };
 
-const F = { region: "us", place: "", cat: "", level: "", age: "", stype: "", fin: "", q: "", h1b: "", cap: false, top: false, source: "", status: "active" };
+let PATTERNS = [];
+const F = { region: "us", topset: false, place: "", cat: "", level: "", age: "", stype: "", fin: "", q: "", h1b: "", cap: false, top: false, source: "", status: "active" };
 const REGION_INFO = {
   us: ["🇺🇸 United States", "US jobs from GitHub lists, LinkedIn and employers' own career sites (finance firms, FAANG / MAANG, big tech and top tech companies)."],
   india: ["🇮🇳 India", "Jobs in India from Indian tech & fintech companies, big tech India teams (Amazon, NVIDIA, Salesforce, Adobe, Intel, Target), global banks & finance firms' India offices, and LinkedIn India searches."],
@@ -108,6 +111,7 @@ const INDIA_CITIES = [["Bengaluru", /Bengaluru|Bangalore|Karnataka|KA,/i], ["Hyd
   ["Mumbai", /Mumbai|Navi Mumbai|Thane/i], ["Delhi NCR", /Delhi|Gurgaon|Gurugram|Noida|Haryana|Uttar Pradesh/i],
   ["Chennai", /Chennai|Tamil Nadu/i], ["Kolkata", /Kolkata/i], ["Ahmedabad", /Ahmedabad|Gujarat/i]];
 function placesOf(j) {
+  if (F.topset) return [j.company];
   if (F.region === "india") return INDIA_CITIES.filter(([, rx]) => rx.test(j.location)).map(([n]) => n);
   if (F.region === "other") return (j.countries || []).filter((c) => c !== "United States" && c !== "India");
   return [];
@@ -129,12 +133,19 @@ function finCell(j) {
   return `<td class="fin"><span class="seg seg-${j.fin.segment}">${esc(j.fin.segment_label)}</span><span class="sname">${esc(j.fin.name)}</span></td>`;
 }
 let JOBS = [], NOW = 0, SORT = { key: "posted", asc: false }, SHOWN = 200;
-const STATUSES = ["new", "saved", "applied", "interviewing", "offer", "rejected", "hidden"];
+const STATUSES = ["new", "saved", "waiting", "declined", "applied", "interviewing", "offer", "rejected", "hidden"];
 const APPLIED = new Set(["applied", "interviewing", "offer", "rejected"]);
 const statusSelect = (j) => `<select data-act="status" title="Stage">${STATUSES.map((s) => `<option ${s === j.status ? "selected" : ""}>${s}</option>`).join("")}</select>`;
-const appliedBox = (j) => `<td class="cb-col"><input type="checkbox" class="applied-cb" data-act="applied" ${APPLIED.has(j.status) ? "checked" : ""}
-  title="${APPLIED.has(j.status) ? `Applied ${j.applied_at ? new Date(j.applied_at * 1000).toLocaleDateString() : ""}` : "Tick when you've applied"}" aria-label="Applied"></td>`;
-const rowClass = (j) => (APPLIED.has(j.status) ? "is-applied" : j.status);
+// The box on the left: click = applied / not applied; hold (or right-click) = menu with Applied · Wait · Decline · Clear.
+const ST_LOOK = { applied: ["✓", "Applied"], waiting: ["⏸", "Wait (checkpoint)"], declined: ["✗", "Declined"] };
+const stateOf = (j) => (APPLIED.has(j.status) ? "applied" : j.status === "waiting" || j.status === "declined" ? j.status : "");
+const appliedBox = (j) => {
+  const st = stateOf(j), [icon, label] = ST_LOOK[st] || ["", ""];
+  const when = st === "applied" && j.applied_at ? ` ${new Date(j.applied_at * 1000).toLocaleDateString()}` : "";
+  return `<td class="cb-col"><button class="st-btn ${st ? "st-" + st : ""}" data-act="st" aria-label="${label || "Not decided"}"
+    title="${label ? label + when + " · " : ""}Click: applied · Hold: Applied / Wait / Decline">${icon}</button></td>`;
+};
+const rowClass = (j) => (stateOf(j) ? "is-" + stateOf(j) : j.status);
 
 function ageOf(j) {
   return NOW - (j.posted_at || j.first_seen);
@@ -201,6 +212,7 @@ async function loadJobs() {
 function matches(j, skip) {
   if (j.source_type === "university") return false; // these live on the Universities tab
   if (!(j.regions || ["us"]).includes(F.region)) return false;
+  if (F.topset && !j.top_company) return false;
   if (skip !== "place" && F.place && !placesOf(j).includes(F.place)) return false;
   if (skip !== "cat" && F.cat && !j.categories.split(",").includes(F.cat)) return false;
   if (skip !== "level" && F.level && j.level !== F.level) return false;
@@ -214,7 +226,7 @@ function matches(j, skip) {
   if (F.h1b === "yes" && j.h1b !== "yes") return false;
   if (F.h1b === "not-no" && ["no", "citizen"].includes(j.h1b)) return false;
   if (F.status === "active" ? j.status === "hidden"
-    : F.status === "todo" ? (APPLIED.has(j.status) || j.status === "hidden")
+    : F.status === "todo" ? (APPLIED.has(j.status) || ["hidden", "declined"].includes(j.status))
     : F.status === "applied-any" ? !APPLIED.has(j.status)
     : j.status !== F.status) return false;
   if (F.q) {
@@ -245,13 +257,14 @@ function renderJobs() {
   const base = (skip) => JOBS.filter((j) => matches(j, skip));
   const forCat = base("cat"), forLevel = base("level"), forAge = base("age"), forSt = base("stype"), forFin = base("fin");
   const [rtitle, rdesc] = REGION_INFO[F.region];
-  $("#region-head").innerHTML = F.region === "us" ? "" : `<h2>${rtitle}</h2><p class="muted">${esc(rdesc)}</p>`;
-  if (F.region === "us") $("#f-place").innerHTML = "";
+  $("#region-head").innerHTML = F.topset ? topHead() : F.region === "us" ? "" : `<h2>${rtitle}</h2><p class="muted">${esc(rdesc)}</p>`;
+  bindTopHead();
+  if (F.region === "us" && !F.topset) $("#f-place").innerHTML = "";
   else {
     const forPlace = base("place"), counts = {};
     forPlace.forEach((j) => placesOf(j).forEach((p) => (counts[p] = (counts[p] || 0) + 1)));
     const places = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 18).map(([p]) => [p, p]);
-    chips($("#f-place"), [["", F.region === "india" ? "All cities" : "All countries"], ...places], "place",
+    chips($("#f-place"), [["", F.topset ? "All top companies" : F.region === "india" ? "All cities" : "All countries"], ...places], "place",
       (v) => (v ? counts[v] || 0 : forPlace.length));
   }
   $("#jobs thead th[data-sort=h1b]").classList.toggle("hidden", F.region !== "us");
@@ -293,7 +306,50 @@ function renderJobs() {
   $("#more").classList.toggle("hidden", rows.length <= SHOWN);
 }
 
+// ---- the status menu (shared by every table)
+let ST_TARGET = null, ST_TIMER = null, ST_HELD = false;
+function openStMenu(btn) {
+  ST_TARGET = btn.closest("tr").dataset.id;
+  const m = $("#st-menu"), r = btn.getBoundingClientRect();
+  m.style.left = `${Math.min(r.left, innerWidth - 190)}px`;
+  m.style.top = `${r.bottom + 4 + (r.bottom + 170 > innerHeight ? -(170 + r.height + 8) : 0)}px`;
+  m.classList.add("show");
+}
+function closeStMenu() { $("#st-menu").classList.remove("show"); ST_TARGET = null; }
+async function setStatus(id, status) {
+  const r = await api(`/api/jobs/${id}/status`, { method: "POST", body: { status } });
+  Object.assign(JOBS.find((j) => j.id === id) || {}, r);
+  if (status === "applied") {
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+    toast(`Marked applied ✓  (${JOBS.filter((j) => j.applied_at && j.applied_at * 1000 >= today.getTime()).length} today)`);
+  } else if (status === "declined") toast("Declined ✗ (still listed in red; hide it with the stage menu)");
+  else if (status === "waiting") toast("Saved as a checkpoint ⏸");
+  renderJobs();
+  renderUnis();
+}
+document.addEventListener("click", (e) => { if (!e.target.closest("#st-menu") && !e.target.closest("[data-act=st]")) closeStMenu(); });
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeStMenu(); });
+
 function bindRowActions(tbody) {
+// hold the status box ~0.4 s (mouse or finger) to open the menu; a quick click toggles "applied"
+tbody.addEventListener("pointerdown", (e) => {
+  const btn = e.target.closest("[data-act=st]");
+  if (!btn) return;
+  ST_HELD = false;
+  ST_TIMER = setTimeout(() => { ST_HELD = true; openStMenu(btn); }, 400);
+});
+["pointerup", "pointerleave", "pointercancel"].forEach((ev) => tbody.addEventListener(ev, () => clearTimeout(ST_TIMER)));
+tbody.addEventListener("contextmenu", (e) => {
+  const btn = e.target.closest("[data-act=st]");
+  if (btn) { e.preventDefault(); clearTimeout(ST_TIMER); ST_HELD = true; openStMenu(btn); }
+});
+tbody.addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-act=st]");
+  if (!btn) return;
+  if (ST_HELD) { ST_HELD = false; return; }  // the long-press already opened the menu
+  const j = JOBS.find((x) => x.id === btn.closest("tr").dataset.id);
+  setStatus(j.id, stateOf(j) === "applied" ? "new" : "applied");
+});
 tbody.addEventListener("change", async (e) => {
   const act = e.target.dataset.act;
   if (act !== "status" && act !== "applied") return;
@@ -311,6 +367,7 @@ tbody.addEventListener("change", async (e) => {
 });
 }
 bindRowActions($("#jobs tbody"));
+$$("#st-menu [data-set]").forEach((b) => (b.onclick = () => { const id = ST_TARGET; closeStMenu(); if (id) setStatus(id, b.dataset.set); }));
 bindRowActions($("#uni-table tbody"));
 $$("#jobs th[data-sort]").forEach((th) => (th.onclick = () => {
   SORT = { key: th.dataset.sort, asc: SORT.key === th.dataset.sort ? !SORT.asc : false };
@@ -324,9 +381,23 @@ $("#f-top").onchange = (e) => { F.top = e.target.checked; renderJobs(); };
 $("#f-source").onchange = (e) => { F.source = e.target.value; renderJobs(); };
 $("#f-status").onchange = (e) => { F.status = e.target.value; renderJobs(); };
 
+let APIFY = null;
+async function loadApify() {
+  try { APIFY = await api("/api/apify"); } catch { APIFY = null; }
+  const b = $("#btn-apify");
+  if (APIFY && APIFY.configured && !APIFY.error)
+    b.innerHTML = `Fetch LinkedIn (Apify) <span class="apify-left ${APIFY.clicks_left <= 2 ? "low" : ""}">$${APIFY.left.toFixed(2)} left · ≈${APIFY.clicks_left} clicks</span>`;
+}
 async function startRefresh(apify) {
   if (apify && !STATUS.apify) return toast("Add APIFY_TOKEN to .env first (see Settings).", 4000);
-  if (apify && !confirm("Run the Apify LinkedIn searches from config/sources.yaml? This uses your Apify credits.")) return;
+  if (apify) {
+    await loadApify();
+    const u = APIFY && APIFY.configured && !APIFY.error ? APIFY : null;
+    const msg = u ? `Run the LinkedIn searches now?\n\nThis fetch ≈ $${u.per_click.toFixed(2)}\nLeft this month: $${u.left.toFixed(2)} of $${u.limit} (≈ ${u.clicks_left} fetches)\nResets: ${u.resets}`
+                  : "Run the LinkedIn searches now? This uses your Apify credit.";
+    if (u && u.left < u.per_click) return alert(`Not enough Apify credit left this month ($${u.left.toFixed(2)}; a fetch ≈ $${u.per_click.toFixed(2)}). It resets ${u.resets}.`);
+    if (!confirm(msg)) return;
+  }
   await api("/api/refresh", { method: "POST", body: { apify } });
   pollRefresh();
 }
@@ -339,6 +410,7 @@ async function pollRefresh() {
   if (s.results.length) toast(errs.length ? `Done, with errors: ${errs.map((e) => e.source).join(", ")}` : `Fetched ${s.results.reduce((a, r) => a + r.count, 0)} jobs`);
   await loadStatus();
   loadJobs();
+  loadApify();
 }
 function lastFetched(log) {
   const t = Math.max(0, ...log.map((l) => l.last_run));
@@ -401,6 +473,103 @@ $("#ask-go").onclick = async () => {
     if (c) c.onclick = () => { navigator.clipboard.writeText(r.text); toast("Copied"); };
   });
 };
+
+// ------------------------------------------------------------------ TOP COMPANIES: posting patterns
+// Measured from the portal's own data: when each company's own career site published its roles (ET).
+const HOUR = (h) => `${h % 12 || 12}${h % 24 < 12 ? "a" : "p"}`;
+function hourBars(hours, start) {
+  const max = Math.max(1, ...hours), W = 120, H = 26, bw = W / 24;
+  const inWin = (h) => ((h - start + 24) % 24) < 3;
+  return `<svg viewBox="0 0 ${W} ${H}" class="hourbars" aria-hidden="true">${hours.map((v, h) =>
+    `<rect x="${h * bw + 0.5}" y="${H - Math.max(1, (v / max) * (H - 2))}" width="${bw - 1}" height="${Math.max(1, (v / max) * (H - 2))}" rx="1" class="${inWin(h) ? "on" : ""}"/>`).join("")}</svg>`;
+}
+function topHead() {
+  const present = new Set(JOBS.filter((j) => j.top_company).map((j) => j.company));
+  const pats = PATTERNS.filter((p) => present.has(p.company)).slice(0, 12);
+  return `<h2>⭐ Top companies</h2>
+    <p class="muted">FAANG / MAANG, big tech, top AI labs and the biggest finance names. Their own career sites are re-checked every 15 minutes.
+      Below: when each one actually posts, measured from the last 60 days (ET). Set up alerts in <a href="#settings">Settings → Phone &amp; email alerts</a>.</p>
+    ${pats.length ? `<div class="pat-cards">${pats.map((p) => `
+      <button class="pat ${F.place === p.company ? "on" : ""}" data-co="${esc(p.company)}" title="${p.samples} postings measured · ${p.strength} pattern">
+        <span class="pat-name">${esc(p.company)}</span>
+        <span class="pat-win">${esc(p.window)}</span>
+        <span class="pat-days">${esc(p.top_days.join(" · "))} · ${Math.round(100 * p.window_share)}% of postings</span>
+        ${hourBars(p.hours, p.window_start)}
+        <span class="pat-axis"><span>12a</span><span>6a</span><span>12p</span><span>6p</span></span>
+      </button>`).join("")}</div>` : ""}`;
+}
+function bindTopHead() {
+  $$("#region-head .pat").forEach((b) => (b.onclick = () => { F.place = F.place === b.dataset.co ? "" : b.dataset.co; SHOWN = 200; renderJobs(); }));
+}
+async function loadPatterns() {
+  try { PATTERNS = (await api("/api/patterns")).patterns; } catch {}
+}
+
+// ------------------------------------------------------------------ ALERTS (Settings)
+let ALERTS = null;
+async function loadAlerts() {
+  try { ALERTS = await api("/api/alerts"); } catch (e) { $("#alerts-card").textContent = e.message; return; }
+  const s = ALERTS.settings, chk = (k) => (s[k] ? "checked" : "");
+  const box = (k, v, label) => `<label class="check"><input type="checkbox" data-list="${k}" value="${v}" ${s[k].includes(v) ? "checked" : ""}> ${label}</label>`;
+  const hours = (k) => `<select data-k="${k}">${[...Array(24)].map((_, h) => `<option value="${h}" ${+s[k] === h ? "selected" : ""}>${HOUR(h)}m</option>`).join("")}</select>`;
+  $("#alerts-card").innerHTML = `
+    <h4>Where to send (both free; use one or both)</h4>
+    <div class="al-ch">
+      <label class="check big"><input type="checkbox" data-k="use_ntfy" ${chk("use_ntfy")}> <b>ntfy app</b></label>
+      <p>In the ntfy app tap <b>+</b> → <b>Subscribe to topic</b> → enter: <code class="topic">${esc(s.topic)}</code> <button id="al-copy">Copy</button>
+        <span class="muted">(works like a password)</span></p>
+      <p>Also by email (optional, through ntfy): <input id="al-email" type="email" value="${esc(s.email)}" placeholder="you@example.com"></p>
+    </div>
+    <div class="al-ch">
+      <label class="check big"><input type="checkbox" data-k="use_telegram" ${chk("use_telegram")}> <b>Telegram</b>
+        ${s.telegram_chat_id ? '<span class="tag yes">connected</span>' : '<span class="tag">not connected</span>'}</label>
+      <ol class="al-steps">
+        <li>In Telegram, open <b>@BotFather</b> → send <code>/newbot</code> → pick a name and a username ending in <code>bot</code>.</li>
+        <li>BotFather replies with a <b>token</b>. Paste it here: <input id="al-tg" type="password" value="${esc(s.telegram_token)}" placeholder="123456789:ABC…" size="30" autocomplete="off"></li>
+        <li>Open your new bot in Telegram and tap <b>Start</b>.</li>
+        <li><button id="al-tg-connect">Connect Telegram</button> <span id="al-tg-msg" class="muted"></span></li>
+      </ol>
+    </div>
+    <h4>What to get</h4>
+    <div class="al-grid">
+      <label class="check big"><input type="checkbox" data-k="enabled" ${chk("enabled")}> <b>Alerts on</b></label>
+      <label class="check"><input type="checkbox" data-k="new_jobs" ${chk("new_jobs")}> New roles at top companies (checked every ${ALERTS.fast_lane_minutes} min)</label>
+      <label class="check"><input type="checkbox" data-k="windows" ${chk("windows")}> Heads-up just before a company's usual posting time</label>
+      <label class="check"><input type="checkbox" data-k="digest" ${chk("digest")}> Morning summary at ${hours("digest_hour")}: new roles from the last 24 h + today's likely posting windows</label>
+      <div><b>Only these roles:</b> ${box("levels", "early_career", "New grad / early career")} ${box("levels", "internship", "Internships")} ${box("levels", "experienced", "Experienced")}</div>
+      <div><b>Sectors:</b> ${box("sectors", "swe", "Software")} ${box("sectors", "data", "Data / ML")} ${box("sectors", "finance", "Finance")}</div>
+      <div><b>Where:</b> ${box("regions", "us", "🇺🇸 US")} ${box("regions", "india", "🇮🇳 India")} ${box("regions", "other", "🌍 Other")}</div>
+      <label class="check"><input type="checkbox" data-k="sponsor_only" ${chk("sponsor_only")}> Only employers with H‑1B history</label>
+      <div><b>Quiet hours:</b> from ${hours("quiet_start")} to ${hours("quiet_end")}</div>
+      <div><b>Tapping an alert opens:</b> <input id="al-url" value="${esc(s.portal_url)}" size="34"></div>
+      <div class="muted">Heads-ups for: ${esc((s.watch.length ? s.watch : ALERTS.watch_default).join(", ") || "none yet (not enough data)")}</div>
+    </div>
+    <div class="row"><button class="primary" id="al-save">Save</button><button id="al-test">Send test</button><span id="al-msg" class="muted"></span></div>
+    ${ALERTS.history.length ? `<h4>Recent alerts</h4><ul class="al-hist">${ALERTS.history.slice(0, 8).map((h) => `<li>${h.ok ? "✓" : "✗"} ${esc(h.title)} <span class="muted">${ageText(Date.now() / 1000 - h.at)} ago</span></li>`).join("")}</ul>` : ""}
+    <p class="muted">Text messages to a phone number aren't offered: they need a paid SMS service. ntfy and Telegram arrive on your phone the same way, for free.</p>`;
+  $("#al-copy").onclick = () => { navigator.clipboard.writeText(s.topic); toast("Topic copied"); };
+  $("#al-tg-connect").onclick = async () => {
+    await saveAlerts();
+    try { const r = await api("/api/alerts/telegram", { method: "POST" }); $("#al-tg-msg").textContent = `Connected: check Telegram, ${r.chat}.`; loadAlerts(); }
+    catch (e) { $("#al-tg-msg").textContent = e.message; }
+  };
+  $("#al-save").onclick = saveAlerts;
+  $("#al-test").onclick = async () => {
+    await saveAlerts();
+    try { await api("/api/alerts/test", { method: "POST" }); $("#al-msg").textContent = "Test sent: check your phone (and email)."; }
+    catch (e) { $("#al-msg").textContent = e.message; }
+  };
+}
+async function saveAlerts() {
+  const s = { ...ALERTS.settings };
+  $$("#alerts-card [data-k]").forEach((el) => (s[el.dataset.k] = el.type === "checkbox" ? el.checked : +el.value));
+  ["levels", "sectors", "regions"].forEach((k) => (s[k] = $$(`#alerts-card [data-list="${k}"]:checked`).map((el) => el.value)));
+  s.email = $("#al-email").value.trim();
+  s.telegram_token = $("#al-tg").value.trim();
+  s.portal_url = $("#al-url").value.trim();
+  try { ALERTS.settings = await api("/api/alerts", { method: "POST", body: s }); $("#al-msg").textContent = "Saved."; }
+  catch (e) { $("#al-msg").textContent = e.message; }
+}
 
 // ------------------------------------------------------------------ UNIVERSITIES
 let UNIS = [];
@@ -655,6 +824,7 @@ function renderAnalytics() {
     ${tile("Daily average", (last30 / 30).toFixed(1), "last 30 days")}
     ${tile("Current streak", `${streak} day${streak === 1 ? "" : "s"}`, streak ? "keep it going" : "apply today to start one")}
     ${tile("Interview rate", `${pct(interviews, apps.length)}%`, `${interviews - offers} interviewing · ${offers} offer${offers === 1 ? "" : "s"} · ${rejected} rejected`)}
+    ${tile("Checkpoints · declined", `${(AN.decisions || {}).waiting || 0} · ${(AN.decisions || {}).declined || 0}`, "jobs marked ⏸ wait / ✗ decline")}
     ${tile("To H-1B sponsors", `${pct(sponsor, usApps.length)}%`, `${sponsor} of ${usApps.length} US applications`)}
   </div>
   ${topSector ? `<div class="insight">You apply most to <b>${esc(topSector.label)}</b> (${pct(topSector.value, apps.length)}% of applications)${segs[0] ? `, and among finance firms mostly to <b>${esc(segs[0].label)}</b>` : ""}. ${withPost.length ? `<b>${fast}%</b> of your applications went in within 3 days of the posting.` : ""}</div>` : ""}
@@ -784,6 +954,8 @@ showQbar(QPIN);
 (async () => {
   await loadStatus();
   try { FIN_SEGMENTS = Object.entries((await api("/api/finance")).segments); } catch {}
+  await loadPatterns();
+  loadApify();
   loadJobs();
   loadUnis();
   pollRefresh();

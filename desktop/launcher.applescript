@@ -5,14 +5,17 @@ set portalURL to "http://localhost:8787"
 
 on isUp()
 	try
-		set code to do shell script "curl -s -m 2 -o /dev/null -w '%{http_code}' http://127.0.0.1:8787/login.html || true"
-		return code is "200"
+		-- "up" means the sign-in page actually has content (a broken process can answer 200 with an empty page)
+		set n to do shell script "curl -s -m 3 http://127.0.0.1:8787/login.html | wc -c | tr -d ' ' || true"
+		return (n as integer) > 100
 	on error
 		return false
 	end try
 end isUp
 
 if not isUp() then
+	do shell script "pkill -f 'uvicorn app.main:app' || true"
+	delay 1
 	do shell script "cd " & quoted form of portalDir & " || exit 1; mkdir -p data; nohup ./run.sh > data/server.log 2>&1 < /dev/null &"
 	repeat 60 times
 		delay 0.5

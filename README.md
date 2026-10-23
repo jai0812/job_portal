@@ -26,40 +26,40 @@ This section is rewritten by the portal itself after every hourly refresh.
 
 <!-- LIVE:START (auto-generated, do not edit by hand) -->
 
-**Last updated: Oct 23, 2026 at 12:39 PM EDT** · refreshed automatically every hour
+**Last updated: Oct 23, 2026 at 3:11 PM EDT** · refreshed automatically every hour
 
 | Right now in the portal | |
 |---|---|
-| 🇺🇸 United States | **87,242** |
-| 🇮🇳 India | **11,662** |
-| 🌍 Other countries | **17,653** |
-| 🎓 University jobs | **4,102** |
-| 🆕 Posted in the last 24 hours | **1,893** |
-| ✅ US jobs at employers with H-1B history | **66,643 (76%)** |
-| 💻 Software Engineering | **22,301** |
-| 📊 Data Science & ML | **13,190** |
-| 🏦 Finance & Banks | **64,982** |
-| 🔌 Sources | **13 GitHub lists · 207 company career sites · 12 universities · LinkedIn (Apify)** |
+| 🇺🇸 United States | **91,173** |
+| 🇮🇳 India | **11,684** |
+| 🌍 Other countries | **18,090** |
+| 🎓 University jobs | **4,122** |
+| 🆕 Posted in the last 24 hours | **2,988** |
+| ✅ US jobs at employers with H-1B history | **68,880 (76%)** |
+| 💻 Software Engineering | **24,617** |
+| 📊 Data Science & ML | **14,194** |
+| 🏦 Finance & Banks | **65,689** |
+| 🔌 Sources | **22 GitHub lists · 207 company career sites · 12 universities · LinkedIn (Apify)** |
 
 **Freshest early-career tech & data roles at employers with H-1B history**
 
 | Company | Role | Location | Posted | H-1B approvals (FY23) | |
 |---|---|---|---|---|---|
-| **Microsoft** | Software Engineering Intern | Tulsa, Oklahoma, United Sta… | 29 min ago | 2,066 | [Apply ↗](https://apply.careers.microsoft.com/careers/job/1970393557044771) |
-| **NBCUniversal** | Associates Systems Engineer | Fort Worth, TEXAS, US | 1h ago | 31 | [Apply ↗](https://jobs.smartrecruiters.com/NBCUniversal3/744000157514653) |
-| **Databricks** | Associate Forward Deployed Engineer | Mountain View, California | 1h ago | 78 | [Apply ↗](https://databricks.com/company/careers/open-positions/job?gh_jid=8910846002) |
-| **MongoDB** | 2027 - Software Engineering Intern, AMER | Austin; New York City; Palo… | 3h ago | 30 | [Apply ↗](https://www.mongodb.com/careers/job/?gh_jid=8209134) |
-| **Western Digital** | Intern - Data Analytics | Biñan City, LAGUNA, PH | 11h ago | 56 | [Apply ↗](https://jobs.smartrecruiters.com/WesternDigital/744000157382148) |
-| **Amazon** | Software Development Engineer - Prime Video Personalizati… | Seattle, WA | 14h ago | 6,126 | [Apply ↗](https://amazon.jobs/en/jobs/10412948/software-dev-engineer-prime-video-personalization-discovery) |
-| **Meta** | Research Scientist Intern - Video Recommendations - PhD | Menlo Park, CA · Bellevue,… | 15h ago | 1,540 | [Apply ↗](https://www.metacareers.com/jobs/932919123033502) |
-| **TikTok** | Seller Content Project Intern | LA | 15h ago | 475 | [Apply ↗](https://lifeattiktok.com/search/7699387964317600053) |
-| **Paccar** | Aftersales Data Analyst Intern | Kirkland, WA | 15h ago | 17 | [Apply ↗](https://jobs.paccar.com/job/Kirkland-Summer-2027-AfterSales-Data-Analyst-Intern-WA-98033/1450518033/?ats=successfactors) |
-| **Toyota Research Institute** | Human Aware Interactions and Learning Intern | Cambridge, MA | 18h ago | 3 | [Apply ↗](https://jobs.lever.co/tri/71e99c38-aa29-4414-956d-cc526644b9b7/apply) |
-| **Palantir** | Forward Deployed Software Engineer New Grad | NYC | 18h ago | 24 | [Apply ↗](https://jobs.lever.co/palantir/66b495eb-aaf9-4bf9-a759-41854534add7/apply) |
-| **JPMorgan Chase** | 2027 Asset Management Data Scientist - Summer Associate | New York, NY, United States | 18h ago | 1,525 | [Apply ↗](https://jpmc.fa.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001/job/210802931) |
-| **Pattern** | AI Automation Engineer Intern | Lehi, UT | 18h ago | 1 | [Apply ↗](https://jobs.lever.co/pattern/48945dce-b5ef-43cd-9d85-f8b26ce5b43e/apply) |
-| **Stand Together** | Data Analyst Intern - Open the Books | Florida | 18h ago | 2 | [Apply ↗](https://jobs.lever.co/standtogether/f379a7ee-c2b6-47db-b1de-08283462ea6c/apply) |
-| **Skydio** | Frontend Software Engineer Intern | San Mateo, CA | 18h ago | 13 | [Apply ↗](https://jobs.ashbyhq.com/skydio/89bb6fee-3cd2-4e0b-a1c2-c73de8c1f9bd/application?embed=true) |
+| **Epic Games** | Tools Programmer Intern (Graphics) | Cary,North Carolina,United… | 31 min ago | 4 | [Apply ↗](https://epicgames.com/careers/jobs/6232770004?gh_jid=6232770004) |
+| **Flagship Pioneering** | ProFound Therapeutics: Bioinformatics Data Engineering Co… | Cambridge, MA USA | 1h ago | 2 | [Apply ↗](https://zapply.jobs/l/d/greenhouse-fspco-op012325-8911245002?s=gh-new-grad-data-science-jobs-2027) |
+| **Salesforce** | Software Engineering SMTS | California - San Francisco | 1h ago | 498 | [Apply ↗](https://zapply.jobs/l/d/workday-salesforce-external-career-site-JR363304?s=gh-new-grad-jobs-2027) |
+| **Zillow** | Software Development Engineer - Intern | Seattle-WA | 1h ago | 96 | [Apply ↗](https://zapply.jobs/l/d/workday-zillow-zillow-group-external-P751630?s=gh-new-grad-jobs-2027) |
+| **KLA** | Software Engineering Intern – AI/ML for Diagnostics & Cal… | Milpitas, CA | 1h ago | 85 | [Apply ↗](https://zapply.jobs/l/d/workday-kla-search-2642129?s=gh-new-grad-jobs-2027) |
+| **Trane Technologies** | Systems Engineer Intern | St Paul, Minnesota | 2h ago | 13 | [Apply ↗](https://zapply.jobs/l/d/workday-tranetechnologies-trane-technologies-car-JR-16745?s=gh-internships-2027) |
+| **Copart** | Software Engineering Intern | Dallas, TX - Headquarters | 2h ago | 19 | [Apply ↗](https://zapply.jobs/l/d/workday-copart-copart-JR111861?s=gh-internships-2027) |
+| **Microsoft** | Software Engineering Intern | Tulsa, Oklahoma, United Sta… | 2h ago | 2,066 | [Apply ↗](https://zapply.jobs/l/d/microsoft-200063146?s=gh-internships-2027) |
+| **Premier** | Advocacy Intern | Washington, DC | 2h ago | 5 | [Apply ↗](https://zapply.jobs/l/d/workday-premierinc-external-professional-R0008520?s=gh-new-grad-software-engineering-jobs-2027) |
+| **ASML** | Software Engineer In Test Intern, MOD | San Jose, CA | 2h ago | 91 | [Apply ↗](https://asml.wd3.myworkdayjobs.com/asmlext1/job/San-Jose-CA-USA/Internship---Software-Engineer-In-Test--MOD-_J-00354568) |
+| **Cisco** | Software Engineer Data & AI II Intern | San Jose, CA · Milpitas, CA… | 3h ago | 831 | [Apply ↗](https://cisco.wd5.myworkdayjobs.com/Cisco_Careers/job/San-Jose-California-US/Software-Engineer-Data---AI-II--Intern----United-States_2026798) |
+| **NBCUniversal** | Associates Systems Engineer | Fort Worth, TEXAS, US | 3h ago | 31 | [Apply ↗](https://jobs.smartrecruiters.com/NBCUniversal3/744000157514653) |
+| **Databricks** | Associate Forward Deployed Engineer | Mountain View, California | 3h ago | 78 | [Apply ↗](https://databricks.com/company/careers/open-positions/job?gh_jid=8910846002) |
+| **Bosch Group** | Agentic AI R&D Intern | Sunnyvale, CA | 4h ago | 5 | [Apply ↗](https://zapply.jobs/l/d/sr-BoschGroup-744000157483412?s=gh-internships-2027) |
+| **AECOM** | Entry-Level Environmental Statistician | Grand Rapids, MI · Novi, MI | 4h ago | 74 | [Apply ↗](https://jobs.smartrecruiters.com/AECOM2/744000157479969) |
 
 <!-- LIVE:END -->
 
@@ -73,10 +73,14 @@ This section is rewritten by the portal itself after every hourly refresh.
 | ⏱ **Honest "posted" times** | `12m`, `3h`, `0d`, `2d` with the exact date. Sources that only give the day say "Today" instead of inventing a time. |
 | 🛂 **Real H‑1B data** | Each employer's actual approval count from the official USCIS H‑1B Employer Data Hub (FY2023). The posting's own words ("no sponsorship", "US citizens only") always win. |
 | 🏦 **Finance firm column** | 107 firms in 11 categories: broad banks, global banks, investment banking, asset managers, private markets, hedge funds, market makers, exchanges, payments, financial data, fintech. |
+| ⭐ **Top companies tab** | FAANG / MAANG, big tech, top AI labs and the biggest finance names, with each company's measured posting pattern ("Microsoft: 12–3 PM ET, Mon · Tue · Thu"). Their career sites are re-checked every 15 minutes. |
+| 📱 **Phone, Telegram & email alerts** | Free: through the ntfy app and/or your own Telegram bot. New matching roles at top companies within about 15 minutes, a heads-up just before a company's usual posting window, a ☀️ morning summary, and quiet hours at night. |
 | 🌍 **Three regions** | 🇺🇸 United States · 🇮🇳 India (by city) · 🌍 Other countries (by country). The country is worked out from each job's location. |
 | 🎓 **Universities** | Harvard, Stanford, Yale, UPenn, UChicago, CMU, Cornell and more: usually H‑1B cap-exempt employers. |
-| ✅ **Applied tracking** | Tick a box when you apply; move jobs through *interviewing → offer / rejected*. |
+| ✅ **Status on every job** | Click the box on the left to mark a job **applied** (green). Hold it (or right-click) for a menu: ✓ Applied · ⏸ Wait / checkpoint (amber) · ✗ Decline (red). Applied jobs move through *interviewing → offer / rejected*. |
 | 📊 **Analytics** | Applications per day, by sector, by finance category, pipeline funnel, country, level, top companies, how fast you apply after posting, weekday and source. |
+| 💸 **LinkedIn budget guard** | LinkedIn jobs come through Apify, which is paid per job. The button shows money and clicks left this month, each fetch reports what it cost, and you're alerted at 50 / 80 / 95 % of the monthly allowance. |
+| 🩺 **Self-healing** | The portal checks itself every 5 minutes and restarts cleanly if it loses access to its files; an optional watchdog brings it back automatically. |
 | 🤖 **Ask all LLMs** | One prompt to ChatGPT, Claude, Gemini and others, answers side by side. |
 | 📋 **Quick-copy bar** | Your LinkedIn, GitHub and saved answers one click away while filling in applications. |
 | 🔐 **Safe to put online** | Built-in sign-in: scrypt-hashed password, optional authenticator codes, lockout, expiring sessions, cross-site request blocking. |
@@ -93,6 +97,9 @@ flowchart LR
     G --> H[(SQLite)]
     H --> I[Dashboard<br/>Jobs · India · World<br/>Universities · Analytics]
     H --> J[README live snapshot]
+    F --> K[Fast lane<br/>top companies every 15 min]
+    K --> H
+    H --> L[Alerts<br/>ntfy · Telegram · email]
 ```
 
 ## 🚀 Quick start (macOS)
@@ -113,6 +120,20 @@ Optional extras:
 | LinkedIn searches | Put an Apify token in `.env` (`cp .env.example .env`) |
 | AI answers in "Ask all LLMs" | Put OpenAI / Anthropic API keys in `.env` |
 | Use it from anywhere on your own domain | See **[DEPLOY.md](DEPLOY.md)**: password first, then a free Cloudflare Tunnel |
+| Job alerts on your phone | **Settings → 📱 Phone & email alerts**: subscribe to your topic in the ntfy app, or connect a Telegram bot from @BotFather |
+| Restart automatically if it ever stops | `./desktop/install.sh --watchdog` |
+
+## 🆕 What's new
+
+**October 2026**
+- **⭐ Top companies tab**: FAANG / MAANG, big tech, top AI labs and major finance firms in one view, with a card for each company showing **when it usually posts**. This is measured from the minute each company's own career site published its jobs over the last 60 days, e.g. *Microsoft 12–3 PM ET, Mon · Tue · Thu*.
+- **Fast lane**: 31 top companies' career sites are re-checked every 15 minutes instead of hourly.
+- **Alerts** through ntfy and Telegram (both free): new roles, posting-window heads-ups, morning summary.
+- **Job status box**: applied ✓ (green) · wait ⏸ (amber) · decline ✗ (red), with a press-and-hold menu.
+- **LinkedIn (Apify)** made reliable (each search runs on its own; a slow one can't lose the others' results), trimmed to ≈ $0.33 per fetch, with spending shown on the button and budget alerts.
+- **9 more GitHub job lists** (≈ 3,400 more jobs), including one with an H‑1B column the portal now reads.
+- **FAANG / MAANG and 100+ top tech companies** read straight from their own career sites, plus Nike, Disney, Verizon and other H‑1B sponsors (tech roles only).
+- **Fixes**: TikTok and Netflix no longer show made-up posting times; the portal restarts cleanly if macOS takes away its file access.
 
 ## ⚙️ Make it yours
 
@@ -120,7 +141,7 @@ Everything is plain YAML in [`config/`](config):
 
 | File | What you edit |
 |---|---|
-| `sources.yaml` | GitHub job lists, LinkedIn searches, refresh interval, how many days of jobs to keep |
+| `sources.yaml` | GitHub job lists, LinkedIn searches, refresh interval, the fast-lane company list, how many days of jobs to keep |
 | `finance_firms.yaml` | Finance firms, their categories and career-site feeds |
 | `more_companies.yaml` | FAANG / MAANG, big tech, top tech, India tech and other H‑1B sponsors (`tech_only: true` keeps just IT / software / data / ML roles) |
 | `universities.yaml` | Universities and their career-site feeds |
@@ -130,7 +151,7 @@ Add a GitHub job list from **Settings** in the app, or paste any repo URL into `
 
 ## 🔌 Where the jobs come from
 
-- **GitHub lists:** SimplifyJobs (new grad, internships), SpeedyApply (SWE, AI/ML), JobRight (software, data, accounting & finance, business analyst), Northwestern Fintech quant internships.
+- **GitHub lists (22):** SimplifyJobs, SpeedyApply, JobRight, SWE Job Lists (H‑1B labelled), Zapply (new grad, data science, software, internships), ApplyGuy, Understudy, Northwestern Fintech quant internships and more.
 - **Finance firms' own sites:** JPMorgan, Bank of America, Citi, Morgan Stanley, BlackRock, Fidelity, Franklin Templeton, Blackstone, Jane Street, HRT, Optiver, Nasdaq, CME, Visa, Mastercard, Stripe and about 60 more.
 - **Tech companies' own sites:** Amazon, Microsoft, Netflix, NVIDIA, Salesforce, Adobe, Intel, Cisco, TikTok, LinkedIn, Airbnb, Databricks, Snowflake, DoorDash, Anthropic, OpenAI and about 90 more.
 - **Other H‑1B sponsors (tech roles only):** Nike, Disney, Verizon, T‑Mobile, Medtronic, Pfizer, Moderna and others.
@@ -147,6 +168,7 @@ app/fetchers/            github.py · careers.py (11 career-site systems) · api
 app/classify.py          sector, level and H-1B wording
 app/finance.py           finance firm matching        app/h1b.py   USCIS approval lookup
 app/geo.py               country detection            app/auth.py  sign-in and sessions
+app/patterns.py          when each company posts      app/alerts.py  phone / email alerts (ntfy)
 app/readme.py            keeps the live snapshot above up to date
 static/                  the dashboard (plain HTML, CSS and JavaScript)
 config/                  sources, companies, universities, USCIS FY2023 data

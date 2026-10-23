@@ -228,7 +228,7 @@ tr.applied td { opacity: 1; }
 .an-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
 .an-head h2 { margin: 0 0 2px; font-size: 20px; letter-spacing: -.01em; }
 .an-head p { margin: 0; }
-.tiles { display: grid; grid-template-columns: 1.4fr repeat(5, 1fr); gap: 10px; margin-bottom: 12px; }
+.tiles { display: grid; grid-template-columns: 1.4fr repeat(6, 1fr); gap: 10px; margin-bottom: 12px; }
 .tile { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .t-label { font-size: 12px; color: var(--muted); }
 .t-value { font-size: 26px; font-weight: 650; letter-spacing: -.01em; line-height: 1.15; }
@@ -279,3 +279,49 @@ table.recent td { vertical-align: middle; }
 
 .brand { display: inline-flex; align-items: center; gap: 8px; }
 .brand img { display: block; }
+
+/* top companies: posting-pattern cards */
+.pat-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(178px, 1fr)); gap: 8px; margin: 4px 0 14px; }
+.pat { text-align: left; display: grid; gap: 2px; padding: 10px 12px; border-radius: 10px; background: var(--panel); border: 1px solid var(--line); cursor: pointer; }
+.pat:hover { border-color: var(--muted); }
+.pat.on { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent) inset; }
+.pat-name { font-weight: 650; }
+.pat-win { font-size: 15px; font-weight: 600; }
+.pat-days { font-size: 12px; color: var(--muted); }
+.hourbars { width: 100%; height: 26px; margin-top: 4px; }
+.hourbars rect { fill: color-mix(in srgb, var(--muted) 35%, transparent); }
+.hourbars rect.on { fill: var(--accent); }
+.pat-axis { display: flex; justify-content: space-between; font-size: 10px; color: var(--muted); padding-right: 25%; }
+/* alerts settings */
+code.topic { font-size: 14px; padding: 4px 8px; user-select: all; }
+.al-grid { display: grid; gap: 8px; margin: 8px 0 12px; }
+.al-grid label.check { margin-right: 10px; }
+.al-grid .big { font-size: 15px; }
+.al-hist { margin: 4px 0; padding-left: 18px; font-size: 13px; }
+#al-email { width: 240px; }
+
+.al-ch { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; margin-bottom: 8px; }
+.al-ch p { margin: 6px 0; }
+.al-steps { margin: 6px 0 0; padding-left: 20px; line-height: 1.9; font-size: 13.5px; }
+
+/* status box on the left + hold menu */
+.st-btn { width: 22px; height: 22px; padding: 0; border-radius: 6px; border: 1.5px solid var(--muted); background: var(--panel);
+  font-size: 13px; font-weight: 700; line-height: 1; display: grid; place-items: center; cursor: pointer; touch-action: none;
+  user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+.st-btn:hover { border-color: var(--ink); }
+.st-applied { background: #1f9d55; border-color: #1f9d55; color: #fff; }
+.st-waiting { background: #d99a00; border-color: #d99a00; color: #fff; }
+.st-declined { background: #d64545; border-color: #d64545; color: #fff; }
+tr.is-applied td { background: color-mix(in srgb, #1f9d55 10%, transparent); }
+tr.is-waiting td { background: color-mix(in srgb, #d99a00 13%, transparent); }
+tr.is-declined td { background: color-mix(in srgb, #d64545 12%, transparent); }
+tr.is-declined td:not(.cb-col) { opacity: .6; }
+tr.is-declined td:not(.cb-col):not(.age) { text-decoration: line-through; text-decoration-color: color-mix(in srgb, #d64545 60%, transparent); }
+.st-menu { position: fixed; z-index: 60; display: none; flex-direction: column; min-width: 180px; padding: 4px; border-radius: 10px;
+  background: var(--panel); border: 1px solid var(--line); box-shadow: 0 8px 24px rgba(0,0,0,.18); }
+.st-menu.show { display: flex; }
+.st-menu button { display: flex; align-items: center; gap: 8px; border: 0; background: none; text-align: left; padding: 7px 8px; border-radius: 6px; }
+.st-menu button:hover { background: var(--chip); }
+.st-dot { width: 18px; height: 18px; border-radius: 5px; display: grid; place-items: center; font-size: 11px; font-weight: 700; border: 1.5px solid var(--muted); }
+.apify-left { font-size: 11px; margin-left: 6px; padding: 1px 6px; border-radius: 99px; background: var(--chip); color: var(--muted); }
+.apify-left.low { color: var(--bad); }

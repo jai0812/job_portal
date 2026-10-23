@@ -87,7 +87,7 @@ class Sink:
             self.counts[r] += 1
         self.jobs.append(classify.build(
             source_type=self.owner["source_type"], source_name=self.owner["source_name"], company=self.owner["company"],
-            title=title, location=location, url=url, posted_at=posted or int(time.time()),
+            title=title, location=location, url=url, posted_at=posted or None,  # None = the site gives no date
             posted_precision=precision if posted else "exact", description=description))
         return True
 
@@ -322,7 +322,8 @@ def eightfold(f: dict, sink: Sink) -> None:
             stop = False
             for p in posts:
                 where = "; ".join(x.replace(",", ", ") for x in (p.get("locations") or [p.get("location", "")])[:3])
-                if not sink.add(p.get("name", ""), where, p.get("canonicalPositionUrl", ""), p.get("t_create")):
+                # t_create is midnight UTC of the posting day, so it's a date, not a time
+                if not sink.add(p.get("name", ""), where, p.get("canonicalPositionUrl", ""), p.get("t_create"), "day"):
                     stop = True
                     break
             start += len(posts)

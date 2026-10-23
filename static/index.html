@@ -43,6 +43,7 @@
   <div class="brand"><img src="logo-mark.svg" alt="" width="22" height="22">SharmaJai Job Portal</div>
   <nav id="tabs">
     <button data-tab="jobs" class="active">🇺🇸 Jobs</button>
+    <button data-tab="top">⭐ Top companies</button>
     <button data-tab="india">🇮🇳 India</button>
     <button data-tab="world">🌍 Other countries</button>
     <button data-tab="analytics">📊 Analytics</button>
@@ -91,6 +92,8 @@
           <option value="todo">Not applied yet</option>
           <option value="applied-any">Applied (any stage)</option>
           <option value="saved">Saved</option>
+          <option value="waiting">⏸ Wait (checkpoint)</option>
+          <option value="declined">✗ Declined</option>
           <option value="interviewing">Interviewing</option>
           <option value="offer">Offer</option>
           <option value="rejected">Rejected</option>
@@ -196,6 +199,9 @@
       <a href="https://www.uscis.gov/tools/reports-and-studies/h-1b-employer-data-hub" target="_blank" rel="noopener">USCIS H-1B Employer Data Hub</a>, FY2023 (latest published).</p>
     <div class="table-wrap"><table class="small" id="set-firms"><thead><tr><th>Firm</th><th>Category</th><th>H-1B FY23</th><th>Career site</th></tr></thead><tbody></tbody></table></div>
 
+    <h3 id="alerts-h">📱 Phone &amp; email alerts</h3>
+    <div class="card" id="alerts-card"><span class="spinner"></span>Loading…</div>
+
     <h3>Tech companies</h3>
     <p class="muted">FAANG / MAANG, big tech, top tech and India tech, read from their own career sites. Edit the list in <code>config/more_companies.yaml</code>.
       Google, Meta, Apple and Uber can't be read directly; they come from the GitHub lists and the LinkedIn (Apify) company search.</p>
@@ -247,6 +253,12 @@
 <button id="q-fab" class="qfab" title="Links & notes">📋</button>
 
 <div id="viz-tip" class="viz-tip" role="tooltip"></div>
+<div id="st-menu" class="st-menu" role="menu">
+  <button data-set="applied"><span class="st-dot st-applied">✓</span> Applied</button>
+  <button data-set="waiting"><span class="st-dot st-waiting">⏸</span> Wait (checkpoint)</button>
+  <button data-set="declined"><span class="st-dot st-declined">✗</span> Decline</button>
+  <button data-set="new"><span class="st-dot"></span> Clear</button>
+</div>
 <div id="toast"></div>
 <script src="app.js"></script>
 </body>
