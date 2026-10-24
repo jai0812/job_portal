@@ -26,40 +26,40 @@ This section is rewritten by the portal itself after every hourly refresh.
 
 <!-- LIVE:START (auto-generated, do not edit by hand) -->
 
-**Last updated: Oct 23, 2026 at 3:11 PM EDT** · refreshed automatically every hour
+**Last updated: Oct 23, 2026 at 9:05 PM EDT** · refreshed automatically every hour
 
 | Right now in the portal | |
 |---|---|
-| 🇺🇸 United States | **91,173** |
-| 🇮🇳 India | **11,684** |
-| 🌍 Other countries | **18,090** |
-| 🎓 University jobs | **4,122** |
-| 🆕 Posted in the last 24 hours | **2,988** |
-| ✅ US jobs at employers with H-1B history | **68,880 (76%)** |
-| 💻 Software Engineering | **24,617** |
-| 📊 Data Science & ML | **14,194** |
-| 🏦 Finance & Banks | **65,689** |
+| 🇺🇸 United States | **91,632** |
+| 🇮🇳 India | **11,687** |
+| 🌍 Other countries | **18,088** |
+| 🎓 University jobs | **4,150** |
+| 🆕 Posted in the last 24 hours | **3,295** |
+| ✅ US jobs at employers with H-1B history | **69,200 (76%)** |
+| 💻 Software Engineering | **24,675** |
+| 📊 Data Science & ML | **14,248** |
+| 🏦 Finance & Banks | **65,962** |
 | 🔌 Sources | **22 GitHub lists · 207 company career sites · 12 universities · LinkedIn (Apify)** |
 
 **Freshest early-career tech & data roles at employers with H-1B history**
 
 | Company | Role | Location | Posted | H-1B approvals (FY23) | |
 |---|---|---|---|---|---|
-| **Epic Games** | Tools Programmer Intern (Graphics) | Cary,North Carolina,United… | 31 min ago | 4 | [Apply ↗](https://epicgames.com/careers/jobs/6232770004?gh_jid=6232770004) |
-| **Flagship Pioneering** | ProFound Therapeutics: Bioinformatics Data Engineering Co… | Cambridge, MA USA | 1h ago | 2 | [Apply ↗](https://zapply.jobs/l/d/greenhouse-fspco-op012325-8911245002?s=gh-new-grad-data-science-jobs-2027) |
-| **Salesforce** | Software Engineering SMTS | California - San Francisco | 1h ago | 498 | [Apply ↗](https://zapply.jobs/l/d/workday-salesforce-external-career-site-JR363304?s=gh-new-grad-jobs-2027) |
-| **Zillow** | Software Development Engineer - Intern | Seattle-WA | 1h ago | 96 | [Apply ↗](https://zapply.jobs/l/d/workday-zillow-zillow-group-external-P751630?s=gh-new-grad-jobs-2027) |
-| **KLA** | Software Engineering Intern – AI/ML for Diagnostics & Cal… | Milpitas, CA | 1h ago | 85 | [Apply ↗](https://zapply.jobs/l/d/workday-kla-search-2642129?s=gh-new-grad-jobs-2027) |
-| **Trane Technologies** | Systems Engineer Intern | St Paul, Minnesota | 2h ago | 13 | [Apply ↗](https://zapply.jobs/l/d/workday-tranetechnologies-trane-technologies-car-JR-16745?s=gh-internships-2027) |
-| **Copart** | Software Engineering Intern | Dallas, TX - Headquarters | 2h ago | 19 | [Apply ↗](https://zapply.jobs/l/d/workday-copart-copart-JR111861?s=gh-internships-2027) |
-| **Microsoft** | Software Engineering Intern | Tulsa, Oklahoma, United Sta… | 2h ago | 2,066 | [Apply ↗](https://zapply.jobs/l/d/microsoft-200063146?s=gh-internships-2027) |
-| **Premier** | Advocacy Intern | Washington, DC | 2h ago | 5 | [Apply ↗](https://zapply.jobs/l/d/workday-premierinc-external-professional-R0008520?s=gh-new-grad-software-engineering-jobs-2027) |
-| **ASML** | Software Engineer In Test Intern, MOD | San Jose, CA | 2h ago | 91 | [Apply ↗](https://asml.wd3.myworkdayjobs.com/asmlext1/job/San-Jose-CA-USA/Internship---Software-Engineer-In-Test--MOD-_J-00354568) |
-| **Cisco** | Software Engineer Data & AI II Intern | San Jose, CA · Milpitas, CA… | 3h ago | 831 | [Apply ↗](https://cisco.wd5.myworkdayjobs.com/Cisco_Careers/job/San-Jose-California-US/Software-Engineer-Data---AI-II--Intern----United-States_2026798) |
-| **NBCUniversal** | Associates Systems Engineer | Fort Worth, TEXAS, US | 3h ago | 31 | [Apply ↗](https://jobs.smartrecruiters.com/NBCUniversal3/744000157514653) |
-| **Databricks** | Associate Forward Deployed Engineer | Mountain View, California | 3h ago | 78 | [Apply ↗](https://databricks.com/company/careers/open-positions/job?gh_jid=8910846002) |
-| **Bosch Group** | Agentic AI R&D Intern | Sunnyvale, CA | 4h ago | 5 | [Apply ↗](https://zapply.jobs/l/d/sr-BoschGroup-744000157483412?s=gh-internships-2027) |
-| **AECOM** | Entry-Level Environmental Statistician | Grand Rapids, MI · Novi, MI | 4h ago | 74 | [Apply ↗](https://jobs.smartrecruiters.com/AECOM2/744000157479969) |
+| **Waymo** | 2027 Summer Intern, MS/PhD, Machine Learning, Driver Refi… | San Francisco, CA, USA | 29 min ago | 87 | [Apply ↗](https://careers.withwaymo.com/jobs?gh_jid=8304574) |
+| **ServiceNow** | Associate Software Engineer | Santa Clara, CALIFORNIA, US | 3h ago | 185 | [Apply ↗](https://jobs.smartrecruiters.com/ServiceNow/744000157571919) |
+| **Skydio** | Embedded Software Engineer Intern - Winter 2027 | San Mateo, California, Unit… | 3h ago | 13 | [Apply ↗](https://jobs.ashbyhq.com/skydio/d79ccbaa-2901-4303-bd90-675db7802366) |
+| **ASML** | Internship - Application Software QA Engineer | San Jose, CA, USA | 3h ago | 91 | [Apply ↗](https://zapply.jobs/l/d/workday-asml-asmlext1-J-00354565?s=gh-internships-2027) |
+| **Philips** | Intern-Customer Experience Analytics (Health Systems Stra… | Nashville, Tennessee, Unite… | 3h ago | 33 | [Apply ↗](https://zapply.jobs/l/d/workday-philips-jobs-and-careers-593456?s=gh-internships-2027) |
+| **ICF** | Software Engineers (Generalists) | Reston, VA | 3h ago | 12 | [Apply ↗](https://zapply.jobs/l/d/workday-icf-icfexternal-career-site-R2603390?s=gh-new-grad-jobs-2027) |
+| **Torc Robotics** | Commissioning - Systems Engineer I | Ann Arbor, MI | 4h ago | 15 | [Apply ↗](https://zapply.jobs/l/d/greenhouse-torcrobotics-8881987002?s=gh-new-grad-jobs-2027) |
+| **Epic Games** | Tools Programmer Intern (Graphics) | Cary,North Carolina,United… | 5h ago | 4 | [Apply ↗](https://zapply.jobs/l/d/greenhouse-epicgames-6232770004?s=gh-internships-2027) |
+| **Flagship Pioneering** | ProFound Therapeutics: Bioinformatics Data Engineering Co… | Cambridge, MA USA | 7h ago | 2 | [Apply ↗](https://zapply.jobs/l/d/greenhouse-fspco-op012325-8911245002?s=gh-new-grad-data-science-jobs-2027) |
+| **Salesforce** | Software Engineering SMTS | California - San Francisco | 7h ago | 498 | [Apply ↗](https://zapply.jobs/l/d/workday-salesforce-external-career-site-JR363304?s=gh-new-grad-jobs-2027) |
+| **Zillow** | Software Development Engineer - Intern | Seattle-WA | 7h ago | 96 | [Apply ↗](https://zapply.jobs/l/d/workday-zillow-zillow-group-external-P751630?s=gh-new-grad-jobs-2027) |
+| **KLA** | Software Engineering Intern – AI/ML for Diagnostics & Cal… | Milpitas, CA | 7h ago | 85 | [Apply ↗](https://zapply.jobs/l/d/workday-kla-search-2642129?s=gh-new-grad-jobs-2027) |
+| **Carrier** | Systems Engineering Intern - Summer | CAI23: Carrier-Indianapolis… | 8h ago | 4 | [Apply ↗](https://carrier.wd5.myworkdayjobs.com/jobs/job/CAI23-Carrier-Indianapolis-7310-West-Morris-Street-Indianapolis-IN-46231-USA/Systems-Engineering-Intern---Summer_30220556-1?utm_source=understudy&ref=understudy-list) |
+| **Copart** | Software Engineering Intern | Dallas, TX - Headquarters | 8h ago | 19 | [Apply ↗](https://copart.wd12.myworkdayjobs.com/copart/job/Dallas-TX---Headquarters/Software-Engineering-Intern_JR111861?utm_source=understudy&ref=understudy-list) |
+| **Trane Technologies** | Systems Engineer Intern | St Paul, Minnesota | 8h ago | 13 | [Apply ↗](https://zapply.jobs/l/d/workday-tranetechnologies-trane-technologies-car-JR-16745?s=gh-internships-2027) |
 
 <!-- LIVE:END -->
 
