@@ -26,40 +26,40 @@ This section is rewritten by the portal itself after every hourly refresh.
 
 <!-- LIVE:START (auto-generated, do not edit by hand) -->
 
-**Last updated: Oct 24, 2026 at 8:35 AM EDT** · refreshed automatically every hour
+**Last updated: Oct 24, 2026 at 3:17 PM EDT** · refreshed automatically every hour
 
 | Right now in the portal | |
 |---|---|
-| 🇺🇸 United States | **91,662** |
-| 🇮🇳 India | **11,540** |
-| 🌍 Other countries | **18,025** |
-| 🎓 University jobs | **4,079** |
-| 🆕 Posted in the last 24 hours | **1,016** |
-| ✅ US jobs at employers with H-1B history | **68,995 (75%)** |
-| 💻 Software Engineering | **24,724** |
-| 📊 Data Science & ML | **14,304** |
-| 🏦 Finance & Banks | **65,772** |
+| 🇺🇸 United States | **92,159** |
+| 🇮🇳 India | **11,541** |
+| 🌍 Other countries | **18,040** |
+| 🎓 University jobs | **4,098** |
+| 🆕 Posted in the last 24 hours | **734** |
+| ✅ US jobs at employers with H-1B history | **69,259 (75%)** |
+| 💻 Software Engineering | **24,820** |
+| 📊 Data Science & ML | **14,376** |
+| 🏦 Finance & Banks | **65,996** |
 | 🔌 Sources | **22 GitHub lists · 207 company career sites · 12 universities · LinkedIn (Apify)** |
 
 **Freshest early-career tech & data roles at employers with H-1B history**
 
 | Company | Role | Location | Posted | H-1B approvals (FY23) | |
 |---|---|---|---|---|---|
-| **Live Nation** | Venue Analytics Intern | Chicago, IL, USA | 7h ago | 10 | [Apply ↗](https://zapply.jobs/l/d/workday-livenation-lnexternalsite-JR-93773?s=gh-internships-2027) |
-| **ASML** | Platform Software Engineer In Test ( Internship) | San Jose, CA, USA | 7h ago | 91 | [Apply ↗](https://zapply.jobs/l/d/workday-asml-asmlext1-J-00354558?s=gh-new-grad-jobs-2027) |
-| **Magna** | Junior AI Engineer | Troy, Michigan, US | 7h ago | 55 | [Apply ↗](https://zapply.jobs/l/d/workday-magna-magna-R00266828?s=gh-new-grad-jobs-2027) |
-| **Intel** | AI Hardware Engineering Intern | California Santa Clara | 7h ago | 1,112 | [Apply ↗](https://zapply.jobs/l/d/workday-intel-external-JR0287533?s=gh-new-grad-jobs-2027) |
-| **Astreya** | Incident Response Analyst I | Austin, TX | 7h ago | 1 | [Apply ↗](https://zapply.jobs/l/d/workday-astreya-life-at-astreya-opportunities-R0017793?s=gh-new-grad-software-engineering-jobs-2027) |
-| **FactSet** | Client Solutions Associate - Enterprise Data Solutions -… | San Francisco, CA | 7h ago | 23 | [Apply ↗](https://zapply.jobs/l/d/workday-factset-factsetcareers-R33489?s=gh-new-grad-software-engineering-jobs-2027) |
-| **GlobalFoundries** | Tapeout Engineering Intern, Tapeout Operations (Summer 20… | USA - Vermont - Essex Junct… | 7h ago | 33 | [Apply ↗](https://zapply.jobs/l/d/workday-globalfoundries-external-JR-2604923?s=gh-new-grad-software-engineering-jobs-2027) |
-| **DraftKings** | Lottery Fulfillment Supervisor | Little Rock, AR | 7h ago | 22 | [Apply ↗](https://zapply.jobs/l/d/workday-draftkings-draftkings-JR15312?s=gh-new-grad-software-engineering-jobs-2027) |
-| **Aptiv** | Embedded Software - Engineering Intern | USA Walnut Creek, CA - WR | 8h ago | 71 | [Apply ↗](https://zapply.jobs/l/d/workday-aptiv-aptiv-careers-J000704386?s=gh-new-grad-jobs-2027) |
-| **Cisco** | Software Engineer Data & AI II (Intern) – United States | San Jose California US | 8h ago | 831 | [Apply ↗](https://zapply.jobs/l/d/workday-cisco-cisco-careers-2026798?s=gh-new-grad-jobs-2027) |
-| **Sun Life** | Data Science Intern - Summer 2027 Intern 🆕 | Wellesley Hills, Massachuse… | 9h ago | 7 | [Apply ↗](https://sunlife.wd3.myworkdayjobs.com/Campus/job/Wellesley-Hills-Massachusetts/Data-Science-Intern---Summer-2027-Intern_JR00127666-1) |
-| **Meta** | Research Scientist Intern - Policy Learning for Robotics… | Redmond, WA | 11h ago | 1,540 | [Apply ↗](https://www.metacareers.com/jobs/2554989011673624) |
-| **Kinaxis** | Co-op/Intern Developer, Machine Learning |  | 11h ago | 4 | [Apply ↗](https://careers-kinaxis.icims.com/jobs/35297/co-op-intern-developer%2c-machine-learning/job?utm_source=understudy&ref=understudy-list) |
-| **Carvana** | Software Engineering | Tempe, AZ | 11h ago | 17 | [Apply ↗](https://www.carvana.com/careers/apply?gh_jid=7542940) |
-| **Waymo** | 2027 Summer Intern, MS/PhD, Machine Learning, Driver Refi… | San Francisco, CA, USA | 11h ago | 87 | [Apply ↗](https://zapply.jobs/l/d/greenhouse-waymo-8304574?s=gh-new-grad-jobs-2027) |
+| **Leidos** | Junior Software Developer | St. Louis, MO | 13h ago | 26 | [Apply ↗](https://zapply.jobs/l/d/workday-leidos-external-R-00195126?s=gh-new-grad-jobs-2027) |
+| **Live Nation** | Venue Analytics Intern | Chicago, IL, USA | 14h ago | 10 | [Apply ↗](https://zapply.jobs/l/d/workday-livenation-lnexternalsite-JR-93773?s=gh-internships-2027) |
+| **ASML** | Platform Software Engineer In Test ( Internship) | San Jose, CA, USA | 14h ago | 91 | [Apply ↗](https://zapply.jobs/l/d/workday-asml-asmlext1-J-00354558?s=gh-new-grad-jobs-2027) |
+| **Magna** | Junior AI Engineer | Troy, Michigan, US | 14h ago | 55 | [Apply ↗](https://zapply.jobs/l/d/workday-magna-magna-R00266828?s=gh-new-grad-jobs-2027) |
+| **Intel** | AI Hardware Engineering Intern | California Santa Clara | 14h ago | 1,112 | [Apply ↗](https://zapply.jobs/l/d/workday-intel-external-JR0287533?s=gh-new-grad-jobs-2027) |
+| **Astreya** | Incident Response Analyst I | Austin, TX | 14h ago | 1 | [Apply ↗](https://zapply.jobs/l/d/workday-astreya-life-at-astreya-opportunities-R0017793?s=gh-new-grad-software-engineering-jobs-2027) |
+| **FactSet** | Client Solutions Associate - Enterprise Data Solutions -… | San Francisco, CA | 14h ago | 23 | [Apply ↗](https://zapply.jobs/l/d/workday-factset-factsetcareers-R33489?s=gh-new-grad-software-engineering-jobs-2027) |
+| **GlobalFoundries** | Tapeout Engineering Intern, Tapeout Operations (Summer 20… | USA - Vermont - Essex Junct… | 14h ago | 33 | [Apply ↗](https://zapply.jobs/l/d/workday-globalfoundries-external-JR-2604923?s=gh-new-grad-software-engineering-jobs-2027) |
+| **DraftKings** | Lottery Fulfillment Supervisor | Little Rock, AR | 14h ago | 22 | [Apply ↗](https://zapply.jobs/l/d/workday-draftkings-draftkings-JR15312?s=gh-new-grad-software-engineering-jobs-2027) |
+| **Aptiv** | Embedded Software - Engineering Intern | USA Walnut Creek, CA - WR | 15h ago | 71 | [Apply ↗](https://zapply.jobs/l/d/workday-aptiv-aptiv-careers-J000704386?s=gh-new-grad-jobs-2027) |
+| **Cisco** | Software Engineer Data & AI II (Intern) – United States | San Jose California US | 15h ago | 831 | [Apply ↗](https://zapply.jobs/l/d/workday-cisco-cisco-careers-2026798?s=gh-new-grad-jobs-2027) |
+| **Sun Life** | Data Science Intern - Summer 2027 Intern 🆕 | Wellesley Hills, Massachuse… | 15h ago | 7 | [Apply ↗](https://sunlife.wd3.myworkdayjobs.com/Campus/job/Wellesley-Hills-Massachusetts/Data-Science-Intern---Summer-2027-Intern_JR00127666-1) |
+| **Meta** | Research Scientist Intern - Policy Learning for Robotics… | Redmond, WA | 17h ago | 1,540 | [Apply ↗](https://www.metacareers.com/jobs/2554989011673624) |
+| **Kinaxis** | Co-op/Intern Developer, Machine Learning |  | 17h ago | 4 | [Apply ↗](https://careers-kinaxis.icims.com/jobs/35297/co-op-intern-developer%2c-machine-learning/job?utm_source=understudy&ref=understudy-list) |
+| **Carvana** | Software Engineering | Tempe, AZ | 17h ago | 17 | [Apply ↗](https://www.carvana.com/careers/apply?gh_jid=7542940) |
 
 <!-- LIVE:END -->
 
