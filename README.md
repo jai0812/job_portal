@@ -26,26 +26,28 @@ This section is rewritten by the portal itself after every hourly refresh.
 
 <!-- LIVE:START (auto-generated, do not edit by hand) -->
 
-**Last updated: Oct 25, 2026 at 2:44 AM EDT** · refreshed automatically every hour
+**Last updated: Oct 25, 2026 at 2:00 PM EDT** · refreshed automatically every hour
 
 | Right now in the portal | |
 |---|---|
-| 🇺🇸 United States | **91,634** |
-| 🇮🇳 India | **11,343** |
-| 🌍 Other countries | **17,900** |
-| 🎓 University jobs | **4,014** |
-| 🆕 Posted in the last 24 hours | **71** |
-| ✅ US jobs at employers with H-1B history | **68,715 (75%)** |
-| 💻 Software Engineering | **24,623** |
-| 📊 Data Science & ML | **14,246** |
-| 🏦 Finance & Banks | **65,725** |
+| 🇺🇸 United States | **92,601** |
+| 🇮🇳 India | **11,350** |
+| 🌍 Other countries | **17,964** |
+| 🎓 University jobs | **4,009** |
+| 🆕 Posted in the last 24 hours | **392** |
+| ✅ US jobs at employers with H-1B history | **69,263 (75%)** |
+| 💻 Software Engineering | **25,003** |
+| 📊 Data Science & ML | **14,519** |
+| 🏦 Finance & Banks | **65,885** |
 | 🔌 Sources | **22 GitHub lists · 207 company career sites · 12 universities · LinkedIn (Apify)** |
 
 **Freshest early-career tech & data roles at employers with H-1B history**
 
 | Company | Role | Location | Posted | H-1B approvals (FY23) | |
 |---|---|---|---|---|---|
-| **Experian** | Software Engineering Intern | Cyberjaya, Selangor, MY | 3h ago | 36 | [Apply ↗](https://jobs.smartrecruiters.com/Experian/744000157657879) |
+| **Notion** | Software Engineer Intern, Mobile | San Francisco, CA · New Yor… | 9h ago | 8 | [Apply ↗](https://go.vansh.nyc/BF) |
+| **Skydio** | Embedded Software Engineer Intern | San Mateo, CA | 9h ago | 13 | [Apply ↗](https://go.vansh.nyc/BD) |
+| **Experian** | Software Engineering Intern | Cyberjaya, Selangor, MY | 15h ago | 36 | [Apply ↗](https://jobs.smartrecruiters.com/Experian/744000157657879) |
 | **Leidos** | Junior Software Developer | St. Louis, MO | 1d ago | 26 | [Apply ↗](https://zapply.jobs/l/d/workday-leidos-external-R-00195126?s=gh-new-grad-jobs-2027) |
 | **Live Nation** | Venue Analytics Intern | Chicago, IL, USA | 1d ago | 10 | [Apply ↗](https://zapply.jobs/l/d/workday-livenation-lnexternalsite-JR-93773?s=gh-internships-2027) |
 | **ASML** | Platform Software Engineer In Test ( Internship) | San Jose, CA, USA | 1d ago | 91 | [Apply ↗](https://zapply.jobs/l/d/workday-asml-asmlext1-J-00354558?s=gh-new-grad-jobs-2027) |
@@ -57,9 +59,7 @@ This section is rewritten by the portal itself after every hourly refresh.
 | **DraftKings** | Lottery Fulfillment Supervisor | Little Rock, AR | 1d ago | 22 | [Apply ↗](https://zapply.jobs/l/d/workday-draftkings-draftkings-JR15312?s=gh-new-grad-software-engineering-jobs-2027) |
 | **Aptiv** | Embedded Software - Engineering Intern | USA Walnut Creek, CA - WR | 1d ago | 71 | [Apply ↗](https://zapply.jobs/l/d/workday-aptiv-aptiv-careers-J000704386?s=gh-new-grad-jobs-2027) |
 | **Cisco** | Software Engineer Data & AI II (Intern) – United States | San Jose California US | 1d ago | 831 | [Apply ↗](https://zapply.jobs/l/d/workday-cisco-cisco-careers-2026798?s=gh-new-grad-jobs-2027) |
-| **Sun Life** | Data Science Intern - Summer 2027 Intern 🆕 | Wellesley Hills, Massachuse… | 1d ago | 7 | [Apply ↗](https://sunlife.wd3.myworkdayjobs.com/Campus/job/Wellesley-Hills-Massachusetts/Data-Science-Intern---Summer-2027-Intern_JR00127666-1) |
-| **Meta** | Research Scientist Intern - Policy Learning for Robotics… | Redmond, WA | 1d ago | 1,540 | [Apply ↗](https://www.metacareers.com/jobs/2554989011673624) |
-| **Kinaxis** | Co-op/Intern Developer, Machine Learning |  | 1d ago | 4 | [Apply ↗](https://careers-kinaxis.icims.com/jobs/35297/co-op-intern-developer%2c-machine-learning/job?utm_source=understudy&ref=understudy-list) |
+| **Hewlett Packard Enterprise** | Cybersecurity Engineering Intern | Spring, TX | 1d ago | 167 | [Apply ↗](https://go.vansh.nyc/hW) |
 
 <!-- LIVE:END -->
 
