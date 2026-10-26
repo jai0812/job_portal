@@ -26,40 +26,40 @@ This section is rewritten by the portal itself after every hourly refresh.
 
 <!-- LIVE:START (auto-generated, do not edit by hand) -->
 
-**Last updated: Oct 25, 2026 at 9:39 PM EDT** · refreshed automatically every hour
+**Last updated: Oct 26, 2026 at 8:41 AM EDT** · refreshed automatically every hour
 
 | Right now in the portal | |
 |---|---|
-| 🇺🇸 United States | **92,676** |
-| 🇮🇳 India | **11,348** |
-| 🌍 Other countries | **17,948** |
-| 🎓 University jobs | **4,005** |
-| 🆕 Posted in the last 24 hours | **580** |
-| ✅ US jobs at employers with H-1B history | **69,235 (75%)** |
-| 💻 Software Engineering | **25,046** |
-| 📊 Data Science & ML | **14,480** |
-| 🏦 Finance & Banks | **65,951** |
+| 🇺🇸 United States | **92,150** |
+| 🇮🇳 India | **11,217** |
+| 🌍 Other countries | **17,800** |
+| 🎓 University jobs | **3,902** |
+| 🆕 Posted in the last 24 hours | **202** |
+| ✅ US jobs at employers with H-1B history | **68,613 (74%)** |
+| 💻 Software Engineering | **24,892** |
+| 📊 Data Science & ML | **14,435** |
+| 🏦 Finance & Banks | **65,456** |
 | 🔌 Sources | **22 GitHub lists · 207 company career sites · 12 universities · LinkedIn (Apify)** |
 
 **Freshest early-career tech & data roles at employers with H-1B history**
 
 | Company | Role | Location | Posted | H-1B approvals (FY23) | |
 |---|---|---|---|---|---|
-| **Salesforce** | Commercial/Enterprise Account Executive, Salesforce Analy… | Illinois Chicago | 1h ago | 498 | [Apply ↗](https://zapply.jobs/l/d/workday-salesforce-external-career-site-JR354555?s=gh-new-grad-jobs-2027) |
-| **Skydio** | PhD Autonomy Engineer Intern - Deep Learning / Computer V… | San Mateo, California, Unit… | 2h ago | 13 | [Apply ↗](https://zapply.jobs/l/d/ashby-skydio-f1a72f5b-6157-47c1-8de9-379a32c7419f?s=gh-internships-2027) |
-| **Notion** | Software Engineer Intern, Mobile | San Francisco, CA · New Yor… | 16h ago | 8 | [Apply ↗](https://go.vansh.nyc/BF) |
-| **Experian** | Software Engineering Intern | Cyberjaya, Selangor, MY | 22h ago | 36 | [Apply ↗](https://jobs.smartrecruiters.com/Experian/744000157657879) |
-| **Leidos** | Junior Software Developer | St. Louis, MO | 1d ago | 26 | [Apply ↗](https://zapply.jobs/l/d/workday-leidos-external-R-00195126?s=gh-new-grad-jobs-2027) |
-| **Live Nation** | Venue Analytics Intern | Chicago, IL, USA | 1d ago | 10 | [Apply ↗](https://zapply.jobs/l/d/workday-livenation-lnexternalsite-JR-93773?s=gh-internships-2027) |
-| **ASML** | Platform Software Engineer In Test ( Internship) | San Jose, CA, USA | 1d ago | 91 | [Apply ↗](https://zapply.jobs/l/d/workday-asml-asmlext1-J-00354558?s=gh-new-grad-jobs-2027) |
-| **Magna** | Junior AI Engineer | Troy, Michigan, US | 1d ago | 55 | [Apply ↗](https://zapply.jobs/l/d/workday-magna-magna-R00266828?s=gh-new-grad-jobs-2027) |
-| **Intel** | AI Hardware Engineering Intern | California Santa Clara | 1d ago | 1,112 | [Apply ↗](https://zapply.jobs/l/d/workday-intel-external-JR0287533?s=gh-new-grad-jobs-2027) |
-| **Astreya** | Incident Response Analyst I | Austin, TX | 1d ago | 1 | [Apply ↗](https://zapply.jobs/l/d/workday-astreya-life-at-astreya-opportunities-R0017793?s=gh-new-grad-software-engineering-jobs-2027) |
-| **FactSet** | Client Solutions Associate - Enterprise Data Solutions -… | San Francisco, CA | 1d ago | 23 | [Apply ↗](https://zapply.jobs/l/d/workday-factset-factsetcareers-R33489?s=gh-new-grad-software-engineering-jobs-2027) |
-| **GlobalFoundries** | Tapeout Engineering Intern, Tapeout Operations (Summer 20… | USA - Vermont - Essex Junct… | 1d ago | 33 | [Apply ↗](https://zapply.jobs/l/d/workday-globalfoundries-external-JR-2604923?s=gh-new-grad-software-engineering-jobs-2027) |
-| **DraftKings** | Lottery Fulfillment Supervisor | Little Rock, AR | 1d ago | 22 | [Apply ↗](https://zapply.jobs/l/d/workday-draftkings-draftkings-JR15312?s=gh-new-grad-software-engineering-jobs-2027) |
-| **Aptiv** | Embedded Software - Engineering Intern | USA Walnut Creek, CA - WR | 1d ago | 71 | [Apply ↗](https://zapply.jobs/l/d/workday-aptiv-aptiv-careers-J000704386?s=gh-new-grad-jobs-2027) |
-| **Cisco** | Software Engineer Data & AI II (Intern) – United States | San Jose California US | 1d ago | 831 | [Apply ↗](https://zapply.jobs/l/d/workday-cisco-cisco-careers-2026798?s=gh-new-grad-jobs-2027) |
+| **Microsoft** | Applied Sciences INTERN | United States | 6h ago | 2,066 | [Apply ↗](https://zapply.jobs/l/d/microsoft-200041777?s=gh-new-grad-data-science-jobs-2027) |
+| **Hewlett Packard Enterprise** | AI/ML Developer Intern | San Jose, CA | 9h ago | 167 | [Apply ↗](https://go.vansh.nyc/BM) |
+| **Salesforce** | Commercial/Enterprise Account Executive, Salesforce Analy… | Illinois Chicago | 12h ago | 498 | [Apply ↗](https://zapply.jobs/l/d/workday-salesforce-external-career-site-JR354555?s=gh-new-grad-jobs-2027) |
+| **Evolent** | Associate Software Engineer | Remote in USA | 12h ago | 3 | [Apply ↗](https://evolent.wd1.myworkdayjobs.com/External/job/Work-at-Home/Associate-Software-Engineer_JR-916896) |
+| **Skydio** | PhD Autonomy Engineer Intern - Deep Learning / Computer V… | San Mateo, California, Unit… | 13h ago | 13 | [Apply ↗](https://zapply.jobs/l/d/ashby-skydio-f1a72f5b-6157-47c1-8de9-379a32c7419f?s=gh-internships-2027) |
+| **Notion** | Software Engineer Intern, Mobile | San Francisco, CA · New Yor… | 1d ago | 8 | [Apply ↗](https://go.vansh.nyc/BF) |
+| **Experian** | Software Engineering Intern | Cyberjaya, Selangor, MY | 1d ago | 36 | [Apply ↗](https://jobs.smartrecruiters.com/Experian/744000157657879) |
+| **Adobe** | Machine Learning Engineer Intern | San Jose, CA · Waltham, MA… | 1d ago | 221 | [Apply ↗](https://go.vansh.nyc/BO) |
+| **Leidos** | Junior Software Developer | St. Louis, MO | 2d ago | 26 | [Apply ↗](https://zapply.jobs/l/d/workday-leidos-external-R-00195126?s=gh-new-grad-jobs-2027) |
+| **Live Nation** | Venue Analytics Intern | Chicago, IL, USA | 2d ago | 10 | [Apply ↗](https://zapply.jobs/l/d/workday-livenation-lnexternalsite-JR-93773?s=gh-internships-2027) |
+| **ASML** | Platform Software Engineer In Test ( Internship) | San Jose, CA, USA | 2d ago | 91 | [Apply ↗](https://zapply.jobs/l/d/workday-asml-asmlext1-J-00354558?s=gh-new-grad-jobs-2027) |
+| **Magna** | Junior AI Engineer | Troy, Michigan, US | 2d ago | 55 | [Apply ↗](https://zapply.jobs/l/d/workday-magna-magna-R00266828?s=gh-new-grad-jobs-2027) |
+| **Intel** | AI Hardware Engineering Intern | California Santa Clara | 2d ago | 1,112 | [Apply ↗](https://zapply.jobs/l/d/workday-intel-external-JR0287533?s=gh-new-grad-jobs-2027) |
+| **Astreya** | Incident Response Analyst I | Austin, TX | 2d ago | 1 | [Apply ↗](https://zapply.jobs/l/d/workday-astreya-life-at-astreya-opportunities-R0017793?s=gh-new-grad-software-engineering-jobs-2027) |
+| **FactSet** | Client Solutions Associate - Enterprise Data Solutions -… | San Francisco, CA | 2d ago | 23 | [Apply ↗](https://zapply.jobs/l/d/workday-factset-factsetcareers-R33489?s=gh-new-grad-software-engineering-jobs-2027) |
 
 <!-- LIVE:END -->
 
