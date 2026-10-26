@@ -9,6 +9,6 @@ ssh -i $KEY "$TARGET" 'sudo systemctl disable --now jobportal-tunnel; sudo syste
 cp data/jobs.db "data/jobs-before-moving-back-$(date +%F).db"
 scp -q -i $KEY "$TARGET":/tmp/jobs-latest.db data/jobs.db
 ssh -i $KEY "$TARGET" 'rm -f /tmp/jobs-latest.db'
-launchctl load ~/Library/LaunchAgents/com.cloudflare.cloudflared.plist
+launchctl enable gui/$(id -u)/com.cloudflare.cloudflared; launchctl load -w ~/Library/LaunchAgents/com.cloudflare.cloudflared.plist
 ./desktop/install.sh >/dev/null 2>&1; open "$HOME/Desktop/Job Portal.app"
 echo "✓ Back on this Mac."

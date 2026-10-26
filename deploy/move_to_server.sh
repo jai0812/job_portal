@@ -54,6 +54,7 @@ rm -rf "$STAGE"
 
 say "Switching jobs.sharmajai.com from this Mac to the server"
 launchctl unload ~/Library/LaunchAgents/com.cloudflare.cloudflared.plist 2>/dev/null || true
+launchctl disable gui/$(id -u)/com.cloudflare.cloudflared   # stays off after a Mac restart
 "${SSH[@]}" "sudo systemctl enable --now jobportal-tunnel >/dev/null && sleep 6 && systemctl is-active jobportal-tunnel"
 
 say "Desktop icon now just opens the website"
