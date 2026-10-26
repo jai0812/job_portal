@@ -346,7 +346,9 @@ def _enrich(rows: list[dict]) -> list[dict]:
     unis = _university_matchers()
     legal = _uscis_counts()
     for r in rows:
-        r["has_description"] = bool(r.pop("description", ""))
+        desc = r.pop("description", "") or ""
+        r["has_description"] = bool(desc)
+        r["immediate"] = classify.immediate(r.get("title", ""), desc)
         r["uni"] = r["source_name"] if r["source_type"] == "university" else next(
             (short for short, rx in unis if rx.search(r["company"] or "")), None)
         if r["source_type"] == "university":

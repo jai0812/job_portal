@@ -1,0 +1,909 @@
+# Mid-size and less famous employers that have sponsored H-1Bs (USCIS FY2023, exact legal-name match, 10+ approvals)
+# and whose career sites the portal can read. Found automatically from the job links already in the portal (Oct 26).
+# Only IT / software / data / ML roles are kept (tech_only), US only, checked every 3 hours, newest ~300 postings each.
+# Remove a line to drop a company; the same format as more_companies.yaml.
+companies:
+- name: Accenture
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 998
+  feeds:
+  - {type: greenhouse, board: accenturefederalservices}
+- name: Elevance Health
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 320
+  feeds:
+  - {type: workday, tenant: elevancehealth, wd: wd1, site: ELV-ET, max: 300}
+- name: Brillio
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 142
+  feeds:
+  - {type: lever, company: brillio-2}
+- name: Amgen
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 137
+  feeds:
+  - {type: workday, tenant: amgen, wd: wd1, site: careers, max: 300}
+- name: Humana
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 130
+  feeds:
+  - {type: workday, tenant: humana, wd: wd5, site: humana_external_career_site, max: 300}
+- name: Cleveland Clinic
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 127
+  feeds:
+  - {type: workday, tenant: ccf, wd: wd1, site: ClevelandClinicCareers, max: 300}
+- name: Memorial Sloan Kettering Cancer Center
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 115
+  feeds:
+  - {type: workday, tenant: msk, wd: wd108, site: MSKCC_Careers_Primary, max: 300}
+- name: Caterpillar
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 106
+  feeds:
+  - {type: workday, tenant: cat, wd: wd5, site: CaterpillarCareers, max: 300}
+- name: TransUnion
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 104
+  feeds:
+  - {type: workday, tenant: transunion, wd: wd5, site: TransUnion, max: 300}
+- name: Equifax
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 102
+  feeds:
+  - {type: workday, tenant: equifax, wd: wd5, site: UR_External, max: 300}
+- name: Zillow
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 96
+  feeds:
+  - {type: workday, tenant: zillow, wd: wd5, site: Zillow_Group_External, max: 300}
+- name: ASML
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 91
+  feeds:
+  - {type: workday, tenant: asml, wd: wd3, site: asmlext1, max: 300}
+- name: Cadence Design Systems
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 77
+  feeds:
+  - {type: workday, tenant: cadence, wd: wd1, site: Univ_Careers, max: 300}
+- name: Thermo Fisher Scientific
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 76
+  feeds:
+  - {type: workday, tenant: thermofisher, wd: wd5, site: ThermoFisherCareers, max: 300}
+- name: Gilead Sciences
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 75
+  feeds:
+  - {type: workday, tenant: gilead, wd: wd1, site: gileadcareers, max: 300}
+- name: Nordstrom
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 74
+  feeds:
+  - {type: workday, tenant: nordstrom, wd: wd501, site: nordstrom_careers, max: 300}
+- name: Aptiv
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 71
+  feeds:
+  - {type: workday, tenant: aptiv, wd: wd5, site: aptiv_careers, max: 300}
+- name: Genpact
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 63
+  feeds:
+  - {type: workday, tenant: genpact, wd: wd108, site: campussite, max: 300}
+- name: 7-Eleven
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 58
+  feeds:
+  - {type: workday, tenant: my7elevenhr, wd: wd12, site: Careers, max: 300}
+- name: Cardinal Health
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 57
+  feeds:
+  - {type: workday, tenant: cardinalhealth, wd: wd1, site: EXT, max: 300}
+- name: Bristol Myers Squibb
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 57
+  feeds:
+  - {type: workday, tenant: bristolmyerssquibb, wd: wd5, site: bms, max: 300}
+- name: Zebra Technologies
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 53
+  feeds:
+  - {type: workday, tenant: zebra, wd: wd501, site: Zebra_careers, max: 300}
+- name: Genentech
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 53
+  feeds:
+  - {type: workday, tenant: roche, wd: wd3, site: ROG-A2O-GENE, max: 300}
+- name: Health Care Service
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 51
+  feeds:
+  - {type: workday, tenant: hcsc, wd: wd1, site: hcsc_external, max: 300}
+- name: McKesson
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 49
+  feeds:
+  - {type: workday, tenant: mckesson, wd: wd3, site: External_Careers, max: 300}
+- name: Manhattan Associates
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 45
+  feeds:
+  - {type: workday, tenant: manh, wd: wd5, site: campus, max: 300}
+- name: Southwest Airlines
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 43
+  feeds:
+  - {type: workday, tenant: swa, wd: wd1, site: external, max: 300}
+- name: Ameriprise Financial
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 42
+  feeds:
+  - {type: workday, tenant: ameriprise, wd: wd5, site: Ameriprise, max: 300}
+- name: Regeneron Pharmaceuticals
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 40
+  feeds:
+  - {type: workday, tenant: regeneron, wd: wd1, site: Careers, max: 300}
+- name: LPL Financial Holdings
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 39
+  feeds:
+  - {type: workday, tenant: lplfinancial, wd: wd1, site: university, max: 300}
+- name: Aurora Innovation
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 39
+  feeds:
+  - {type: ashby, board: aurora-operations-inc}
+- name: Microchip Technology
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 39
+  feeds:
+  - {type: workday, tenant: microchiphr, wd: wd5, site: External, max: 300}
+- name: LexisNexis
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 37
+  feeds:
+  - {type: workday, tenant: relx, wd: wd3, site: lexisnexislegal, max: 300}
+- name: Crowdstrike
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 35
+  feeds:
+  - {type: workday, tenant: crowdstrike, wd: wd5, site: crowdstrikecareers, max: 300}
+- name: Wellington Management
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 35
+  feeds:
+  - {type: workday, tenant: wellington, wd: wd5, site: Campus, max: 300}
+- name: GlobalFoundries
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 33
+  feeds:
+  - {type: workday, tenant: globalfoundries, wd: wd1, site: External, max: 300}
+- name: Vertex Pharmaceuticals
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 31
+  feeds:
+  - {type: workday, tenant: vrtx, wd: wd501, site: vertex_careers, max: 300}
+- name: Gartner
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 30
+  feeds:
+  - {type: workday, tenant: gartner, wd: wd5, site: EXT, max: 300}
+- name: Biogen
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 30
+  feeds:
+  - {type: workday, tenant: biibhr, wd: wd3, site: external, max: 300}
+- name: Stanley Black & Decker
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 29
+  feeds:
+  - {type: workday, tenant: sbdinc, wd: wd1, site: Stanley_Black_Decker_Career_Site, max: 300}
+- name: Fannie Mae
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 28
+  feeds:
+  - {type: workday, tenant: fanniemae, wd: wd1, site: FannieMaeCareers, max: 300}
+- name: Johnson Controls
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 28
+  feeds:
+  - {type: workday, tenant: jci, wd: wd5, site: JCI, max: 300}
+- name: LexisNexis Risk Solutions
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 27
+  feeds:
+  - {type: workday, tenant: relx, wd: wd3, site: RiskSolutions, max: 300}
+- name: Highmark Health
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 27
+  feeds:
+  - {type: workday, tenant: highmarkhealth, wd: wd1, site: highmark, max: 300}
+- name: Zoetis
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 27
+  feeds:
+  - {type: workday, tenant: zoetis, wd: wd5, site: zoetis, max: 300}
+- name: Leidos
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 26
+  feeds:
+  - {type: workday, tenant: leidos, wd: wd5, site: External, max: 300}
+- name: Genuine Parts Company
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 26
+  feeds:
+  - {type: workday, tenant: genpt, wd: wd1, site: Careers, max: 300}
+- name: Remitly
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 26
+  feeds:
+  - {type: workday, tenant: remitly, wd: wd5, site: Remitly_Careers, max: 300}
+- name: Allstate Insurance Company
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 25
+  feeds:
+  - {type: workday, tenant: allstate, wd: wd5, site: allstate_careers, max: 300}
+- name: Proofpoint
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 24
+  feeds:
+  - {type: workday, tenant: proofpoint, wd: wd5, site: proofpointcareers, max: 300}
+- name: Dexcom
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 23
+  feeds:
+  - {type: workday, tenant: dexcom, wd: wd1, site: Dexcom, max: 300}
+- name: Stryker
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 22
+  feeds:
+  - {type: workday, tenant: stryker, wd: wd1, site: StrykerCareers, max: 300}
+- name: Match Group
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 22
+  feeds:
+  - {type: lever, company: matchgroup}
+- name: DraftKings
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 22
+  feeds:
+  - {type: workday, tenant: draftkings, wd: wd1, site: Campus_Career_Portal, max: 300}
+- name: CCC Intelligent Solutions
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 22
+  feeds:
+  - {type: workday, tenant: cccis, wd: wd1, site: broadbean_external, max: 300}
+- name: Jabil
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 20
+  feeds:
+  - {type: workday, tenant: jabil, wd: wd5, site: Jabil_Careers, max: 300}
+- name: Vizient
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 20
+  feeds:
+  - {type: workday, tenant: vizient, wd: wd1, site: Vizient_Careers, max: 300}
+- name: OCLC
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 20
+  feeds:
+  - {type: workday, tenant: oclc, wd: wd1, site: OCLC_Careers, max: 300}
+- name: Newrez
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 19
+  feeds:
+  - {type: workday, tenant: newrez, wd: wd1, site: NRZ, max: 300}
+- name: DaVita
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 19
+  feeds:
+  - {type: workday, tenant: davita, wd: wd1, site: DKC_External, max: 300}
+- name: Rockwell Automation
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 19
+  feeds:
+  - {type: workday, tenant: rockwellautomation, wd: wd1, site: External-Rockwell-Automation-Early-Careers, max: 300}
+- name: Copart
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 19
+  feeds:
+  - {type: workday, tenant: copart, wd: wd12, site: copart, max: 300}
+- name: Sonos
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 19
+  feeds:
+  - {type: workday, tenant: sonos, wd: wd1, site: sonos, max: 300}
+- name: Bose
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 19
+  feeds:
+  - {type: workday, tenant: boseallaboutme, wd: wd503, site: bose_careers, max: 300}
+- name: Uline
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 19
+  feeds:
+  - {type: workday, tenant: uline, wd: wd1, site: Uline_Careers, max: 300}
+- name: Schweitzer Engineering Laboratories
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 18
+  feeds:
+  - {type: workday, tenant: selinc, wd: wd1, site: SEL, max: 300}
+- name: Symbotic
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 18
+  feeds:
+  - {type: workday, tenant: symbotic, wd: wd504, site: Symbotic, max: 300}
+- name: Levi Strauss & Co
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 17
+  feeds:
+  - {type: workday, tenant: levistraussandco, wd: wd5, site: external, max: 300}
+- name: Trimble
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 17
+  feeds:
+  - {type: workday, tenant: trimble, wd: wd1, site: TrimbleCareers, max: 300}
+- name: Guidehouse
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 16
+  feeds:
+  - {type: workday, tenant: guidehouse, wd: wd1, site: external, max: 300}
+- name: American Electric Power
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 16
+  feeds:
+  - {type: workday, tenant: aep, wd: wd1, site: AEPCareerSite, max: 300}
+- name: Agilent Technologies
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 16
+  feeds:
+  - {type: workday, tenant: agilent, wd: wd5, site: Agilent_Student_Careers, max: 300}
+- name: Etsy
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 16
+  feeds:
+  - {type: workday, tenant: etsy, wd: wd5, site: Etsy_Careers, max: 300}
+- name: Regal Rexnord
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 16
+  feeds:
+  - {type: workday, tenant: regalrexnord, wd: wd1, site: careers, max: 300}
+- name: Torc Robotics
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 15
+  feeds:
+  - {type: greenhouse, board: torcrobotics}
+- name: Momentive
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 15
+  feeds:
+  - {type: workday, tenant: momentive, wd: wd1, site: MC, max: 300}
+- name: ALTEN Technology
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 15
+  feeds:
+  - {type: greenhouse, board: altentechnologyusa}
+- name: TripAdvisor
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 15
+  feeds:
+  - {type: greenhouse, board: tripadvisor}
+- name: AllianceBernstein
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 14
+  feeds:
+  - {type: workday, tenant: abglobal, wd: wd1, site: abcampuscareers, max: 300}
+- name: Brunswick
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 14
+  feeds:
+  - {type: workday, tenant: brunswick, wd: wd1, site: search, max: 300}
+- name: Dimensional Fund Advisors
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 13
+  feeds:
+  - {type: workday, tenant: dimensional, wd: wd5, site: dfa_careers, max: 300}
+- name: Kite Pharma
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 13
+  feeds:
+  - {type: workday, tenant: gilead, wd: wd1, site: kitepharmacareers, max: 300}
+- name: Hitachi Energy
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 13
+  feeds:
+  - {type: workday, tenant: hitachi, wd: wd1, site: hitachi, max: 300}
+- name: Chamberlain Group
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 13
+  feeds:
+  - {type: workday, tenant: chamberlain, wd: wd1, site: Chamberlain_Group, max: 300}
+- name: Dow Chemical Company
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 13
+  feeds:
+  - {type: workday, tenant: dow, wd: wd1, site: ExternalCareers, max: 300}
+- name: Ingram Micro
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 13
+  feeds:
+  - {type: workday, tenant: ingrammicro, wd: wd5, site: IngramMicro, max: 300}
+- name: Trane Technologies
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 13
+  feeds:
+  - {type: workday, tenant: tranetechnologies, wd: wd12, site: trane_technologies_careers, max: 300}
+- name: Illumio
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 13
+  feeds:
+  - {type: ashby, board: illumio}
+- name: AppLovin
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 12
+  feeds:
+  - {type: greenhouse, board: applovin}
+- name: General Dynamics Information Technology
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 12
+  feeds:
+  - {type: workday, tenant: gdit, wd: wd5, site: gdit_earlytalent, max: 300}
+- name: The Home Depot
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 12
+  feeds:
+  - {type: workday, tenant: homedepot, wd: wd5, site: careerdepot, max: 300}
+- name: The Trade Desk
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 12
+  feeds:
+  - {type: greenhouse, board: thetradedesk}
+- name: DIRECTV
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 12
+  feeds:
+  - {type: workday, tenant: directv, wd: wd1, site: careers, max: 300}
+- name: Natera
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 12
+  feeds:
+  - {type: greenhouse, board: natera}
+- name: Sigma Computing
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 12
+  feeds:
+  - {type: greenhouse, board: sigmacomputing}
+- name: Exelixis
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 11
+  feeds:
+  - {type: workday, tenant: exelixis, wd: wd1, site: exel, max: 300}
+- name: Regions Bank
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 11
+  feeds:
+  - {type: workday, tenant: regions, wd: wd5, site: regions_careers, max: 300}
+- name: Itron
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 11
+  feeds:
+  - {type: workday, tenant: itron, wd: wd5, site: itron, max: 300}
+- name: CDK Global
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 11
+  feeds:
+  - {type: workday, tenant: cdk, wd: wd1, site: CDK, max: 300}
+- name: Appian
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 11
+  feeds:
+  - {type: greenhouse, board: appian}
+- name: Klaviyo
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 10
+  feeds:
+  - {type: greenhouse, board: klaviyocampus}
+- name: PROS Holdings, Inc
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 10
+  feeds:
+  - {type: workday, tenant: pros, wd: wd5, site: pros_careers, max: 300}
+- name: AHEAD
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 10
+  feeds:
+  - {type: lever, company: thinkahead}
+- name: Mass General Brigham
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 10
+  feeds:
+  - {type: workday, tenant: massgeneralbrigham, wd: wd1, site: mgbexternal, max: 300}
+- name: Crowe
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 10
+  feeds:
+  - {type: workday, tenant: crowe, wd: wd12, site: external_careers, max: 300}
+- name: Insulet
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 10
+  feeds:
+  - {type: workday, tenant: insulet, wd: wd5, site: insuletcareers, max: 300}
+- name: HNTB
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 10
+  feeds:
+  - {type: workday, tenant: hntb, wd: wd5, site: hntb_careers, max: 300}
+- name: Gordon Food Service
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 10
+  feeds:
+  - {type: workday, tenant: gfs, wd: wd5, site: usjobs-gen-gfs, max: 300}
+- name: Great American Insurance Company
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 10
+  feeds:
+  - {type: workday, tenant: gaig, wd: wd1, site: GAIG_External, max: 300}
+- name: Neuberger Berman
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 10
+  feeds:
+  - {type: workday, tenant: nb, wd: wd1, site: NBCareers, max: 300}
+- name: Astera Labs
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 10
+  feeds:
+  - {type: greenhouse, board: asteraearlycareer2027}
+- name: International Rescue Committee
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 10
+  feeds:
+  - {type: workday, tenant: theirc, wd: wd1, site: External_Careers, max: 300}
+- name: SK hynix memory solutions America Inc
+  group: More H-1B sponsors (tech roles only)
+  tech_only: true
+  regions: [us]
+  every_hours: 3
+  h1b_fy23_seen: 10
+  feeds:
+  - {type: greenhouse, board: skhynixmemorysolutionsamericainc}

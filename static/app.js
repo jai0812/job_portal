@@ -222,6 +222,7 @@ function matches(j, skip) {
   if (F.source && j.source_name !== F.source) return false;
   if (F.cap && !j.cap_exempt) return false;
   if (F.top && !j.top_company) return false;
+  if (F.imm && !j.immediate) return false;
   if (F.h1b === "sponsor" && !hasSponsored(j)) return false;
   if (F.h1b === "yes" && j.h1b !== "yes") return false;
   if (F.h1b === "not-no" && ["no", "citizen"].includes(j.h1b)) return false;
@@ -291,7 +292,7 @@ function renderJobs() {
       ${postedCell(j)}
       <td class="company">${esc(j.company)}<br>${badges}</td>
       ${finCell(j)}
-      <td>${esc(j.title)}${j.salary ? `<br><span class="muted">${esc(j.salary)}</span>` : ""}</td>
+      <td>${esc(j.title)}${j.immediate ? ` <span class="tag imm" title="The posting asks for someone who can start right away">⚡ Immediate start</span>` : ""}${j.salary ? `<br><span class="muted">${esc(j.salary)}</span>` : ""}</td>
       <td class="loc">${esc(j.location)}${F.region === "other" ? `<span class="age-date">${esc(placesOf(j).join(", "))}</span>` : ""}</td>
       <td>${cats}</td>
       <td>${LEVEL_LABEL[j.level] || j.level}</td>
@@ -378,6 +379,7 @@ $("#q").oninput = (e) => { F.q = e.target.value; SHOWN = 200; renderJobs(); };
 $("#f-h1b").onchange = (e) => { F.h1b = e.target.value; renderJobs(); };
 $("#f-cap").onchange = (e) => { F.cap = e.target.checked; renderJobs(); };
 $("#f-top").onchange = (e) => { F.top = e.target.checked; renderJobs(); };
+$("#f-imm").onchange = (e) => { F.imm = e.target.checked; SHOWN = 200; renderJobs(); };
 $("#f-source").onchange = (e) => { F.source = e.target.value; renderJobs(); };
 $("#f-status").onchange = (e) => { F.status = e.target.value; renderJobs(); };
 

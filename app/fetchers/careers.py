@@ -112,12 +112,13 @@ def workday(f: dict, sink: Sink) -> None:
             passes.append((None, {}))
         for region, facet in passes:
             # In the unfiltered pass, skip places we can't place ("2 Locations"): the country passes covered those.
-            _workday_pass(c, base, api, f["site"], facet, region, sink, known_only=region is None and bool(done))
+            _workday_pass(c, base, api, f["site"], facet, region, sink, known_only=region is None and bool(done),
+                          cap=f.get("max"))
 
 
-def _workday_pass(c, base, api, site, facets, region, sink, known_only=False) -> None:
+def _workday_pass(c, base, api, site, facets, region, sink, known_only=False, cap=None) -> None:
     offset, total, old_pages = 0, MAX_PER_FEED, 0
-    limit = MAX_PER_FEED * (2 if sink.only else 1)  # look further when most rows will be filtered out
+    limit = cap or MAX_PER_FEED * (2 if sink.only else 1)  # look further when most rows will be filtered out
     while offset < min(total, limit):
         if region and sink.full(region):
             break
@@ -194,13 +195,22 @@ def smartrecruiters(f: dict, sink: Sink) -> None:
                 break
 
 
+def _plain(html_text: str, limit: int = 5000) -> str:
+    """Job description HTML → plain text (Greenhouse sends it HTML-escaped)."""
+    import html as _h
+    text = re.sub(r"<[^>]+>", " ", _h.unescape(_h.unescape(html_text or "")))
+    return re.sub(r"\s+", " ", text).strip()[:limit]
+
+
 def greenhouse(f: dict, sink: Sink) -> None:
     with _client() as c:
-        d = c.get(f"https://boards-api.greenhouse.io/v1/boards/{f['board']}/jobs")
+        # content=true includes each job's description in the same request: used to spot
+        # "no visa sponsorship" / "US citizens only" and "immediate start" wording
+        d = c.get(f"https://boards-api.greenhouse.io/v1/boards/{f['board']}/jobs", params={"content": "true"})
         d.raise_for_status()
         for p in d.json().get("jobs") or []:
             sink.add(p.get("title", ""), (p.get("location") or {}).get("name", ""), p.get("absolute_url", ""),
-                     _iso(p.get("first_published") or p.get("updated_at")))
+                     _iso(p.get("first_published") or p.get("updated_at")), description=_plain(p.get("content", "")))
 
 
 def lever(f: dict, sink: Sink) -> None:

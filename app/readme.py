@@ -92,7 +92,8 @@ def snapshot() -> str:
 
 def update() -> bool:
     """Rewrite the live section in README.md. Returns True if the file changed."""
-    if not README.exists():
+    from .config import env
+    if env("PORTAL_README", "1") == "0" or not README.exists():  # e.g. on the server
         return False
     text = README.read_text()
     if START not in text or END not in text:
@@ -107,8 +108,9 @@ def update() -> bool:
 def push_if_due() -> str:
     """Commit and push README.md (only that file) when this folder is a git repo with a GitHub remote.
     Controlled by readme_auto_push / readme_push_hours in config/sources.yaml."""
+    from .config import env
     cfg = load_sources()
-    if not cfg.get("readme_auto_push", True) or not (ROOT / ".git").exists():
+    if env("PORTAL_README", "1") == "0" or not cfg.get("readme_auto_push", True) or not (ROOT / ".git").exists():
         return "skipped"
 
     def git(*args):

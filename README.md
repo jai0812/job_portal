@@ -26,40 +26,40 @@ This section is rewritten by the portal itself after every hourly refresh.
 
 <!-- LIVE:START (auto-generated, do not edit by hand) -->
 
-**Last updated: Oct 26, 2026 at 8:41 AM EDT** · refreshed automatically every hour
+**Last updated: Oct 26, 2026 at 11:35 AM EDT** · refreshed automatically every hour
 
 | Right now in the portal | |
 |---|---|
-| 🇺🇸 United States | **92,150** |
-| 🇮🇳 India | **11,217** |
-| 🌍 Other countries | **17,800** |
-| 🎓 University jobs | **3,902** |
-| 🆕 Posted in the last 24 hours | **202** |
-| ✅ US jobs at employers with H-1B history | **68,613 (74%)** |
-| 💻 Software Engineering | **24,892** |
-| 📊 Data Science & ML | **14,435** |
-| 🏦 Finance & Banks | **65,456** |
+| 🇺🇸 United States | **93,121** |
+| 🇮🇳 India | **11,549** |
+| 🌍 Other countries | **18,063** |
+| 🎓 University jobs | **3,930** |
+| 🆕 Posted in the last 24 hours | **1,255** |
+| ✅ US jobs at employers with H-1B history | **69,303 (74%)** |
+| 💻 Software Engineering | **25,377** |
+| 📊 Data Science & ML | **14,701** |
+| 🏦 Finance & Banks | **66,046** |
 | 🔌 Sources | **22 GitHub lists · 207 company career sites · 12 universities · LinkedIn (Apify)** |
 
 **Freshest early-career tech & data roles at employers with H-1B history**
 
 | Company | Role | Location | Posted | H-1B approvals (FY23) | |
 |---|---|---|---|---|---|
-| **Microsoft** | Applied Sciences INTERN | United States | 6h ago | 2,066 | [Apply ↗](https://zapply.jobs/l/d/microsoft-200041777?s=gh-new-grad-data-science-jobs-2027) |
-| **Hewlett Packard Enterprise** | AI/ML Developer Intern | San Jose, CA | 9h ago | 167 | [Apply ↗](https://go.vansh.nyc/BM) |
-| **Salesforce** | Commercial/Enterprise Account Executive, Salesforce Analy… | Illinois Chicago | 12h ago | 498 | [Apply ↗](https://zapply.jobs/l/d/workday-salesforce-external-career-site-JR354555?s=gh-new-grad-jobs-2027) |
-| **Evolent** | Associate Software Engineer | Remote in USA | 12h ago | 3 | [Apply ↗](https://evolent.wd1.myworkdayjobs.com/External/job/Work-at-Home/Associate-Software-Engineer_JR-916896) |
-| **Skydio** | PhD Autonomy Engineer Intern - Deep Learning / Computer V… | San Mateo, California, Unit… | 13h ago | 13 | [Apply ↗](https://zapply.jobs/l/d/ashby-skydio-f1a72f5b-6157-47c1-8de9-379a32c7419f?s=gh-internships-2027) |
-| **Notion** | Software Engineer Intern, Mobile | San Francisco, CA · New Yor… | 1d ago | 8 | [Apply ↗](https://go.vansh.nyc/BF) |
-| **Experian** | Software Engineering Intern | Cyberjaya, Selangor, MY | 1d ago | 36 | [Apply ↗](https://jobs.smartrecruiters.com/Experian/744000157657879) |
-| **Adobe** | Machine Learning Engineer Intern | San Jose, CA · Waltham, MA… | 1d ago | 221 | [Apply ↗](https://go.vansh.nyc/BO) |
-| **Leidos** | Junior Software Developer | St. Louis, MO | 2d ago | 26 | [Apply ↗](https://zapply.jobs/l/d/workday-leidos-external-R-00195126?s=gh-new-grad-jobs-2027) |
-| **Live Nation** | Venue Analytics Intern | Chicago, IL, USA | 2d ago | 10 | [Apply ↗](https://zapply.jobs/l/d/workday-livenation-lnexternalsite-JR-93773?s=gh-internships-2027) |
-| **ASML** | Platform Software Engineer In Test ( Internship) | San Jose, CA, USA | 2d ago | 91 | [Apply ↗](https://zapply.jobs/l/d/workday-asml-asmlext1-J-00354558?s=gh-new-grad-jobs-2027) |
-| **Magna** | Junior AI Engineer | Troy, Michigan, US | 2d ago | 55 | [Apply ↗](https://zapply.jobs/l/d/workday-magna-magna-R00266828?s=gh-new-grad-jobs-2027) |
-| **Intel** | AI Hardware Engineering Intern | California Santa Clara | 2d ago | 1,112 | [Apply ↗](https://zapply.jobs/l/d/workday-intel-external-JR0287533?s=gh-new-grad-jobs-2027) |
-| **Astreya** | Incident Response Analyst I | Austin, TX | 2d ago | 1 | [Apply ↗](https://zapply.jobs/l/d/workday-astreya-life-at-astreya-opportunities-R0017793?s=gh-new-grad-software-engineering-jobs-2027) |
-| **FactSet** | Client Solutions Associate - Enterprise Data Solutions -… | San Francisco, CA | 2d ago | 23 | [Apply ↗](https://zapply.jobs/l/d/workday-factset-factsetcareers-R33489?s=gh-new-grad-software-engineering-jobs-2027) |
+| **Analog Devices** | DevOps Co-op | Boston, MA | 38 min ago | 41 | [Apply ↗](https://go.vansh.nyc/Qf) |
+| **Pattern** | Revenue Operations Data Analyst Intern | Lehi, UT | 52 min ago | 1 | [Apply ↗](https://jobs.lever.co/pattern/84c10630-d414-4ad6-a195-05b0691fa97a/apply) |
+| **Booz Allen** | University - 2027 Summer Games Systems Engineer Intern -… | Lexington, MA | 1h ago | 9 | [Apply ↗](https://bah.wd1.myworkdayjobs.com/bah_jobs/job/Lexington-MA/University---2027-Summer-Games-Systems-Engineer-Intern---Lexington--MA_R0252273?utm_source=understudy&ref=understudy-list) |
+| **Meta** | Research Intern - Embedded AI on Wearables - PhD | Redmond, WA | 1h ago | 1,540 | [Apply ↗](https://www.metacareers.com/jobs/4070678619908522) |
+| **Manhattan Associates** | Cloud Intern | Atlanta, GA | 1h ago | 45 | [Apply ↗](https://go.vansh.nyc/MX) |
+| **PTC** | Software Engineer Intern (Summer 2027) | Boston, MA, USA | 2h ago | 19 | [Apply ↗](https://zapply.jobs/l/d/workday-ptc-ptc-JR112943?s=gh-new-grad-jobs-2027) |
+| **Microsoft** | Applied Sciences INTERN | United States | 10h ago | 2,066 | [Apply ↗](https://zapply.jobs/l/d/microsoft-200041777?s=gh-new-grad-data-science-jobs-2027) |
+| **Catalent** | 2027 Intern - IT | Madison, WI | 10h ago | 19 | [Apply ↗](https://catalent.wd1.myworkdayjobs.com/external/job/Madison-WI/XMLNAME-2027-Intern---IT_0097277?utm_source=understudy&ref=understudy-list) |
+| **Hewlett Packard Enterprise** | AI/ML Developer Intern | San Jose, CA | 12h ago | 167 | [Apply ↗](https://go.vansh.nyc/BM) |
+| **Salesforce** | Commercial/Enterprise Account Executive, Salesforce Analy… | Illinois Chicago | 15h ago | 498 | [Apply ↗](https://zapply.jobs/l/d/workday-salesforce-external-career-site-JR354555?s=gh-new-grad-jobs-2027) |
+| **JPMorgan Chase** | Quantitative Research \[Multiple Positions Available\] | New York, NY, United States | 15h ago | 1,525 | [Apply ↗](https://zapply.jobs/l/d/oracle-jpmorgan-chase-210801267?s=gh-new-grad-data-science-jobs-2027) |
+| **Evolent** | Associate Software Engineer | Remote in USA | 15h ago | 3 | [Apply ↗](https://evolent.wd1.myworkdayjobs.com/External/job/Work-at-Home/Associate-Software-Engineer_JR-916896) |
+| **Interface** | Data Coordinator | LaGrange, GA | 15h ago | 5 | [Apply ↗](https://interface.wd1.myworkdayjobs.com/interface/job/LaGrange-GA/Data-Coordinator_R4332) |
+| **Wells Fargo** | Technology Intern - Early Careers - Data Engineering | Iselin, Woodbridge Township… | 15h ago | 233 | [Apply ↗](https://wd1.myworkdaysite.com/recruiting/wf/WellsFargoJobs/job/CHARLOTTE-NC/XMLNAME-2027-Technology-Summer-Internship---Early-Careers--Data-Engineering-_R-583066) |
+| **Skydio** | PhD Autonomy Engineer Intern - Deep Learning / Computer V… | San Mateo, California, Unit… | 16h ago | 13 | [Apply ↗](https://zapply.jobs/l/d/ashby-skydio-f1a72f5b-6157-47c1-8de9-379a32c7419f?s=gh-internships-2027) |
 
 <!-- LIVE:END -->
 

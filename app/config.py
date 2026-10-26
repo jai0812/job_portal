@@ -43,7 +43,13 @@ def load_universities() -> list[dict]:
 MORE_COMPANIES_FILE = CONFIG_DIR / "more_companies.yaml"
 
 
+SPONSORS_FILE = CONFIG_DIR / "sponsor_companies.yaml"
+
+
 def load_more_companies() -> list[dict]:
-    if not MORE_COMPANIES_FILE.exists():
-        return []
-    return (yaml.safe_load(MORE_COMPANIES_FILE.read_text()) or {}).get("companies") or []
+    """config/more_companies.yaml (FAANG, big tech, India…) + config/sponsor_companies.yaml (mid-size H-1B sponsors)."""
+    out = []
+    for f in (MORE_COMPANIES_FILE, SPONSORS_FILE):
+        if f.exists():
+            out += (yaml.safe_load(f.read_text()) or {}).get("companies") or []
+    return out

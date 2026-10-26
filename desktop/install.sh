@@ -5,7 +5,12 @@ cd "$(dirname "$0")"
 PORTAL_DIR="$(cd .. && pwd -P)"
 APP="$HOME/Desktop/Job Portal.app"
 TMP="$(mktemp -t launcher).applescript"
-sed "s#__PORTAL_DIR__#${PORTAL_DIR}#" launcher.applescript > "$TMP"
+if [ "$1" = "--cloud" ]; then
+  # the portal runs on a server: the icon just opens the website
+  echo 'open location "https://jobs.sharmajai.com"' > "$TMP"
+else
+  sed "s#__PORTAL_DIR__#${PORTAL_DIR}#" launcher.applescript > "$TMP"
+fi
 rm -rf "$APP"
 osacompile -o "$APP" "$TMP"
 rm -f "$TMP"

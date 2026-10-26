@@ -104,6 +104,15 @@ apify:
       location: United States
       datePosted: past24Hours
       limitPerSource: 50
+    # Roles that need someone to start right away (US + India), last week
+    - keywords: immediate joiner OR immediate start software engineer OR data scientist OR analyst
+      location: India
+      datePosted: pastWeek
+      limitPerSource: 15
+    - keywords: immediate start OR start immediately software engineer OR data analyst
+      location: United States
+      datePosted: pastWeek
+      limitPerSource: 15
     # India: data / ML / finance, last 24 hours
     - keywords: data scientist OR machine learning engineer OR financial analyst
       location: India

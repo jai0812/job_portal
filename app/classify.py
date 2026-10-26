@@ -44,6 +44,24 @@ H1B_PATTERNS = [
 ]
 
 
+# Postings that need someone to start right away ("immediate joiner" is the usual Indian phrasing).
+IMMEDIATE = re.compile(
+    r"immediate(ly)?[ -](start|join|joiner|joining|hire|hiring|opening|need|requirement|availability|available)"
+    r"|(start|join|joining|available)\s+(date\s*[:\-]?\s*)?(immediately|asap|right away)|\basap\b"
+    r"|urgent(ly)?\s+(hiring|requirement|need|opening|position)"
+    r"|notice period[^.]{0,25}?\b(0|immediate|15)\b|\b(0|zero)\s*-\s*(15|30)\s*days?\s*notice|can join (within|in) (15|30) days", re.I)
+
+
+def immediate(title: str, description: str = "") -> bool:
+    return bool(IMMEDIATE.search(title or "") or IMMEDIATE.search(description or ""))
+
+
+RETAIL_BANKING = re.compile(
+    r"\bteller|\bbranch\b|\bbanker\b|client service (associate|representative)|customer service|call center|contact center"
+    r"|lending officer|loan officer|financial (solutions )?advisor|wealth advisor|private client advisor|\bhome lending\b"
+    r"|\bpart[- ]time\b|\b(20|30) hours?\b", re.I)
+
+
 def _names_regex(names: list[str]) -> re.Pattern | None:
     names = [n for n in names or [] if n]
     if not names:
@@ -96,7 +114,8 @@ def categories(title: str, company: str, source_category: str = "") -> list[str]
     if source_category and source_category.lower() in SOURCE_CATEGORY:
         cats.add(SOURCE_CATEGORY[source_category.lower()])
     rules = _company_rules()
-    if rules["finance"] and rules["finance"].search(company or ""):
+    # Working at a bank counts as Finance, except branch / retail jobs (tellers, bankers, advisors, call centre)
+    if rules["finance"] and rules["finance"].search(company or "") and not RETAIL_BANKING.search(t):
         cats.add("finance")
     return sorted(cats) or ["other"]
 

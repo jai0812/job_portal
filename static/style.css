@@ -325,3 +325,5 @@ tr.is-declined td:not(.cb-col):not(.age) { text-decoration: line-through; text-d
 .st-dot { width: 18px; height: 18px; border-radius: 5px; display: grid; place-items: center; font-size: 11px; font-weight: 700; border: 1.5px solid var(--muted); }
 .apify-left { font-size: 11px; margin-left: 6px; padding: 1px 6px; border-radius: 99px; background: var(--chip); color: var(--muted); }
 .apify-left.low { color: var(--bad); }
+
+.tag.imm { color: #b35c00; background: color-mix(in srgb, #f0a020 18%, transparent); font-weight: 600; }

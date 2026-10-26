@@ -13,6 +13,14 @@ def _employers() -> list[dict]:
     return [f for f in finance.public_list() if f.get("feeds")] + [c for c in load_more_companies() if c.get("feeds")]
 
 
+def _due(name: str, every_hours: float | None) -> bool:
+    """Employers with every_hours (e.g. the mid-size sponsors) are only re-checked that often, to keep refreshes quick."""
+    if not every_hours:
+        return True
+    last = {l["source"]: l["last_run"] for l in db.fetch_log()}.get(name) or 0
+    return time.time() - last >= every_hours * 3600 - 300
+
+
 def run_fast(names: list[str], on_new=None) -> list[dict]:
     """Fast lane: re-check just these companies' own career sites for postings from the last few days."""
     cfg = load_sources()
@@ -43,7 +51,7 @@ def run(include_apify: bool = False, only: str | None = None, on_new=None) -> li
                    lambda e=e: careers.fetch(e["feeds"], {"source_type": "company", "source_name": e["name"], "company": e["name"]},
                                              firm_age, [r for r in regions if r in (e.get("regions") or regions)],
                                              tech_only=bool(e.get("tech_only"))))
-                  for e in employers]
+                  for e in employers if only or _due(f"Company: {e['name']}", e.get("every_hours"))]
     ap = cfg.get("apify") or {}
     if include_apify and ap.get("enabled", True):
         def linkedin():
