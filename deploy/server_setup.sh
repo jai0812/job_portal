@@ -44,6 +44,8 @@ Environment=PORTAL_README=0
 ExecStart=$APP/venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8787 --proxy-headers --forwarded-allow-ips 127.0.0.1
 Restart=always
 RestartSec=5
+# background fetches are safe to cut off (the next refresh redoes them): don't wait 90 s on restart
+TimeoutStopSec=10
 [Install]
 WantedBy=multi-user.target
 UNIT
