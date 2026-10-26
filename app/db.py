@@ -46,7 +46,8 @@ APPLIED_STAGES = ("applied", "interviewing", "offer", "rejected")
 
 @contextmanager
 def conn():
-    c = sqlite3.connect(DB_PATH)
+    c = sqlite3.connect(DB_PATH, timeout=30)  # refresh, fast lane and page loads overlap: wait instead of "database is locked"
+    c.execute("PRAGMA journal_mode=WAL")
     c.row_factory = sqlite3.Row
     try:
         yield c
