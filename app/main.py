@@ -31,13 +31,14 @@
 #               ~ built by JAI SHARMA ~
 # ==============================
 """Job Portal: jobs dashboard, analytics and multi-LLM chat. Run with ./run.sh"""
+import gzip
 import json
 import re
 import threading
 import time
 
 from fastapi import Body, FastAPI, HTTPException, Request
-from fastapi.responses import JSONResponse, RedirectResponse
+from fastapi.responses import JSONResponse, RedirectResponse, Response
 from fastapi.staticfiles import StaticFiles
 
 from . import alerts, auth, classify, db, finance, geo, h1b, llm, patterns, readme, refresh
@@ -150,6 +151,7 @@ def _do_refresh(include_apify: bool):
     _refresh.update(running=True, started=int(time.time()), results=[])
     try:
         _refresh["results"] = refresh.run(include_apify=include_apify, on_new=alerts.on_new)
+        rebuild_jobs()
         try:  # keep the README's live snapshot current (and push it to GitHub when that's set up)
             readme.update()
             _refresh["readme"] = readme.push_if_due()
@@ -200,6 +202,8 @@ def _fast_lane_loop():
             try:
                 _fast["results"] = refresh.run_fast(names, on_new=alerts.on_new)
                 _fast["last"] = int(time.time())
+                if any(r["new"] for r in _fast["results"]):
+                    rebuild_jobs()
             except Exception as e:
                 _fast["results"] = [{"source": "fast lane", "error": str(e)[:200]}]
         time.sleep(max(max(minutes, 5) * 60 - (time.time() - started), 60))  # every N minutes from start to start
@@ -216,6 +220,11 @@ def _alerts_loop():
 
 @app.on_event("startup")
 def _startup():
+    try:
+        _jobs.update(gz=JOBS_CACHE.read_bytes(), built=int(JOBS_CACHE.stat().st_mtime))
+    except OSError:
+        pass
+    rebuild_jobs()
     threading.Thread(target=_auto_refresh_loop, daemon=True).start()
     threading.Thread(target=_self_check_loop, daemon=True).start()
     threading.Thread(target=_fast_lane_loop, daemon=True).start()
@@ -232,7 +241,7 @@ def start_refresh(body: dict = Body(default={})):
 
 @app.get("/api/refresh")
 def refresh_status():
-    return {**_refresh, "log": db.fetch_log(), "fast_lane": _fast}
+    return {**_refresh, "log": db.fetch_log(), "fast_lane": _fast, "jobs_built": _jobs["built"]}
 
 
 @app.get("/api/apify")
@@ -346,29 +355,93 @@ def _uscis_counts() -> dict[str, int]:
 def _enrich(rows: list[dict]) -> list[dict]:
     unis = _university_matchers()
     legal = _uscis_counts()
+    by_company, by_location = {}, {}  # ~130k jobs but only a few thousand companies and places: work each out once
+
+    def company_info(company: str):
+        if company not in by_company:
+            firm = finance.firm_for(company)
+            by_company[company] = (
+                next((short for short, rx in unis if rx.search(company)), None),
+                firm and {k: firm[k] for k in ("name", "segment", "segment_label")},
+                # USCIS FY2023 H-1B approvals: exact entity list for known finance firms, name match for everyone else
+                firm["h1b_fy23"] if firm else legal[company.lower()] if company.lower() in legal
+                else h1b.approvals_for_company(company))
+        return by_company[company]
+
+    def place_info(location: str):
+        if location not in by_location:
+            by_location[location] = (list(geo.regions(location)), list(geo.countries(location)))
+        return by_location[location]
+
     for r in rows:
         desc = r.pop("description", "") or ""
         r["has_description"] = bool(desc)
         r["immediate"] = classify.immediate(r.get("title", ""), desc)
-        r["uni"] = r["source_name"] if r["source_type"] == "university" else next(
-            (short for short, rx in unis if rx.search(r["company"] or "")), None)
+        uni, r["fin"], r["h1b_fy23"] = company_info(r["company"] or "")
+        r["uni"] = r["source_name"] if r["source_type"] == "university" else uni
         if r["source_type"] == "university":
             r["regions"], r["countries"] = ["us"], [geo.US]
         else:
-            r["regions"], r["countries"] = list(geo.regions(r["location"])), list(geo.countries(r["location"]))
-        firm = finance.firm_for(r["company"])
-        r["fin"] = firm and {k: firm[k] for k in ("name", "segment", "segment_label")}
-        # USCIS FY2023 H-1B approvals: exact entity list for known finance firms, name match for everyone else
-        company = r["company"] or ""
-        r["h1b_fy23"] = (firm["h1b_fy23"] if firm
-                         else legal[company.lower()] if company.lower() in legal
-                         else h1b.approvals_for_company(company))
+            r["regions"], r["countries"] = place_info(r["location"])
     return rows
 
 
+# Building the job list (~130k rows, H-1B / finance / region lookups) takes minutes on a small cloud server, so it is
+# built in the background after each refresh and kept gzipped; page loads get that copy instantly. Your own marks
+# (status, notes) change all the time, so they come separately from /api/jobs/mine and the page merges them in.
+JOBS_CACHE = DATA_DIR / "jobs_cache.json.gz"
+_jobs = {"gz": None, "built": 0, "building": False, "again": False}
+_jobs_lock = threading.Lock()
+
+
+def _build_jobs():
+    rows = _enrich(db.list_jobs(int(load_sources().get("max_age_days", 45))))
+    gz = gzip.compress(json.dumps({"now": int(time.time()), "jobs": rows}, separators=(",", ":")).encode(), 5)
+    _jobs.update(gz=gz, built=int(time.time()))
+    try:
+        tmp = JOBS_CACHE.with_suffix(".tmp")
+        tmp.write_bytes(gz)
+        tmp.replace(JOBS_CACHE)
+    except OSError:
+        pass
+
+
+def rebuild_jobs():
+    """Rebuild the job list in the background (coalesces calls that arrive while a build is running)."""
+    with _jobs_lock:
+        if _jobs["building"]:
+            _jobs["again"] = True
+            return
+        _jobs["building"] = True
+
+    def work():
+        while True:
+            try:
+                _build_jobs()
+            except Exception as e:
+                print(f"job list build failed: {e}", flush=True)
+            with _jobs_lock:
+                if not _jobs["again"]:
+                    _jobs["building"] = False
+                    return
+                _jobs["again"] = False
+    threading.Thread(target=work, daemon=True).start()
+
+
 @app.get("/api/jobs")
-def jobs():
-    return {"now": int(time.time()), "jobs": _enrich(db.list_jobs(int(load_sources().get("max_age_days", 45))))}
+def jobs(request: Request):
+    if _jobs["gz"] is None:
+        _build_jobs()  # very first start, nothing cached yet
+    if "gzip" in request.headers.get("accept-encoding", ""):
+        return Response(_jobs["gz"], media_type="application/json",
+                        headers={"Content-Encoding": "gzip", "Cache-Control": "no-store", "Vary": "Accept-Encoding"})
+    return Response(gzip.decompress(_jobs["gz"]), media_type="application/json", headers={"Cache-Control": "no-store"})
+
+
+@app.get("/api/jobs/mine")
+def my_marks():
+    """Your status / notes / applied date for every job you've touched (everything else is 'new')."""
+    return {"now": int(time.time()), "built": _jobs["built"], "marks": db.marks()}
 
 
 @app.get("/api/analytics")
@@ -428,6 +501,7 @@ def add_job(body: dict = Body(...)):
                        location=body.get("location", ""), url=body.get("url", ""),
                        posted_at=int(time.time()), description=body.get("description", ""))
     db.upsert_jobs([j])
+    rebuild_jobs()
     return j
 
 

@@ -198,9 +198,15 @@ function sourceCell(j) {
 }
 
 async function loadJobs() {
-  const data = await api("/api/jobs");
+  // The job list is a prebuilt copy (fast); your status / notes come fresh and are merged in.
+  const [data, mine] = await Promise.all([api("/api/jobs"), api("/api/jobs/mine")]);
+  for (const j of data.jobs) {
+    const m = mine.marks[j.id];
+    [j.status, j.notes, j.applied_at] = m || ["new", "", null];
+  }
   JOBS = data.jobs;
-  NOW = data.now;
+  NOW = mine.now;
+  JOBS_BUILT = mine.built;
   LAST_FETCH = Math.max(0, ...(STATUS.log || []).map((l) => l.last_run));
   const sources = [...new Set(JOBS.map((j) => j.source_name))].sort();
   const sel = $("#f-source");
@@ -421,15 +427,11 @@ function lastFetched(log) {
 $("#btn-refresh").onclick = () => startRefresh(false);
 
 // The server refreshes sources on its own (fast lane every 10 min, everything every 30); pick up new data without a page reload.
-let LAST_FETCH = 0, LAST_FAST = 0;
+let LAST_FETCH = 0, JOBS_BUILT = 0;
 setInterval(async () => {
   try {
     const s = await api("/api/refresh");
-    const latest = Math.max(0, ...s.log.map((l) => l.last_run));
-    const fast = s.fast_lane || {};
-    const fastNew = fast.last > LAST_FAST && (fast.results || []).some((r) => r.new > 0);
-    if (fast.last) LAST_FAST = fast.last;
-    if (!s.running && (latest > LAST_FETCH || fastNew)) { await loadStatus(); loadJobs(); }
+    if (s.jobs_built > JOBS_BUILT) { await loadStatus(); loadJobs(); }  // a fresh job list is ready on the server
     else $("#refresh-state").innerHTML = s.running ? `<span class="spinner"></span>Fetching…` : lastFetched(s.log);
   } catch { /* server restarting */ }
 }, 120000);

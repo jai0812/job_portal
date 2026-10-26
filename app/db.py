@@ -129,6 +129,13 @@ def list_jobs(max_age_days: int) -> list[dict]:
         return [dict(r) for r in rows]
 
 
+def marks() -> dict:
+    """{job id: [status, notes, applied_at]} for every job that isn't plain 'new' with no notes."""
+    with conn() as c:
+        return {r[0]: [r[1], r[2] or "", r[3]] for r in c.execute(
+            "SELECT id, status, notes, applied_at FROM jobs WHERE status != 'new' OR COALESCE(notes, '') != ''")}
+
+
 def decision_counts() -> dict:
     with conn() as c:
         return {r[0]: r[1] for r in c.execute("SELECT status, COUNT(*) FROM jobs WHERE status IN ('waiting','declined') GROUP BY status")}
