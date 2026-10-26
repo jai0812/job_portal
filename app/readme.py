@@ -77,7 +77,7 @@ def snapshot() -> str:
             break
 
     stamp = datetime.now().astimezone().strftime("%b %-d, %Y at %-I:%M %p %Z")
-    out = [START, "", f"**Last updated: {stamp}** · refreshed automatically every hour", "",
+    out = [START, "", f"**Last updated: {stamp}** · fast lane every 10 min · everything every 30 min", "",
            "| Right now in the portal | |", "|---|---|"] + [f"| {a} | **{b}** |" for a, b in rows]
     out += ["", "**Freshest early-career tech & data roles at employers with H-1B history**", "",
             "| Company | Role | Location | Posted | H-1B approvals (FY23) | |", "|---|---|---|---|---|---|"]

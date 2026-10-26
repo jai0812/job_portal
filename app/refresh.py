@@ -31,6 +31,9 @@ def run_fast(names: list[str], on_new=None) -> list[dict]:
                                         3, [r for r in regions if r in (e.get("regions") or regions)],
                                         tech_only=bool(e.get("tech_only"))))
              for e in _employers() if e["name"].lower() in wanted]
+    if cfg.get("fast_lane_github"):  # the GitHub new-grad lists are where most postings show up first, and they're cheap to read
+        max_age = int(cfg.get("max_age_days", 45))
+        tasks += [(s.get("name") or s["url"], lambda s=s: github.fetch(s, max_age)) for s in cfg.get("github") or []]
     return _execute(tasks, on_new, log=False)
 
 

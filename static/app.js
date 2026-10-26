@@ -420,13 +420,16 @@ function lastFetched(log) {
 }
 $("#btn-refresh").onclick = () => startRefresh(false);
 
-// The server refreshes sources every hour on its own; pick up new data without a page reload.
-let LAST_FETCH = 0;
+// The server refreshes sources on its own (fast lane every 10 min, everything every 30); pick up new data without a page reload.
+let LAST_FETCH = 0, LAST_FAST = 0;
 setInterval(async () => {
   try {
     const s = await api("/api/refresh");
     const latest = Math.max(0, ...s.log.map((l) => l.last_run));
-    if (!s.running && latest > LAST_FETCH) { await loadStatus(); loadJobs(); }
+    const fast = s.fast_lane || {};
+    const fastNew = fast.last > LAST_FAST && (fast.results || []).some((r) => r.new > 0);
+    if (fast.last) LAST_FAST = fast.last;
+    if (!s.running && (latest > LAST_FETCH || fastNew)) { await loadStatus(); loadJobs(); }
     else $("#refresh-state").innerHTML = s.running ? `<span class="spinner"></span>Fetching…` : lastFetched(s.log);
   } catch { /* server restarting */ }
 }, 120000);
@@ -489,7 +492,7 @@ function topHead() {
   const present = new Set(JOBS.filter((j) => j.top_company).map((j) => j.company));
   const pats = PATTERNS.filter((p) => present.has(p.company)).slice(0, 12);
   return `<h2>⭐ Top companies</h2>
-    <p class="muted">FAANG / MAANG, big tech, top AI labs and the biggest finance names. Their own career sites are re-checked every 15 minutes.
+    <p class="muted">FAANG / MAANG, big tech, top AI labs and the biggest finance names. Their own career sites (and the GitHub lists) are re-checked every 10 minutes.
       Below: when each one actually posts, measured from the last 60 days (ET). Set up alerts in <a href="#settings">Settings → Phone &amp; email alerts</a>.</p>
     ${pats.length ? `<div class="pat-cards">${pats.map((p) => `
       <button class="pat ${F.place === p.company ? "on" : ""}" data-co="${esc(p.company)}" title="${p.samples} postings measured · ${p.strength} pattern">

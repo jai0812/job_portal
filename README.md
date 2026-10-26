@@ -22,11 +22,11 @@
 
 ## 📡 Live snapshot
 
-This section is rewritten by the portal itself after every hourly refresh.
+This section is rewritten by the portal itself after every full refresh.
 
 <!-- LIVE:START (auto-generated, do not edit by hand) -->
 
-**Last updated: Oct 26, 2026 at 11:35 AM EDT** · refreshed automatically every hour
+**Last updated: Oct 26, 2026 at 11:35 AM EDT** · fast lane every 10 min · everything every 30 min
 
 | Right now in the portal | |
 |---|---|
@@ -69,12 +69,12 @@ This section is rewritten by the portal itself after every hourly refresh.
 
 | | |
 |---|---|
-| 🗂 **One table for every opening** | Jobs from GitHub job lists, 200+ employers' own career sites, 12 university career sites and LinkedIn (through Apify), de-duplicated and refreshed every hour. |
+| 🗂 **One table for every opening** | Jobs from GitHub job lists, 200+ employers' own career sites, 12 university career sites and LinkedIn (through Apify), de-duplicated and refreshed every 30 minutes (top companies and the GitHub lists every 10). |
 | ⏱ **Honest "posted" times** | `12m`, `3h`, `0d`, `2d` with the exact date. Sources that only give the day say "Today" instead of inventing a time. |
 | 🛂 **Real H‑1B data** | Each employer's actual approval count from the official USCIS H‑1B Employer Data Hub (FY2023). The posting's own words ("no sponsorship", "US citizens only") always win. |
 | 🏦 **Finance firm column** | 107 firms in 11 categories: broad banks, global banks, investment banking, asset managers, private markets, hedge funds, market makers, exchanges, payments, financial data, fintech. |
-| ⭐ **Top companies tab** | FAANG / MAANG, big tech, top AI labs and the biggest finance names, with each company's measured posting pattern ("Microsoft: 12–3 PM ET, Mon · Tue · Thu"). Their career sites are re-checked every 15 minutes. |
-| 📱 **Phone, Telegram & email alerts** | Free: through the ntfy app and/or your own Telegram bot. New matching roles at top companies within about 15 minutes, a heads-up just before a company's usual posting window, a ☀️ morning summary, and quiet hours at night. |
+| ⭐ **Top companies tab** | FAANG / MAANG, big tech, top AI labs and the biggest finance names, with each company's measured posting pattern ("Microsoft: 12–3 PM ET, Mon · Tue · Thu"). Their career sites are re-checked every 10 minutes. |
+| 📱 **Phone, Telegram & email alerts** | Free: through the ntfy app and/or your own Telegram bot. New matching roles at top companies within about 10 minutes, a heads-up just before a company's usual posting window, a ☀️ morning summary, and quiet hours at night. |
 | 🌍 **Three regions** | 🇺🇸 United States · 🇮🇳 India (by city) · 🌍 Other countries (by country). The country is worked out from each job's location. |
 | 🎓 **Universities** | Harvard, Stanford, Yale, UPenn, UChicago, CMU, Cornell and more: usually H‑1B cap-exempt employers. |
 | ✅ **Status on every job** | Click the box on the left to mark a job **applied** (green). Hold it (or right-click) for a menu: ✓ Applied · ⏸ Wait / checkpoint (amber) · ✗ Decline (red). Applied jobs move through *interviewing → offer / rejected*. |
@@ -97,7 +97,7 @@ flowchart LR
     G --> H[(SQLite)]
     H --> I[Dashboard<br/>Jobs · India · World<br/>Universities · Analytics]
     H --> J[README live snapshot]
-    F --> K[Fast lane<br/>top companies every 15 min]
+    F --> K[Fast lane<br/>top companies + GitHub lists every 10 min]
     K --> H
     H --> L[Alerts<br/>ntfy · Telegram · email]
 ```
@@ -127,7 +127,7 @@ Optional extras:
 
 **October 2026**
 - **⭐ Top companies tab**: FAANG / MAANG, big tech, top AI labs and major finance firms in one view, with a card for each company showing **when it usually posts**. This is measured from the minute each company's own career site published its jobs over the last 60 days, e.g. *Microsoft 12–3 PM ET, Mon · Tue · Thu*.
-- **Fast lane**: 31 top companies' career sites are re-checked every 15 minutes instead of hourly.
+- **Fast lane**: 31 top companies' career sites and all GitHub lists are re-checked every 10 minutes; everything else every 30.
 - **Alerts** through ntfy and Telegram (both free): new roles, posting-window heads-ups, morning summary.
 - **Job status box**: applied ✓ (green) · wait ⏸ (amber) · decline ✗ (red), with a press-and-hold menu.
 - **LinkedIn (Apify)** made reliable (each search runs on its own; a slow one can't lose the others' results), trimmed to ≈ $0.33 per fetch, with spending shown on the button and budget alerts.

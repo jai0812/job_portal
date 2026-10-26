@@ -195,13 +195,14 @@ def _fast_lane_loop():
         cfg = load_sources()
         minutes = int(cfg.get("fast_lane_minutes") or 0)
         names = cfg.get("fast_lane") or []
+        started = time.time()
         if minutes > 0 and names and not _refresh["running"]:
             try:
                 _fast["results"] = refresh.run_fast(names, on_new=alerts.on_new)
                 _fast["last"] = int(time.time())
             except Exception as e:
                 _fast["results"] = [{"source": "fast lane", "error": str(e)[:200]}]
-        time.sleep(max(minutes, 5) * 60)
+        time.sleep(max(max(minutes, 5) * 60 - (time.time() - started), 60))  # every N minutes from start to start
 
 
 def _alerts_loop():

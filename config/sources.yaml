@@ -130,7 +130,7 @@ company_regions: [us, india, other]
 
 # Refresh all sources automatically while the portal is running (minutes, 0 = off).
 # Apify is excluded from auto-refresh because it costs money; use the "Fetch LinkedIn (Apify)" button.
-auto_refresh_minutes: 60
+auto_refresh_minutes: 30
 
 # JobRight AI has no public API, so the portal links out. {q} is replaced with "title company".
 jobright_url: https://jobright.ai/jobs/search?value={q}
@@ -140,9 +140,10 @@ jobright_url: https://jobright.ai/jobs/search?value={q}
 readme_auto_push: true
 readme_push_hours: 6
 
-# Fast lane: these companies' own career sites are re-checked every N minutes (not just hourly), so brand-new
-# postings show up quickly and can trigger phone / email alerts (Settings → Phone & email alerts).
-fast_lane_minutes: 15
+# Fast lane: these companies' own career sites (and, with fast_lane_github, all the GitHub lists) are re-checked
+# every N minutes, so brand-new postings show up quickly and can trigger phone / email alerts.
+fast_lane_minutes: 10
+fast_lane_github: true
 fast_lane: [Microsoft, Amazon, NVIDIA, Netflix, Salesforce, Adobe, LinkedIn, Airbnb, Databricks, Snowflake, Stripe, DoorDash,
             Pinterest, Roblox, Waymo, Datadog, Cloudflare, Anthropic, OpenAI, Coinbase, Robinhood, Palantir, Jane Street,
             Hudson River Trading, JPMorgan Chase, Capital One, Visa, Mastercard, Morgan Stanley, Citi, BlackRock]
