@@ -430,8 +430,12 @@ def rebuild_jobs():
 
 @app.get("/api/jobs")
 def jobs(request: Request):
+    for _ in range(600):  # very first start, nothing cached yet: wait for the background build
+        if _jobs["gz"] is not None or not _jobs["building"]:
+            break
+        time.sleep(1)
     if _jobs["gz"] is None:
-        _build_jobs()  # very first start, nothing cached yet
+        _build_jobs()
     if "gzip" in request.headers.get("accept-encoding", ""):
         return Response(_jobs["gz"], media_type="application/json",
                         headers={"Content-Encoding": "gzip", "Cache-Control": "no-store", "Vary": "Accept-Encoding"})
