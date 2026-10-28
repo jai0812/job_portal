@@ -86,7 +86,7 @@ def _is_https(request: Request) -> bool:
 
 # Only the admin may use these (everyone else gets the job tabs and their own Analytics). Checked on the server,
 # not just hidden in the page.
-ADMIN_PATHS = ("/api/alerts", "/api/sources", "/api/ask", "/api/apify", "/api/users")
+ADMIN_PATHS = ("/api/alerts", "/api/sources", "/api/ask", "/api/apify", "/api/users", "/api/handshake")
 ADMIN_WRITES = {"/api/refresh", "/api/jobs"}
 
 
@@ -492,7 +492,8 @@ def _enrich(rows: list[dict]) -> list[dict]:
 # built in the background after each refresh and kept gzipped; page loads get that copy instantly. Your own marks
 # (status, notes) change all the time, so they come separately from /api/jobs/mine and the page merges them in.
 # One prebuilt list per tab (US, India, Canada, other countries), so each tab only downloads its own jobs.
-REGIONS = ("us", "india", "canada", "other")
+# Handshake jobs are the admin's own (imported from their Handshake account): only in the admin's Handshake list.
+REGIONS = ("us", "india", "canada", "other", "handshake")
 _jobs = {"gz": None, "built": 0, "building": False, "again": False}  # gz: {region: gzipped JSON}
 _jobs_lock = threading.Lock()
 
@@ -504,6 +505,9 @@ def _build_jobs():
     for row in rows:
         for k in ("status", "notes", "applied_at"):  # pre-accounts columns: each user's marks come from /api/jobs/mine
             row.pop(k, None)
+        if row["source_type"] == "handshake":
+            by_region["handshake"].append(row)
+            continue
         for r in row["regions"]:
             by_region[r].append(row)
     gz = {r: gzip.compress(json.dumps({"now": now, "region": r, "jobs": js}, separators=(",", ":")).encode(), 5)
@@ -544,6 +548,8 @@ def rebuild_jobs():
 def jobs(request: Request, region: str = "us"):
     if region not in REGIONS:
         raise HTTPException(400, "Unknown region.")
+    if region == "handshake" and me(request)["role"] != "admin":
+        raise HTTPException(403, "Only the admin can do that.")
     for _ in range(600):  # very first start, nothing cached yet: wait for the background build
         if _jobs["gz"] is not None or not _jobs["building"]:
             break
@@ -623,6 +629,19 @@ def add_job(body: dict = Body(...)):
     db.upsert_jobs([j])
     rebuild_jobs()
     return j
+
+
+@app.post("/api/handshake/import")
+def handshake_import(body: dict = Body(...)):
+    """Jobs copied from Handshake with the bookmark (or pasted Handshake job links)."""
+    from .fetchers import handshake
+    jobs = handshake.parse(str(body.get("text", ""))[:2_000_000])
+    if not jobs:
+        raise HTTPException(400, "No Handshake jobs found in what you pasted. Use the bookmark on a Handshake job-search page.")
+    new = db.upsert_jobs(jobs)
+    db.log_fetch("Handshake (imported)", len(jobs))
+    rebuild_jobs()
+    return {"found": len(jobs), "new": len(new)}
 
 
 # ---------------------------------------------------------------- quick-copy bar (links, snippets, notes)

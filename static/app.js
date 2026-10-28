@@ -61,8 +61,9 @@ let STATUS = {};
 const isAdmin = () => !STATUS.me || STATUS.me.role === "admin";
 
 // ------------------------------------------------------------------ tabs
-const REGION_TABS = { jobs: "us", top: "us", india: "india", canada: "canada", canhr: "canada", world: "other" };
-const ADMIN_TABS = new Set(["ask", "users", "settings"]);
+const REGION_TABS = { jobs: "us", top: "us", india: "india", canada: "canada", canhr: "canada", world: "other", handshake: "handshake" };
+const ADMIN_TABS = new Set(["ask", "users", "settings", "handshake"]);
+const usLike = () => F.region === "us" || F.region === "handshake";  // Handshake jobs are (almost all) American
 function showTab(name) {
   if (ADMIN_TABS.has(name) && !isAdmin()) name = "jobs";
   $$("#tabs button").forEach((b) => b.classList.toggle("active", b.dataset.tab === name));
@@ -116,6 +117,7 @@ const F = { region: "us", topset: false, place: "", cat: "", level: "", age: "",
 const REGION_INFO = {
   us: ["🇺🇸 United States", "US jobs from GitHub lists, LinkedIn and employers' own career sites (finance firms, FAANG / MAANG, big tech and top tech companies)."],
   india: ["🇮🇳 India", "Jobs in India from Indian tech & fintech companies, big tech India teams (Amazon, NVIDIA, Salesforce, Adobe, Intel, Target), global banks & finance firms' India offices, and LinkedIn India searches."],
+  handshake: ["🤝 Handshake", "Jobs you copied from your own Handshake account (only you can see this tab). Handshake needs your sign-in, so the portal never logs in for you: use the bookmark below."],
   canada: ["🇨🇦 Canada", "Jobs in Canada: Canadian tech companies, banks, insurers and big employers' own career sites, big tech's Canadian teams, Canadian GitHub internship & new-grad lists, and Job Bank (jobbank.gc.ca)."],
   other: ["🌍 Other countries", "Jobs outside the US, India and Canada, mostly from global banks, finance firms and tech companies' own career sites."],
 };
@@ -136,7 +138,7 @@ function placesOf(j) {
   if (F.region === "other") return (j.countries || []).filter((c) => !["United States", "India", "Canada"].includes(c));
   return [];
 }
-const STYPES = [["", "All sources"], ["github", "GitHub lists"], ["company", "Company career sites"], ["jobbank", "🍁 Job Bank Canada"], ["apify", "Apify · LinkedIn"], ["manual", "Added by you"]];
+const STYPES = [["", "All sources"], ["github", "GitHub lists"], ["company", "Company career sites"], ["jobbank", "🍁 Job Bank Canada"], ["handshake", "🤝 Handshake"], ["apify", "Apify · LinkedIn"], ["manual", "Added by you"]];
 let FIN_SEGMENTS = [];  // filled from /api/finance
 
 // H-1B: the posting's own words win; otherwise real USCIS FY2023 approval counts; otherwise our hand list.
@@ -207,7 +209,7 @@ function postedCell(j) {
   return `<td class="age ${p.fresh ? "fresh" : ""}"><b>${p.short}</b><span class="age-long">${esc(p.long)}</span><span class="age-date">${esc(p.date)}</span></td>`;
 }
 
-const STYPE = { github: "GitHub", apify: "Apify · LinkedIn", university: "University site", company: "Company site", jobbank: "Job Bank Canada", manual: "Added by you" };
+const STYPE = { github: "GitHub", apify: "Apify · LinkedIn", university: "University site", company: "Company site", jobbank: "Job Bank Canada", handshake: "Handshake", manual: "Added by you" };
 function sourceCell(j) {
   const all = (j.sources || j.source_name || "").split("|").filter(Boolean);
   const others = all.filter((s) => s !== j.source_name);
@@ -268,7 +270,7 @@ function appliedToday() {
 
 function matches(j, skip) {
   if (j.source_type === "university") return false; // these live on the Universities tab
-  if (!(j.regions || ["us"]).includes(F.region)) return false;
+  if (F.region === "handshake" ? j.source_type !== "handshake" : !(j.regions || ["us"]).includes(F.region)) return false;
   if (F.topset && !j.top_company) return false;
   if (skip !== "place" && F.place && !placesOf(j).includes(F.place)) return false;
   if (skip !== "cat" && F.cat && !j.categories.split(",").includes(F.cat)) return false;
@@ -277,10 +279,10 @@ function matches(j, skip) {
   if (skip !== "stype" && F.stype && j.source_type !== F.stype) return false;
   if (skip !== "fin" && F.fin && !(F.fin === "any" ? j.fin : j.fin && j.fin.segment === F.fin)) return false;
   if (F.source && j.source_name !== F.source) return false;
-  if (F.cap && F.region === "us" && !j.cap_exempt) return false;
+  if (F.cap && usLike() && !j.cap_exempt) return false;
   if (F.top && !j.top_company) return false;
   if (F.imm && !j.immediate) return false;
-  if (F.region === "us") {  // H-1B filters only mean something for US jobs
+  if (usLike()) {  // H-1B filters only mean something for US jobs
     if (F.h1b === "sponsor" && !hasSponsored(j)) return false;
     if (F.h1b === "yes" && j.h1b !== "yes") return false;
     if (F.h1b === "not-no" && ["no", "citizen"].includes(j.h1b)) return false;
@@ -317,10 +319,11 @@ function renderJobs() {
   const base = (skip) => JOBS.filter((j) => matches(j, skip));
   const forCat = base("cat"), forLevel = base("level"), forAge = base("age"), forSt = base("stype"), forFin = base("fin");
   const [rtitle, rdesc] = F.region === "canada" && F.cat === "hr" ? HR_INFO : REGION_INFO[F.region];
-  $$(".us-only").forEach((el) => el.classList.toggle("hidden", F.region !== "us"));
+  $$(".us-only").forEach((el) => el.classList.toggle("hidden", !usLike()));
+  $("#hs-panel").classList.toggle("hidden", F.region !== "handshake");
   $("#region-head").innerHTML = F.topset ? topHead() : F.region === "us" ? "" : `<h2>${rtitle}</h2><p class="muted">${esc(rdesc)}</p>`;
   bindTopHead();
-  if (F.region === "us" && !F.topset) $("#f-place").innerHTML = "";
+  if (usLike() && !F.topset) $("#f-place").innerHTML = "";
   else {
     const forPlace = base("place"), counts = {};
     forPlace.forEach((j) => placesOf(j).forEach((p) => (counts[p] = (counts[p] || 0) + 1)));
@@ -328,10 +331,10 @@ function renderJobs() {
     chips($("#f-place"), [["", F.topset ? "All top companies" : F.region === "other" ? "All countries" : "All cities"], ...places], "place",
       (v) => (v ? counts[v] || 0 : forPlace.length));
   }
-  $("#jobs thead th[data-sort=h1b]").classList.toggle("hidden", F.region !== "us");
+  $("#jobs thead th[data-sort=h1b]").classList.toggle("hidden", !usLike());
   chips($("#f-fin"), [["", "All companies"], ["any", "Any finance firm"], ...FIN_SEGMENTS], "fin",
     (v) => (v === "" ? forFin.length : forFin.filter((j) => j.fin && (v === "any" || j.fin.segment === v)).length));
-  chips($("#f-stype"), STYPES.filter(([v]) => v !== "jobbank" || F.region === "canada"), "stype", (v) => (v ? forSt.filter((j) => j.source_type === v).length : forSt.length));
+  chips($("#f-stype"), STYPES.filter(([v]) => (v !== "jobbank" || F.region === "canada") && (v !== "handshake" || F.region === "handshake")), "stype", (v) => (v ? forSt.filter((j) => j.source_type === v).length : forSt.length));
   chips($("#f-cat"), F.region === "canada" ? CATS_CANADA : CATS, "cat", (v) => (v ? forCat.filter((j) => j.categories.split(",").includes(v)).length : forCat.length));
   chips($("#f-level"), LEVELS, "level", (v) => (v ? forLevel.filter((j) => j.level === v).length : forLevel.length));
   chips($("#f-age"), AGES, "age", (v) => (v ? forAge.filter((j) => ageOf(j) <= v * 3600).length : forAge.length));
@@ -356,7 +359,7 @@ function renderJobs() {
       <td class="loc">${esc(j.location)}${F.region === "other" ? `<span class="age-date">${esc(placesOf(j).join(", "))}</span>` : ""}</td>
       <td>${cats}</td>
       <td>${LEVEL_LABEL[j.level] || j.level}</td>
-      ${F.region === "us" ? `<td class="h1b">${h1bCell(j)}</td>` : ""}
+      ${usLike() ? `<td class="h1b">${h1bCell(j)}</td>` : ""}
       ${sourceCell(j)}
       <td><div class="actions">
         ${j.url ? `<a class="btn primary-link" href="${esc(j.url)}" target="_blank" rel="noopener">Apply ↗</a>` : ""}
@@ -1065,6 +1068,23 @@ $("#pass-form").addEventListener("submit", async (e) => {
     toast("Password changed ✓");
   } catch (err) { $("#pw-msg").textContent = err.message; }
 });
+
+// ------------------------------------------------------------------ Handshake (admin): bookmark + paste import
+// The bookmark runs on Handshake's page, in your own signed-in browser: it reads the job cards on screen and copies them.
+const HS_BOOKMARKLET = `javascript:(()=>{const seen=new Set(),out=[];for(const a of document.querySelectorAll('a[href*="/jobs/"]')){const m=a.href.match(/\\/jobs\\/(\\d+)/);if(!m||seen.has(m[1]))continue;let c=a;for(let i=0;i<7&&c.parentElement;i++){c=c.parentElement;if(c.innerText.split('\\n').filter(s=>s.trim()).length>=4)break}seen.add(m[1]);out.push({id:m[1],url:'https://app.joinhandshake.com/jobs/'+m[1],title:(a.innerText||'').trim().split('\\n')[0],lines:c.innerText.split('\\n').map(s=>s.trim()).filter(Boolean).slice(0,10)})}const t=JSON.stringify({handshake:out});const done=()=>alert('Copied '+out.length+' Handshake jobs. Paste them into the portal (Handshake tab).');navigator.clipboard.writeText(t).then(done,()=>prompt('Copy this, then paste it into the portal:',t))})()`;
+$("#hs-bookmarklet").setAttribute("href", HS_BOOKMARKLET);
+$("#hs-bookmarklet").addEventListener("click", (e) => { e.preventDefault(); toast("Drag this button to your bookmarks bar, then click it on a Handshake job-search page.", 5000); });
+$("#hs-import").onclick = async () => {
+  const text = $("#hs-text").value.trim();
+  if (!text) return toast("Paste what the bookmark copied first.");
+  try {
+    const r = await api("/api/handshake/import", { method: "POST", body: { text } });
+    $("#hs-text").value = "";
+    $("#hs-msg").textContent = `Imported ${r.found} jobs (${r.new} new). The list updates in a minute.`;
+    delete STORE.handshake;
+    setTimeout(loadJobs, 8000);
+  } catch (e) { $("#hs-msg").textContent = e.message; }
+};
 
 // ------------------------------------------------------------------ boot
 (async () => {

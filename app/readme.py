@@ -29,6 +29,7 @@ def snapshot() -> str:
     cfg = load_sources()
     now = time.time()
     jobs = db.list_jobs(int(cfg.get("max_age_days", 45)))
+    jobs = [j for j in jobs if j["source_type"] != "handshake"]  # your own Handshake imports stay private
     board = [j for j in jobs if j["source_type"] != "university"]
     legal = {c["name"].lower(): h1b.approvals_for_names(c["uscis"]) for c in load_more_companies() if c.get("uscis")}
 

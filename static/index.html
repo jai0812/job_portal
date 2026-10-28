@@ -48,6 +48,7 @@
     <button data-tab="canada">🇨🇦 Canada</button>
     <button data-tab="canhr">👥 Canada HR</button>
     <button data-tab="world">🌍 Other countries</button>
+    <button data-tab="handshake" class="admin-only">🤝 Handshake</button>
     <button data-tab="analytics">📊 Analytics</button>
     <button data-tab="unis">Universities</button>
     <button data-tab="ask" class="admin-only">Ask All LLMs</button>
@@ -61,6 +62,16 @@
 <!-- ============================ JOBS ============================ -->
 <section id="tab-jobs" class="tab active">
   <div class="region-head" id="region-head"></div>
+  <div id="hs-panel" class="hs-panel hidden">
+    <ol>
+      <li>Drag this button to your bookmarks bar (once): <a id="hs-bookmarklet" class="btn" title="Drag me to the bookmarks bar">📋 Copy jobs from Handshake</a></li>
+      <li>Open Handshake and search: <a href="https://app.joinhandshake.com/job-search" target="_blank" rel="noopener">Handshake job search ↗</a>
+        (signed in as you; scroll so the jobs you want are on screen)</li>
+      <li>Click the <b>📋 Copy jobs from Handshake</b> bookmark, then paste here and import:</li>
+    </ol>
+    <textarea id="hs-text" rows="3" placeholder="Paste what the bookmark copied (or Handshake job links, one per line)"></textarea>
+    <div class="row"><button class="primary" id="hs-import">Import Handshake jobs</button><span id="hs-msg" class="muted"></span></div>
+  </div>
   <div class="toolbar">
     <input id="q" type="search" placeholder="Search company, role, location…">
     <button id="btn-refresh" class="primary admin-only">Refresh now</button>
