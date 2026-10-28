@@ -63,8 +63,8 @@ def check_login(username: str, password: str) -> dict | None:
 
 def password_problem(pw: str) -> str:
     """Why a new password isn't good enough ("" when it's fine)."""
-    if len(pw) < 10:
-        return "Use at least 10 characters."
+    if len(pw) < 8:
+        return "Use at least 8 characters."
     if len(set(pw)) < 5:
         return "Too simple: use more different characters."
     return ""

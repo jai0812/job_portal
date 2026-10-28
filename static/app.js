@@ -1014,7 +1014,7 @@ function genPassword() {
 }
 function renderUsers(users) {
   $("#users-body").innerHTML = users.map((u) => `<tr data-id="${u.id}" class="${u.active ? "" : "is-off"}">
-    <td><b>${esc(u.username)}</b></td><td>${u.role === "admin" ? "Admin (you)" : "User"}</td>
+    <td><b>${esc(u.username)}</b>${u.email ? `<br><span class="muted">${esc(u.email)}</span>` : ""}</td><td>${u.role === "admin" ? "Admin (you)" : "User"}</td>
     <td>${u.active ? '<span class="tag yes">Active</span>' : '<span class="tag no">Off</span>'}</td>
     <td>${u.applied}</td><td>${when(u.last_login)}</td><td>${when(u.last_active)}</td>
     <td class="acts">${u.role === "admin" ? "" : `<button data-u="reset">Reset password</button>
@@ -1026,9 +1026,9 @@ async function loadUsers() {
 $("#nu-gen").onclick = () => { $("#nu-pass").value = genPassword(); };
 $("#user-form").addEventListener("submit", async (e) => {
   e.preventDefault();
-  const username = $("#nu-name").value.trim(), password = $("#nu-pass").value;
+  const username = $("#nu-name").value.trim(), email = $("#nu-email").value.trim(), password = $("#nu-pass").value;
   try {
-    renderUsers(await api("/api/users", { method: "POST", body: { username, password } }));
+    renderUsers(await api("/api/users", { method: "POST", body: { username, email, password } }));
     $("#user-form").reset();
     navigator.clipboard?.writeText(`jobs.sharmajai.com\nUsername: ${username}\nPassword: ${password}`).catch(() => {});
     toast(`Account "${username}" created · sign-in details copied, send them privately`, 5000);
@@ -1040,7 +1040,7 @@ $("#users-body").addEventListener("click", async (e) => {
   const tr = b.closest("tr"), id = tr.dataset.id, name = tr.querySelector("b").textContent;
   try {
     if (b.dataset.u === "reset") {
-      const pw = prompt(`New password for ${name} (10+ characters):`, genPassword());
+      const pw = prompt(`New password for ${name} (8+ characters):`, genPassword());
       if (!pw) return;
       renderUsers(await api(`/api/users/${id}`, { method: "POST", body: { password: pw } }));
       navigator.clipboard?.writeText(pw).catch(() => {});

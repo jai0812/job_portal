@@ -45,7 +45,8 @@ CREATE TABLE IF NOT EXISTS users (
     sv          INTEGER NOT NULL DEFAULT 1,      -- session version: bumped to sign this user out everywhere
     created_at  INTEGER,
     last_login  INTEGER,
-    profile     TEXT                             -- quick-copy bar (links, snippets), JSON
+    profile     TEXT,                            -- quick-copy bar (links, snippets), JSON
+    email       TEXT                             -- optional: can sign in with this instead of the username
 );
 -- Each user's own status / notes per job (the jobs table's status columns are from before accounts existed).
 CREATE TABLE IF NOT EXISTS marks (
@@ -90,6 +91,8 @@ def init() -> None:
                 c.execute(f"ALTER TABLE jobs ADD COLUMN {col} {decl}")
         c.execute("UPDATE jobs SET sources = source_name WHERE sources IS NULL")
         c.execute("UPDATE jobs SET applied_at = first_seen WHERE applied_at IS NULL AND status IN ('applied','interviewing','offer','rejected')")
+        if "email" not in {r["name"] for r in c.execute("PRAGMA table_info(users)")}:
+            c.execute("ALTER TABLE users ADD COLUMN email TEXT")
         done = {r[0] for r in c.execute("SELECT key FROM meta")}
         # Accounts: the first admin comes from the single password the portal had before accounts existed.
         if not c.execute("SELECT 1 FROM users WHERE role='admin'").fetchone():
@@ -245,18 +248,19 @@ def all_users() -> dict[int, dict]:
 
 
 def user_by_name(username: str) -> dict | None:
+    """By username or email, ignoring case."""
     name = (username or "").strip().lower()
-    return next((u for u in all_users().values() if u["username"].lower() == name), None)
+    return next((u for u in all_users().values() if name in (u["username"].lower(), (u.get("email") or "").lower())), None)
 
 
 def admin_user() -> dict:
     return min((u for u in all_users().values() if u["role"] == "admin"), key=lambda u: u["id"])
 
 
-def create_user(username: str, pw_hash: str, role: str = "user") -> int:
+def create_user(username: str, pw_hash: str, role: str = "user", email: str = "") -> int:
     with conn() as c:
-        cur = c.execute("INSERT INTO users (username, pw_hash, role, created_at) VALUES (?,?,?,?)",
-                        (username.strip(), pw_hash, role, int(time.time())))
+        cur = c.execute("INSERT INTO users (username, pw_hash, role, created_at, email) VALUES (?,?,?,?,?)",
+                        (username.strip(), pw_hash, role, int(time.time()), email.strip().lower() or None))
     _users_changed()
     return cur.lastrowid
 

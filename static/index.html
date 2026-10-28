@@ -183,7 +183,8 @@
     their password from the 🔑 button. Phone alerts, Settings, LinkedIn fetches and Ask All LLMs stay yours.</p>
   <form id="user-form" class="user-form" autocomplete="off">
     <input id="nu-name" placeholder="Username (e.g. priya)" required pattern="[A-Za-z0-9._-]{3,32}" autocapitalize="none" spellcheck="false">
-    <input id="nu-pass" placeholder="Starting password (10+ characters)" required minlength="10">
+    <input id="nu-email" type="email" placeholder="Email (optional, can sign in with it)" autocapitalize="none" spellcheck="false">
+    <input id="nu-pass" placeholder="Starting password (8+ characters)" required minlength="8">
     <button class="secondary" type="button" id="nu-gen" title="Make up a strong password">🎲 Generate</button>
     <button class="primary">Create account</button>
   </form>
@@ -237,8 +238,8 @@
     <h3>Change your password</h3>
     <label class="lbl" for="pw-cur">Current password</label>
     <input id="pw-cur" type="password" autocomplete="current-password" required>
-    <label class="lbl" for="pw-new">New password (10+ characters)</label>
-    <input id="pw-new" type="password" autocomplete="new-password" required minlength="10">
+    <label class="lbl" for="pw-new">New password (8+ characters)</label>
+    <input id="pw-new" type="password" autocomplete="new-password" required minlength="8">
     <p id="pw-msg" class="flag" role="alert"></p>
     <menu><button value="cancel" formnovalidate>Cancel</button><button value="ok" class="primary" id="pw-go">Change password</button></menu>
   </form>

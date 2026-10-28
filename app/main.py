@@ -163,7 +163,7 @@ def login(request: Request, body: dict = Body(...)):
 
 def _user_row(u: dict, stats: dict) -> dict:
     s = stats.get(u["id"], {})
-    return {"id": u["id"], "username": u["username"], "role": u["role"], "active": bool(u["active"]),
+    return {"id": u["id"], "username": u["username"], "email": u.get("email") or "", "role": u["role"], "active": bool(u["active"]),
             "created_at": u["created_at"], "last_login": u["last_login"], "applied": s.get("applied") or 0,
             "last_active": s.get("last_active")}
 
@@ -177,13 +177,16 @@ def list_users():
 @app.post("/api/users")
 def create_user(body: dict = Body(...)):
     username, password = str(body.get("username", "")).strip(), str(body.get("password", ""))
+    email = str(body.get("email", "")).strip()
     if not re.fullmatch(r"[A-Za-z0-9._-]{3,32}", username):
         raise HTTPException(400, "Username: 3–32 letters, numbers, dots, dashes or underscores.")
-    if db.user_by_name(username):
-        raise HTTPException(400, "That username is taken.")
+    if email and not re.fullmatch(r"[^@\s]+@[^@\s]+\.[^@\s]+", email):
+        raise HTTPException(400, "That email doesn't look right.")
+    if db.user_by_name(username) or (email and db.user_by_name(email)):
+        raise HTTPException(400, "That username or email is taken.")
     if problem := auth.password_problem(password):
         raise HTTPException(400, problem)
-    db.create_user(username, auth.hash_password(password))
+    db.create_user(username, auth.hash_password(password), email=email)
     return list_users()
 
 
