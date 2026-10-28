@@ -8,7 +8,7 @@ document.getElementById("login").addEventListener("submit", async (e) => {
     const r = await fetch("/api/login", {
       method: "POST",
       headers: { "Content-Type": "application/json", "X-Portal": "1" },
-      body: JSON.stringify({ password: document.getElementById("password").value, code: document.getElementById("code").value }),
+      body: JSON.stringify({ username: document.getElementById("username").value, password: document.getElementById("password").value }),
     });
     if (r.ok) { location.href = "/"; return; }
     msg.textContent = (await r.json().catch(() => ({}))).detail || "Sign-in failed.";

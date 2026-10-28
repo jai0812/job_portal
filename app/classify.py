@@ -9,7 +9,17 @@ from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 from .config import load_companies
 
+# HR, recruiting and people-operations roles (the Canada tab's HR section).
+HR_TITLE = re.compile(
+    r"\bhr\b|\bh\.r\.|human resource|\bhrbp\b|\bhris\b|\brecruit(er|ing|ment)\b|talent acquisition|\bsourcer\b"
+    r"|talent (partner|sourcing|coordinator|specialist|advisor|management)|staffing (specialist|coordinator|advis[eo]r)"
+    r"|people (operations|ops|partner|business partner|advisor|coordinator|generalist|analyst|experience|team|and culture|& culture)"
+    r"|payroll|compensation|total rewards|benefits (specialist|analyst|coordinator|administrator|advis[eo]r)"
+    r"|employee (relations|experience|engagement)|labou?r relations|workforce (planning|analyst)|organi[sz]ational development"
+    r"|learning (and|&) development|\bl&d\b|onboarding (specialist|coordinator)|diversity|\bdei\b|\bedi\b", re.I)
+
 CATEGORY_PATTERNS = {
+    "hr": HR_TITLE.pattern,
     "data": r"data scien|machine learning|\bml\b|\bai\b|artificial intelligence|deep learning|\bnlp\b|computer vision"
             r"|data analy|data engineer|analytics|research scientist|\bllm|applied scientist|statistic|business intelligence",
     "finance": r"\bquant|\btrad(er|ing)\b|investment|banking|financ|risk analy|actuar|portfolio|credit|wealth|asset management"
@@ -23,7 +33,7 @@ SOURCE_CATEGORY = {
     "software": "swe", "software engineering": "swe",
     "ai/ml/data": "data", "data science, ai & machine learning": "data",
     "quant": "finance", "quantitative finance": "finance",
-    "swe": "swe", "data": "data", "finance": "finance",  # per-source hints from config/sources.yaml
+    "swe": "swe", "data": "data", "finance": "finance", "hr": "hr",  # per-source hints from config/sources.yaml
 }
 
 LEVEL_PATTERNS = [
@@ -31,7 +41,8 @@ LEVEL_PATTERNS = [
     ("experienced", r"senior|\bsr\.?\b|\bstaff\b|principal|\blead\b|manager|director|\bii\b|\biii\b|\biv\b|architect"
                     r"|head of|\bvp\b|\b[3-9]\+? years"),
     ("early_career", r"new grad|graduate|entry|junior|\bjr\.?\b|early career|associate|university|campus|\bi\b|level 1"
-                     r"|rotational|analyst program|20(2[5-9]) start|recent grad"),
+                     r"|rotational|analyst program|20(2[5-9]) start|recent grad|college grad"
+                     r"|\b(hr|human resources?|recruit\w*|talent acquisition|people|payroll|benefits) (assistant|coordinator|administrator)"),
 ]
 
 H1B_PATTERNS = [

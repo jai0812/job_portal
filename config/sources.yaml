@@ -5,6 +5,35 @@
 # `level` is a hint used when a job title doesn't say (internship | early_career | experienced).
 
 github:
+  # ---------------- Canada (🇨🇦 tab): internships, co-ops and new grad
+  - name: Canadian Tech Internships 2027 (negarprh)
+    url: https://github.com/negarprh/Canadian-Tech-Internships-2027
+    level: internship
+  - name: Frogg Canadian Internships
+    url: https://github.com/seun-ipaye/frogg-canadian-internships
+    level: internship
+  - name: Canadian Internship List (Bobwillrule)
+    url: https://github.com/Bobwillrule/Canadian-Internship-List
+    level: internship
+  - name: Canada CS Internships & New Grad (csjobs.ca)
+    url: https://github.com/mazentalsam/Canada-CS-Internships-New-Grad
+  - name: Zapply Canada Jobs 2027
+    url: https://github.com/zapplyjobs/Canada-Jobs-2027
+  - name: Zapply Canada Internships 2027
+    url: https://github.com/zapplyjobs/Canada-Internships-2027
+    level: internship
+  - name: Canada SDE Internships (hanzili)
+    url: https://github.com/hanzili/canada_sde_intern_position
+    level: internship
+  - name: Toronto AI/ML Internship Radar
+    url: https://github.com/krishi-shah/Toronto-AI-ML-internship-radar
+    level: internship
+    category: data
+  - name: Software New Grad Canada (grind.fyi)
+    url: https://github.com/grind-fyi/Software-NewGrad-Canada
+    level: early_career
+    category: swe
+  # ---------------- US & everywhere
   - name: Simplify New Grad
     url: https://github.com/SimplifyJobs/New-Grad-Positions
     level: early_career
@@ -126,7 +155,13 @@ max_age_days: 45
 # last N days, for these tabs: us = Jobs, india = India, other = Other countries.
 company_feeds: true
 company_max_age_days: 30
-company_regions: [us, india, other]
+company_regions: [us, india, canada, other]
+
+# Job Bank (jobbank.gc.ca), Canada's government job board: HR, recruiting, software and data searches.
+# Each search only shows the newest ~30 postings, so it's checked every couple of hours and adds up over time.
+jobbank:
+  enabled: true
+  every_hours: 2
 
 # Refresh all sources automatically while the portal is running (minutes, 0 = off).
 # Apify is excluded from auto-refresh because it costs money; use the "Fetch LinkedIn (Apify)" button.

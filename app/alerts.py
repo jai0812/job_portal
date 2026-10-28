@@ -3,10 +3,10 @@
 - ntfy (https://ntfy.sh): no account, just its phone app and a private topic name.
 - Telegram: your own bot (made in 1 minute with @BotFather) messages you.
 
-Three kinds of alerts:
-- New job: a matching role at a top company just appeared (checked every 15 minutes by the fast lane).
-- Window: "Microsoft usually posts around this time today": sent shortly before a company's usual posting window.
-- Morning digest: today's likely posting windows, once a day.
+Every alert is one short line ("Snapchat 1m", "Google · posting window in 5 min"), and only the admin gets them:
+- New job: a matching role at a top company posted in the last 15 minutes (checked every 10 minutes by the fast lane).
+- Window: sent about 5 minutes before a company's usual posting window opens.
+- Morning digest: one line with last night's count and today's likely windows.
 
 Settings live in data/alerts.json (private, never committed). The ntfy topic name works like a password:
 anyone who knows it can read your alerts, so it's long and random.
@@ -37,6 +37,7 @@ DEFAULTS = {
     "email": "",
     "portal_url": "http://localhost:8787/#top",
     "new_jobs": True,          # alert on new roles at top companies
+    "max_age_min": 15,         # only jobs posted at most this many minutes ago
     "levels": ["early_career", "internship"],
     "sectors": ["swe", "data", "finance"],
     "regions": ["us"],
@@ -118,10 +119,11 @@ def send(title: str, message: str, click: str = "", tags: list[str] | None = Non
 
 
 def _telegram(cfg: dict, title: str, message: str, click: str = "") -> tuple[bool, str]:
+    """One line: the bold headline, the detail after it, and a link."""
     from html import escape
-    text = f"<b>{escape(title)}</b>\n{escape(message)}"
+    text = f"<b>{escape(title)}</b>" + (f" · {escape(message)}" if message else "")
     if click:
-        text += f'\n<a href="{escape(click, quote=True)}">Open ↗</a>'
+        text += f' <a href="{escape(click, quote=True)}">↗</a>'
     try:
         r = httpx.post(f"https://api.telegram.org/bot{cfg['telegram_token']}/sendMessage", timeout=20,
                        json={"chat_id": cfg["telegram_chat_id"], "text": text[:4000], "parse_mode": "HTML",
@@ -169,17 +171,22 @@ def _is_top(job: dict, fast: set[str]) -> bool:
     return bool(job.get("top_company")) or (job.get("company") or "").lower() in fast
 
 
-def _fresh(job: dict, now: float) -> bool:
-    """Only alert on genuinely new postings, not on old jobs from a list that was just added."""
+def _age_min(job: dict, now: float, since: float | None, limit: int) -> tuple[int, bool] | None:
+    """How many minutes ago the job was posted, and whether that's an upper bound; None when it's older than
+    `limit` (or we can't tell). Exact timestamps are used as they are. Sites that only give the day ("Posted Today",
+    most Workday sites) count only when this check found a job that wasn't there on the previous check `since`,
+    a few minutes ago: then it was posted at most that long ago."""
     ts = job.get("posted_at")
-    if not ts:
-        return False
-    if job.get("posted_precision") == "day":
-        return datetime.fromtimestamp(ts).date() == datetime.fromtimestamp(now).date()
-    return now - ts < 6 * 3600
+    if ts and job.get("posted_precision", "exact") == "exact":
+        age = max(0, int((now - ts) // 60))
+        return (age, False) if age <= limit else None
+    if since and now - since <= (limit + 5) * 60 and ts and datetime.fromtimestamp(ts).date() == datetime.fromtimestamp(now).date():
+        return max(1, int((now - since) // 60)), True
+    return None
 
 
-def on_new(jobs: list[dict]) -> None:
+def on_new(jobs: list[dict], since: float | None = None) -> None:
+    """since: when the previous check of these sources started (fast lane only); None for the full refresh."""
     cfg = load()
     if not (cfg["enabled"] and cfg["new_jobs"]):
         return
@@ -189,8 +196,14 @@ def on_new(jobs: list[dict]) -> None:
     picks = []
     for j in jobs:
         cats = set((j.get("categories") or "").split(","))
-        if not (_is_top(j, fast) and _fresh(j, now) and j.get("level") in cfg["levels"] and cats & set(cfg["sectors"])):
+        if not (_is_top(j, fast) and j.get("level") in cfg["levels"] and cats & set(cfg["sectors"])):
             continue
+        # "posted today" can only be narrowed down for sources the 10-minute check looks at
+        checked = j.get("source_type") == "github" or (j.get("company") or "").lower() in fast
+        age = _age_min(j, now, since if checked else None, int(cfg.get("max_age_min") or 15))
+        if age is None:
+            continue
+        j = {**j, "_age": age}
         if not set(geo.regions(j.get("location") or "")) & set(cfg["regions"]):
             continue
         if j.get("h1b") in ("no", "citizen"):
@@ -215,20 +228,18 @@ def on_new(jobs: list[dict]) -> None:
     if not picks:
         return
 
-    def line(j, n):
-        mins = int((now - j["posted_at"]) // 60)
-        when = f"{mins} min ago" if mins < 90 else f"{mins // 60}h ago"
-        return f"{j['location'][:40]} · posted {when}" + (f" · H-1B: {n:,} approvals" if n else "")
+    def ago(j):
+        mins, upper = j["_age"]
+        return f"{'≤' if upper else ''}{mins}m"
 
-    if len(picks) <= 3:
-        for j, n in picks:
-            send(f"🆕 {j['company']}: {j['title']}"[:200], line(j, n), click=j.get("url") or cfg["portal_url"],
-                 tags=["briefcase", "new"], priority=4, cfg=cfg)
-    else:
-        body = "\n".join(f"• {j['company']}: {j['title'][:60]}" for j, _ in picks[:8])
-        if len(picks) > 8:
-            body += f"\n…and {len(picks) - 8} more"
-        send(f"🆕 {len(picks)} new roles at top companies", body, click=cfg["portal_url"], tags=["briefcase", "new"],
+    picks.sort(key=lambda p: p[0]["_age"][0])
+    if len(picks) == 1:
+        j, _ = picks[0]
+        send(f"{j['company']} {ago(j)}", j["title"][:90], click=j.get("url") or cfg["portal_url"], tags=["briefcase"],
+             priority=4, cfg=cfg)
+    else:  # one line for the whole batch: "Snapchat 1m · Stripe 5m · Google ≤10m"
+        head = " · ".join(f"{j['company']} {ago(j)}" for j, _ in picks[:6]) + (f" +{len(picks) - 6}" if len(picks) > 6 else "")
+        send(head[:200], " · ".join(j["title"][:40] for j, _ in picks[:3]), click=cfg["portal_url"], tags=["briefcase"],
              priority=4, cfg=cfg)
 
 
@@ -258,17 +269,8 @@ def tick() -> None:
     if cfg["digest"] and st.get("digest_day") != today and datetime.now().hour >= int(cfg["digest_hour"]):
         todays = [p for p in watch if now_et.weekday() in p["top_day_idx"]]
         overnight = _matching_since(cfg, time.time() - 24 * 3600)
-        parts = []
-        if overnight:
-            parts.append(f"{len(overnight)} new matching roles at top companies in the last 24 hours:")
-            parts += [f"• {j['company']}: {j['title'][:60]}" for j in overnight[:6]]
-            if len(overnight) > 6:
-                parts.append(f"…and {len(overnight) - 6} more in the ⭐ Top companies tab")
-        else:
-            parts.append("No new matching roles at top companies in the last 24 hours.")
-        if todays:
-            parts += ["", "Likely posting windows today (ET):"] + [f"• {p['company']}: {p['window']}" for p in todays]
-        send("☀️ Good morning: your job summary", "\n".join(parts), click=cfg["portal_url"], tags=["sunny"], cfg=cfg)
+        send(f"☀️ {len(overnight)} new top-company roles since yesterday",
+             " · ".join(f"{p['company']} {p['window']}" for p in todays[:4]), click=cfg["portal_url"], tags=["sunny"], cfg=cfg)
         st = _state()
         st["digest_day"] = today
         _save_state(st)
@@ -279,11 +281,9 @@ def tick() -> None:
                 continue
             minutes_to = (p["window_start"] * 60) - (now_et.hour * 60 + now_et.minute)
             key = f"{p['company']}|{today}"
-            if 0 <= minutes_to <= 20 and key not in st.get("windows", {}):
-                send(f"⏰ {p['company']} usually posts soon",
-                     f"{p['company']} posts most new roles {p['window']} on {', '.join(p['top_days'])} "
-                     f"({round(100 * p['window_share'])}% of its postings). The portal checks every 15 minutes "
-                     f"and will alert you about matching roles.", click=cfg["portal_url"], tags=["alarm_clock"], cfg=cfg)
+            if 0 <= minutes_to <= 6 and key not in st.get("windows", {}):  # checked every 4 minutes
+                send(f"{p['company']} · posting window in {max(minutes_to, 1)} min", p["window"],
+                     click=cfg["portal_url"], tags=["alarm_clock"], cfg=cfg)
                 st = _state()
                 st.setdefault("windows", {})[key] = int(time.time())
                 st["windows"] = {k: v for k, v in st["windows"].items() if k.endswith(today)}
@@ -306,9 +306,8 @@ def _apify_check(cfg: dict) -> None:
         return
     if crossed:
         t = max(crossed)
-        send(f"{'⚠️' if t >= 80 else '💸'} Apify: {t}% of this month's LinkedIn budget used",
-             f"${u['used']:.2f} of ${u['limit']:.0f} used · ${u['left']:.2f} left ≈ {u['clicks_left']} more LinkedIn fetches. "
-             f"Resets {u['resets']}.", tags=["moneybag"], priority=4 if t >= 80 else 3, cfg=cfg)
+        send(f"Apify {t}% used · ${u['left']:.2f} left", f"≈ {u['clicks_left']} LinkedIn fetches · resets {u['resets']}",
+             tags=["moneybag"], priority=4 if t >= 80 else 3, cfg=cfg)
 
 
 def _matching_since(cfg: dict, since: float) -> list[dict]:
@@ -316,7 +315,7 @@ def _matching_since(cfg: dict, since: float) -> list[dict]:
     from . import db, geo
     fast = {n.lower() for n in load_sources().get("fast_lane") or []}
     with db.conn() as c:
-        rows = [dict(r) for r in c.execute("SELECT * FROM jobs WHERE first_seen >= ? AND status != 'hidden' "
+        rows = [dict(r) for r in c.execute("SELECT * FROM jobs WHERE first_seen >= ? "
                                            "ORDER BY COALESCE(posted_at, first_seen) DESC", (int(since),))]
     out = []
     for j in rows:

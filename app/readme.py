@@ -12,7 +12,7 @@ from .config import ROOT, load_more_companies, load_sources, load_universities
 
 README = ROOT / "README.md"
 START, END = "<!-- LIVE:START (auto-generated, do not edit by hand) -->", "<!-- LIVE:END -->"
-SECTOR = {"swe": "Software Engineering", "data": "Data Science & ML", "finance": "Finance & Banks"}
+SECTOR = {"swe": "Software Engineering", "data": "Data Science & ML", "finance": "Finance & Banks", "hr": "HR & People"}
 
 
 def _cell(text: str, limit: int = 60) -> str:
@@ -50,11 +50,12 @@ def snapshot() -> str:
     rows = [
         ("🇺🇸 United States", f"{regions['us']:,}"),
         ("🇮🇳 India", f"{regions['india']:,}"),
+        ("🇨🇦 Canada", f"{regions['canada']:,}"),
         ("🌍 Other countries", f"{regions['other']:,}"),
         ("🎓 University jobs", f"{len(jobs) - len(board):,}"),
         ("🆕 Posted in the last 24 hours", f"{len(day):,}"),
         ("✅ US jobs at employers with H-1B history", f"{sponsors:,} ({round(100 * sponsors / max(len(us), 1))}%)"),
-    ] + [(f"{'💻' if k == 'swe' else '📊' if k == 'data' else '🏦'} {SECTOR[k]}", f"{sectors[k]:,}") for k in ("swe", "data", "finance")] + [
+    ] + [(f"{ {'swe': '💻', 'data': '📊', 'finance': '🏦', 'hr': '👥'}[k]} {SECTOR[k]}", f"{sectors[k]:,}") for k in ("swe", "data", "finance", "hr")] + [
         ("🔌 Sources", f"{len(cfg.get('github') or [])} GitHub lists · {feeds} company career sites · {unis} universities · LinkedIn (Apify)"),
     ]
 

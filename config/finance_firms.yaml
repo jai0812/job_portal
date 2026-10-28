@@ -55,7 +55,7 @@ firms:
      uscis: [MUFG], feeds: [{type: workday, tenant: mufgub, wd: wd3, site: MUFG-Careers}], careers: https://careers.mufgamericas.com}
   - {name: Mizuho, segment: global_banks, match: [Mizuho], exclude: [Mizuho Orthopedic], uscis: [MIZUHO SERVICES, MIZUHO SECURITIES, MIZUHO BANK], careers: https://www.mizuhogroup.com/americas/careers}
   - {name: Nomura, segment: global_banks, match: [Nomura], uscis: [NOMURA], careers: https://www.nomura.com/americas/careers}
-  - {name: RBC, segment: global_banks, match: [RBC, Royal Bank of Canada], uscis: [RBC CAPITAL MARKETS, ROYAL BANK OF CANADA], careers: https://jobs.rbc.com}
+  - {name: RBC, segment: global_banks, match: [RBC, Royal Bank of Canada], uscis: [RBC CAPITAL MARKETS, ROYAL BANK OF CANADA], every_hours: 2, feeds: [{type: workday, tenant: rbc, wd: wd3, site: RBCGLOBAL1}], careers: https://jobs.rbc.com}
   - {name: TD, segment: global_banks, match: [TD Bank, TD Securities, Toronto-Dominion],
      uscis: [TD BANK, TD SECURITIES, TORONTO DOMINION], feeds: [{type: workday, tenant: td, wd: wd3, site: TD_Bank_Careers}], careers: https://jobs.td.com}
   - {name: BMO, segment: global_banks, match: [BMO, Bank of Montreal],

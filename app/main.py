@@ -54,7 +54,11 @@ if env("PORTAL_HOST", "127.0.0.1") not in LOCAL_HOSTS and not auth.enabled():
     raise SystemExit("Refusing to start: PORTAL_HOST makes the portal reachable from other computers, but no password "
                      "is set. Run  .venv/bin/python scripts/set_password.py  first.")
 if auth.enabled() and len(env("SESSION_SECRET")) < 32:
-    raise SystemExit("PORTAL_PASSWORD_HASH is set but SESSION_SECRET is missing. Run scripts/set_password.py again.")
+    raise SystemExit("A password is set but SESSION_SECRET is missing. Run scripts/set_password.py again.")
+
+
+def me(request: Request) -> dict:
+    return request.state.user
 
 OPEN_PATHS = {"/login", "/login.html", "/login.js", "/style.css", "/logo-mark.svg", "/api/login", "/favicon.ico"}
 HEADERS = {
@@ -80,18 +84,33 @@ def _is_https(request: Request) -> bool:
     return request.url.scheme == "https" or (env("TRUST_PROXY") == "1" and request.headers.get("x-forwarded-proto") == "https")
 
 
+# Only the admin may use these (everyone else gets the job tabs and their own Analytics). Checked on the server,
+# not just hidden in the page.
+ADMIN_PATHS = ("/api/alerts", "/api/sources", "/api/ask", "/api/apify", "/api/users")
+ADMIN_WRITES = {"/api/refresh", "/api/jobs"}
+
+
+def _admin_only(method: str, path: str) -> bool:
+    return path.startswith(ADMIN_PATHS) or (method == "POST" and path in ADMIN_WRITES)
+
+
 @app.middleware("http")
 async def guard(request: Request, call_next):
     path = request.url.path
     if auth.enabled():
-        if path not in OPEN_PATHS and not auth.valid_session(request.cookies.get(auth.COOKIE, "")):
+        user = auth.session_user(request.cookies.get(auth.COOKIE, ""))
+        request.state.user = user
+        if path not in OPEN_PATHS and not user:
             response = (JSONResponse({"detail": "Please sign in"}, status_code=401) if path.startswith("/api/")
                         else RedirectResponse("/login", status_code=303))
+        elif user and user["role"] != "admin" and _admin_only(request.method, path):
+            response = JSONResponse({"detail": "Only the admin can do that."}, status_code=403)
         elif request.method not in ("GET", "HEAD", "OPTIONS") and not _same_site(request):
             response = JSONResponse({"detail": "Request blocked (cross-site)"}, status_code=403)
         else:
             response = await call_next(request)
-    else:
+    else:  # local use on your own Mac, no password set: you're the admin
+        request.state.user = db.admin_user()
         response = await call_next(request)
     for k, v in HEADERS.items():
         response.headers.setdefault(k, v)
@@ -122,17 +141,92 @@ def login(request: Request, body: dict = Body(...)):
     wait = auth.locked_for(ip)
     if wait:
         raise HTTPException(429, f"Too many wrong attempts. Try again in {wait // 60 + 1} minutes.")
+    username = str(body.get("username", "")).strip()[:64]
+    account = "user:" + username.lower()
+    wait = max(wait, auth.locked_for(account))
+    if wait:
+        raise HTTPException(429, f"Too many wrong attempts. Try again in {wait // 60 + 1} minutes.")
     time.sleep(0.4)  # every attempt costs time, right or wrong
-    ok = auth.check_password(str(body.get("password", ""))[:256])
-    if ok and auth.totp_enabled():
-        ok = auth.check_totp(str(body.get("code", "")))
-    if not ok:
-        auth.record_failure(ip)
-        raise HTTPException(401, "Wrong password or code.")
-    auth.record_success(ip)
+    user = auth.check_login(username, str(body.get("password", ""))[:256])
+    if not user:
+        auth.record_failure(ip, account)
+        raise HTTPException(401, "Wrong username or password.")
+    auth.record_success(ip, account)
+    db.update_user(user["id"], last_login=int(time.time()))
     response = JSONResponse({"ok": True})
-    response.set_cookie(auth.COOKIE, auth.new_session(), max_age=auth.SESSION_HOURS * 3600, httponly=True,
-                        samesite="strict", secure=_is_https(request), path="/")
+    response.set_cookie(auth.COOKIE, auth.new_session(db.all_users()[user["id"]]), max_age=auth.SESSION_HOURS * 3600,
+                        httponly=True, samesite="strict", secure=_is_https(request), path="/")
+    return response
+
+
+# ---------------------------------------------------------------- accounts (admin creates them; nobody signs up)
+
+def _user_row(u: dict, stats: dict) -> dict:
+    s = stats.get(u["id"], {})
+    return {"id": u["id"], "username": u["username"], "role": u["role"], "active": bool(u["active"]),
+            "created_at": u["created_at"], "last_login": u["last_login"], "applied": s.get("applied") or 0,
+            "last_active": s.get("last_active")}
+
+
+@app.get("/api/users")
+def list_users():
+    stats = db.user_stats()
+    return sorted((_user_row(u, stats) for u in db.all_users().values()), key=lambda u: (u["role"] != "admin", u["id"]))
+
+
+@app.post("/api/users")
+def create_user(body: dict = Body(...)):
+    username, password = str(body.get("username", "")).strip(), str(body.get("password", ""))
+    if not re.fullmatch(r"[A-Za-z0-9._-]{3,32}", username):
+        raise HTTPException(400, "Username: 3–32 letters, numbers, dots, dashes or underscores.")
+    if db.user_by_name(username):
+        raise HTTPException(400, "That username is taken.")
+    if problem := auth.password_problem(password):
+        raise HTTPException(400, problem)
+    db.create_user(username, auth.hash_password(password))
+    return list_users()
+
+
+@app.post("/api/users/{user_id}")
+def change_user(user_id: int, request: Request, body: dict = Body(...)):
+    """Reset a password and/or turn an account on or off (both sign that person out everywhere)."""
+    u = db.all_users().get(user_id)
+    if not u:
+        raise HTTPException(404, "No such user.")
+    fields = {}
+    if body.get("password"):
+        if problem := auth.password_problem(str(body["password"])):
+            raise HTTPException(400, problem)
+        fields["pw_hash"] = auth.hash_password(str(body["password"]))
+    if "active" in body:
+        if u["id"] == me(request)["id"] and not body["active"]:
+            raise HTTPException(400, "You can't turn off your own account.")
+        fields["active"] = int(bool(body["active"]))
+    db.update_user(user_id, **fields)
+    return list_users()
+
+
+@app.delete("/api/users/{user_id}")
+def remove_user(user_id: int, request: Request):
+    u = db.all_users().get(user_id)
+    if not u or u["role"] == "admin":
+        raise HTTPException(400, "The admin account can't be deleted.")
+    db.delete_user(user_id)
+    return list_users()
+
+
+@app.post("/api/me/password")
+def change_my_password(request: Request, body: dict = Body(...)):
+    """Anyone can change their own password (they need the current one)."""
+    user = me(request)
+    if not auth.verify(user["pw_hash"], str(body.get("current", ""))):
+        raise HTTPException(400, "Your current password is wrong.")
+    if problem := auth.password_problem(str(body.get("new", ""))):
+        raise HTTPException(400, problem)
+    db.update_user(user["id"], pw_hash=auth.hash_password(str(body["new"])))
+    response = JSONResponse({"ok": True})  # the old session is now invalid: hand out a fresh one
+    response.set_cookie(auth.COOKIE, auth.new_session(db.all_users()[user["id"]]), max_age=auth.SESSION_HOURS * 3600,
+                        httponly=True, samesite="strict", secure=_is_https(request), path="/")
     return response
 
 
@@ -150,7 +244,9 @@ _refresh = {"running": False, "started": None, "results": []}
 def _do_refresh(include_apify: bool):
     _refresh.update(running=True, started=int(time.time()), results=[])
     try:
-        _refresh["results"] = refresh.run(include_apify=include_apify, on_new=alerts.on_new)
+        # a job new to this refresh wasn't there when the fast lane last checked the top companies
+        _refresh["results"] = refresh.run(include_apify=include_apify,
+                                          on_new=lambda jobs: alerts.on_new(jobs, since=_fast.get("started")))
         rebuild_jobs()
         try:  # keep the README's live snapshot current (and push it to GitHub when that's set up)
             readme.update()
@@ -187,7 +283,7 @@ def _self_check_loop():
             os._exit(3)
 
 
-_fast = {"last": 0, "results": []}
+_fast = {"last": 0, "started": None, "results": []}
 
 
 def _fast_lane_loop():
@@ -200,8 +296,9 @@ def _fast_lane_loop():
         started = time.time()
         if minutes > 0 and names and not _refresh["running"]:
             try:
-                _fast["results"] = refresh.run_fast(names, on_new=alerts.on_new)
-                _fast["last"] = int(time.time())
+                prev = _fast.get("started")  # what this run finds wasn't there when the previous run looked
+                _fast["results"] = refresh.run_fast(names, on_new=lambda jobs: alerts.on_new(jobs, since=prev))
+                _fast["started"], _fast["last"] = started, int(time.time())
                 if any(r["new"] for r in _fast["results"]):
                     rebuild_jobs()
             except Exception as e:
@@ -221,7 +318,8 @@ def _alerts_loop():
 @app.on_event("startup")
 def _startup():
     try:
-        _jobs.update(gz=JOBS_CACHE.read_bytes(), built=int(JOBS_CACHE.stat().st_mtime))
+        gz = {r: (DATA_DIR / f"jobs_cache_{r}.json.gz").read_bytes() for r in REGIONS}
+        _jobs.update(gz=gz, built=int((DATA_DIR / "jobs_cache_us.json.gz").stat().st_mtime))
     except OSError:
         pass
     rebuild_jobs()
@@ -302,11 +400,12 @@ def test_alert():
 # ---------------------------------------------------------------- status & sources
 
 @app.get("/api/status")
-def status():
+def status(request: Request):
     cfg = load_sources()
+    user = me(request)
     return {
         "auth": auth.enabled(),
-        "two_step": auth.enabled() and auth.totp_enabled(),
+        "me": {"username": user["username"], "role": user["role"]},
         "llms": llm.status(),
         "apify": bool(env("APIFY_TOKEN")),
         "sources": cfg.get("github") or [],
@@ -389,21 +488,31 @@ def _enrich(rows: list[dict]) -> list[dict]:
 # Building the job list (~130k rows, H-1B / finance / region lookups) takes minutes on a small cloud server, so it is
 # built in the background after each refresh and kept gzipped; page loads get that copy instantly. Your own marks
 # (status, notes) change all the time, so they come separately from /api/jobs/mine and the page merges them in.
-JOBS_CACHE = DATA_DIR / "jobs_cache.json.gz"
-_jobs = {"gz": None, "built": 0, "building": False, "again": False}
+# One prebuilt list per tab (US, India, Canada, other countries), so each tab only downloads its own jobs.
+REGIONS = ("us", "india", "canada", "other")
+_jobs = {"gz": None, "built": 0, "building": False, "again": False}  # gz: {region: gzipped JSON}
 _jobs_lock = threading.Lock()
 
 
 def _build_jobs():
     rows = _enrich(db.list_jobs(int(load_sources().get("max_age_days", 45))))
-    gz = gzip.compress(json.dumps({"now": int(time.time()), "jobs": rows}, separators=(",", ":")).encode(), 5)
-    _jobs.update(gz=gz, built=int(time.time()))
-    try:
-        tmp = JOBS_CACHE.with_suffix(".tmp")
-        tmp.write_bytes(gz)
-        tmp.replace(JOBS_CACHE)
-    except OSError:
-        pass
+    now = int(time.time())
+    by_region = {r: [] for r in REGIONS}
+    for row in rows:
+        for k in ("status", "notes", "applied_at"):  # pre-accounts columns: each user's marks come from /api/jobs/mine
+            row.pop(k, None)
+        for r in row["regions"]:
+            by_region[r].append(row)
+    gz = {r: gzip.compress(json.dumps({"now": now, "region": r, "jobs": js}, separators=(",", ":")).encode(), 5)
+          for r, js in by_region.items()}
+    _jobs.update(gz=gz, built=now)
+    for r, data in gz.items():
+        try:
+            tmp = DATA_DIR / f"jobs_cache_{r}.tmp"
+            tmp.write_bytes(data)
+            tmp.replace(DATA_DIR / f"jobs_cache_{r}.json.gz")
+        except OSError:
+            pass
 
 
 def rebuild_jobs():
@@ -429,29 +538,33 @@ def rebuild_jobs():
 
 
 @app.get("/api/jobs")
-def jobs(request: Request):
+def jobs(request: Request, region: str = "us"):
+    if region not in REGIONS:
+        raise HTTPException(400, "Unknown region.")
     for _ in range(600):  # very first start, nothing cached yet: wait for the background build
         if _jobs["gz"] is not None or not _jobs["building"]:
             break
         time.sleep(1)
     if _jobs["gz"] is None:
         _build_jobs()
+    data = _jobs["gz"][region]
     if "gzip" in request.headers.get("accept-encoding", ""):
-        return Response(_jobs["gz"], media_type="application/json",
+        return Response(data, media_type="application/json",
                         headers={"Content-Encoding": "gzip", "Cache-Control": "no-store", "Vary": "Accept-Encoding"})
-    return Response(gzip.decompress(_jobs["gz"]), media_type="application/json", headers={"Cache-Control": "no-store"})
+    return Response(gzip.decompress(data), media_type="application/json", headers={"Cache-Control": "no-store"})
 
 
 @app.get("/api/jobs/mine")
-def my_marks():
+def my_marks(request: Request):
     """Your status / notes / applied date for every job you've touched (everything else is 'new')."""
-    return {"now": int(time.time()), "built": _jobs["built"], "marks": db.marks()}
+    return {"now": int(time.time()), "built": _jobs["built"], "marks": db.marks(me(request)["id"])}
 
 
 @app.get("/api/analytics")
-def analytics():
+def analytics(request: Request):
     """Everything you've applied to (any age), enriched like the job list."""
-    return {"now": int(time.time()), "applied": _enrich(db.applied_jobs()), "decisions": db.decision_counts()}
+    uid = me(request)["id"]
+    return {"now": int(time.time()), "applied": _enrich(db.applied_jobs(uid)), "decisions": db.decision_counts(uid)}
 
 
 @app.get("/api/companies")
@@ -491,10 +604,10 @@ def job(job_id: str):
 
 
 @app.post("/api/jobs/{job_id}/status")
-def job_status(job_id: str, body: dict = Body(...)):
+def job_status(job_id: str, request: Request, body: dict = Body(...)):
     if body.get("status") not in db.STATUSES:
         raise HTTPException(400, "bad status")
-    return db.set_status(job_id, body["status"], body.get("notes")) or {}
+    return db.set_status(me(request)["id"], job_id, body["status"], body.get("notes")) or {}
 
 
 @app.post("/api/jobs")
@@ -521,14 +634,19 @@ DEFAULT_PROFILE = {
 
 
 @app.get("/api/profile")
-def get_profile():
-    return json.loads(PROFILE_JSON.read_text()) if PROFILE_JSON.exists() else DEFAULT_PROFILE
+def get_profile(request: Request):
+    """Each person's own quick-copy bar. The admin's starts from the profile.json saved before accounts existed."""
+    user = me(request)
+    saved = db.get_profile(user["id"])
+    if saved is None and user["role"] == "admin" and PROFILE_JSON.exists():
+        saved = json.loads(PROFILE_JSON.read_text())
+    return saved or DEFAULT_PROFILE
 
 
 @app.post("/api/profile")
-def save_profile(body: dict = Body(...)):
+def save_profile(request: Request, body: dict = Body(...)):
     profile = {k: body.get(k, DEFAULT_PROFILE[k]) for k in DEFAULT_PROFILE}
-    PROFILE_JSON.write_text(json.dumps(profile, indent=1))
+    db.update_user(me(request)["id"], profile=json.dumps(profile))
     return profile
 
 

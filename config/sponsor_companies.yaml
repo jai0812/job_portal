@@ -6,7 +6,7 @@ companies:
 - name: Accenture
   group: More H-1B sponsors (tech roles only)
   tech_only: true
-  regions: [us]
+  regions: [us, canada]
   every_hours: 3
   h1b_fy23_seen: 998
   feeds:

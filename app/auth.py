@@ -1,25 +1,24 @@
 # Job Portal · built by JAI SHARMA
-"""Password protection for running the portal on the internet.
+"""Accounts and sign-in for running the portal on the internet.
 
-Off by default (local use on your own Mac). It turns on as soon as PORTAL_PASSWORD_HASH is set in .env,
-which scripts/set_password.py does for you. What it provides:
+The admin (you) signs in with a username and password and creates accounts for other people from the
+Users tab; nobody can sign up on their own. Off on a local Mac until a password is set (scripts/set_password.py).
 
-- the password is never stored: only a salted scrypt hash (slow by design, so guessing is expensive)
-- optional second step: 6-digit codes from an authenticator app (TOTP)
-- lockout after repeated wrong attempts, per visitor and overall
-- sessions are signed cookies (HttpOnly, SameSite=Strict, Secure on https) that expire
+- passwords are never stored: only salted scrypt hashes (slow by design, so guessing is expensive)
+- lockout after repeated wrong attempts, per visitor, per account and overall
+- sessions are signed cookies (HttpOnly, SameSite=Strict, Secure on https) that expire; changing a password
+  or disabling an account signs that person out everywhere
 - every state-changing request must come from the portal's own page (CSRF protection)
-- strict security headers on every response
 """
 import base64
 import hashlib
 import hmac
 import json
 import secrets
-import struct
 import threading
 import time
 
+from . import db
 from .config import env
 
 SESSION_HOURS = 12
@@ -27,10 +26,12 @@ COOKIE = "portal_session"
 MAX_FAILS, WINDOW, LOCK = 5, 15 * 60, 15 * 60       # 5 wrong tries in 15 min → locked for 15 min
 GLOBAL_MAX_FAILS = 30                               # across all visitors: slows down distributed guessing
 SCRYPT = dict(n=2 ** 15, r=8, p=1, dklen=32, maxmem=64 * 1024 * 1024)
+_DUMMY = None  # a hash to check unknown usernames against, so they take as long as real ones
 
 
 def enabled() -> bool:
-    return bool(env("PORTAL_PASSWORD_HASH"))
+    """Sign-in is required as soon as any account has a password."""
+    return any(u["pw_hash"] for u in db.all_users().values())
 
 
 # ---------------------------------------------------------------- password hashing
@@ -41,46 +42,32 @@ def hash_password(password: str) -> str:
     return "scrypt$" + base64.b64encode(salt).decode() + "$" + base64.b64encode(digest).decode()
 
 
-def check_password(password: str) -> bool:
+def verify(pw_hash: str, password: str) -> bool:
     try:
-        _, salt, digest = env("PORTAL_PASSWORD_HASH").split("$")
-        expected = base64.b64decode(digest)
+        _, salt, digest = pw_hash.split("$")
         actual = hashlib.scrypt(password.encode(), salt=base64.b64decode(salt), **SCRYPT)
+        return hmac.compare_digest(actual, base64.b64decode(digest))
     except Exception:
         return False
-    return hmac.compare_digest(actual, expected)
 
 
-# ---------------------------------------------------------------- authenticator-app codes (TOTP, RFC 6238)
-
-_used_codes: set[tuple[int, str]] = set()
-
-
-def totp_enabled() -> bool:
-    return bool(env("PORTAL_TOTP_SECRET"))
-
-
-def _totp(secret_b32: str, counter: int) -> str:
-    key = base64.b32decode(secret_b32.upper() + "=" * (-len(secret_b32) % 8))
-    mac = hmac.new(key, struct.pack(">Q", counter), hashlib.sha1).digest()
-    offset = mac[-1] & 0x0F
-    return f"{(struct.unpack('>I', mac[offset:offset + 4])[0] & 0x7FFFFFFF) % 1_000_000:06d}"
+def check_login(username: str, password: str) -> dict | None:
+    global _DUMMY
+    user = db.user_by_name(username)
+    if not (user and user["active"] and user["pw_hash"]):
+        _DUMMY = _DUMMY or hash_password(secrets.token_hex(8))
+        verify(_DUMMY, password)  # same cost as a real check
+        return None
+    return user if verify(user["pw_hash"], password) else None
 
 
-def check_totp(code: str) -> bool:
-    code = "".join(ch for ch in (code or "") if ch.isdigit())
-    if len(code) != 6:
-        return False
-    now = int(time.time()) // 30
-    for counter in (now - 1, now, now + 1):  # allow one step of clock drift
-        if hmac.compare_digest(_totp(env("PORTAL_TOTP_SECRET"), counter), code):
-            if (counter, code) in _used_codes:  # each code works once
-                return False
-            _used_codes.add((counter, code))
-            for old in [c for c in _used_codes if c[0] < now - 4]:
-                _used_codes.discard(old)
-            return True
-    return False
+def password_problem(pw: str) -> str:
+    """Why a new password isn't good enough ("" when it's fine)."""
+    if len(pw) < 10:
+        return "Use at least 10 characters."
+    if len(set(pw)) < 5:
+        return "Too simple: use more different characters."
+    return ""
 
 
 # ---------------------------------------------------------------- lockout after wrong attempts
@@ -102,10 +89,11 @@ def locked_for(ip: str) -> int:
         return int(max(_locked_until.get(ip, 0) - now, _locked_until.get("*", 0) - now, 0))
 
 
-def record_failure(ip: str) -> None:
+def record_failure(*keys: str) -> None:
+    """keys: the visitor's IP and the account they tried ("user:name"); the overall counter is added once."""
     now = time.time()
     with _lock:
-        for key, limit in ((ip, MAX_FAILS), ("*", GLOBAL_MAX_FAILS)):
+        for key, limit in [(k, MAX_FAILS) for k in keys] + [("*", GLOBAL_MAX_FAILS)]:
             fails = _recent(key, now)
             fails.append(now)
             if len(fails) >= limit:
@@ -113,10 +101,11 @@ def record_failure(ip: str) -> None:
                 _fails[key] = []
 
 
-def record_success(ip: str) -> None:
+def record_success(*keys: str) -> None:
     with _lock:
-        _fails.pop(ip, None)
-        _locked_until.pop(ip, None)
+        for key in keys:
+            _fails.pop(key, None)
+            _locked_until.pop(key, None)
 
 
 # ---------------------------------------------------------------- signed session cookies
@@ -125,19 +114,24 @@ def _sign(payload: bytes) -> str:
     return hmac.new(env("SESSION_SECRET").encode(), payload, hashlib.sha256).hexdigest()
 
 
-def new_session() -> str:
+def new_session(user: dict) -> str:
     payload = base64.urlsafe_b64encode(json.dumps(
-        {"exp": int(time.time()) + SESSION_HOURS * 3600, "n": secrets.token_hex(8)}).encode())
+        {"u": user["id"], "v": user["sv"], "exp": int(time.time()) + SESSION_HOURS * 3600, "n": secrets.token_hex(8)}).encode())
     return payload.decode() + "." + _sign(payload)
 
 
-def valid_session(token: str) -> bool:
+def session_user(token: str) -> dict | None:
+    """The signed-in user for this cookie, or None (expired, tampered with, account disabled or password changed)."""
     if not token or "." not in token or len(env("SESSION_SECRET")) < 32:
-        return False
+        return None
     payload, sig = token.rsplit(".", 1)
     if not hmac.compare_digest(_sign(payload.encode()), sig):
-        return False
+        return None
     try:
-        return json.loads(base64.urlsafe_b64decode(payload))["exp"] > time.time()
+        data = json.loads(base64.urlsafe_b64decode(payload))
     except Exception:
-        return False
+        return None
+    user = db.all_users().get(data.get("u"))
+    if not user or not user["active"] or data.get("v") != user["sv"] or data.get("exp", 0) <= time.time():
+        return None
+    return user

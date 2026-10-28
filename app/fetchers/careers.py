@@ -26,7 +26,7 @@ TECH_ROLES = re.compile(
     r"|salesforce|\bsap\b|\berp\b|workday (analyst|developer)|servicenow|automation engineer|firmware|embedded"
     r"|mobile (engineer|developer)|\bios\b|android|web (engineer|developer)|\bapi\b|engineering manager|\bux\b", re.I)
 # Most jobs to keep per employer and region, so huge global banks don't drown everything else.
-REGION_CAPS = {"us": 1000, "india": 600, "other": 400}
+REGION_CAPS = {"us": 1000, "india": 600, "canada": 600, "other": 400}
 HEADERS = {"User-Agent": "Mozilla/5.0 (job-portal)"}
 TIMEOUT = httpx.Timeout(60, connect=20)
 
@@ -61,7 +61,7 @@ class Sink:
 
     def __init__(self, owner: dict, cutoff: float, regions=("us",), only: re.Pattern | None = None):
         self.owner, self.cutoff, self.regions, self.jobs = owner, cutoff, set(regions), []
-        self.only = only  # when set, keep only titles matching it
+        self.only = only  # when set, keep only titles matching it (HR titles are kept too when the job is in Canada)
         self.counts = dict.fromkeys(REGION_CAPS, 0)
         self.seen: set[str] = set()
 
@@ -75,11 +75,13 @@ class Sink:
             return False
         if known_only and not geo.detected(location):
             return True
-        if self.only and not self.only.search(title or ""):
-            return True
         if region and geo.countries(location) == (geo.US,) and region != "us":
-            location = f"{location} · {geo.INDIA if region == 'india' else 'Outside US'}".strip(" ·")
-        wanted = [r for r in geo.regions(location) if not self.full(r)]
+            label = {"india": geo.INDIA, "canada": geo.CANADA}.get(region, "Outside US")
+            location = f"{location} · {label}".strip(" ·")
+        places = geo.regions(location)
+        if self.only and not self.only.search(title or "") and not ("canada" in places and classify.HR_TITLE.search(title or "")):
+            return True
+        wanted = [r for r in places if not self.full(r)]
         if not wanted or url in self.seen:
             return True
         self.seen.add(url)
@@ -99,10 +101,11 @@ def workday(f: dict, sink: Sink) -> None:
     api = f"{base}/wday/cxs/{f['tenant']}/{f['site']}/jobs"
     with _client() as c:
         first = c.post(api, json={"appliedFacets": {}, "limit": 20, "offset": 0, "searchText": ""}).json()
-        # Most Workday sites have a country filter, so fetch the US and India separately; then one unfiltered
-        # pass picks up everything else (that pass only keeps jobs outside the US and India).
+        # Most Workday sites have a country filter, so fetch the US, India and Canada separately; then one unfiltered
+        # pass picks up everything else (that pass only keeps jobs in the remaining regions).
         passes = []
-        for region, names in (("us", ("United States of America", "United States", "USA")), ("india", ("India",))):
+        for region, names in (("us", ("United States of America", "United States", "USA")), ("india", ("India",)),
+                              ("canada", ("Canada",))):
             if region in sink.regions:
                 facet = _workday_facet(first.get("facets") or [], names)
                 if facet:
@@ -243,7 +246,7 @@ def phenom(f: dict, sink: Sink) -> None:
     with _client() as c:
         offset, total = 0, MAX_PER_FEED
         while offset < min(total, MAX_PER_FEED):
-            html = c.get(f"https://{f['host']}/us/en/search-results", params={"from": offset, "s": 1}).text
+            html = c.get(f"https://{f['host']}/{f.get('locale', 'us/en')}/search-results", params={"from": offset, "s": 1}).text
             m = re.search(r"phApp\.ddo\s*=\s*(\{.*?\});\s*phApp", html, re.S)
             data = (json.loads(m.group(1)) if m else {}).get("eagerLoadRefineSearch") or {}
             total = data.get("totalHits") or 0
@@ -252,7 +255,7 @@ def phenom(f: dict, sink: Sink) -> None:
                 break
             for p in posts:
                 where = p.get("cityStateCountry") or p.get("location") or ""
-                url = p.get("applyUrl") or f"https://{f['host']}/us/en/job/{p.get('jobSeqNo', '')}"
+                url = p.get("applyUrl") or f"https://{f['host']}/{f.get('locale', 'us/en')}/job/{p.get('jobSeqNo', '')}"
                 sink.add(p.get("title", ""), where, url, _iso(p.get("postedDate")), "day")
             offset += len(posts)
             time.sleep(0.3)

@@ -58,21 +58,28 @@ function toast(msg, ms = 2600) {
 }
 
 let STATUS = {};
+const isAdmin = () => !STATUS.me || STATUS.me.role === "admin";
 
 // ------------------------------------------------------------------ tabs
-const REGION_TABS = { jobs: "us", top: "us", india: "india", world: "other" };
+const REGION_TABS = { jobs: "us", top: "us", india: "india", canada: "canada", canhr: "canada", world: "other" };
+const ADMIN_TABS = new Set(["ask", "users", "settings"]);
 function showTab(name) {
+  if (ADMIN_TABS.has(name) && !isAdmin()) name = "jobs";
   $$("#tabs button").forEach((b) => b.classList.toggle("active", b.dataset.tab === name));
   const section = name in REGION_TABS ? "jobs" : name;
   $$(".tab").forEach((t) => t.classList.toggle("active", t.id === `tab-${section}`));
-  if (name in REGION_TABS && (F.region !== REGION_TABS[name] || F.topset !== (name === "top"))) {
-    F.region = REGION_TABS[name];
-    F.topset = name === "top";
-    F.place = "";
-    SHOWN = 200;
-    if (JOBS.length) renderJobs();
+  if (name in REGION_TABS) {
+    const region = REGION_TABS[name], topset = name === "top";
+    const cat = name === "canhr" ? "hr" : F.cat === "hr" ? "" : F.cat;  // the HR tab is the Canada tab with HR picked
+    if (F.region !== region || F.topset !== topset || F.cat !== cat) {
+      Object.assign(F, { region, topset, cat, place: "" });
+      SHOWN = 200;
+      showRegion();
+    }
   }
+  if (name === "unis") ensureRegion("us").then(renderUnis);
   if (name === "settings") loadAlerts();
+  if (name === "users") loadUsers();
   if (name === "analytics") loadAnalytics();
   location.hash = name;
 }
@@ -82,30 +89,42 @@ window.addEventListener("hashchange", () => { const t = location.hash.slice(1); 
 // ------------------------------------------------------------------ status
 async function loadStatus() {
   STATUS = await api("/api/status");
-  $("#llm-pills").innerHTML = STATUS.llms
+  document.body.classList.toggle("is-admin", isAdmin());
+  $("#llm-pills").innerHTML = (isAdmin() ? STATUS.llms
     .filter((l) => l.configured || ["chatgpt", "claude"].includes(l.id))
     .map((l) => `<span class="pill ${l.configured ? "on" : ""}" title="${esc(l.model)}">${l.configured ? "●" : "○"} ${esc(l.label)}</span>`)
-    .join("") + (STATUS.auth ? `<button id="signout" title="Sign out of the portal">Sign out</button>` : "");
-  if (STATUS.auth) $("#signout").onclick = async () => { await api("/api/logout", { method: "POST" }); location.href = "/login"; };
-  renderSettings();
-  renderAskProviders();
+    .join("") : "") + (STATUS.auth ? `<span class="me" title="Signed in">👤 ${esc(STATUS.me.username)}</span>
+      <button id="chpass" title="Change your password">🔑</button><button id="signout" title="Sign out of the portal">Sign out</button>` : "");
+  if (STATUS.auth) {
+    $("#signout").onclick = async () => { await api("/api/logout", { method: "POST" }); location.href = "/login"; };
+    $("#chpass").onclick = () => { $("#pass-form").reset(); $("#pw-msg").textContent = ""; $("#dlg-pass").showModal(); };
+  }
+  if (isAdmin()) { renderSettings(); renderAskProviders(); }
 }
 
 // ------------------------------------------------------------------ JOBS
 const CATS = [["", "All"], ["swe", "Software Engineering"], ["finance", "Finance & Banks"], ["data", "Data Science & ML"], ["other", "Other"]];
+const CATS_CANADA = [["", "All"], ["swe", "Software Engineering"], ["data", "Data Science & ML"], ["hr", "👥 HR & People"], ["finance", "Finance & Banks"], ["other", "Other"]];
 const LEVELS = [["", "All levels"], ["internship", "Internship"], ["early_career", "Early career / New grad"], ["experienced", "Experienced"], ["unspecified", "Unspecified"]];
 const AGES = [["", "Any time"], [6, "≤ 6h"], [24, "≤ 24h"], [48, "≤ 2d"], [72, "≤ 3d"], [168, "≤ 7d"], [336, "≤ 14d"], [720, "≤ 30d"]];
 const H1B_LABEL = { yes: "Sponsors", likely: "Likely", no: "No sponsorship", citizen: "US citizens", unknown: "Unknown" };
 const LEVEL_LABEL = { internship: "Intern", early_career: "Early career", experienced: "Experienced", unspecified: "—" };
-const CAT_LABEL = { swe: "SWE", finance: "Finance", data: "DS/ML", other: "Other" };
+const CAT_LABEL = { swe: "SWE", finance: "Finance", data: "DS/ML", hr: "HR", other: "Other" };
 
 let PATTERNS = [];
 const F = { region: "us", topset: false, place: "", cat: "", level: "", age: "", stype: "", fin: "", q: "", h1b: "", cap: false, top: false, source: "", status: "active" };
 const REGION_INFO = {
   us: ["🇺🇸 United States", "US jobs from GitHub lists, LinkedIn and employers' own career sites (finance firms, FAANG / MAANG, big tech and top tech companies)."],
   india: ["🇮🇳 India", "Jobs in India from Indian tech & fintech companies, big tech India teams (Amazon, NVIDIA, Salesforce, Adobe, Intel, Target), global banks & finance firms' India offices, and LinkedIn India searches."],
-  other: ["🌍 Other countries", "Jobs outside the US and India, mostly from global banks, finance firms and tech companies' own career sites."],
+  canada: ["🇨🇦 Canada", "Jobs in Canada: Canadian tech companies, banks, insurers and big employers' own career sites, big tech's Canadian teams, Canadian GitHub internship & new-grad lists, and Job Bank (jobbank.gc.ca)."],
+  other: ["🌍 Other countries", "Jobs outside the US, India and Canada, mostly from global banks, finance firms and tech companies' own career sites."],
 };
+const HR_INFO = ["👥 Canada · HR & People", "HR, recruiting, talent acquisition, people operations, payroll and HR coordinator / generalist roles in Canada, from employers' career sites (banks, insurers, retail, telecom, tech) and Job Bank."];
+const CANADA_CITIES = [["Toronto / GTA", /Toronto|Mississauga|Markham|Brampton|Vaughan|Oakville|Richmond Hill|North York|Scarborough|Etobicoke|Burlington|Pickering|Ajax/i],
+  ["Vancouver / BC", /Vancouver|Burnaby|Surrey|Richmond, BC|Victoria|Kelowna|British Columbia|, BC\b/i], ["Montréal / Québec", /Montr[eé]al|Laval|Qu[eé]bec|, QC\b|Gatineau|Longueuil/i],
+  ["Ottawa", /Ottawa|Kanata/i], ["Waterloo / Kitchener", /Waterloo|Kitchener|Cambridge, ON|Guelph/i], ["Calgary", /Calgary/i], ["Edmonton", /Edmonton/i],
+  ["Winnipeg", /Winnipeg|Manitoba|, MB\b/i], ["Halifax / Atlantic", /Halifax|Nova Scotia|, NS\b|New Brunswick|, NB\b|Moncton|Fredericton|Newfoundland|St\. John's|Charlottetown/i],
+  ["Saskatchewan", /Saskatoon|Regina|Saskatchewan|, SK\b/i], ["Remote", /remote/i]];
 // India: group cities into metro areas; other countries: by country.
 const INDIA_CITIES = [["Bengaluru", /Bengaluru|Bangalore|Karnataka|KA,/i], ["Hyderabad", /Hyderabad|Telang/i], ["Pune", /Pune/i],
   ["Mumbai", /Mumbai|Navi Mumbai|Thane/i], ["Delhi NCR", /Delhi|Gurgaon|Gurugram|Noida|Haryana|Uttar Pradesh/i],
@@ -113,10 +132,11 @@ const INDIA_CITIES = [["Bengaluru", /Bengaluru|Bangalore|Karnataka|KA,/i], ["Hyd
 function placesOf(j) {
   if (F.topset) return [j.company];
   if (F.region === "india") return INDIA_CITIES.filter(([, rx]) => rx.test(j.location)).map(([n]) => n);
-  if (F.region === "other") return (j.countries || []).filter((c) => c !== "United States" && c !== "India");
+  if (F.region === "canada") return CANADA_CITIES.filter(([, rx]) => rx.test(j.location)).map(([n]) => n);
+  if (F.region === "other") return (j.countries || []).filter((c) => !["United States", "India", "Canada"].includes(c));
   return [];
 }
-const STYPES = [["", "All sources"], ["github", "GitHub lists"], ["company", "Company career sites"], ["apify", "Apify · LinkedIn"], ["manual", "Added by you"]];
+const STYPES = [["", "All sources"], ["github", "GitHub lists"], ["company", "Company career sites"], ["jobbank", "🍁 Job Bank Canada"], ["apify", "Apify · LinkedIn"], ["manual", "Added by you"]];
 let FIN_SEGMENTS = [];  // filled from /api/finance
 
 // H-1B: the posting's own words win; otherwise real USCIS FY2023 approval counts; otherwise our hand list.
@@ -187,7 +207,7 @@ function postedCell(j) {
   return `<td class="age ${p.fresh ? "fresh" : ""}"><b>${p.short}</b><span class="age-long">${esc(p.long)}</span><span class="age-date">${esc(p.date)}</span></td>`;
 }
 
-const STYPE = { github: "GitHub", apify: "Apify · LinkedIn", university: "University site", company: "Company site", manual: "Added by you" };
+const STYPE = { github: "GitHub", apify: "Apify · LinkedIn", university: "University site", company: "Company site", jobbank: "Job Bank Canada", manual: "Added by you" };
 function sourceCell(j) {
   const all = (j.sources || j.source_name || "").split("|").filter(Boolean);
   const others = all.filter((s) => s !== j.source_name);
@@ -197,22 +217,53 @@ function sourceCell(j) {
     <span class="age-date">found ${ageText(NOW - j.first_seen)} ago</span></td>`;
 }
 
-async function loadJobs() {
-  // The job list is a prebuilt copy (fast); your status / notes come fresh and are merged in.
-  const [data, mine] = await Promise.all([api("/api/jobs"), api("/api/jobs/mine")]);
-  for (const j of data.jobs) {
-    const m = mine.marks[j.id];
-    [j.status, j.notes, j.applied_at] = m || ["new", "", null];
-  }
-  JOBS = data.jobs;
-  NOW = mine.now;
-  JOBS_BUILT = mine.built;
-  LAST_FETCH = Math.max(0, ...(STATUS.log || []).map((l) => l.last_run));
+// Each tab's jobs come as a prebuilt list for that country (fast, and a tab only downloads its own jobs);
+// your own status / notes (MARKS) come fresh and are merged into every list that's loaded.
+const STORE = {};   // region -> jobs
+let MARKS = {};     // job id -> [status, notes, applied_at]
+const LOADING = {};
+function applyMarks(list) {
+  for (const j of list) [j.status, j.notes, j.applied_at] = MARKS[j.id] || ["new", "", null];
+}
+function ensureRegion(region) {
+  if (STORE[region]) return Promise.resolve(STORE[region]);
+  return (LOADING[region] ||= api(`/api/jobs?region=${region}`).then((d) => {
+    applyMarks(d.jobs);
+    STORE[region] = d.jobs;
+    delete LOADING[region];
+    return d.jobs;
+  }));
+}
+async function showRegion() {
+  if (!STORE[F.region]) { JOBS = []; $("#count").textContent = "Loading…"; $("#jobs tbody").innerHTML = ""; }
+  const want = F.region;
+  await ensureRegion(want);
+  if (F.region !== want) return;  // switched tabs meanwhile
+  JOBS = STORE[want];
   const sources = [...new Set(JOBS.map((j) => j.source_name))].sort();
-  const sel = $("#f-source");
-  sel.innerHTML = `<option value="">All</option>` + sources.map((s) => `<option ${s === F.source ? "selected" : ""}>${esc(s)}</option>`).join("");
+  $("#f-source").innerHTML = `<option value="">All</option>` + sources.map((s) => `<option ${s === F.source ? "selected" : ""}>${esc(s)}</option>`).join("");
   renderJobs();
-  renderUnis();
+}
+async function loadJobs() {
+  const mine = await api("/api/jobs/mine");
+  MARKS = mine.marks;
+  NOW = mine.now;
+  if (mine.built !== JOBS_BUILT) for (const r in STORE) delete STORE[r];  // the server has a newer list
+  JOBS_BUILT = mine.built;
+  for (const r in STORE) applyMarks(STORE[r]);
+  LAST_FETCH = Math.max(0, ...(STATUS.log || []).map((l) => l.last_run));
+  await showRegion();
+  if (STORE.us) renderUnis();
+}
+// After a status change: remember it and update that job in every loaded list.
+function markLocal(id, r) {
+  MARKS[id] = r.status === "new" && !r.notes ? undefined : [r.status, r.notes || "", r.applied_at];
+  if (!MARKS[id]) delete MARKS[id];
+  for (const list of Object.values(STORE)) { const j = list.find((x) => x.id === id); if (j) Object.assign(j, r); }
+}
+function appliedToday() {
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  return Object.values(MARKS).filter((m) => m[2] && m[2] * 1000 >= today.getTime()).length;
 }
 
 function matches(j, skip) {
@@ -226,12 +277,14 @@ function matches(j, skip) {
   if (skip !== "stype" && F.stype && j.source_type !== F.stype) return false;
   if (skip !== "fin" && F.fin && !(F.fin === "any" ? j.fin : j.fin && j.fin.segment === F.fin)) return false;
   if (F.source && j.source_name !== F.source) return false;
-  if (F.cap && !j.cap_exempt) return false;
+  if (F.cap && F.region === "us" && !j.cap_exempt) return false;
   if (F.top && !j.top_company) return false;
   if (F.imm && !j.immediate) return false;
-  if (F.h1b === "sponsor" && !hasSponsored(j)) return false;
-  if (F.h1b === "yes" && j.h1b !== "yes") return false;
-  if (F.h1b === "not-no" && ["no", "citizen"].includes(j.h1b)) return false;
+  if (F.region === "us") {  // H-1B filters only mean something for US jobs
+    if (F.h1b === "sponsor" && !hasSponsored(j)) return false;
+    if (F.h1b === "yes" && j.h1b !== "yes") return false;
+    if (F.h1b === "not-no" && ["no", "citizen"].includes(j.h1b)) return false;
+  }
   if (F.status === "active" ? j.status === "hidden"
     : F.status === "todo" ? (APPLIED.has(j.status) || ["hidden", "declined"].includes(j.status))
     : F.status === "applied-any" ? !APPLIED.has(j.status)
@@ -263,7 +316,8 @@ const sorters = {
 function renderJobs() {
   const base = (skip) => JOBS.filter((j) => matches(j, skip));
   const forCat = base("cat"), forLevel = base("level"), forAge = base("age"), forSt = base("stype"), forFin = base("fin");
-  const [rtitle, rdesc] = REGION_INFO[F.region];
+  const [rtitle, rdesc] = F.region === "canada" && F.cat === "hr" ? HR_INFO : REGION_INFO[F.region];
+  $$(".us-only").forEach((el) => el.classList.toggle("hidden", F.region !== "us"));
   $("#region-head").innerHTML = F.topset ? topHead() : F.region === "us" ? "" : `<h2>${rtitle}</h2><p class="muted">${esc(rdesc)}</p>`;
   bindTopHead();
   if (F.region === "us" && !F.topset) $("#f-place").innerHTML = "";
@@ -271,14 +325,14 @@ function renderJobs() {
     const forPlace = base("place"), counts = {};
     forPlace.forEach((j) => placesOf(j).forEach((p) => (counts[p] = (counts[p] || 0) + 1)));
     const places = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 18).map(([p]) => [p, p]);
-    chips($("#f-place"), [["", F.topset ? "All top companies" : F.region === "india" ? "All cities" : "All countries"], ...places], "place",
+    chips($("#f-place"), [["", F.topset ? "All top companies" : F.region === "other" ? "All countries" : "All cities"], ...places], "place",
       (v) => (v ? counts[v] || 0 : forPlace.length));
   }
   $("#jobs thead th[data-sort=h1b]").classList.toggle("hidden", F.region !== "us");
   chips($("#f-fin"), [["", "All companies"], ["any", "Any finance firm"], ...FIN_SEGMENTS], "fin",
     (v) => (v === "" ? forFin.length : forFin.filter((j) => j.fin && (v === "any" || j.fin.segment === v)).length));
-  chips($("#f-stype"), STYPES, "stype", (v) => (v ? forSt.filter((j) => j.source_type === v).length : forSt.length));
-  chips($("#f-cat"), CATS, "cat", (v) => (v ? forCat.filter((j) => j.categories.split(",").includes(v)).length : forCat.length));
+  chips($("#f-stype"), STYPES.filter(([v]) => v !== "jobbank" || F.region === "canada"), "stype", (v) => (v ? forSt.filter((j) => j.source_type === v).length : forSt.length));
+  chips($("#f-cat"), F.region === "canada" ? CATS_CANADA : CATS, "cat", (v) => (v ? forCat.filter((j) => j.categories.split(",").includes(v)).length : forCat.length));
   chips($("#f-level"), LEVELS, "level", (v) => (v ? forLevel.filter((j) => j.level === v).length : forLevel.length));
   chips($("#f-age"), AGES, "age", (v) => (v ? forAge.filter((j) => ageOf(j) <= v * 3600).length : forAge.length));
 
@@ -325,11 +379,8 @@ function openStMenu(btn) {
 function closeStMenu() { $("#st-menu").classList.remove("show"); ST_TARGET = null; }
 async function setStatus(id, status) {
   const r = await api(`/api/jobs/${id}/status`, { method: "POST", body: { status } });
-  Object.assign(JOBS.find((j) => j.id === id) || {}, r);
-  if (status === "applied") {
-    const today = new Date(); today.setHours(0, 0, 0, 0);
-    toast(`Marked applied ✓  (${JOBS.filter((j) => j.applied_at && j.applied_at * 1000 >= today.getTime()).length} today)`);
-  } else if (status === "declined") toast("Declined ✗ (still listed in red; hide it with the stage menu)");
+  markLocal(id, r);
+  if (status === "applied") toast(`Marked applied ✓  (${appliedToday()} today)`); else if (status === "declined") toast("Declined ✗ (still listed in red; hide it with the stage menu)");
   else if (status === "waiting") toast("Saved as a checkpoint ⏸");
   renderJobs();
   renderUnis();
@@ -354,7 +405,7 @@ tbody.addEventListener("click", (e) => {
   const btn = e.target.closest("[data-act=st]");
   if (!btn) return;
   if (ST_HELD) { ST_HELD = false; return; }  // the long-press already opened the menu
-  const j = JOBS.find((x) => x.id === btn.closest("tr").dataset.id);
+  const j = (btn.closest("#uni-table") ? STORE.us || [] : JOBS).find((x) => x.id === btn.closest("tr").dataset.id);
   setStatus(j.id, stateOf(j) === "applied" ? "new" : "applied");
 });
 tbody.addEventListener("change", async (e) => {
@@ -363,12 +414,8 @@ tbody.addEventListener("change", async (e) => {
   const id = e.target.closest("tr").dataset.id;
   const status = act === "applied" ? (e.target.checked ? "applied" : "new") : e.target.value;
   const r = await api(`/api/jobs/${id}/status`, { method: "POST", body: { status } });
-  Object.assign(JOBS.find((j) => j.id === id), r);
-  if (act === "applied" && e.target.checked) {
-    const today = new Date(); today.setHours(0, 0, 0, 0);
-    const n = JOBS.filter((j) => j.applied_at && j.applied_at * 1000 >= today.getTime()).length;
-    toast(`Marked applied ✓  (${n} today)`);
-  }
+  markLocal(id, r);
+  if (act === "applied" && e.target.checked) toast(`Marked applied ✓  (${appliedToday()} today)`);
   renderJobs();
   renderUnis();
 });
@@ -540,12 +587,12 @@ async function loadAlerts() {
     <h4>What to get</h4>
     <div class="al-grid">
       <label class="check big"><input type="checkbox" data-k="enabled" ${chk("enabled")}> <b>Alerts on</b></label>
-      <label class="check"><input type="checkbox" data-k="new_jobs" ${chk("new_jobs")}> New roles at top companies (checked every ${ALERTS.fast_lane_minutes} min)</label>
-      <label class="check"><input type="checkbox" data-k="windows" ${chk("windows")}> Heads-up just before a company's usual posting time</label>
-      <label class="check"><input type="checkbox" data-k="digest" ${chk("digest")}> Morning summary at ${hours("digest_hour")}: new roles from the last 24 h + today's likely posting windows</label>
+      <label class="check"><input type="checkbox" data-k="new_jobs" ${chk("new_jobs")}> New roles at top companies posted in the last ${s.max_age_min || 15} min (checked every ${ALERTS.fast_lane_minutes} min)</label>
+      <label class="check"><input type="checkbox" data-k="windows" ${chk("windows")}> Heads-up 5 min before a company's usual posting time</label>
+      <label class="check"><input type="checkbox" data-k="digest" ${chk("digest")}> One-line morning summary at ${hours("digest_hour")}</label>
       <div><b>Only these roles:</b> ${box("levels", "early_career", "New grad / early career")} ${box("levels", "internship", "Internships")} ${box("levels", "experienced", "Experienced")}</div>
       <div><b>Sectors:</b> ${box("sectors", "swe", "Software")} ${box("sectors", "data", "Data / ML")} ${box("sectors", "finance", "Finance")}</div>
-      <div><b>Where:</b> ${box("regions", "us", "🇺🇸 US")} ${box("regions", "india", "🇮🇳 India")} ${box("regions", "other", "🌍 Other")}</div>
+      <div><b>Where:</b> ${box("regions", "us", "🇺🇸 US")} ${box("regions", "india", "🇮🇳 India")} ${box("regions", "canada", "🇨🇦 Canada")} ${box("regions", "other", "🌍 Other")}</div>
       <label class="check"><input type="checkbox" data-k="sponsor_only" ${chk("sponsor_only")}> Only employers with H‑1B history</label>
       <div><b>Quiet hours:</b> from ${hours("quiet_start")} to ${hours("quiet_end")}</div>
       <div><b>Tapping an alert opens:</b> <input id="al-url" value="${esc(s.portal_url)}" size="34"></div>
@@ -610,8 +657,9 @@ function uniMatch(j, skip) {
 }
 
 function renderUnis() {
-  if (!UNIS.length || !JOBS.length) return;
-  const forCards = JOBS.filter((j) => uniMatch(j, "uni"));
+  const ALL = STORE.us || [];
+  if (!UNIS.length || !ALL.length) return;
+  const forCards = ALL.filter((j) => uniMatch(j, "uni"));
   $("#uni-cards").innerHTML = UNIS.map((u) => {
     const mine = forCards.filter((j) => j.uni === u.short);
     const fresh = mine.filter((j) => ageOf(j) <= 86400).length;
@@ -625,7 +673,7 @@ function renderUnis() {
   $$("#uni-cards [data-stop]").forEach((a) => a.addEventListener("click", (e) => e.stopPropagation()));
   $$("#uni-cards .uni").forEach((c) => (c.onclick = () => { UF.uni = UF.uni === c.dataset.u ? "" : c.dataset.u; USHOWN = 200; renderUnis(); }));
 
-  const forType = JOBS.filter((j) => uniMatch(j, "type")), forAge = JOBS.filter((j) => uniMatch(j, "age"));
+  const forType = ALL.filter((j) => uniMatch(j, "type")), forAge = ALL.filter((j) => uniMatch(j, "age"));
   const uchips = (el, items, key, counter) => {
     el.innerHTML = items.map(([v, label]) => `<button class="chip ${String(UF[key]) === String(v) ? "on" : ""}" data-v="${v}">${esc(label)}<small>${counter(v)}</small></button>`).join("");
     $$("button", el).forEach((b) => (b.onclick = () => { UF[key] = b.dataset.v === "" ? "" : isNaN(b.dataset.v) ? b.dataset.v : Number(b.dataset.v); USHOWN = 200; renderUnis(); }));
@@ -633,7 +681,7 @@ function renderUnis() {
   uchips($("#u-type"), UTYPES, "type", (v) => (v ? forType.filter((j) => UTYPES.find((t) => t[0] === v)[2].test(j.title)).length : forType.length));
   uchips($("#u-age"), UAGES, "age", (v) => (v ? forAge.filter((j) => ageOf(j) <= v * 3600).length : forAge.length));
 
-  const rows = JOBS.filter((j) => uniMatch(j)).sort((a, b) => ageOf(a) - ageOf(b));
+  const rows = ALL.filter((j) => uniMatch(j)).sort((a, b) => ageOf(a) - ageOf(b));
   $("#uni-count").textContent = `${rows.length.toLocaleString()} jobs${UF.uni ? " at " + UF.uni : ""}`;
   $("#uni-table tbody").innerHTML = rows.slice(0, USHOWN).map((j) => {
     const types = UTYPES.slice(1).filter((t) => t[2].test(j.title)).map((t) => `<span class="tag">${esc(t[1])}</span>`).join("");
@@ -704,8 +752,8 @@ $("#src-add").onclick = async () => {
 // Hand-built charts (no library): one accent hue for magnitude, an ordinal blue ramp for the funnel,
 // thin marks with rounded data-ends, hover tooltips, and a table view under every chart.
 let AN = null, AN_RANGE = 30;
-const SECTOR = { swe: "Software Engineering", finance: "Finance & Banks", data: "Data Science & ML", other: "Other" };
-const REGION = { us: "🇺🇸 United States", india: "🇮🇳 India", other: "🌍 Other countries" };
+const SECTOR = { swe: "Software Engineering", finance: "Finance & Banks", data: "Data Science & ML", hr: "HR & People", other: "Other" };
+const REGION = { us: "🇺🇸 United States", india: "🇮🇳 India", canada: "🇨🇦 Canada", other: "🌍 Other countries" };
 const DAY = 86400;
 
 async function loadAnalytics() {
@@ -860,7 +908,7 @@ function renderAnalytics() {
   $$("#an .recent select").forEach((sel) => (sel.onchange = async () => {
     const id = sel.closest("tr").dataset.id;
     const r = await api(`/api/jobs/${id}/status`, { method: "POST", body: { status: sel.value } });
-    const j = JOBS.find((x) => x.id === id); if (j) Object.assign(j, r);
+    markLocal(id, r);
     toast(`Stage → ${sel.value}`);
     loadAnalytics();
   }));
@@ -957,15 +1005,78 @@ $("#q-pin").onclick = () => {
 $("#q-pin").classList.toggle("on", QPIN);
 showQbar(QPIN);
 
+// ------------------------------------------------------------------ users (admin) & your password
+const when = (ts) => (ts ? `${ageText(Date.now() / 1000 - ts)} ago` : "never");
+function genPassword() {
+  const words = "maple river cedar falcon harbor quartz meadow comet orchid summit lantern pepper canyon velvet aurora".split(" ");
+  const pick = () => words[crypto.getRandomValues(new Uint32Array(1))[0] % words.length];
+  return `${pick()}-${pick()}-${pick()}-${crypto.getRandomValues(new Uint32Array(1))[0] % 90 + 10}`;
+}
+function renderUsers(users) {
+  $("#users-body").innerHTML = users.map((u) => `<tr data-id="${u.id}" class="${u.active ? "" : "is-off"}">
+    <td><b>${esc(u.username)}</b></td><td>${u.role === "admin" ? "Admin (you)" : "User"}</td>
+    <td>${u.active ? '<span class="tag yes">Active</span>' : '<span class="tag no">Off</span>'}</td>
+    <td>${u.applied}</td><td>${when(u.last_login)}</td><td>${when(u.last_active)}</td>
+    <td class="acts">${u.role === "admin" ? "" : `<button data-u="reset">Reset password</button>
+      <button data-u="toggle">${u.active ? "Turn off" : "Turn on"}</button><button data-u="del" class="danger">Delete</button>`}</td></tr>`).join("");
+}
+async function loadUsers() {
+  try { renderUsers(await api("/api/users")); } catch (e) { toast(e.message); }
+}
+$("#nu-gen").onclick = () => { $("#nu-pass").value = genPassword(); };
+$("#user-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const username = $("#nu-name").value.trim(), password = $("#nu-pass").value;
+  try {
+    renderUsers(await api("/api/users", { method: "POST", body: { username, password } }));
+    $("#user-form").reset();
+    navigator.clipboard?.writeText(`jobs.sharmajai.com\nUsername: ${username}\nPassword: ${password}`).catch(() => {});
+    toast(`Account "${username}" created · sign-in details copied, send them privately`, 5000);
+  } catch (err) { toast(err.message, 4000); }
+});
+$("#users-body").addEventListener("click", async (e) => {
+  const b = e.target.closest("[data-u]");
+  if (!b) return;
+  const tr = b.closest("tr"), id = tr.dataset.id, name = tr.querySelector("b").textContent;
+  try {
+    if (b.dataset.u === "reset") {
+      const pw = prompt(`New password for ${name} (10+ characters):`, genPassword());
+      if (!pw) return;
+      renderUsers(await api(`/api/users/${id}`, { method: "POST", body: { password: pw } }));
+      navigator.clipboard?.writeText(pw).catch(() => {});
+      toast(`Password reset for ${name} (copied). They're signed out everywhere.`, 4000);
+    } else if (b.dataset.u === "toggle") {
+      const on = b.textContent === "Turn on";
+      renderUsers(await api(`/api/users/${id}`, { method: "POST", body: { active: on } }));
+      toast(on ? `${name} can sign in again` : `${name} is signed out and can't sign in`);
+    } else if (b.dataset.u === "del") {
+      if (!confirm(`Delete ${name}'s account and their applied / wait / decline marks? This can't be undone.`)) return;
+      renderUsers(await api(`/api/users/${id}`, { method: "DELETE" }));
+      toast(`Deleted ${name}`);
+    }
+  } catch (err) { toast(err.message, 4000); }
+});
+$("#pass-form").addEventListener("submit", async (e) => {
+  if (e.submitter && e.submitter.value === "cancel") return;
+  e.preventDefault();
+  try {
+    await api("/api/me/password", { method: "POST", body: { current: $("#pw-cur").value, new: $("#pw-new").value } });
+    $("#dlg-pass").close();
+    toast("Password changed ✓");
+  } catch (err) { $("#pw-msg").textContent = err.message; }
+});
+
 // ------------------------------------------------------------------ boot
 (async () => {
   await loadStatus();
+  const start = location.hash.slice(1);
+  if (start in REGION_TABS) Object.assign(F, { region: REGION_TABS[start], topset: start === "top", cat: start === "canhr" ? "hr" : "" });
   try { FIN_SEGMENTS = Object.entries((await api("/api/finance")).segments); } catch {}
   await loadPatterns();
-  loadApify();
+  if (isAdmin()) loadApify();
   loadJobs();
   loadUnis();
   pollRefresh();
   loadProfile();
-  if (location.hash) showTab(location.hash.slice(1));
+  if (start) showTab(start);
 })();

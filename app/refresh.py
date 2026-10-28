@@ -5,7 +5,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 from . import db, finance
 from .config import load_more_companies, load_sources, load_universities
-from .fetchers import apify, careers, github
+from .fetchers import apify, careers, github, jobbank
 
 
 def _employers() -> list[dict]:
@@ -55,6 +55,9 @@ def run(include_apify: bool = False, only: str | None = None, on_new=None) -> li
                                              firm_age, [r for r in regions if r in (e.get("regions") or regions)],
                                              tech_only=bool(e.get("tech_only"))))
                   for e in employers if only or _due(f"Company: {e['name']}", e.get("every_hours"))]
+    jb = cfg.get("jobbank") or {}
+    if jb.get("enabled", True) and (only or _due("Job Bank Canada", jb.get("every_hours", 2))):
+        tasks.append(("Job Bank Canada", lambda: jobbank.fetch(jb, firm_age)))
     ap = cfg.get("apify") or {}
     if include_apify and ap.get("enabled", True):
         def linkedin():
@@ -64,9 +67,8 @@ def run(include_apify: bool = False, only: str | None = None, on_new=None) -> li
                 from . import alerts
                 spent = apify.record_fetch(started, len(jobs))
                 u = apify.usage()
-                alerts.send("💸 LinkedIn fetch done",
-                            f"{len(jobs)} jobs · cost ${spent['cost']:.2f}\n${u['left']:.2f} of ${u['limit']:.0f} left this month "
-                            f"≈ {u['clicks_left']} more fetches (resets {u['resets']})", tags=["moneybag"])
+                alerts.send(f"LinkedIn: {len(jobs)} jobs · ${spent['cost']:.2f}",
+                            f"${u['left']:.2f} left ≈ {u['clicks_left']} fetches", tags=["moneybag"])
             except Exception:
                 pass
             return jobs

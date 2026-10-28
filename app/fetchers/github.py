@@ -102,9 +102,16 @@ def _text(cell: str) -> str:
     return re.sub(r"\s+", " ", html.unescape(cell)).strip()
 
 
+_IMAGE = re.compile(r"img\.shields\.io|imgur\.com|\.(png|svg|gif|jpe?g)(\?|$)", re.I)
+
+
 def _link(cell: str) -> str:
-    m = re.search(r'href="([^"]+)"', cell) or re.search(r"\]\((https?://[^)\s]+)\)", cell) or re.search(r"(https?://\S+)", cell)
-    return html.unescape(m.group(1)) if m else ""
+    """The cell's job link, skipping badge images ("[![Apply](badge.svg)](job-url)")."""
+    for rx in (r'href="([^"]+)"', r"\]\((https?://[^)\s]+)\)", r"(https?://[^\s)\]]+)"):
+        for url in re.findall(rx, cell):
+            if not _IMAGE.search(url):
+                return html.unescape(url)
+    return ""
 
 
 def parse_age(s: str, now: float | None = None) -> tuple[int | None, str]:

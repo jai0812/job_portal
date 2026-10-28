@@ -45,11 +45,14 @@
     <button data-tab="jobs" class="active">🇺🇸 Jobs</button>
     <button data-tab="top">⭐ Top companies</button>
     <button data-tab="india">🇮🇳 India</button>
+    <button data-tab="canada">🇨🇦 Canada</button>
+    <button data-tab="canhr">👥 Canada HR</button>
     <button data-tab="world">🌍 Other countries</button>
     <button data-tab="analytics">📊 Analytics</button>
     <button data-tab="unis">Universities</button>
-    <button data-tab="ask">Ask All LLMs</button>
-    <button data-tab="settings">Settings</button>
+    <button data-tab="ask" class="admin-only">Ask All LLMs</button>
+    <button data-tab="users" class="admin-only">👤 Users</button>
+    <button data-tab="settings" class="admin-only">Settings</button>
   </nav>
   <div id="llm-pills" class="pills"></div>
 </header>
@@ -60,9 +63,9 @@
   <div class="region-head" id="region-head"></div>
   <div class="toolbar">
     <input id="q" type="search" placeholder="Search company, role, location…">
-    <button id="btn-refresh" class="primary">Refresh now</button>
-    <button id="btn-apify">Fetch LinkedIn (Apify)</button>
-    <button id="btn-add-job">+ Add job</button>
+    <button id="btn-refresh" class="primary admin-only">Refresh now</button>
+    <button id="btn-apify" class="admin-only">Fetch LinkedIn (Apify)</button>
+    <button id="btn-add-job" class="admin-only">+ Add job</button>
     <a class="btn" href="https://jobright.ai/jobs" target="_blank" rel="noopener">Open JobRight ↗</a>
     <span id="refresh-state" class="muted"></span>
   </div>
@@ -75,7 +78,7 @@
     <div class="chips" id="f-fin"></div>
     <div class="chips" id="f-place"></div>
     <div class="row">
-      <label>H-1B
+      <label class="us-only">H-1B
         <select id="f-h1b">
           <option value="">Any</option>
           <option value="sponsor">Has sponsored H-1B (USCIS data or posting)</option>
@@ -83,7 +86,7 @@
           <option value="not-no">Hide "no sponsorship" / citizens only</option>
         </select>
       </label>
-      <label class="check"><input type="checkbox" id="f-cap"> Cap-exempt only</label>
+      <label class="check us-only"><input type="checkbox" id="f-cap"> Cap-exempt only</label>
       <label class="check"><input type="checkbox" id="f-top"> Top companies only</label>
       <label class="check" title="The posting asks for someone who can start right away"><input type="checkbox" id="f-imm"> ⚡ Immediate start</label>
       <label>Source <select id="f-source"><option value="">All</option></select></label>
@@ -173,6 +176,21 @@
 </section>
 
 <!-- ============================ SETTINGS ============================ -->
+<section id="tab-users" class="tab">
+  <h2>Users</h2>
+  <p class="muted">Only you can create accounts. Each person signs in with the username and password you give them,
+    sees the job tabs and their own Analytics, and marks applied / wait / decline for themselves. They can change
+    their password from the 🔑 button. Phone alerts, Settings, LinkedIn fetches and Ask All LLMs stay yours.</p>
+  <form id="user-form" class="user-form" autocomplete="off">
+    <input id="nu-name" placeholder="Username (e.g. priya)" required pattern="[A-Za-z0-9._-]{3,32}" autocapitalize="none" spellcheck="false">
+    <input id="nu-pass" placeholder="Starting password (10+ characters)" required minlength="10">
+    <button class="secondary" type="button" id="nu-gen" title="Make up a strong password">🎲 Generate</button>
+    <button class="primary">Create account</button>
+  </form>
+  <table class="users-table"><thead><tr><th>User</th><th>Role</th><th>Status</th><th>Applied</th><th>Last sign-in</th><th>Last activity</th><th></th></tr></thead>
+    <tbody id="users-body"></tbody></table>
+</section>
+
 <section id="tab-settings" class="tab">
   <div class="settings">
     <h3>AI models</h3>
@@ -213,6 +231,18 @@
   </div>
 </section>
 </main>
+
+<dialog id="dlg-pass">
+  <form method="dialog" id="pass-form">
+    <h3>Change your password</h3>
+    <label class="lbl" for="pw-cur">Current password</label>
+    <input id="pw-cur" type="password" autocomplete="current-password" required>
+    <label class="lbl" for="pw-new">New password (10+ characters)</label>
+    <input id="pw-new" type="password" autocomplete="new-password" required minlength="10">
+    <p id="pw-msg" class="flag" role="alert"></p>
+    <menu><button value="cancel" formnovalidate>Cancel</button><button value="ok" class="primary" id="pw-go">Change password</button></menu>
+  </form>
+</dialog>
 
 <dialog id="dlg-job">
   <form method="dialog" id="add-job-form">

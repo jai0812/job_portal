@@ -327,3 +327,22 @@ tr.is-declined td:not(.cb-col):not(.age) { text-decoration: line-through; text-d
 .apify-left.low { color: var(--bad); }
 
 .tag.imm { color: #b35c00; background: color-mix(in srgb, #f0a020 18%, transparent); font-weight: 600; }
+
+/* ---------- accounts */
+body:not(.is-admin) .admin-only { display: none !important; }
+.me { font-size: 13px; color: var(--muted, #8a8f98); margin: 0 4px; white-space: nowrap; }
+#chpass { padding: 4px 8px; }
+.user-form { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 16px; }
+.user-form input { flex: 1 1 220px; min-width: 0; }
+.users-table { width: 100%; border-collapse: collapse; }
+.users-table th, .users-table td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line, rgba(127,127,127,.2)); font-size: 14px; }
+.users-table .acts { white-space: nowrap; text-align: right; }
+.users-table .acts button { margin-left: 4px; }
+.users-table tr.is-off td { opacity: .55; }
+button.danger { color: #e5534b; }
+#dlg-pass form { display: flex; flex-direction: column; gap: 6px; min-width: min(360px, 80vw); }
+#dlg-pass menu { display: flex; justify-content: flex-end; gap: 8px; padding: 0; margin: 8px 0 0; }
+@media (max-width: 640px) {
+  .users-table th:nth-child(5), .users-table td:nth-child(5), .users-table th:nth-child(6), .users-table td:nth-child(6) { display: none; }
+  .users-table .acts { white-space: normal; }
+}

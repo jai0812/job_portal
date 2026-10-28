@@ -1,0 +1,68 @@
+# Canadian employers, read straight from their own career sites (same feed format as more_companies.yaml).
+# All collect Canada only. Big non-tech employers (banks, insurers, retail, energy…) use tech_only: they keep
+# software / data / IT roles, plus HR & recruiting roles (any employer's HR roles in Canada are always kept).
+# every_hours keeps the 30-minute refresh quick: these are re-checked every 2–3 hours.
+# Sources found 2026-10-28 by probing each company's careers page / job board. Cohere, Faire, Instacart, RBC, TD and BMO
+# are configured elsewhere (more_companies.yaml / finance_firms.yaml) and pick up their Canadian jobs there.
+
+companies:
+  # ---------------- Canadian tech (every role: small and mid-size companies, mostly tech anyway)
+  - {name: Wealthsimple, group: Canada tech, regions: [canada], every_hours: 2, feeds: [{type: ashby, board: wealthsimple}]}
+  - {name: 1Password, group: Canada tech, regions: [canada], every_hours: 2, feeds: [{type: ashby, board: 1password}]}
+  - {name: Lightspeed, group: Canada tech, regions: [canada], every_hours: 2, feeds: [{type: ashby, board: lightspeedhq}]}
+  - {name: Neo Financial, group: Canada tech, regions: [canada], every_hours: 2, feeds: [{type: ashby, board: neofinancial}]}
+  - {name: Jobber, group: Canada tech, regions: [canada], every_hours: 2, feeds: [{type: ashby, board: jobber}]}
+  - {name: Docebo, group: Canada tech, regions: [canada], every_hours: 2, feeds: [{type: ashby, board: docebo}]}
+  - {name: Benevity, group: Canada tech, regions: [canada], every_hours: 2, feeds: [{type: ashby, board: benevity}]}
+  - {name: Trulioo, group: Canada tech, regions: [canada], every_hours: 2, feeds: [{type: ashby, board: trulioo}]}
+  - {name: Float, group: Canada tech, regions: [canada], every_hours: 2, feeds: [{type: ashby, board: float}]}
+  - {name: Loopio, group: Canada tech, regions: [canada], every_hours: 2, feeds: [{type: ashby, board: loopio}]}
+  - {name: KOHO, group: Canada tech, regions: [canada], every_hours: 2, feeds: [{type: ashby, board: koho}]}
+  - {name: Hopper, group: Canada tech, regions: [canada], every_hours: 2, feeds: [{type: ashby, board: hopper}]}
+  - {name: Klue, group: Canada tech, regions: [canada], every_hours: 2, feeds: [{type: ashby, board: klue}]}
+  - {name: Clearco, group: Canada tech, regions: [canada], every_hours: 2, feeds: [{type: ashby, board: clearco}]}
+  - {name: Thinkific, group: Canada tech, regions: [canada], every_hours: 2, feeds: [{type: ashby, board: thinkific}]}
+  - {name: Visier, group: Canada tech, regions: [canada], every_hours: 2, feeds: [{type: ashby, board: visier}]}
+  - {name: Waabi, group: Canada tech, regions: [canada], every_hours: 2, feeds: [{type: lever, company: waabi}]}
+  - {name: PointClickCare, group: Canada tech, regions: [canada], every_hours: 2, feeds: [{type: lever, company: pointclickcare}]}
+  - {name: Wave, group: Canada tech, regions: [canada], every_hours: 2, feeds: [{type: lever, company: waveapps}]}
+  - {name: Wattpad, group: Canada tech, regions: [canada], every_hours: 2, feeds: [{type: lever, company: wattpad}]}
+  - {name: Plooto, group: Canada tech, regions: [canada], every_hours: 2, feeds: [{type: lever, company: plooto}]}
+  - {name: Deep Genomics, group: Canada tech, regions: [canada], every_hours: 2, feeds: [{type: lever, company: deepgenomics}]}
+  - {name: D2L, group: Canada tech, regions: [canada], every_hours: 2, feeds: [{type: greenhouse, board: d2l}]}
+  - {name: Geotab, group: Canada tech, regions: [canada], every_hours: 2, feeds: [{type: greenhouse, board: geotab}]}
+  - {name: Later, group: Canada tech, regions: [canada], every_hours: 2, feeds: [{type: greenhouse, board: later}]}
+  - {name: Mejuri, group: Canada tech, regions: [canada], every_hours: 2, feeds: [{type: greenhouse, board: mejuri}]}
+  - {name: Shakepay, group: Canada tech, regions: [canada], every_hours: 2, feeds: [{type: greenhouse, board: shakepay}]}
+  - {name: Ada, group: Canada tech, regions: [canada], every_hours: 2, feeds: [{type: greenhouse, board: ada18}]}
+  - {name: League, group: Canada tech, regions: [canada], every_hours: 2, feeds: [{type: greenhouse, board: leagueinc}]}
+  - {name: Tailscale, group: Canada tech, regions: [canada], every_hours: 2, feeds: [{type: greenhouse, board: tailscale}]}
+  - {name: Hootsuite, group: Canada tech, regions: [canada], every_hours: 2, feeds: [{type: smartrecruiters, company: hootsuite}]}
+  - {name: Ubisoft, group: Canada tech, regions: [canada], every_hours: 2, feeds: [{type: smartrecruiters, company: Ubisoft2}]}
+  - {name: BlackBerry, group: Canada tech, regions: [canada], every_hours: 2, feeds: [{type: workday, tenant: bb, wd: wd3, site: BlackBerry}]}
+  - {name: Arctic Wolf, group: Canada tech, regions: [canada], every_hours: 2, feeds: [{type: workday, tenant: arcticwolf, wd: wd1, site: External}]}
+  - {name: Ciena, group: Canada tech, regions: [canada], every_hours: 2, feeds: [{type: workday, tenant: ciena, wd: wd5, site: Careers}]}
+  - {name: Interac, group: Canada tech, regions: [canada], every_hours: 2, feeds: [{type: workday, tenant: interac, wd: wd3, site: Interac}]}
+  - {name: OpenText, group: Canada tech, regions: [canada], every_hours: 3, feeds: [{type: phenom, host: careers.opentext.com}]}
+
+  # ---------------- Canadian banks, insurers & investors (tech, data and HR roles)
+  - {name: CIBC, group: Canada banks & insurance, tech_only: true, regions: [canada], every_hours: 2, feeds: [{type: workday, tenant: cibc, wd: wd3, site: search}]}
+  - {name: Desjardins, group: Canada banks & insurance, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workday, tenant: desjardins, wd: wd10, site: Desjardins}]}
+  - {name: Manulife, group: Canada banks & insurance, tech_only: true, regions: [canada], every_hours: 2, feeds: [{type: workday, tenant: manulife, wd: wd3, site: MFCJH_Jobs}]}
+  - {name: Sun Life, group: Canada banks & insurance, tech_only: true, regions: [canada], every_hours: 2, feeds: [{type: workday, tenant: sunlife, wd: wd3, site: Experienced-Jobs}]}
+  - {name: Intact, group: Canada banks & insurance, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workday, tenant: intactfc, wd: wd3, site: intactfc}]}
+  - {name: Ontario Teachers' Pension Plan, group: Canada banks & insurance, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workday, tenant: otppb, wd: wd3, site: OntarioTeachers_Careers}]}
+
+  # ---------------- Big Canadian employers: retail, telecom, energy, aerospace, consulting (tech, data and HR roles)
+  - {name: Walmart Canada, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workday, tenant: walmart, wd: wd504, site: WalmartExternal, max: 1000}]}
+  - {name: Canadian Tire, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workday, tenant: canadiantirecorporation, wd: wd3, site: Enterprise_External_Careers_Site}]}
+  - {name: Aritzia, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workday, tenant: aritzia, wd: wd3, site: External}]}
+  - {name: Magna, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workday, tenant: magna, wd: wd3, site: Magna}]}
+  - {name: CAE, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workday, tenant: cae, wd: wd3, site: career}]}
+  - {name: TELUS Health, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workday, tenant: lifeworks, wd: wd3, site: External}]}
+  - {name: Bell, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: phenom, host: jobs.bell.ca, locale: ca/en}]}
+  - {name: Air Canada, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: phenom, host: careers.aircanada.com, locale: ca/en}]}
+  - {name: TC Energy, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workday, tenant: tcenergy, wd: wd3, site: CAREER_SITE_TC}]}
+  - {name: Enbridge, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workday, tenant: enbridge, wd: wd3, site: enbridge_careers}]}
+  - {name: Cenovus, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workday, tenant: cenovus, wd: wd3, site: careers}]}
+  - {name: University of British Columbia, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workday, tenant: ubc, wd: wd10, site: ubcstaffjobs}]}

@@ -74,8 +74,10 @@ This section is rewritten by the portal itself after every full refresh.
 | 🛂 **Real H‑1B data** | Each employer's actual approval count from the official USCIS H‑1B Employer Data Hub (FY2023). The posting's own words ("no sponsorship", "US citizens only") always win. |
 | 🏦 **Finance firm column** | 107 firms in 11 categories: broad banks, global banks, investment banking, asset managers, private markets, hedge funds, market makers, exchanges, payments, financial data, fintech. |
 | ⭐ **Top companies tab** | FAANG / MAANG, big tech, top AI labs and the biggest finance names, with each company's measured posting pattern ("Microsoft: 12–3 PM ET, Mon · Tue · Thu"). Their career sites are re-checked every 10 minutes. |
-| 📱 **Phone, Telegram & email alerts** | Free: through the ntfy app and/or your own Telegram bot. New matching roles at top companies within about 10 minutes, a heads-up just before a company's usual posting window, a ☀️ morning summary, and quiet hours at night. |
-| 🌍 **Three regions** | 🇺🇸 United States · 🇮🇳 India (by city) · 🌍 Other countries (by country). The country is worked out from each job's location. |
+| 📱 **Phone, Telegram & email alerts** | Free: through the ntfy app and/or your own Telegram bot. One short line per alert (*Snapchat 1m · Stripe 5m*, *Google · posting window in 5 min*), only for roles posted in the last 15 minutes, plus a one-line morning summary and quiet hours at night. Admin only. |
+| 🌍 **Four regions** | 🇺🇸 United States · 🇮🇳 India (by city) · 🇨🇦 Canada (by city) · 🌍 Other countries (by country). The country is worked out from each job's location ("Toronto, ON, CA" is Canada, "Ontario, CA" is California). |
+| 🇨🇦 **Canada & HR** | A Canada tab (software, data science, finance) and a 👥 **Canada HR** tab: HR, recruiting, talent acquisition, payroll and people-ops roles from Canadian banks, insurers, retailers, telecoms, tech companies and Job Bank. |
+| 👤 **Accounts** | The admin creates accounts for up to a handful of friends from the Users tab (nobody can sign up). Each person has their own applied / wait / decline marks, quick-copy bar and Analytics; alerts, settings and paid features stay with the admin. |
 | 🎓 **Universities** | Harvard, Stanford, Yale, UPenn, UChicago, CMU, Cornell and more: usually H‑1B cap-exempt employers. |
 | ✅ **Status on every job** | Click the box on the left to mark a job **applied** (green). Hold it (or right-click) for a menu: ✓ Applied · ⏸ Wait / checkpoint (amber) · ✗ Decline (red). Applied jobs move through *interviewing → offer / rejected*. |
 | 📊 **Analytics** | Applications per day, by sector, by finance category, pipeline funnel, country, level, top companies, how fast you apply after posting, weekday and source. |
@@ -83,7 +85,7 @@ This section is rewritten by the portal itself after every full refresh.
 | 🩺 **Self-healing** | The portal checks itself every 5 minutes and restarts cleanly if it loses access to its files; an optional watchdog brings it back automatically. |
 | 🤖 **Ask all LLMs** | One prompt to ChatGPT, Claude, Gemini and others, answers side by side. |
 | 📋 **Quick-copy bar** | Your LinkedIn, GitHub and saved answers one click away while filling in applications. |
-| 🔐 **Safe to put online** | Built-in sign-in: scrypt-hashed password, optional authenticator codes, lockout, expiring sessions, cross-site request blocking. |
+| 🔐 **Safe to put online** | Username + password sign-in: scrypt-hashed passwords, lockout per visitor and per account, expiring sessions that end when a password changes or an account is turned off, admin-only areas checked on the server, cross-site request blocking. |
 
 ## 🧭 How it works
 
@@ -125,6 +127,12 @@ Optional extras:
 
 ## 🆕 What's new
 
+**Late October 2026**
+- **👤 Accounts**: you're the admin; make accounts for friends from the new Users tab. Everyone gets the job tabs and their own Analytics; sign-in is a username and password (the authenticator code is gone).
+- **🇨🇦 Canada tab and 👥 Canada HR tab**: 55 Canadian employers' career sites (CIBC, RBC, TD, BMO, Manulife, Sun Life, Walmart Canada, Canadian Tire, Bell, Air Canada, Wealthsimple, Cohere, 1Password, Lightspeed…), the Canadian teams of big tech, 9 Canadian GitHub internship / new-grad lists, and Job Bank (jobbank.gc.ca).
+- **Quieter alerts**: one line each, only for jobs posted in the last 15 minutes. Sites that only say "posted today" count only when the 10-minute check sees a job that wasn't there 10 minutes earlier.
+- **Faster pages**: each country tab downloads only its own jobs.
+
 **October 2026**
 - **⭐ Top companies tab**: FAANG / MAANG, big tech, top AI labs and major finance firms in one view, with a card for each company showing **when it usually posts**. This is measured from the minute each company's own career site published its jobs over the last 60 days, e.g. *Microsoft 12–3 PM ET, Mon · Tue · Thu*.
 - **Fast lane**: 31 top companies' career sites and all GitHub lists are re-checked every 10 minutes; everything else every 30.
@@ -151,11 +159,12 @@ Add a GitHub job list from **Settings** in the app, or paste any repo URL into `
 
 ## 🔌 Where the jobs come from
 
-- **GitHub lists (22):** SimplifyJobs, SpeedyApply, JobRight, SWE Job Lists (H‑1B labelled), Zapply (new grad, data science, software, internships), ApplyGuy, Understudy, Northwestern Fintech quant internships and more.
+- **GitHub lists (31):** SimplifyJobs, SpeedyApply, JobRight, SWE Job Lists (H‑1B labelled), Zapply (new grad, data science, software, internships), ApplyGuy, Understudy, Northwestern Fintech quant internships and more.
 - **Finance firms' own sites:** JPMorgan, Bank of America, Citi, Morgan Stanley, BlackRock, Fidelity, Franklin Templeton, Blackstone, Jane Street, HRT, Optiver, Nasdaq, CME, Visa, Mastercard, Stripe and about 60 more.
 - **Tech companies' own sites:** Amazon, Microsoft, Netflix, NVIDIA, Salesforce, Adobe, Intel, Cisco, TikTok, LinkedIn, Airbnb, Databricks, Snowflake, DoorDash, Anthropic, OpenAI and about 90 more.
 - **Other H‑1B sponsors (tech roles only):** Nike, Disney, Verizon, T‑Mobile, Medtronic, Pfizer, Moderna and others.
 - **India:** Paytm, Meesho, CRED, Groww, Sarvam AI, InMobi and the India offices of the companies above.
+- **Canada:** CIBC, RBC, TD, BMO, Desjardins, Manulife, Sun Life, Intact, Walmart Canada, Canadian Tire, Aritzia, Magna, CAE, Bell, Air Canada, TC Energy, Enbridge, UBC, Wealthsimple, Cohere, 1Password, Lightspeed, Neo Financial, Jobber, Docebo, Geotab, D2L, Ubisoft and more; Canadian GitHub lists (negarprh, Frogg, Zapply Canada, csjobs.ca, hanzili…); and Job Bank's HR, recruiting, software and data searches.
 - **Universities:** Harvard, Stanford, Yale, UPenn, UChicago, CMU, Cornell, Northeastern, UW, UT Austin, Maryland, Rochester.
 
 Google, Meta, Apple and Uber don't allow their career sites to be read automatically; their roles arrive through the GitHub lists and an optional LinkedIn search.
