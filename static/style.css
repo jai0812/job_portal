@@ -269,12 +269,26 @@ table.recent td { vertical-align: middle; }
 @media (max-width: 760px) { .tiles { grid-template-columns: repeat(2, 1fr); } .an-grid { grid-template-columns: 1fr; } }
 
 /* login page */
-.login-body { min-height: 100vh; display: grid; place-items: center; padding: 16px; }
-.login-card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 28px; width: min(380px, 100%); display: grid; gap: 8px; }
-.login-card .brand { font-size: 20px; }
-.login-card input { padding: 9px 11px; }
-.login-card button { margin-top: 10px; padding: 9px; }
-.login-card p { margin: 0; min-height: 18px; }
+/* The animated pixel-art room fills the screen; the sign-in box floats on it, see-through. */
+.login-body { min-height: 100vh; min-height: 100dvh; margin: 0; padding: 16px; box-sizing: border-box; display: grid;
+  align-items: center; justify-items: end; background: #120c1c url("login-bg.gif") 32% center / cover no-repeat;
+  image-rendering: pixelated; }
+.login-card { width: min(320px, 100%); margin-right: 6vw; display: grid; gap: 8px; padding: 24px; border-radius: 14px;
+  background: rgba(18, 10, 30, .38); border: 1px solid rgba(255, 255, 255, .14);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); color: #f1eaff; image-rendering: auto; }
+.login-card .lbl { color: rgba(241, 234, 255, .85); }
+.login-card input { padding: 10px 12px; color: #fff; background: rgba(255, 255, 255, .08);
+  border: 1px solid rgba(255, 255, 255, .22); border-radius: 8px; }
+.login-card input:focus { outline: none; border-color: rgba(196, 160, 255, .8); background: rgba(255, 255, 255, .12); }
+.login-card button { margin-top: 10px; padding: 10px; border-radius: 8px; border: 0; color: #fff;
+  background: rgba(150, 100, 230, .75); }
+.login-card button:hover { background: rgba(165, 115, 245, .9); }
+.login-card p { margin: 0; min-height: 18px; color: #ffb4c4; }
+@media (max-width: 700px) {  /* phones: keep the knight and his laptop in view, sign-in box low on the screen */
+  .login-body { justify-items: center; align-items: end; padding-bottom: 3vh; background-position: 30% 40%; }
+  .login-card { margin-right: 0; padding: 16px 18px; gap: 6px; }
+  .login-card button { margin-top: 6px; }
+}
 #signout { font-size: 12px; padding: 3px 9px; }
 
 .brand { display: inline-flex; align-items: center; gap: 8px; }

@@ -60,7 +60,7 @@ if auth.enabled() and len(env("SESSION_SECRET")) < 32:
 def me(request: Request) -> dict:
     return request.state.user
 
-OPEN_PATHS = {"/login", "/login.html", "/login.js", "/style.css", "/logo-mark.svg", "/api/login", "/favicon.ico"}
+OPEN_PATHS = {"/login", "/login.html", "/login.js", "/style.css", "/logo-mark.svg", "/login-bg.gif", "/api/login", "/favicon.ico"}
 HEADERS = {
     "X-Content-Type-Options": "nosniff",
     "X-Frame-Options": "DENY",
@@ -112,6 +112,8 @@ async def guard(request: Request, call_next):
     else:  # local use on your own Mac, no password set: you're the admin
         request.state.user = db.admin_user()
         response = await call_next(request)
+    if path == "/login-bg.gif" and response.status_code == 200:  # 2.5 MB picture: download it once, not every visit
+        response.headers["Cache-Control"] = "public, max-age=604800"
     for k, v in HEADERS.items():
         response.headers.setdefault(k, v)
     if _is_https(request):
