@@ -270,16 +270,24 @@ table.recent td { vertical-align: middle; }
 
 /* login page */
 /* The animated pixel-art room fills the screen; a Spotlight-style field floats at the top, fully transparent. */
-.login-body { min-height: 100vh; min-height: 100dvh; margin: 0; padding: 0 16px; box-sizing: border-box;
+/* fixed to the window: the page never scrolls, the picture always fills it */
+.login-html { height: 100%; overflow: hidden; background: #120c1c; }  /* own background, so the body paints the picture itself */
+.login-body { position: fixed; inset: 0; margin: 0; padding: 0; overflow: hidden;
   background: #120c1c url("login-bg.gif?v=2") 32% center / cover no-repeat; image-rendering: pixelated; }
-.spot { width: min(640px, 100%); margin: 13vh auto 0; image-rendering: auto; }
+.spot { position: absolute; top: 40px; left: 50%; transform: translateX(-50%); width: min(652px, calc(100% - 32px));
+  margin: 0; image-rendering: auto; }
 .spot-row { display: flex; align-items: center; gap: 14px; }
 .spot-field { flex: 1; min-width: 0; height: 58px; display: flex; align-items: center; padding: 0 24px; border-radius: 999px;
-  background: transparent; border: 1.5px solid rgba(255, 255, 255, .78); box-shadow: 0 0 0 1px rgba(0, 0, 0, .25); }
-.spot-input { width: 100%; border: 0; outline: none; padding: 0; background: transparent; color: #fff; font-size: 22px;
-  caret-color: #fff; text-shadow: 0 1px 6px rgba(0, 0, 0, .6); }
-.spot-input::placeholder { color: rgba(255, 255, 255, .78); }
-.spot-input:-webkit-autofill { -webkit-text-fill-color: #fff; transition: background-color 9999s 0s; }  /* no yellow autofill box */
+  background: transparent; border: 1.5px solid rgba(255, 255, 255, .78); box-shadow: 0 0 0 1px rgba(0, 0, 0, .25);
+  transition: background .2s, border-color .2s; }
+.spot-field:focus-within { background: rgba(200, 172, 255, .16); border-color: rgba(222, 202, 255, .95); }  /* light purple while typing */
+.spot .spot-input, .spot .spot-input:focus { width: 100%; border: 0; outline: none; padding: 0; background: transparent;
+  color: #efe4ff; font-size: 22px; caret-color: #e2d0ff; text-shadow: 0 1px 6px rgba(0, 0, 0, .6); border-radius: 0; }
+.spot .spot-input::placeholder { color: rgba(239, 228, 255, .8); }
+/* Browsers paint saved-password fields dark: keep them see-through and light purple instead */
+.spot .spot-input:-webkit-autofill, .spot .spot-input:-webkit-autofill:hover, .spot .spot-input:-webkit-autofill:focus,
+.spot .spot-input:autofill { -webkit-text-fill-color: #efe4ff; -webkit-background-clip: text; background-clip: text;
+  transition: background-color 600000s 0s, color 600000s 0s; box-shadow: none; }
 .spot-go { flex: none; width: 58px; height: 58px; padding: 0; border-radius: 50%; display: grid; place-items: center;
   background: rgba(255, 255, 255, .12); border: 1.5px solid rgba(255, 255, 255, .78); color: rgba(255, 255, 255, .92);
   cursor: pointer; transition: background .15s, transform .15s; }
@@ -290,7 +298,7 @@ table.recent td { vertical-align: middle; }
 .shake { animation: spot-shake .35s; }
 @keyframes spot-shake { 20%, 60% { transform: translateX(-8px); } 40%, 80% { transform: translateX(8px); } }
 @media (max-width: 700px) {
-  .spot { margin-top: 9vh; }
+  .spot { top: 28px; }
   .spot-row { gap: 10px; }
   .spot-field { height: 50px; padding: 0 18px; }
   .spot-input { font-size: 18px; }
