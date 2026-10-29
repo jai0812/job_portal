@@ -1,4 +1,5 @@
 <!doctype html>
+<!-- Job Portal · built by JAI SHARMA -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -8,13 +9,21 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body class="login-body">
-<form id="login" class="login-card" autocomplete="on">
-  <label class="lbl" for="username">Username or email</label>
-  <input id="username" autocomplete="username" autocapitalize="none" spellcheck="false" required autofocus>
-  <label class="lbl" for="password">Password</label>
-  <input id="password" type="password" autocomplete="current-password" required>
-  <button class="primary" id="go">Sign in</button>
-  <p id="msg" class="flag" role="alert"></p>
+<!-- One Spotlight-style field: username first, then the same field asks for the password. -->
+<form id="login" class="spot" autocomplete="on" novalidate>
+  <div class="spot-row">
+    <div class="spot-field" id="spot-field">
+      <input id="username" name="username" class="spot-input" placeholder="Your username" aria-label="Username or email"
+             autocomplete="username" autocapitalize="none" spellcheck="false" autofocus>
+      <input id="password" name="password" class="spot-input" type="password" placeholder="Password" aria-label="Password"
+             autocomplete="current-password" hidden>
+    </div>
+    <button class="spot-go" id="go" aria-label="Continue">
+      <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+  <p id="msg" class="spot-msg" role="alert"></p>
 </form>
 <script src="login.js"></script>
 </body>

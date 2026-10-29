@@ -269,25 +269,32 @@ table.recent td { vertical-align: middle; }
 @media (max-width: 760px) { .tiles { grid-template-columns: repeat(2, 1fr); } .an-grid { grid-template-columns: 1fr; } }
 
 /* login page */
-/* The animated pixel-art room fills the screen; the sign-in box floats on it, see-through. */
-.login-body { min-height: 100vh; min-height: 100dvh; margin: 0; padding: 16px; box-sizing: border-box; display: grid;
-  align-items: center; justify-items: end; background: #120c1c url("login-bg.gif") 32% center / cover no-repeat;
-  image-rendering: pixelated; }
-.login-card { width: min(320px, 100%); margin-right: 6vw; display: grid; gap: 8px; padding: 24px; border-radius: 14px;
-  background: rgba(18, 10, 30, .38); border: 1px solid rgba(255, 255, 255, .14);
-  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); color: #f1eaff; image-rendering: auto; }
-.login-card .lbl { color: rgba(241, 234, 255, .85); }
-.login-card input { padding: 10px 12px; color: #fff; background: rgba(255, 255, 255, .08);
-  border: 1px solid rgba(255, 255, 255, .22); border-radius: 8px; }
-.login-card input:focus { outline: none; border-color: rgba(196, 160, 255, .8); background: rgba(255, 255, 255, .12); }
-.login-card button { margin-top: 10px; padding: 10px; border-radius: 8px; border: 0; color: #fff;
-  background: rgba(150, 100, 230, .75); }
-.login-card button:hover { background: rgba(165, 115, 245, .9); }
-.login-card p { margin: 0; min-height: 18px; color: #ffb4c4; }
-@media (max-width: 700px) {  /* phones: keep the knight and his laptop in view, sign-in box low on the screen */
-  .login-body { justify-items: center; align-items: end; padding-bottom: 3vh; background-position: 30% 40%; }
-  .login-card { margin-right: 0; padding: 16px 18px; gap: 6px; }
-  .login-card button { margin-top: 6px; }
+/* The animated pixel-art room fills the screen; a Spotlight-style field floats at the top, fully transparent. */
+.login-body { min-height: 100vh; min-height: 100dvh; margin: 0; padding: 0 16px; box-sizing: border-box;
+  background: #120c1c url("login-bg.gif?v=2") 32% center / cover no-repeat; image-rendering: pixelated; }
+.spot { width: min(640px, 100%); margin: 13vh auto 0; image-rendering: auto; }
+.spot-row { display: flex; align-items: center; gap: 14px; }
+.spot-field { flex: 1; min-width: 0; height: 58px; display: flex; align-items: center; padding: 0 24px; border-radius: 999px;
+  background: transparent; border: 1.5px solid rgba(255, 255, 255, .78); box-shadow: 0 0 0 1px rgba(0, 0, 0, .25); }
+.spot-input { width: 100%; border: 0; outline: none; padding: 0; background: transparent; color: #fff; font-size: 22px;
+  caret-color: #fff; text-shadow: 0 1px 6px rgba(0, 0, 0, .6); }
+.spot-input::placeholder { color: rgba(255, 255, 255, .78); }
+.spot-input:-webkit-autofill { -webkit-text-fill-color: #fff; transition: background-color 9999s 0s; }  /* no yellow autofill box */
+.spot-go { flex: none; width: 58px; height: 58px; padding: 0; border-radius: 50%; display: grid; place-items: center;
+  background: rgba(255, 255, 255, .12); border: 1.5px solid rgba(255, 255, 255, .78); color: rgba(255, 255, 255, .92);
+  cursor: pointer; transition: background .15s, transform .15s; }
+.spot-go:hover { background: rgba(255, 255, 255, .2); }
+.spot-go:active { transform: scale(.94); }
+.spot-go:disabled { opacity: .6; cursor: wait; }
+.spot-msg { min-height: 20px; margin: 10px 0 0 26px; color: #fff; font-size: 14px; text-shadow: 0 1px 6px rgba(0, 0, 0, .8); }
+.shake { animation: spot-shake .35s; }
+@keyframes spot-shake { 20%, 60% { transform: translateX(-8px); } 40%, 80% { transform: translateX(8px); } }
+@media (max-width: 700px) {
+  .spot { margin-top: 9vh; }
+  .spot-row { gap: 10px; }
+  .spot-field { height: 50px; padding: 0 18px; }
+  .spot-input { font-size: 18px; }
+  .spot-go { width: 50px; height: 50px; }
 }
 #signout { font-size: 12px; padding: 3px 9px; }
 
