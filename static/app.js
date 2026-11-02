@@ -110,12 +110,13 @@ const LEVEL_LABEL = { internship: "Intern", early_career: "Early career", experi
 const CAT_LABEL = { swe: "SWE", finance: "Finance", data: "DS/ML", it: "IT", hr: "HR", other: "Other" };
 
 // ---- Part-time / Contract tab (admin only): OPT counts any job of 20+ hours a week in your field of study.
-// A job is in when the career site or the posting says contract / part-time / temp (or gives the hours),
-// it isn't under 20 hours a week, and it's tech: software, data, or IT support / help desk.
+// A job is in when the career site or the posting says contract / part-time / temp, or gives 20-35 hours a week
+// ("40 hours" alone is just a full-time job); never under 20 hours; and it's tech: software, data, or IT support.
 const JT_LABEL = { contract: "Contract", part_time: "Part-time", temp: "Temp" };
-const optOk = (j) => (j.jt || j.hrs) && !(j.hrs && j.hrs < 20) && /\b(swe|data|it)\b/.test(j.categories);
+const partHours = (j) => j.hrs && j.hrs <= 35;
+const optOk = (j) => (j.jt || partHours(j)) && !(j.hrs && j.hrs < 20) && /\b(swe|data|it)\b/.test(j.categories);
 function jtTag(j) {
-  if (!j.jt && !j.hrs) return "";
+  if (!j.jt && !partHours(j)) return "";
   const bits = [JT_LABEL[j.jt] || "", j.hrs ? `${j.hrs} h/wk` : "", ...(j.pay || [])].filter(Boolean).join(" · ");
   return ` <span class="tag jt" title="From the career site / posting">${esc(bits)}</span>`;
 }
