@@ -264,11 +264,15 @@ def _do_refresh(include_apify: bool):
 
 def _auto_refresh_loop():
     while env("PORTAL_NO_REFRESH") != "1":
-        minutes = int(load_sources().get("auto_refresh_minutes") or 0)
-        newest = max((l["last_run"] or 0 for l in db.fetch_log()), default=0)
-        due = time.time() - newest >= minutes * 60 - 120  # skip when a refresh finished recently (e.g. after a restart)
-        if minutes > 0 and due and not _refresh["running"]:
-            _do_refresh(False)
+        minutes = 30
+        try:  # never let one bad refresh stop all future ones (a "database is locked" once did, for 4 days)
+            minutes = int(load_sources().get("auto_refresh_minutes") or 0)
+            newest = max((l["last_run"] or 0 for l in db.fetch_log()), default=0)
+            due = time.time() - newest >= minutes * 60 - 120  # skip when a refresh finished recently (e.g. after a restart)
+            if minutes > 0 and due and not _refresh["running"]:
+                _do_refresh(False)
+        except Exception as e:
+            print(f"auto refresh failed, will retry: {e}", flush=True)
         time.sleep(max(min(minutes, 10), 5) * 60)
 
 

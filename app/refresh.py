@@ -93,7 +93,10 @@ def _execute(tasks, on_new=None, log=True) -> list[dict]:
             return {"source": name, "count": len(jobs), "new": len(new), "error": ""}
         except Exception as e:  # one broken source shouldn't stop the others
             if log:
-                db.log_fetch(name, 0, str(e)[:300])
+                try:
+                    db.log_fetch(name, 0, str(e)[:300])
+                except Exception:
+                    pass
             return {"source": name, "count": 0, "new": 0, "error": str(e)[:300]}
 
     # GitHub lists are fast, so fetch them in parallel. Employer career sites (Workday especially) throttle

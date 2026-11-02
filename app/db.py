@@ -70,9 +70,15 @@ STATUSES = ("new", "saved", "waiting", "declined", "applied", "interviewing", "o
 APPLIED_STAGES = ("applied", "interviewing", "offer", "rejected")
 
 
+# SQLite allows one writer at a time. Many fetch threads write at once (full refresh, fast lane, people marking jobs),
+# so writes take turns on this lock instead of racing for SQLite's: on a slow server that race ended in
+# "database is locked". Reads don't need it (WAL lets them run alongside a write).
+WRITE_LOCK = threading.RLock()
+
+
 @contextmanager
 def conn():
-    c = sqlite3.connect(DB_PATH, timeout=30)  # refresh, fast lane and page loads overlap: wait instead of "database is locked"
+    c = sqlite3.connect(DB_PATH, timeout=60)  # refresh, fast lane and page loads overlap: wait instead of "database is locked"
     c.execute("PRAGMA journal_mode=WAL")
     c.row_factory = sqlite3.Row
     try:
@@ -140,13 +146,16 @@ def upsert_jobs(jobs: list[dict]) -> list[dict]:
         ",sources=CASE WHEN instr('|' || COALESCE(jobs.sources, '') || '|', '|' || excluded.source_name || '|') > 0"
         " THEN jobs.sources ELSE COALESCE(jobs.sources || '|', '') || excluded.source_name END")
     sql = f"INSERT INTO jobs ({','.join(cols)}) VALUES ({placeholders}) ON CONFLICT(id) DO UPDATE SET {updates}"
+    ids = list({j["id"] for j in jobs})
+    existing = set()
     with conn() as c:
-        ids = list({j["id"] for j in jobs})
-        existing = set()
         for i in range(0, len(ids), 500):
             chunk = ids[i:i + 500]
             existing |= {r[0] for r in c.execute(f"SELECT id FROM jobs WHERE id IN ({','.join('?' * len(chunk))})", chunk)}
-        c.executemany(sql, [[j["id"], now, j["source_name"]] + [j.get(f) for f in UPDATABLE] for j in jobs])
+    rows = [[j["id"], now, j["source_name"]] + [j.get(f) for f in UPDATABLE] for j in jobs]
+    for i in range(0, len(rows), 300):  # short write transactions, one at a time
+        with WRITE_LOCK, conn() as c:
+            c.executemany(sql, rows[i:i + 300])
     seen, new = set(), []
     for j in jobs:
         if j["id"] not in existing and j["id"] not in seen:
@@ -156,7 +165,7 @@ def upsert_jobs(jobs: list[dict]) -> list[dict]:
 
 
 def log_fetch(source: str, count: int, error: str = "") -> None:
-    with conn() as c:
+    with WRITE_LOCK, conn() as c:
         c.execute("INSERT OR REPLACE INTO fetch_log VALUES (?,?,?,?)", (source, int(time.time()), count, error))
 
 
@@ -213,7 +222,7 @@ def get_job(job_id: str) -> dict | None:
 def set_status(user_id: int, job_id: str, status: str, notes: str | None = None) -> dict | None:
     """Moving into any applied stage stamps applied_at once; moving back to new/saved clears it."""
     now = int(time.time())
-    with conn() as c:
+    with WRITE_LOCK, conn() as c:
         if not c.execute("SELECT 1 FROM jobs WHERE id=?", (job_id,)).fetchone():
             return None
         old = c.execute("SELECT notes, applied_at FROM marks WHERE user_id=? AND job_id=?", (user_id, job_id)).fetchone()
