@@ -83,7 +83,7 @@ This section is rewritten by the portal itself after every full refresh.
 | 📊 **Analytics** | Applications per day, by sector, by finance category, pipeline funnel, country, level, top companies, how fast you apply after posting, weekday and source. |
 | 💸 **LinkedIn budget guard** | LinkedIn jobs come through Apify, which is paid per job. The button shows money and clicks left this month, each fetch reports what it cost, and you're alerted at 50 / 80 / 95 % of the monthly allowance. |
 | 🩺 **Self-healing** | The portal checks itself every 5 minutes and restarts cleanly if it loses access to its files; an optional watchdog brings it back automatically. |
-| 🤖 **Ask all LLMs** | One prompt to ChatGPT, Claude, Gemini and others, answers side by side. |
+| 🤖 **Ask ChatGPT** | Prompt templates (cover letter, fit score…) sent to chatgpt.com on your own ChatGPT subscription — no API costs. |
 | 📋 **Quick-copy bar** | Your LinkedIn, GitHub and saved answers one click away while filling in applications. |
 | 🔐 **Safe to put online** | Username + password sign-in: scrypt-hashed passwords, lockout per visitor and per account, expiring sessions that end when a password changes or an account is turned off, admin-only areas checked on the server, cross-site request blocking. |
 

@@ -51,7 +51,7 @@
     <button data-tab="handshake" class="admin-only">🤝 Handshake</button>
     <button data-tab="analytics">📊 Analytics</button>
     <button data-tab="unis">Universities</button>
-    <button data-tab="ask" class="admin-only">Ask All LLMs</button>
+    <button data-tab="ask" class="admin-only">🤖 Ask ChatGPT</button>
     <button data-tab="users" class="admin-only">👤 Users</button>
     <button data-tab="settings" class="admin-only">Settings</button>
   </nav>
@@ -176,13 +176,13 @@
 <section id="tab-ask" class="tab">
   <div class="ask">
     <div class="templates" id="templates"></div>
-    <textarea id="ask-system" rows="2" placeholder="System prompt (optional)"></textarea>
-    <textarea id="ask-prompt" rows="7" placeholder="Ask ChatGPT, Claude and the others the same thing…"></textarea>
+    <textarea id="ask-prompt" rows="12" placeholder="Ask ChatGPT anything, or pick a template above and paste in the job description…"></textarea>
     <div class="row">
-      <div id="ask-providers" class="row"></div>
-      <button id="ask-go" class="primary">Ask all</button>
+      <button id="ask-go" class="primary">Ask ChatGPT ↗</button>
+      <button id="ask-copy">Copy prompt</button>
+      <span class="muted">Opens chatgpt.com in a new tab on your own ChatGPT Pro account — nothing extra to pay.
+        Long prompts are copied instead: press ⌘V there.</span>
     </div>
-    <div id="ask-out" class="grid"></div>
   </div>
 </section>
 
@@ -191,7 +191,7 @@
   <h2>Users</h2>
   <p class="muted">Only you can create accounts. Each person signs in with the username and password you give them,
     sees the job tabs and their own Analytics, and marks applied / wait / decline for themselves. They can change
-    their password from the 🔑 button. Phone alerts, Settings, LinkedIn fetches and Ask All LLMs stay yours.</p>
+    their password from the 🔑 button. Phone alerts, Settings, LinkedIn fetches and Ask ChatGPT stay yours.</p>
   <form id="user-form" class="user-form" autocomplete="off">
     <input id="nu-name" placeholder="Username (e.g. priya)" required pattern="[A-Za-z0-9._-]{3,32}" autocapitalize="none" spellcheck="false">
     <input id="nu-email" type="email" placeholder="Email (optional, can sign in with it)" autocapitalize="none" spellcheck="false">
@@ -205,10 +205,6 @@
 
 <section id="tab-settings" class="tab">
   <div class="settings">
-    <h3>AI models</h3>
-    <div id="set-llms"></div>
-    <p class="muted">Keys live in <code>.env</code> in the project folder (restart the portal after editing). ChatGPT Plus / Claude Pro don't include API access — without keys, use the copy &amp; paste mode.</p>
-
     <h3>GitHub job lists</h3>
     <ul id="set-sources" class="list"></ul>
     <div class="row">

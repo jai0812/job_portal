@@ -134,6 +134,77 @@ companies:
   - {name: Together AI, group: AI labs (H-1B not verified), regions: [us, canada], feeds: [{type: greenhouse, board: togetherai}]}
   - {name: Decagon, group: AI labs (H-1B not verified), regions: [us, canada], feeds: [{type: ashby, board: decagon}]}
 
+  # ---------------- Self-driving, robotics, space & AI chips (like Zoox / Waymo / Nuro). The giant defense & space
+  # employers post thousands of shop-floor roles, so only their tech roles are kept.
+  - {name: Motional, group: Self-driving & robotics, feeds: [{type: greenhouse, board: motional}]}
+  - {name: Kodiak Robotics, group: Self-driving & robotics, feeds: [{type: greenhouse, board: kodiak}]}
+  - {name: May Mobility, group: Self-driving & robotics, feeds: [{type: greenhouse, board: maymobility}]}
+  - {name: Applied Intuition, group: Self-driving & robotics, feeds: [{type: ashby, board: applied}]}
+  - {name: Wayve, group: Self-driving & robotics, regions: [us, canada, other], feeds: [{type: ashby, board: wayve}]}
+  - {name: Stack AV, group: Self-driving & robotics, feeds: [{type: greenhouse, board: stackav}]}
+  - {name: Avride, group: Self-driving & robotics, feeds: [{type: greenhouse, board: avride}]}
+  - {name: Woven by Toyota, group: Self-driving & robotics, feeds: [{type: lever, company: woven-by-toyota}]}
+  - {name: Pronto, group: Self-driving & robotics, feeds: [{type: greenhouse, board: pronto}]}
+  - {name: Outrider, group: Self-driving & robotics, feeds: [{type: greenhouse, board: outrider}]}
+  - {name: Aeva, group: Self-driving & robotics, feeds: [{type: lever, company: aeva}]}
+  - {name: Scout Motors, group: Self-driving & robotics, feeds: [{type: greenhouse, board: scoutmotors}]}
+  - {name: Boston Dynamics, group: Self-driving & robotics, feeds: [{type: workday, tenant: bostondynamics, wd: wd1, site: Boston_Dynamics}]}
+  - {name: Figure AI, group: Self-driving & robotics, feeds: [{type: greenhouse, board: figureai}]}
+  - {name: Agility Robotics, group: Self-driving & robotics, feeds: [{type: greenhouse, board: agilityrobotics}]}
+  - {name: 1X, group: Self-driving & robotics, feeds: [{type: ashby, board: 1x}]}
+  - {name: Apptronik, group: Self-driving & robotics, feeds: [{type: greenhouse, board: apptronik}]}
+  - {name: Physical Intelligence, group: Self-driving & robotics, feeds: [{type: ashby, board: physicalintelligence}]}
+  - {name: Dexterity, group: Self-driving & robotics, feeds: [{type: lever, company: dexterity}]}
+  - {name: Standard Bots, group: Self-driving & robotics, feeds: [{type: ashby, board: standardbots}]}
+  - {name: Formic, group: Self-driving & robotics, feeds: [{type: greenhouse, board: formic}]}
+  - {name: Serve Robotics, group: Self-driving & robotics, feeds: [{type: ashby, board: serverobotics}]}
+  - {name: Neuralink, group: Self-driving & robotics, feeds: [{type: greenhouse, board: neuralink}]}
+  - {name: Archer Aviation, group: Self-driving & robotics, feeds: [{type: greenhouse, board: archer56}]}
+  - {name: Hermeus, group: Self-driving & robotics, feeds: [{type: lever, company: hermeus}]}
+  - {name: Divergent, group: Self-driving & robotics, feeds: [{type: greenhouse, board: divergent}]}
+  - {name: Cerebras, group: Self-driving & robotics, feeds: [{type: ashby, board: cerebras}]}
+  - {name: Etched, group: Self-driving & robotics, feeds: [{type: ashby, board: etched}]}
+  - {name: Tenstorrent, group: Self-driving & robotics, feeds: [{type: greenhouse, board: tenstorrent}]}
+  - {name: Lightmatter, group: Self-driving & robotics, feeds: [{type: greenhouse, board: lightmatter}]}
+  - {name: d-Matrix, group: Self-driving & robotics, feeds: [{type: ashby, board: d-matrix}]}
+  - {name: Anduril, group: Self-driving & robotics, tech_only: true, feeds: [{type: greenhouse, board: andurilindustries}]}
+  - {name: Shield AI, group: Self-driving & robotics, tech_only: true, feeds: [{type: lever, company: shieldai}]}
+  - {name: Saronic, group: Self-driving & robotics, tech_only: true, feeds: [{type: ashby, board: saronic}]}
+  - {name: Zipline, group: Self-driving & robotics, tech_only: true, feeds: [{type: greenhouse, board: flyzipline}]}
+  - {name: SpaceX, group: Self-driving & robotics, tech_only: true, feeds: [{type: greenhouse, board: spacex}]}
+  - {name: Rocket Lab, group: Self-driving & robotics, tech_only: true, feeds: [{type: greenhouse, board: rocketlab}]}
+
+  # ---------------- Research hospitals, cancer centers, pharma & AI-biotech (like Dana-Farber): tech / data / computational
+  # roles only. The big Workday sites are slow to read, so they're re-checked every 2 hours instead of every refresh.
+  - {name: Dana-Farber Cancer Institute, group: Hospitals, research & pharma, tech_only: true, regions: [us], every_hours: 2, feeds: [{type: workday, tenant: danafarber, wd: wd5, site: dana-farber, max: 300}]}
+  - {name: Beth Israel Lahey Health, group: Hospitals, research & pharma, tech_only: true, regions: [us], every_hours: 2, feeds: [{type: workday, tenant: bilh, wd: wd1, site: External, max: 300}]}
+  - {name: Boston Medical Center, group: Hospitals, research & pharma, tech_only: true, regions: [us], every_hours: 2, feeds: [{type: workday, tenant: bmc, wd: wd1, site: bmc, max: 300}]}
+  - {name: St. Jude Children's Research Hospital, group: Hospitals, research & pharma, tech_only: true, regions: [us], every_hours: 2, feeds: [{type: workday, tenant: stjude, wd: wd1, site: stjude, max: 300}]}
+  - {name: Moffitt Cancer Center, group: Hospitals, research & pharma, tech_only: true, regions: [us], every_hours: 2, feeds: [{type: workday, tenant: moffitt, wd: wd108, site: moffitt, max: 300}]}
+  - {name: Children's Hospital of Philadelphia, group: Hospitals, research & pharma, tech_only: true, regions: [us], every_hours: 2, feeds: [{type: workday, tenant: chop, wd: wd108, site: CHOPExternalCareers, max: 300}]}
+  - {name: Mayo Clinic, group: Hospitals, research & pharma, tech_only: true, regions: [us], every_hours: 2, feeds: [{type: oracle, host: fa-euwp-saasfaprod1.fa.ocs.oraclecloud.com, site_number: Mayo-US, site: Mayo-US}]}
+  - {name: Mount Sinai Health System, group: Hospitals, research & pharma, tech_only: true, regions: [us], every_hours: 2, feeds: [{type: oracle, host: ejis.fa.us6.oraclecloud.com, site_number: CX, site: CX}]}
+  - {name: UCSF, group: Hospitals, research & pharma, tech_only: true, regions: [us], every_hours: 2, feeds: [{type: oracle, host: iazuqy.fa.ocs.oraclecloud.com, site_number: CX_1, site: CX_1}]}
+  - {name: Sanofi, group: Hospitals, research & pharma, tech_only: true, regions: [us, india, canada], every_hours: 2, feeds: [{type: workday, tenant: sanofi, wd: wd3, site: SanofiCareers, max: 300}]}
+  - {name: Novartis, group: Hospitals, research & pharma, tech_only: true, regions: [us, india, canada], every_hours: 2, feeds: [{type: workday, tenant: novartis, wd: wd3, site: novartis_careers, max: 300}]}
+  - {name: AstraZeneca, group: Hospitals, research & pharma, tech_only: true, regions: [us, india, canada], every_hours: 2, feeds: [{type: workday, tenant: astrazeneca, wd: wd3, site: Careers, max: 300}]}
+  - {name: GSK, group: Hospitals, research & pharma, tech_only: true, regions: [us, india, canada], every_hours: 2, feeds: [{type: workday, tenant: gsk, wd: wd5, site: gskcareers, max: 300}]}
+  - {name: Merck, group: Hospitals, research & pharma, tech_only: true, regions: [us, india, canada], every_hours: 2, feeds: [{type: workday, tenant: msd, wd: wd5, site: SearchJobs, max: 300}]}
+  - {name: Tempus AI, group: Hospitals, research & pharma, tech_only: true, feeds: [{type: workday, tenant: tempus, wd: wd5, site: tempus_careers}]}
+  - {name: Flatiron Health, group: Hospitals, research & pharma, tech_only: true, feeds: [{type: greenhouse, board: flatironhealth}]}
+  - {name: PathAI, group: Hospitals, research & pharma, tech_only: true, feeds: [{type: greenhouse, board: pathai}]}
+  - {name: Recursion, group: Hospitals, research & pharma, tech_only: true, feeds: [{type: greenhouse, board: recursionpharmaceuticals}]}
+  - {name: insitro, group: Hospitals, research & pharma, tech_only: true, feeds: [{type: ashby, board: insitro}]}
+  - {name: Generate Biomedicines, group: Hospitals, research & pharma, tech_only: true, feeds: [{type: greenhouse, board: generatebiomedicines}]}
+  - {name: Isomorphic Labs, group: Hospitals, research & pharma, tech_only: true, feeds: [{type: greenhouse, board: isomorphiclabs}]}
+  - {name: Xaira Therapeutics, group: Hospitals, research & pharma, tech_only: true, feeds: [{type: greenhouse, board: xairatherapeutics}]}
+  - {name: Chan Zuckerberg Initiative, group: Hospitals, research & pharma, tech_only: true, feeds: [{type: greenhouse, board: chanzuckerberginitiative}]}
+  - {name: Arc Institute, group: Hospitals, research & pharma, tech_only: true, feeds: [{type: greenhouse, board: arcinstitute}]}
+  - {name: Altos Labs, group: Hospitals, research & pharma, tech_only: true, feeds: [{type: greenhouse, board: altoslabs}]}
+  - {name: Ginkgo Bioworks, group: Hospitals, research & pharma, tech_only: true, feeds: [{type: greenhouse, board: ginkgobioworks}]}
+  - {name: Profluent, group: Hospitals, research & pharma, tech_only: true, feeds: [{type: greenhouse, board: profluent}]}
+  - {name: Inceptive, group: Hospitals, research & pharma, tech_only: true, feeds: [{type: greenhouse, board: inceptive}]}
+
   # ---------------- Big employers outside tech that sponsor H-1Bs: only their IT / software / data / ML roles are kept (tech_only)
   - {name: Nike, group: Other H-1B sponsors (tech roles only), tech_only: true, regions: [us, india, canada], feeds: [{type: workday, tenant: nike, wd: wd1, site: nke}]}
   - {name: Disney, group: Other H-1B sponsors (tech roles only), tech_only: true, regions: [us, india, canada], uscis: [DISNEY, WALT DISNEY], feeds: [{type: workday, tenant: disney, wd: wd5, site: disneycareer}]}

@@ -30,7 +30,7 @@
 #
 #               ~ built by JAI SHARMA ~
 # ==============================
-"""Job Portal: jobs dashboard, analytics and multi-LLM chat. Run with ./run.sh"""
+"""Job Portal: jobs dashboard and analytics. Run with ./run.sh"""
 import gzip
 import json
 import re
@@ -41,7 +41,7 @@ from fastapi import Body, FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse, RedirectResponse, Response
 from fastapi.staticfiles import StaticFiles
 
-from . import alerts, auth, classify, db, finance, geo, h1b, llm, patterns, readme, refresh
+from . import alerts, auth, classify, db, finance, geo, h1b, patterns, readme, refresh
 from .config import DATA_DIR, ROOT, env, load_more_companies, load_sources, load_universities, save_sources
 
 app = FastAPI(title="Job Portal", docs_url=None, redoc_url=None, openapi_url=None)
@@ -86,7 +86,7 @@ def _is_https(request: Request) -> bool:
 
 # Only the admin may use these (everyone else gets the job tabs and their own Analytics). Checked on the server,
 # not just hidden in the page.
-ADMIN_PATHS = ("/api/alerts", "/api/sources", "/api/ask", "/api/apify", "/api/users", "/api/handshake")
+ADMIN_PATHS = ("/api/alerts", "/api/sources", "/api/apify", "/api/users", "/api/handshake")
 ADMIN_WRITES = {"/api/refresh", "/api/jobs"}
 
 
@@ -415,7 +415,6 @@ def status(request: Request):
     return {
         "auth": auth.enabled(),
         "me": {"username": user["username"], "role": user["role"]},
-        "llms": llm.status(),
         "apify": bool(env("APIFY_TOKEN")),
         "sources": cfg.get("github") or [],
         "apify_searches": (cfg.get("apify") or {}).get("searches") or [],
@@ -676,14 +675,6 @@ def save_profile(request: Request, body: dict = Body(...)):
     profile = {k: body.get(k, DEFAULT_PROFILE[k]) for k in DEFAULT_PROFILE}
     db.update_user(me(request)["id"], profile=json.dumps(profile))
     return profile
-
-
-# ---------------------------------------------------------------- ask all LLMs
-
-@app.post("/api/ask")
-def ask(body: dict = Body(...)):
-    providers = [p for p in body.get("providers") or [] if p in llm.PROVIDERS]
-    return llm.ask_all(providers, body.get("system") or "You are a helpful career assistant.", body.get("prompt", ""))
 
 
 app.mount("/", StaticFiles(directory=ROOT / "static", html=True), name="static")

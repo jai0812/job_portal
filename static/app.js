@@ -91,16 +91,13 @@ window.addEventListener("hashchange", () => { const t = location.hash.slice(1); 
 async function loadStatus() {
   STATUS = await api("/api/status");
   document.body.classList.toggle("is-admin", isAdmin());
-  $("#llm-pills").innerHTML = (isAdmin() ? STATUS.llms
-    .filter((l) => l.configured || ["chatgpt", "claude"].includes(l.id))
-    .map((l) => `<span class="pill ${l.configured ? "on" : ""}" title="${esc(l.model)}">${l.configured ? "●" : "○"} ${esc(l.label)}</span>`)
-    .join("") : "") + (STATUS.auth ? `<span class="me" title="Signed in">👤 ${esc(STATUS.me.username)}</span>
+  $("#llm-pills").innerHTML = (STATUS.auth ? `<span class="me" title="Signed in">👤 ${esc(STATUS.me.username)}</span>
       <button id="chpass" title="Change your password">🔑</button><button id="signout" title="Sign out of the portal">Sign out</button>` : "");
   if (STATUS.auth) {
     $("#signout").onclick = async () => { await api("/api/logout", { method: "POST" }); location.href = "/login"; };
     $("#chpass").onclick = () => { $("#pass-form").reset(); $("#pw-msg").textContent = ""; $("#dlg-pass").showModal(); };
   }
-  if (isAdmin()) { renderSettings(); renderAskProviders(); }
+  if (isAdmin()) renderSettings();
 }
 
 // ------------------------------------------------------------------ JOBS
@@ -497,7 +494,7 @@ $("#dlg-job").addEventListener("close", async () => {
   loadJobs();
 });
 
-// ------------------------------------------------------------------ ASK ALL
+// ------------------------------------------------------------------ ASK CHATGPT
 const TEMPLATES = {
   "Cover letter": "Write a concise, specific cover letter (under 250 words) for this job using my resume. No clichés.\n\nJOB DESCRIPTION:\n\n\nMY RESUME:\n",
   "Recruiter message": "Write a 3-sentence LinkedIn connection note to a recruiter at this company about this role, mentioning one specific fit point.\n\nROLE / JD:\n",
@@ -508,27 +505,18 @@ const TEMPLATES = {
 $("#templates").innerHTML = Object.keys(TEMPLATES).map((k) => `<button class="chip" data-t="${esc(k)}">${esc(k)}</button>`).join("");
 $$("#templates .chip").forEach((b) => (b.onclick = () => { $("#ask-prompt").value = TEMPLATES[b.dataset.t]; $("#ask-prompt").focus(); }));
 
-function renderAskProviders() {
-  $("#ask-providers").innerHTML = STATUS.llms.map((l) => `<label class="check"><input type="checkbox" value="${l.id}" ${["chatgpt", "claude"].includes(l.id) || l.configured ? "checked" : ""}> ${esc(l.label)} <span class="muted">${l.configured ? esc(l.model) : "(no key)"}</span></label>`).join("");
-}
+// ChatGPT subscriptions (Plus / Pro) don't include API access, so instead of paying per message through the API
+// this opens chatgpt.com with the prompt filled in (?q=), running on Jai's own signed-in ChatGPT account.
+// Very long prompts (a whole JD + resume) don't fit in a link, so those are copied for a ⌘V paste instead.
+const CHATGPT = "https://chatgpt.com/";
+$("#ask-copy").onclick = () => { navigator.clipboard.writeText($("#ask-prompt").value.trim()); toast("Copied"); };
 $("#ask-go").onclick = async () => {
   const prompt = $("#ask-prompt").value.trim();
   if (!prompt) return;
-  const chosen = $$("#ask-providers input:checked").map((i) => i.value);
-  const withKey = chosen.filter((p) => STATUS.llms.find((l) => l.id === p).configured);
-  const noKey = chosen.filter((p) => !withKey.includes(p));
-  const full = ($("#ask-system").value.trim() ? $("#ask-system").value.trim() + "\n\n" : "") + prompt;
-  $("#ask-out").innerHTML = withKey.map((p) => `<div class="card" id="ans-${p}"><h3>${esc(STATUS.llms.find((l) => l.id === p).label)}</h3><span class="spinner"></span>Thinking…</div>`).join("")
-    + noKey.map((p) => { const l = STATUS.llms.find((x) => x.id === p); return `<div class="card"><h3>${esc(l.label)}</h3><p class="muted">No API key — use your subscription:</p><div class="row"><button data-copy>Copy prompt</button><a class="btn" href="${esc(l.chat_url)}" target="_blank" rel="noopener">Open ${esc(l.label)} ↗</a></div></div>`; }).join("");
-  $$("#ask-out [data-copy]").forEach((b) => (b.onclick = () => { navigator.clipboard.writeText(full); toast("Copied"); }));
-  if (!withKey.length) return;
-  const res = await api("/api/ask", { method: "POST", body: { prompt, system: $("#ask-system").value, providers: withKey } });
-  res.forEach((r) => {
-    $(`#ans-${r.provider}`).innerHTML = `<h3>${esc(r.label)} <span class="muted">${esc(r.model || "")}</span></h3>` +
-      (r.error ? `<p class="flag">${esc(r.error)}</p>` : `<div class="answer">${esc(r.text)}</div><button data-c>Copy</button>`);
-    const c = $(`#ans-${r.provider} [data-c]`);
-    if (c) c.onclick = () => { navigator.clipboard.writeText(r.text); toast("Copied"); };
-  });
+  try { await navigator.clipboard.writeText(prompt); } catch { /* the link below still carries short prompts */ }
+  const fits = encodeURIComponent(prompt).length <= 6000;
+  window.open(fits ? `${CHATGPT}?q=${encodeURIComponent(prompt)}` : CHATGPT, "_blank", "noopener");
+  if (!fits) toast("Prompt copied — press ⌘V in ChatGPT");
 };
 
 // ------------------------------------------------------------------ TOP COMPANIES: posting patterns
@@ -708,7 +696,6 @@ $("#u-more").onclick = () => { USHOWN += 300; renderUnis(); };
 
 // ------------------------------------------------------------------ SETTINGS
 function renderSettings() {
-  $("#set-llms").innerHTML = `<ul class="list">${STATUS.llms.map((l) => `<li><span><b>${esc(l.label)}</b> <span class="muted">${esc(l.model)}</span></span><span class="tag ${l.configured ? "yes" : "no"}">${l.configured ? "API key set" : "no key → copy & paste mode"}</span></li>`).join("")}</ul>`;
   $("#set-sources").innerHTML = STATUS.sources.map((s) => `<li><span><b>${esc(s.name)}</b> <span class="tag">${esc(LEVEL_LABEL[s.level] || s.level || "")}</span><br><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.url)}</a></span><button data-del="${esc(s.url)}">Remove</button></li>`).join("");
   $$("#set-sources [data-del]").forEach((b) => (b.onclick = async () => { if (!confirm("Remove this source?")) return; await api(`/api/sources/github?url=${encodeURIComponent(b.dataset.del)}`, { method: "DELETE" }); loadStatus(); }));
   $("#set-apify").innerHTML = `<p><span class="tag ${STATUS.apify ? "yes" : "no"}">${STATUS.apify ? "APIFY_TOKEN set" : "APIFY_TOKEN missing"}</span> Searches (edit in <code>config/sources.yaml</code>):</p><ul>${STATUS.apify_searches.map((s) => `<li>${esc(s.keywords)} · ${esc(s.location || "")} · ${esc(s.datePosted || "")}</li>`).join("")}</ul>`;

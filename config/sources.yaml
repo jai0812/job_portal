@@ -180,5 +180,5 @@ readme_push_hours: 6
 fast_lane_minutes: 10
 fast_lane_github: true
 fast_lane: [Microsoft, Amazon, NVIDIA, Netflix, Salesforce, Adobe, LinkedIn, Airbnb, Databricks, Snowflake, Stripe, DoorDash,
-            Pinterest, Roblox, Waymo, Datadog, Cloudflare, Anthropic, OpenAI, Coinbase, Robinhood, Palantir, Jane Street,
+            Pinterest, Roblox, Waymo, Zoox, Datadog, Cloudflare, Anthropic, OpenAI, Coinbase, Robinhood, Palantir, Jane Street,
             Hudson River Trading, JPMorgan Chase, Capital One, Visa, Mastercard, Morgan Stanley, Citi, BlackRock]

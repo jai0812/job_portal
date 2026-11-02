@@ -24,7 +24,8 @@ TECH_ROLES = re.compile(
     r"|\bit\b|information technology|information systems|database|\bdba\b|network (engineer|architect|admin)"
     r"|technical program|technical product|product manager.*(data|ai|ml|platform|tech)|\bqa\b|test automation|\bsdet\b"
     r"|salesforce|\bsap\b|\berp\b|workday (analyst|developer)|servicenow|automation engineer|firmware|embedded"
-    r"|mobile (engineer|developer)|\bios\b|android|web (engineer|developer)|\bapi\b|engineering manager|\bux\b", re.I)
+    r"|mobile (engineer|developer)|\bios\b|android|web (engineer|developer)|\bapi\b|engineering manager|\bux\b"
+    r"|robotic|autonomy|perception|motion planning|simulation engineer|\bgnc\b|guidance, navigation", re.I)
 # Most jobs to keep per employer and region, so huge global banks don't drown everything else.
 REGION_CAPS = {"us": 1000, "india": 600, "canada": 600, "other": 400}
 HEADERS = {"User-Agent": "Mozilla/5.0 (job-portal)"}
