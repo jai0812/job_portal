@@ -33,7 +33,7 @@ CATEGORY_PATTERNS = {
     "finance": r"\bquant|\btrad(er|ing)\b|investment|banking|financ|risk analy|actuar|portfolio|credit|wealth|asset management"
                r"|treasury|\baudit|accounting|fixed income|equity research|capital markets|underwrit",
     "swe": r"software|developer|\bsde\b|\bswe\b|back.?end|front.?end|full.?stack|devops|\bsre\b|site reliability|platform eng"
-           r"|mobile|\bios\b|android|\bweb\b|cloud|infrastructure|systems eng|security eng|programmer|application eng"
+           r"|mobile(?!,)|\bios\b|android|\bweb\b|cloud|infrastructure|systems eng|security eng|programmer|application eng"
            r"|forward deployed|solutions eng|\bqa\b|test automation|embedded software",
 }
 # Category names used by SimplifyJobs / similar lists.
@@ -82,11 +82,12 @@ _TYPE_TITLE = [("part_time", r"\bpart[- ]?time\b|\bpt\b"), ("temp", r"\btemporar
                ("contract", r"\bcontract(or)?\b|\bc2h\b|\bw2\b|\b\d{1,2}\+? ?(months?|mos?)\b")]
 _TYPE_DESC = [("part_time", r"\bpart[- ]time (position|role|job|opportunity|schedule|employee)|this is a part[- ]time"),
               ("contract", r"contract[- ]to[- ](hire|perm|permanent|regular)|\b(this is|is) an? (\d+[- ]months? )?contract"
-                           r"|contract (position|role|assignment|opportunity|length|duration|term)|(\d+|six|three|twelve)[- ]months? contract"
+                           r"|contract (position|role|assignment|opportunity|length|duration)\b|(\d+|six|three|twelve)[- ]months? contract"
                            r"|\bw-?2 (contract|only|position)|\bon (a )?w-?2\b|\bcorp[- ]to[- ]corp\b|\bc2c\b|\b1099\b"),
               ("temp", r"temporary (position|role|assignment|employee)|\btemp[- ]to[- ]hire\b")]
 _ATS_TYPE = [("part_time", "part"), ("temp", "temp"), ("temp", "seasonal"), ("contract", "contract"), ("contract", "consult")]
 HOURS = re.compile(r"\b(\d{1,2})(?:\s*(?:-|–|to)\s*(\d{1,2}))?\+?\s*(?:hours|hrs|hr)\.?\s*(?:/|per|a|each|every)\s*(?:week|wk)", re.I)
+TITLE_HOURS = re.compile(r"\b(\d{1,2})()\s*(?:hours|hrs)\b", re.I)  # "Part Time (30 Hours)" in a title
 PAY_TERMS = [("W2", re.compile(r"\bw-?2\b", re.I)), ("C2C", re.compile(r"\bc2c\b|corp[- ]to[- ]corp", re.I)),
              ("1099", re.compile(r"\b1099\b"))]
 EMAIL = re.compile(r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b")
@@ -113,7 +114,7 @@ def job_type(title: str, description: str = "") -> str:
 
 def hours(title: str, description: str = "") -> int | None:
     """Hours a week when the posting says ("20-30 hours per week" → 30), else None."""
-    m = HOURS.search(title or "") or HOURS.search(description or "")
+    m = HOURS.search(title or "") or TITLE_HOURS.search(title or "") or HOURS.search(description or "")
     if not m:
         return None
     h = max(int(x) for x in m.groups() if x)
