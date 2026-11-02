@@ -459,9 +459,25 @@ def _uscis_counts() -> dict[str, int]:
     return {c["name"].lower(): h1b.approvals_for_names(c["uscis"]) for c in load_more_companies() if c.get("uscis")}
 
 
+# Company tiers for the Part-time / Contract tab: 1 = top tech, big banks, trading firms; 2 = the other employers the
+# portal follows (or a solid H-1B record); 3 = everyone else (startups from the GitHub lists, staffing agencies).
+TIER1_GROUPS = {"FAANG / MAANG", "Big tech", "Top tech", "AI labs (H-1B not verified)"}
+TIER1_SEGMENTS = {"broad_banks", "global_banks", "ib_markets", "hedge_quant", "market_makers"}
+
+
 def _enrich(rows: list[dict]) -> list[dict]:
     unis = _university_matchers()
     legal = _uscis_counts()
+    groups = {c["name"].lower(): c.get("group", "") for c in load_more_companies()}
+    tiers = {}
+
+    def tier(company: str, firm, approvals) -> int:
+        if company not in tiers:
+            group = groups.get(company.lower(), "")
+            tiers[company] = (1 if classify.top_company(company) or group in TIER1_GROUPS
+                              or (firm and firm["segment"] in TIER1_SEGMENTS)
+                              else 3 if group.startswith("IT staffing") else 2 if firm or group or (approvals or 0) >= 25 else 3)
+        return tiers[company]
     by_company, by_location = {}, {}  # ~130k jobs but only a few thousand companies and places: work each out once
 
     def company_info(company: str):
@@ -485,6 +501,11 @@ def _enrich(rows: list[dict]) -> list[dict]:
         r["has_description"] = bool(desc)
         r["immediate"] = classify.immediate(r.get("title", ""), desc)
         uni, r["fin"], r["h1b_fy23"] = company_info(r["company"] or "")
+        # contract / part-time / temp, hours a week, W2 or C2C, and any recruiter contact written in the posting
+        jt, hrs = r.pop("job_type", "") or classify.job_type(r["title"], desc), classify.hours(r["title"], desc)
+        if jt or hrs:
+            r.update(jt=jt, hrs=hrs, pay=classify.pay_terms(desc), contacts=classify.contacts(desc),
+                     tier=tier(r["company"] or "", r["fin"], r["h1b_fy23"]))
         r["uni"] = r["source_name"] if r["source_type"] == "university" else uni
         if r["source_type"] == "university":
             r["regions"], r["countries"] = ["us"], [geo.US]

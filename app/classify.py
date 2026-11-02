@@ -18,8 +18,16 @@ HR_TITLE = re.compile(
     r"|employee (relations|experience|engagement)|labou?r relations|workforce (planning|analyst)|organi[sz]ational development"
     r"|learning (and|&) development|\bl&d\b|onboarding (specialist|coordinator)|diversity|\bdei\b|\bedi\b", re.I)
 
+# IT support / help desk / technician roles: entry-level tech jobs, often contract or part-time.
+IT_SUPPORT = re.compile(
+    r"help ?desk|service desk|desktop support|deskside|end[- ]user (support|computing|services)|tech(nical)? support"
+    r"|\bit (support|technician|tech|specialist|analyst|associate|administrator|coordinator|operations|service|asset)"
+    r"|support (technician|specialist|analyst|engineer)|computer technician|(network|field service|imaging|a/?v) technician"
+    r"|\bnoc\b|systems? administrator|sysadmin|it field", re.I)
+
 CATEGORY_PATTERNS = {
     "hr": HR_TITLE.pattern,
+    "it": IT_SUPPORT.pattern,
     "data": r"data scien|machine learning|\bml\b|\bai\b|artificial intelligence|deep learning|\bnlp\b|computer vision"
             r"|data analy|data engineer|analytics|research scientist|\bllm|applied scientist|statistic|business intelligence",
     "finance": r"\bquant|\btrad(er|ing)\b|investment|banking|financ|risk analy|actuar|portfolio|credit|wealth|asset management"
@@ -65,6 +73,67 @@ IMMEDIATE = re.compile(
 
 def immediate(title: str, description: str = "") -> bool:
     return bool(IMMEDIATE.search(title or "") or IMMEDIATE.search(description or ""))
+
+
+# Contract, part-time and temporary roles. F-1 OPT counts any job of 20+ hours a week in your field of study, so the
+# portal tags these and reads the hours when the posting gives them. Titles are trusted; descriptions only for phrases
+# that clearly describe the job itself (plain "contract" appears in plenty of full-time postings: "contract management").
+_TYPE_TITLE = [("part_time", r"\bpart[- ]?time\b|\bpt\b"), ("temp", r"\btemporary\b|\btemp\b(?![- ]?to)|\bseasonal\b"),
+               ("contract", r"\bcontract(or)?\b|\bc2h\b|\bw2\b|\b\d{1,2}\+? ?(months?|mos?)\b")]
+_TYPE_DESC = [("part_time", r"\bpart[- ]time (position|role|job|opportunity|schedule|employee)|this is a part[- ]time"),
+              ("contract", r"contract[- ]to[- ](hire|perm|permanent|regular)|\b(this is|is) an? (\d+[- ]months? )?contract"
+                           r"|contract (position|role|assignment|opportunity|length|duration|term)|(\d+|six|three|twelve)[- ]months? contract"
+                           r"|\bw-?2 (contract|only|position)|\bon (a )?w-?2\b|\bcorp[- ]to[- ]corp\b|\bc2c\b|\b1099\b"),
+              ("temp", r"temporary (position|role|assignment|employee)|\btemp[- ]to[- ]hire\b")]
+_ATS_TYPE = [("part_time", "part"), ("temp", "temp"), ("temp", "seasonal"), ("contract", "contract"), ("contract", "consult")]
+HOURS = re.compile(r"\b(\d{1,2})(?:\s*(?:-|–|to)\s*(\d{1,2}))?\+?\s*(?:hours|hrs|hr)\.?\s*(?:/|per|a|each|every)\s*(?:week|wk)", re.I)
+PAY_TERMS = [("W2", re.compile(r"\bw-?2\b", re.I)), ("C2C", re.compile(r"\bc2c\b|corp[- ]to[- ]corp", re.I)),
+             ("1099", re.compile(r"\b1099\b"))]
+EMAIL = re.compile(r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b")
+_NOT_A_CONTACT = re.compile(r"accommodat|accessib|privacy|\beeo|\bada\b|disabilit|no-?reply|benefits|legal|compliance|fraud"
+                            r"|example\.com|ethics|security@|abuse@|unsubscribe", re.I)
+PHONE = re.compile(r"(?:contact|call|text|reach|phone|recruiter)[^.\n]{0,40}?(\(?\b\d{3}\)?[-. ]\d{3}[-. ]\d{4}\b)", re.I)
+
+
+def ats_job_type(label: str) -> str:
+    """'Part-time' / 'Contractor' / 'Contract to Regular' / 'PartTime' (career-site labels) → part_time | contract | temp | ''."""
+    s = (label or "").lower()
+    return next((t for t, w in _ATS_TYPE if w in s), "")
+
+
+def job_type(title: str, description: str = "") -> str:
+    for t, pat in _TYPE_TITLE:
+        if re.search(pat, title or "", re.I):
+            return t
+    for t, pat in _TYPE_DESC:
+        if re.search(pat, description or "", re.I):
+            return t
+    return ""
+
+
+def hours(title: str, description: str = "") -> int | None:
+    """Hours a week when the posting says ("20-30 hours per week" → 30), else None."""
+    m = HOURS.search(title or "") or HOURS.search(description or "")
+    if not m:
+        return None
+    h = max(int(x) for x in m.groups() if x)
+    return h if 4 <= h <= 60 else None
+
+
+def pay_terms(text: str) -> list[str]:
+    return [name for name, rx in PAY_TERMS if rx.search(text or "")]
+
+
+def contacts(description: str) -> list[str]:
+    """Recruiter emails / phone numbers written in the posting itself (not the accommodation or privacy addresses)."""
+    found = []
+    for e in EMAIL.findall(description or ""):
+        if not _NOT_A_CONTACT.search(e) and e.lower() not in (f.lower() for f in found):
+            found.append(e)
+    for p in PHONE.findall(description or ""):
+        if p not in found:
+            found.append(p)
+    return found[:3]
 
 
 RETAIL_BANKING = re.compile(
@@ -169,7 +238,7 @@ def top_company(company: str) -> bool:
 
 def build(*, source_type: str, source_name: str, company: str, title: str, location: str = "", url: str = "",
           posted_at: int | None = None, posted_precision: str = "exact", description: str = "", salary: str = "", level_hint: str = "",
-          seniority: str = "", source_category: str = "", sponsorship_text: str = "") -> dict:
+          seniority: str = "", source_category: str = "", sponsorship_text: str = "", job_type: str = "") -> dict:
     company, title = (company or "").strip(), (title or "").strip()
     return {
         "id": job_id(url, company, title, location),
@@ -188,4 +257,5 @@ def build(*, source_type: str, source_name: str, company: str, title: str, locat
         "top_company": int(top_company(company)),
         "salary": salary or "",
         "description": description or "",
+        "job_type": ats_job_type(job_type),
     }

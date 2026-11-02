@@ -174,6 +174,14 @@ companies:
   - {name: SpaceX, group: Self-driving & robotics, tech_only: true, feeds: [{type: greenhouse, board: spacex}]}
   - {name: Rocket Lab, group: Self-driving & robotics, tech_only: true, feeds: [{type: greenhouse, board: rocketlab}]}
 
+  # ---------------- IT staffing agencies: they fill the contract roles at banks and big tech (JPMorgan, Capital One...)
+  # and are hired W2, which works on OPT. Their sites list every kind of job, so only these searches are read.
+  - {name: TEKsystems, group: IT staffing (contract roles), tech_only: true, regions: [us], feeds: [{type: phenom, host: careers.teksystems.com, ref: TESYUS,
+     keywords: [help desk, desktop support, service desk, it support, technical support, it technician, network technician, systems administrator,
+                software engineer, developer, python, java, data analyst, data engineer, business analyst, sql, cloud, qa tester]}]}
+  - {name: Actalent, group: IT staffing (contract roles), tech_only: true, regions: [us], feeds: [{type: phenom, host: careers.actalentservices.com, ref: ALGRUS,
+     keywords: [help desk, it support, software, data analyst, data engineer, developer, network]}]}
+
   # ---------------- Research hospitals, cancer centers, pharma & AI-biotech (like Dana-Farber): tech / data / computational
   # roles only. The big Workday sites are slow to read, so they're re-checked every 2 hours instead of every refresh.
   - {name: Dana-Farber Cancer Institute, group: Hospitals, research & pharma, tech_only: true, regions: [us], every_hours: 2, feeds: [{type: workday, tenant: danafarber, wd: wd5, site: dana-farber, max: 300}]}

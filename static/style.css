@@ -381,3 +381,7 @@ button.danger { color: #e5534b; }
 .hs-panel ol { margin: 0 0 8px; padding-left: 20px; line-height: 1.9; }
 .hs-panel textarea { width: 100%; box-sizing: border-box; font: inherit; font-size: 13px; }
 #hs-bookmarklet { cursor: grab; }
+/* part-time / contract tab */
+.tag.jt { color: var(--accent); font-weight: 600; }
+.contacts { font-size: 12px; display: inline-flex; gap: 10px; flex-wrap: wrap; margin-top: 2px; }
+#region-head .chips { display: flex; gap: 6px; flex-wrap: wrap; margin: 6px 0; }

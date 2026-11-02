@@ -61,8 +61,8 @@ let STATUS = {};
 const isAdmin = () => !STATUS.me || STATUS.me.role === "admin";
 
 // ------------------------------------------------------------------ tabs
-const REGION_TABS = { jobs: "us", top: "us", india: "india", canada: "canada", canhr: "canada", world: "other", handshake: "handshake" };
-const ADMIN_TABS = new Set(["ask", "users", "settings", "handshake"]);
+const REGION_TABS = { jobs: "us", top: "us", opt: "us", india: "india", canada: "canada", canhr: "canada", world: "other", handshake: "handshake" };
+const ADMIN_TABS = new Set(["ask", "users", "settings", "handshake", "opt"]);
 const usLike = () => F.region === "us" || F.region === "handshake";  // Handshake jobs are (almost all) American
 function showTab(name) {
   if (ADMIN_TABS.has(name) && !isAdmin()) name = "jobs";
@@ -70,10 +70,10 @@ function showTab(name) {
   const section = name in REGION_TABS ? "jobs" : name;
   $$(".tab").forEach((t) => t.classList.toggle("active", t.id === `tab-${section}`));
   if (name in REGION_TABS) {
-    const region = REGION_TABS[name], topset = name === "top";
+    const region = REGION_TABS[name], topset = name === "top", opt = name === "opt";
     const cat = name === "canhr" ? "hr" : F.cat === "hr" ? "" : F.cat;  // the HR tab is the Canada tab with HR picked
-    if (F.region !== region || F.topset !== topset || F.cat !== cat) {
-      Object.assign(F, { region, topset, cat, place: "" });
+    if (F.region !== region || F.topset !== topset || F.opt !== opt || F.cat !== cat) {
+      Object.assign(F, { region, topset, opt, cat, place: "" });
       SHOWN = 200;
       showRegion();
     }
@@ -101,16 +101,45 @@ async function loadStatus() {
 }
 
 // ------------------------------------------------------------------ JOBS
-const CATS = [["", "All"], ["swe", "Software Engineering"], ["finance", "Finance & Banks"], ["data", "Data Science & ML"], ["other", "Other"]];
-const CATS_CANADA = [["", "All"], ["swe", "Software Engineering"], ["data", "Data Science & ML"], ["hr", "👥 HR & People"], ["finance", "Finance & Banks"], ["other", "Other"]];
+const CATS = [["", "All"], ["swe", "Software Engineering"], ["finance", "Finance & Banks"], ["data", "Data Science & ML"], ["it", "💻 IT Support"], ["other", "Other"]];
+const CATS_CANADA = [["", "All"], ["swe", "Software Engineering"], ["data", "Data Science & ML"], ["it", "💻 IT Support"], ["hr", "👥 HR & People"], ["finance", "Finance & Banks"], ["other", "Other"]];
 const LEVELS = [["", "All levels"], ["internship", "Internship"], ["early_career", "Early career / New grad"], ["experienced", "Experienced"], ["unspecified", "Unspecified"]];
 const AGES = [["", "Any time"], [6, "≤ 6h"], [24, "≤ 24h"], [48, "≤ 2d"], [72, "≤ 3d"], [168, "≤ 7d"], [336, "≤ 14d"], [720, "≤ 30d"]];
 const H1B_LABEL = { yes: "Sponsors", likely: "Likely", no: "No sponsorship", citizen: "US citizens", unknown: "Unknown" };
 const LEVEL_LABEL = { internship: "Intern", early_career: "Early career", experienced: "Experienced", unspecified: "—" };
-const CAT_LABEL = { swe: "SWE", finance: "Finance", data: "DS/ML", hr: "HR", other: "Other" };
+const CAT_LABEL = { swe: "SWE", finance: "Finance", data: "DS/ML", it: "IT", hr: "HR", other: "Other" };
+
+// ---- Part-time / Contract tab (admin only): OPT counts any job of 20+ hours a week in your field of study.
+// A job is in when the career site or the posting says contract / part-time / temp (or gives the hours),
+// it isn't under 20 hours a week, and it's tech: software, data, or IT support / help desk.
+const JT_LABEL = { contract: "Contract", part_time: "Part-time", temp: "Temp" };
+const optOk = (j) => (j.jt || j.hrs) && !(j.hrs && j.hrs < 20) && /\b(swe|data|it)\b/.test(j.categories);
+function jtTag(j) {
+  if (!j.jt && !j.hrs) return "";
+  const bits = [JT_LABEL[j.jt] || "", j.hrs ? `${j.hrs} h/wk` : "", ...(j.pay || [])].filter(Boolean).join(" · ");
+  return ` <span class="tag jt" title="From the career site / posting">${esc(bits)}</span>`;
+}
+function contactLine(j) {
+  const mails = (j.contacts || []).map((c) => c.includes("@") ? `<a href="mailto:${esc(c)}">✉ ${esc(c)}</a>` : `<span>☎ ${esc(c)}</span>`);
+  const city = (j.location || "").split(/[,;·]/)[0].trim();  // agency recruiters work locally: search the job's city too
+  const li = `https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(`${j.company} recruiter ${/remote/i.test(city) ? "" : city}`.trim())}`;
+  return `<br><span class="contacts">${mails.join(" ")} <a href="${esc(li)}" target="_blank" rel="noopener" title="Recruiters at this company on LinkedIn">🔍 Recruiters</a></span>`;
+}
+function optHead(forJt, forTier) {
+  const n = (rows, f) => rows.filter(f).length;
+  const chip = (key, v, label, cnt) => `<button class="chip ${F[key] === v ? "on" : ""}" data-k="${key}" data-v="${v}">${label}<small>${cnt}</small></button>`;
+  return `<h2>⏱️ Part-time / Contract</h2>
+    <p class="muted">Contract, part-time and temp tech jobs (software, data, IT support / help desk) of 20+ hours a week — or no hours stated,
+      which usually means full-time hours. Under F-1 OPT, a job counts when it's 20+ hours a week and related to your degree;
+      staffing-agency contracts (TEKsystems, Actalent) are W2, which works on OPT. C2C / 1099 roles usually don't fit OPT.
+      For the STEM extension the employer must use E-Verify. Contacts are the ones written in the posting; 🔍 Recruiters searches LinkedIn.</p>
+    <div class="chips">${chip("jt", "", "All types", forJt.length)}${Object.entries(JT_LABEL).map(([v, l]) => chip("jt", v, l, n(forJt, (j) => j.jt === v))).join("")}</div>
+    <div class="chips">${chip("tier", "", "All tiers", forTier.length)}${[1, 2, 3].map((t) => chip("tier", String(t),
+      ["", "Tier 1 · top tech & big banks", "Tier 2 · known employers", "Tier 3 · startups & agencies"][t], n(forTier, (j) => j.tier === t))).join("")}</div>`;
+}
 
 let PATTERNS = [];
-const F = { region: "us", topset: false, place: "", cat: "", level: "", age: "", stype: "", fin: "", q: "", h1b: "", cap: false, top: false, source: "", status: "active" };
+const F = { region: "us", topset: false, opt: false, jt: "", tier: "", place: "", cat: "", level: "", age: "", stype: "", fin: "", q: "", h1b: "", cap: false, top: false, source: "", status: "active" };
 const REGION_INFO = {
   us: ["🇺🇸 United States", "US jobs from GitHub lists, LinkedIn and employers' own career sites (finance firms, FAANG / MAANG, big tech and top tech companies)."],
   india: ["🇮🇳 India", "Jobs in India from Indian tech & fintech companies, big tech India teams (Amazon, NVIDIA, Salesforce, Adobe, Intel, Target), global banks & finance firms' India offices, and LinkedIn India searches."],
@@ -269,6 +298,7 @@ function matches(j, skip) {
   if (j.source_type === "university") return false; // these live on the Universities tab
   if (F.region === "handshake" ? j.source_type !== "handshake" : !(j.regions || ["us"]).includes(F.region)) return false;
   if (F.topset && !j.top_company) return false;
+  if (F.opt && (!optOk(j) || (skip !== "jt" && F.jt && j.jt !== F.jt) || (skip !== "tier" && F.tier && j.tier !== Number(F.tier)))) return false;
   if (skip !== "place" && F.place && !placesOf(j).includes(F.place)) return false;
   if (skip !== "cat" && F.cat && !j.categories.split(",").includes(F.cat)) return false;
   if (skip !== "level" && F.level && j.level !== F.level) return false;
@@ -318,8 +348,10 @@ function renderJobs() {
   const [rtitle, rdesc] = F.region === "canada" && F.cat === "hr" ? HR_INFO : REGION_INFO[F.region];
   $$(".us-only").forEach((el) => el.classList.toggle("hidden", !usLike()));
   $("#hs-panel").classList.toggle("hidden", F.region !== "handshake");
-  $("#region-head").innerHTML = F.topset ? topHead() : F.region === "us" ? "" : `<h2>${rtitle}</h2><p class="muted">${esc(rdesc)}</p>`;
+  $("#region-head").innerHTML = F.topset ? topHead() : F.opt ? optHead(base("jt"), base("tier"))
+    : F.region === "us" ? "" : `<h2>${rtitle}</h2><p class="muted">${esc(rdesc)}</p>`;
   bindTopHead();
+  $$("#region-head [data-k]").forEach((b) => (b.onclick = () => { F[b.dataset.k] = b.dataset.v; SHOWN = 200; renderJobs(); }));
   if (usLike() && !F.topset) $("#f-place").innerHTML = "";
   else {
     const forPlace = base("place"), counts = {};
@@ -350,9 +382,9 @@ function renderJobs() {
     return `<tr class="${rowClass(j)}" data-id="${j.id}">
       ${appliedBox(j)}
       ${postedCell(j)}
-      <td class="company">${esc(j.company)}<br>${badges}</td>
+      <td class="company">${esc(j.company)}<br>${badges}${F.opt && j.tier ? `<span class="tag">Tier ${j.tier}</span>` : ""}</td>
       ${finCell(j)}
-      <td>${esc(j.title)}${j.immediate ? ` <span class="tag imm" title="The posting asks for someone who can start right away">⚡ Immediate start</span>` : ""}${j.salary ? `<br><span class="muted">${esc(j.salary)}</span>` : ""}</td>
+      <td>${esc(j.title)}${j.immediate ? ` <span class="tag imm" title="The posting asks for someone who can start right away">⚡ Immediate start</span>` : ""}${jtTag(j)}${j.salary ? `<br><span class="muted">${esc(j.salary)}</span>` : ""}${F.opt ? contactLine(j) : ""}</td>
       <td class="loc">${esc(j.location)}${F.region === "other" ? `<span class="age-date">${esc(placesOf(j).join(", "))}</span>` : ""}</td>
       <td>${cats}</td>
       <td>${LEVEL_LABEL[j.level] || j.level}</td>
@@ -1077,7 +1109,7 @@ $("#hs-import").onclick = async () => {
 (async () => {
   await loadStatus();
   const start = location.hash.slice(1);
-  if (start in REGION_TABS) Object.assign(F, { region: REGION_TABS[start], topset: start === "top", cat: start === "canhr" ? "hr" : "" });
+  if (start in REGION_TABS) Object.assign(F, { region: REGION_TABS[start], topset: start === "top", opt: start === "opt" && isAdmin(), cat: start === "canhr" ? "hr" : "" });
   try { FIN_SEGMENTS = Object.entries((await api("/api/finance")).segments); } catch {}
   await loadPatterns();
   if (isAdmin()) loadApify();

@@ -64,8 +64,9 @@ CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT);
 
 # Fields a re-fetch may overwrite; status and notes are yours and are never overwritten.
 UPDATABLE = ["source_type", "source_name", "company", "title", "location", "url", "posted_at", "posted_precision",
-             "categories", "level", "h1b", "cap_exempt", "top_company", "salary", "description"]
-NEW_COLUMNS = {"posted_precision": "TEXT DEFAULT 'exact'", "sources": "TEXT", "applied_at": "INTEGER"}
+             "categories", "level", "h1b", "cap_exempt", "top_company", "salary", "description", "job_type"]
+NEW_COLUMNS = {"posted_precision": "TEXT DEFAULT 'exact'", "sources": "TEXT", "applied_at": "INTEGER",
+               "job_type": "TEXT DEFAULT ''"}  # job_type: contract | part_time | temp, as the career site labels it
 STATUSES = ("new", "saved", "waiting", "declined", "applied", "interviewing", "offer", "rejected", "hidden")
 APPLIED_STAGES = ("applied", "interviewing", "offer", "rejected")
 
@@ -116,6 +117,13 @@ def init() -> None:
                       for r in rows if HR_TITLE.search(r[1] or "")]
             c.executemany("UPDATE jobs SET categories=? WHERE id=?", tagged)
             c.execute("INSERT INTO meta VALUES ('hr_tag_v1', '1')")
+        if "it_tag_v1" not in done:  # tag existing help desk / desktop support / IT technician titles "it"
+            from .classify import IT_SUPPORT
+            rows = c.execute("SELECT id, title, categories FROM jobs WHERE categories NOT LIKE '%it%'").fetchall()
+            tagged = [(",".join(sorted((set(r[2].split(",")) - {"other"}) | {"it"})), r[0])
+                      for r in rows if IT_SUPPORT.search(r[1] or "")]
+            c.executemany("UPDATE jobs SET categories=? WHERE id=?", tagged)
+            c.execute("INSERT INTO meta VALUES ('it_tag_v1', '1')")
     _users_changed()
 
 
@@ -135,7 +143,7 @@ def upsert_jobs(jobs: list[dict]) -> list[dict]:
     placeholders = ",".join("?" for _ in cols)
 
     def rule(f):
-        if f in ("description", "salary"):  # keep a real value if a later source doesn't have one
+        if f in ("description", "salary", "job_type"):  # keep a real value if a later source doesn't have one
             return f"{f}=COALESCE(NULLIF(excluded.{f}, ''), jobs.{f})"
         if f in ("posted_at", "posted_precision", "source_type", "source_name"):
             return f"{f}=CASE WHEN {_TAKE_NEW} THEN excluded.{f} ELSE jobs.{f} END"

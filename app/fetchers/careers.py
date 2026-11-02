@@ -25,7 +25,9 @@ TECH_ROLES = re.compile(
     r"|technical program|technical product|product manager.*(data|ai|ml|platform|tech)|\bqa\b|test automation|\bsdet\b"
     r"|salesforce|\bsap\b|\berp\b|workday (analyst|developer)|servicenow|automation engineer|firmware|embedded"
     r"|mobile (engineer|developer)|\bios\b|android|web (engineer|developer)|\bapi\b|engineering manager|\bux\b"
-    r"|robotic|autonomy|perception|motion planning|simulation engineer|\bgnc\b|guidance, navigation", re.I)
+    r"|robotic|autonomy|perception|motion planning|simulation engineer|\bgnc\b|guidance, navigation"
+    r"|help ?desk|service desk|desktop support|deskside|end[- ]user|tech(nical)? support|support (technician|specialist|analyst)"
+    r"|computer technician|network technician|\bnoc\b|sysadmin", re.I)
 # Most jobs to keep per employer and region, so huge global banks don't drown everything else.
 REGION_CAPS = {"us": 1000, "india": 600, "canada": 600, "other": 400}
 HEADERS = {"User-Agent": "Mozilla/5.0 (job-portal)"}
@@ -69,7 +71,8 @@ class Sink:
     def full(self, region: str) -> bool:
         return region not in self.regions or self.counts[region] >= REGION_CAPS[region]
 
-    def add(self, title, location, url, posted, precision="exact", description="", region=None, known_only=False) -> bool:
+    def add(self, title, location, url, posted, precision="exact", description="", region=None, known_only=False,
+            job_type="") -> bool:
         """region forces the tab (from a country filter on the career site); known_only skips unclear locations.
         Returns False when the posting is older than the cutoff."""
         if posted and posted < self.cutoff:
@@ -91,7 +94,7 @@ class Sink:
         self.jobs.append(classify.build(
             source_type=self.owner["source_type"], source_name=self.owner["source_name"], company=self.owner["company"],
             title=title, location=location, url=url, posted_at=posted or None,  # None = the site gives no date
-            posted_precision=precision if posted else "exact", description=description))
+            posted_precision=precision if posted else "exact", description=description, job_type=job_type))
         return True
 
 
@@ -193,7 +196,8 @@ def smartrecruiters(f: dict, sink: Sink) -> None:
                 loc = p.get("location") or {}
                 where = ", ".join(x for x in (loc.get("city"), loc.get("region"), loc.get("country", "").upper()) if x) \
                     or ("Remote" if loc.get("remote") else "")
-                sink.add(p.get("name", ""), where, f"https://jobs.smartrecruiters.com/{cid}/{p.get('id')}", _iso(p.get("releasedDate")))
+                sink.add(p.get("name", ""), where, f"https://jobs.smartrecruiters.com/{cid}/{p.get('id')}", _iso(p.get("releasedDate")),
+                         job_type=(p.get("typeOfEmployment") or {}).get("label", ""))
             offset += 100
             if offset >= d.get("totalFound", 0) or not items:
                 break
@@ -226,7 +230,7 @@ def lever(f: dict, sink: Sink) -> None:
             where = "; ".join(cat.get("allLocations") or [cat.get("location") or ""])
             created = p.get("createdAt")
             sink.add(p.get("text", ""), where, p.get("hostedUrl", ""), int(created / 1000) if created else None,
-                     description=p.get("descriptionPlain", ""))
+                     description=p.get("descriptionPlain", ""), job_type=cat.get("commitment", ""))
 
 
 def ashby(f: dict, sink: Sink) -> None:
@@ -239,11 +243,13 @@ def ashby(f: dict, sink: Sink) -> None:
             country = ((p.get("address") or {}).get("postalAddress") or {}).get("addressCountry", "")
             where = ", ".join(x for x in (p.get("location", ""), country) if x)
             sink.add(p.get("title", "").strip(), where, p.get("jobUrl", ""), _iso(p.get("publishedAt")),
-                     description=p.get("descriptionPlain", ""))
+                     description=p.get("descriptionPlain", ""), job_type=p.get("employmentType", ""))
 
 
 def phenom(f: dict, sink: Sink) -> None:
     """Phenom career sites embed the search results as JSON in the page (10 per page)."""
+    if f.get("keywords"):
+        return _phenom_search(f, sink)
     with _client() as c:
         offset, total = 0, MAX_PER_FEED
         while offset < min(total, MAX_PER_FEED):
@@ -257,9 +263,38 @@ def phenom(f: dict, sink: Sink) -> None:
             for p in posts:
                 where = p.get("cityStateCountry") or p.get("location") or ""
                 url = p.get("applyUrl") or f"https://{f['host']}/{f.get('locale', 'us/en')}/job/{p.get('jobSeqNo', '')}"
-                sink.add(p.get("title", ""), where, url, _iso(p.get("postedDate")), "day")
+                sink.add(p.get("title", ""), where, url, _iso(p.get("postedDate")), "day", p.get("descriptionTeaser", ""),
+                         job_type=p.get("type", ""))
             offset += len(posts)
             time.sleep(0.3)
+
+
+def _phenom_search(f: dict, sink: Sink) -> None:
+    """Staffing agencies list thousands of jobs of every kind, so ask the site's own search for each keyword instead.
+    f["ref"] is the site's Phenom id (phApp.refNum in the page source, e.g. TESYUS for TEKsystems)."""
+    seen = set()
+    with _client() as c:
+        for kw in f["keywords"]:
+            offset = 0
+            while offset < f.get("max", 150):
+                body = {"lang": "en_us", "deviceType": "desktop", "country": "us", "pageName": "search-results",
+                        "ddoKey": "refineSearch", "sortBy": "Most recent", "subsearch": "", "from": offset, "jobs": True,
+                        "counts": False, "all_fields": [], "size": 50, "clearAll": False, "jdsource": "facets",
+                        "isSliderEnable": False, "pageId": "page20", "siteType": "external", "keywords": kw,
+                        "global": True, "selected_fields": {}, "refNum": f["ref"]}
+                d = c.post(f"https://{f['host']}/widgets", json=body).json().get("refineSearch") or {}
+                posts = (d.get("data") or {}).get("jobs") or []
+                for p in posts:
+                    if p.get("jobSeqNo") in seen:
+                        continue
+                    seen.add(p.get("jobSeqNo"))
+                    url = p.get("applyUrl") or f"https://{f['host']}/us/en/job/{p.get('jobSeqNo', '')}"
+                    sink.add(p.get("title", ""), p.get("cityStateCountry") or p.get("location") or "", url,
+                             _iso(p.get("postedDate")), "day", p.get("descriptionTeaser", ""), job_type=p.get("type", ""))
+                offset += len(posts)
+                if not posts or offset >= (d.get("totalHits") or 0):
+                    break
+                time.sleep(0.3)
 
 
 def amazon(f: dict, sink: Sink) -> None:
