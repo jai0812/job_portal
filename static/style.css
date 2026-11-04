@@ -385,3 +385,37 @@ button.danger { color: #e5534b; }
 .tag.jt { color: var(--accent); font-weight: 600; }
 .contacts { font-size: 12px; display: inline-flex; gap: 10px; flex-wrap: wrap; margin-top: 2px; }
 #region-head .chips { display: flex; gap: 6px; flex-wrap: wrap; margin: 6px 0; }
+/* startup radar */
+.su-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.su-head h2 { margin: 0 0 4px; }
+.su-trends { display: grid; grid-template-columns: 2fr 1fr; gap: 12px; margin: 12px 0; }
+.su-trend h3 { margin: 0 0 4px; font-size: 15px; }
+.su-bar { display: grid; grid-template-columns: 190px 1fr 40px; align-items: center; gap: 8px; width: 100%; border: 0; background: none; padding: 3px 0; text-align: left; }
+.su-bar i { display: block; height: 10px; border-radius: 99px; background: var(--accent); opacity: .75; }
+.su-bar b { text-align: right; font-variant-numeric: tabular-nums; }
+.su-bar:hover span { text-decoration: underline; }
+.su-big { padding: 4px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
+.su-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 16px; align-items: start; }
+.su-list { display: grid; gap: 10px; }
+.su-card { display: grid; gap: 5px; }
+.su-top { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.su-name { font-size: 16px; }
+.su-desc { font-size: 13px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.su-meta, .su-links, .su-people { font-size: 13px; display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; }
+.su-person { display: inline-flex; gap: 6px; align-items: baseline; padding-right: 8px; border-right: 1px solid var(--line); }
+.su-load { font-size: 12px; padding: 3px 9px; }
+.tag.su-st.early { color: var(--good); }
+.tag.su-st.second { color: var(--accent); }
+.tag.su-st.advanced { color: var(--warn); }
+.su-side { position: sticky; top: 70px; max-height: calc(100vh - 90px); overflow-y: auto; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; }
+.su-side h3 { font-size: 14px; margin: 8px 0; }
+.su-item { padding: 6px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
+.su-rec { padding-left: 18px; font-size: 13px; margin: 0; }
+.su-rec li { margin-bottom: 6px; }
+@media (max-width: 900px) {
+  .su-trends, .su-layout { grid-template-columns: 1fr; }
+  .su-side { position: static; max-height: none; }
+  .su-bar { grid-template-columns: 130px 1fr 34px; }
+}
+.su-card, .su-trend { margin: 0; padding: 12px 14px; }
+.toolbar #su-q { flex: 1; min-width: 220px; }

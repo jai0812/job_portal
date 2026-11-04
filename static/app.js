@@ -79,6 +79,7 @@ function showTab(name) {
     }
   }
   if (name === "unis") ensureRegion("us").then(renderUnis);
+  if (name === "startups") loadStartups();
   if (name === "settings") loadAlerts();
   if (name === "users") loadUsers();
   if (name === "analytics") loadAnalytics();
@@ -1104,6 +1105,163 @@ $("#hs-import").onclick = async () => {
     delete STORE.handshake;
     setTimeout(loadJobs, 8000);
   } catch (e) { $("#hs-msg").textContent = e.message; }
+};
+
+// ------------------------------------------------------------------ STARTUPS (startup radar, every user)
+// Built once a day on the server from the YC directory, SEC Form D filings, funding news and Launch HN.
+let SU = null, SUSHOWN = 60;
+const SUF = { stage: "", cat: "", src: "", age: "", q: "", sort: "recent", hiring: false, jobs: false };
+const SU_SRC = [["", "All sources"], ["yc", "Y Combinator"], ["sec", "SEC funding filings"], ["news", "In the news"]];
+const SU_AGE = [["", "Any time"], [7, "New this week"], [30, "This month"], [90, "Last 3 months"], [365, "This year"]];
+const money = (a) => !a ? "" : a >= 1e9 ? `$${(a / 1e9).toFixed(1)}B` : a >= 1e6 ? `$${(a / 1e6).toFixed(a >= 1e8 ? 0 : 1)}M` : `$${Math.round(a / 1e3)}K`;
+const suWhen = (s) => s.raised_at || s.added || 0;
+const liSearch = (q) => `https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(q)}`;
+
+async function loadStartups() {
+  if (!SU) {
+    $("#su-list").innerHTML = `<p class="muted"><span class="spinner"></span> Loading startups…</p>`;
+    try { SU = await api("/api/startups"); } catch (e) { $("#su-list").innerHTML = `<p class="flag">${esc(e.message)}</p>`; return; }
+    SU.catLabel = Object.fromEntries(SU.categories);
+    SU.catLabel.other = "Other";
+    $("#su-rec").innerHTML = SU.recommended.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.name)} ↗</a><br><span class="muted">${esc(r.about)}</span></li>`).join("");
+  }
+  renderStartups();
+}
+
+function suMatch(s, skip) {
+  const now = SU.now;
+  if (skip !== "stage" && SUF.stage && (s.stage || "unknown") !== SUF.stage) return false;
+  if (skip !== "cat" && SUF.cat && !s.cats.includes(SUF.cat)) return false;
+  if (skip !== "src" && SUF.src && !s.src.includes(SUF.src)) return false;
+  if (skip !== "age" && SUF.age && now - suWhen(s) > SUF.age * 86400) return false;
+  if (SUF.hiring && !s.hiring) return false;
+  if (SUF.jobs && !s.jobs) return false;
+  if (SUF.q) {
+    const hay = `${s.name} ${s.one_liner || ""} ${s.description || ""} ${s.tags || ""} ${s.location || ""} ${s.batch || ""} ${(s.people || []).map((p) => p.name).join(" ")}`.toLowerCase();
+    if (!SUF.q.toLowerCase().split(/\s+/).every((w) => hay.includes(w))) return false;
+  }
+  return true;
+}
+
+function suTrends() {
+  // What's being started and funded right now: the last 30 days, by category, plus the biggest rounds.
+  const recent = SU.startups.filter((s) => SU.now - suWhen(s) <= 30 * 86400);
+  const funded = recent.filter((s) => s.amount);
+  const by = {};
+  recent.forEach((s) => s.cats.forEach((c) => (by[c] = (by[c] || 0) + 1)));
+  const top = Object.entries(by).filter(([c]) => c !== "other").sort((a, b) => b[1] - a[1]).slice(0, 8);
+  const max = Math.max(1, ...top.map(([, n]) => n));
+  const big = [...funded].sort((a, b) => b.amount - a.amount).slice(0, 5);
+  return `<div class="card su-trend"><h3>Where the action is · last 30 days</h3>
+      <p class="muted">${recent.length.toLocaleString()} new or newly funded startups · ${money(funded.reduce((t, s) => t + s.amount, 0))} raised in rounds we saw</p>
+      ${top.map(([c, n]) => `<button class="su-bar" data-cat="${c}"><span>${esc(SU.catLabel[c] || c)}</span><i style="width:${(n / max) * 100}%"></i><b>${n}</b></button>`).join("")}</div>
+    <div class="card su-trend"><h3>Biggest rounds this month</h3>${big.map((s) => `<div class="su-big"><b>${esc(s.name)}</b> <span class="tag">${money(s.amount)}${s.round ? " · " + esc(s.round) : ""}</span><br><span class="muted">${esc((s.one_liner || "").slice(0, 90))}</span></div>`).join("") || `<p class="muted">No rounds yet.</p>`}</div>`;
+}
+
+function suCard(s) {
+  const stage = s.stage ? `<span class="tag su-st ${s.stage}">${esc(SU.stages[s.stage])}</span>` : "";
+  const raise = s.amount || s.round ? `<span class="tag">${[money(s.amount), s.round].filter(Boolean).join(" · ")}${s.raised_at ? " · " + new Date(s.raised_at * 1000).toLocaleDateString() : ""}</span>` : "";
+  const cats = s.cats.filter((c) => c !== "other").map((c) => `<span class="tag">${esc(SU.catLabel[c] || c)}</span>`).join("");
+  const facts = [s.location, s.batch && `YC ${s.batch}`, s.team_size && `${s.team_size} people`, s.founded && `founded ${s.founded}`].filter(Boolean).map(esc).join(" · ");
+  const links = [
+    s.website && `<a href="${esc(s.website)}" target="_blank" rel="noopener">Website ↗</a>`,
+    s.yc_url && `<a href="${esc(s.yc_url)}" target="_blank" rel="noopener">YC page ↗</a>`,
+    `<a href="${esc(s.linkedin || `https://www.linkedin.com/search/results/companies/?keywords=${encodeURIComponent(s.name)}`)}" target="_blank" rel="noopener">LinkedIn ↗</a>`,
+    s.jobs && `<a href="#jobs" data-jobs="${esc(s.name)}">💼 ${s.jobs} job${s.jobs > 1 ? "s" : ""} here</a>`,
+    s.hiring && !s.jobs && `<span class="muted">Hiring (YC)</span>`,
+    s.news && `<a href="#" data-news="${esc(s.id)}">📰 ${s.news} in the news</a>`,
+  ].filter(Boolean).join(" · ");
+  return `<div class="card su-card" data-id="${esc(s.id)}">
+    <div class="su-top"><b class="su-name">${esc(s.name)}</b> ${stage} ${raise}</div>
+    ${s.one_liner ? `<div>${esc(s.one_liner)}</div>` : ""}
+    ${s.description && s.description !== s.one_liner ? `<div class="muted su-desc">${esc(s.description)}</div>` : ""}
+    <div class="su-meta">${cats} <span class="muted">${facts}</span></div>
+    <div class="su-links">${links}</div>
+    <div class="su-people">${suPeople(s)}</div>
+  </div>`;
+}
+
+function suPeople(s) {
+  // Founders from the YC page / executives from the SEC filing; the company's own contact address and phone.
+  const contact = [s.email && `<a href="mailto:${esc(s.email)}">✉ ${esc(s.email)}</a>`, s.phone && `☎ ${esc(s.phone)} <span class="muted">(SEC filing)</span>`].filter(Boolean).join(" · ");
+  if (!s.people) {
+    return `<button class="su-load" data-people="${esc(s.id)}">👤 Founders &amp; contacts</button>
+      <a href="${esc(liSearch(`${s.name} CEO`))}" target="_blank" rel="noopener">🔍 CEO on LinkedIn</a>${contact ? " · " + contact : ""}`;
+  }
+  const ppl = s.people.map((p) => `<span class="su-person"><b>${esc(p.name)}</b> <span class="muted">${esc(p.title || "")}</span>
+      <a href="${esc(p.linkedin || liSearch(`${p.name} ${s.name}`))}" target="_blank" rel="noopener">${p.linkedin ? "LinkedIn ↗" : "🔍 LinkedIn"}</a>${p.twitter ? ` <a href="${esc(p.twitter)}" target="_blank" rel="noopener">X ↗</a>` : ""}</span>`).join("");
+  return `${ppl || `<span class="muted">No founders listed.</span> <a href="${esc(liSearch(`${s.name} founder`))}" target="_blank" rel="noopener">🔍 Founders on LinkedIn</a>`}${contact ? `<div>${contact}</div>` : ""}`;
+}
+
+function renderStartups() {
+  if (!SU) return;
+  SUF.q = $("#su-q").value.trim();
+  const base = (skip) => SU.startups.filter((s) => suMatch(s, skip));
+  const forStage = base("stage"), forCat = base("cat"), forSrc = base("src"), forAge = base("age");
+  const ago = Math.round((Date.now() / 1000 - SU.now) / 3600);
+  $("#su-sub").textContent = `${SU.startups.length.toLocaleString()} startups from the Y Combinator directory, SEC funding filings (Form D), TechCrunch, Crunchbase News, Sifted, EU-Startups, BetaKit, Inc42 and Launch HN · scanned ${ago < 1 ? "within the hour" : ago + "h ago"} · news every 3 hours, full scan daily`;
+  $("#su-trends").innerHTML = suTrends();
+  $$("#su-trends [data-cat]").forEach((b) => (b.onclick = () => { SUF.cat = SUF.cat === b.dataset.cat ? "" : b.dataset.cat; SUSHOWN = 60; renderStartups(); }));
+  const suChips = (el, items, key, rows, test) => {
+    el.innerHTML = items.map(([v, l]) => `<button class="chip ${String(SUF[key]) === String(v) ? "on" : ""}" data-v="${v}">${esc(l)}<small>${v === "" ? rows.length : rows.filter((s) => test(s, v)).length}</small></button>`).join("");
+    $$("button", el).forEach((b) => (b.onclick = () => { SUF[key] = b.dataset.v === "" ? "" : isNaN(b.dataset.v) ? b.dataset.v : Number(b.dataset.v); SUSHOWN = 60; renderStartups(); }));
+  };
+  suChips($("#su-stage"), [["", "All stages"], ...Object.entries(SU.stages), ["unknown", "Stage unknown"]], "stage", forStage, (s, v) => (s.stage || "unknown") === v);
+  suChips($("#su-cat"), [["", "All categories"], ...SU.categories], "cat", forCat, (s, v) => s.cats.includes(v));
+  suChips($("#su-src"), SU_SRC, "src", forSrc, (s, v) => s.src.includes(v));
+  suChips($("#su-age"), SU_AGE, "age", forAge, (s, v) => SU.now - suWhen(s) <= v * 86400);
+
+  const rows = base();
+  const sorts = { recent: (s) => -suWhen(s), amount: (s) => -(s.amount || 0), team: (s) => -(s.team_size || 0), name: (s) => s.name.toLowerCase() };
+  const k = sorts[SUF.sort];
+  rows.sort((a, b) => { const x = k(a), y = k(b); return x < y ? -1 : x > y ? 1 : 0; });
+  $("#su-count").textContent = `${rows.length.toLocaleString()} startups`;
+  $("#su-list").innerHTML = rows.slice(0, SUSHOWN).map(suCard).join("") || `<p class="muted">No startups match.</p>`;
+  $("#su-more").classList.toggle("hidden", rows.length <= SUSHOWN);
+  renderSuNews();
+}
+
+function renderSuNews(only) {
+  const items = only ? SU.news.filter((n) => n.startup_id === only) : SU.news.slice(0, 60);
+  $("#su-news").innerHTML = (only ? `<button class="chip" id="su-news-all">← All news</button>` : "") + items.map((n) => `<div class="su-item">
+      <a href="${esc(n.url)}" target="_blank" rel="noopener">${esc(n.title)}</a>
+      <div class="muted">${esc(n.source)} · ${new Date(n.published * 1000).toLocaleDateString()}${n.funding ? ` · <span class="tag su-st second">${[money(n.amount), n.round].filter(Boolean).join(" · ") || "funding"}</span>` : ""}</div></div>`).join("");
+  const back = $("#su-news-all");
+  if (back) back.onclick = () => renderSuNews();
+}
+
+$("#su-list").addEventListener("click", async (e) => {
+  const load = e.target.closest("[data-people]"), jobs = e.target.closest("[data-jobs]"), news = e.target.closest("[data-news]");
+  if (load) {
+    const s = SU.startups.find((x) => x.id === load.dataset.people);
+    load.disabled = true;
+    load.innerHTML = `<span class="spinner"></span> Looking up…`;
+    try {
+      const r = await api(`/api/startups/${encodeURIComponent(s.id)}/people`);
+      Object.assign(s, { people: r.people || [], linkedin: r.linkedin || s.linkedin, founded: r.founded || s.founded, email: r.email || s.email, phone: r.phone || s.phone });
+    } catch { s.people = []; }
+    load.closest(".su-card").outerHTML = suCard(s);
+  } else if (jobs) {
+    e.preventDefault();
+    showTab("jobs");
+    $("#q").value = jobs.dataset.jobs;
+    F.q = jobs.dataset.jobs;
+    renderJobs();
+  } else if (news) {
+    e.preventDefault();
+    renderSuNews(news.dataset.news);
+    $("#su-news").scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+});
+let SUQT = null;
+$("#su-q").oninput = () => { clearTimeout(SUQT); SUQT = setTimeout(() => { SUSHOWN = 60; renderStartups(); }, 200); };
+$("#su-sort").onchange = (e) => { SUF.sort = e.target.value; renderStartups(); };
+$("#su-hiring").onchange = (e) => { SUF.hiring = e.target.checked; SUSHOWN = 60; renderStartups(); };
+$("#su-jobs").onchange = (e) => { SUF.jobs = e.target.checked; SUSHOWN = 60; renderStartups(); };
+$("#su-more").onclick = () => { SUSHOWN += 120; renderStartups(); };
+$("#su-scan").onclick = async () => {
+  const r = await api("/api/startups/refresh", { method: "POST", body: { full: true } });
+  toast(r.started ? "Scanning — takes a few minutes; reopen the tab after" : "A scan is already running");
 };
 
 // ------------------------------------------------------------------ boot

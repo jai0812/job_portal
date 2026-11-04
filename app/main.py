@@ -41,7 +41,7 @@ from fastapi import Body, FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse, RedirectResponse, Response
 from fastapi.staticfiles import StaticFiles
 
-from . import alerts, auth, classify, db, finance, geo, h1b, patterns, readme, refresh
+from . import alerts, auth, classify, db, finance, geo, h1b, patterns, readme, refresh, startups
 from .config import DATA_DIR, ROOT, env, load_more_companies, load_sources, load_universities, save_sources
 
 app = FastAPI(title="Job Portal", docs_url=None, redoc_url=None, openapi_url=None)
@@ -87,7 +87,7 @@ def _is_https(request: Request) -> bool:
 # Only the admin may use these (everyone else gets the job tabs and their own Analytics). Checked on the server,
 # not just hidden in the page.
 ADMIN_PATHS = ("/api/alerts", "/api/sources", "/api/apify", "/api/users", "/api/handshake")
-ADMIN_WRITES = {"/api/refresh", "/api/jobs"}
+ADMIN_WRITES = {"/api/refresh", "/api/jobs", "/api/startups/refresh"}
 
 
 def _admin_only(method: str, path: str) -> bool:
@@ -332,10 +332,13 @@ def _startup():
     except OSError:
         pass
     rebuild_jobs()
+    startups.init()
     threading.Thread(target=_auto_refresh_loop, daemon=True).start()
     threading.Thread(target=_self_check_loop, daemon=True).start()
     threading.Thread(target=_fast_lane_loop, daemon=True).start()
     threading.Thread(target=_alerts_loop, daemon=True).start()
+    if env("PORTAL_NO_REFRESH") != "1":  # the startup radar waits while a job refresh runs, so fetching never slows down
+        threading.Thread(target=startups.loop, args=(lambda: _refresh["running"],), daemon=True).start()
 
 
 @app.post("/api/refresh")
@@ -568,6 +571,37 @@ def rebuild_jobs():
                     return
                 _jobs["again"] = False
     threading.Thread(target=work, daemon=True).start()
+
+
+# ---------------------------------------------------------------- startup radar (every user)
+
+@app.get("/api/startups")
+def startups_list(request: Request):
+    data = startups.payload()
+    if "gzip" in request.headers.get("accept-encoding", ""):
+        return Response(data, media_type="application/json",
+                        headers={"Content-Encoding": "gzip", "Cache-Control": "no-store", "Vary": "Accept-Encoding"})
+    return Response(gzip.decompress(data), media_type="application/json", headers={"Cache-Control": "no-store"})
+
+
+@app.get("/api/startups/status")
+def startups_status():
+    return startups._status
+
+
+@app.get("/api/startups/{sid}/people")
+def startup_people(sid: str):
+    if not re.fullmatch(r"[a-z0-9-]{1,80}", sid):
+        raise HTTPException(400, "Unknown startup.")
+    return startups.people(sid)
+
+
+@app.post("/api/startups/refresh")
+def startups_refresh(body: dict = Body(default={})):
+    if startups._status["running"]:
+        return {"started": False, "reason": "already running"}
+    threading.Thread(target=startups.run, kwargs={"full": bool(body.get("full", True))}, daemon=True).start()
+    return {"started": True}
 
 
 @app.get("/api/jobs")

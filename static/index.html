@@ -50,6 +50,7 @@
     <button data-tab="world">🌍 Other countries</button>
     <button data-tab="handshake" class="admin-only">🤝 Handshake</button>
     <button data-tab="opt" class="admin-only">⏱️ Part-time / Contract</button>
+    <button data-tab="startups">🚀 Startups</button>
     <button data-tab="analytics">📊 Analytics</button>
     <button data-tab="unis">Universities</button>
     <button data-tab="ask" class="admin-only">🤖 Ask ChatGPT</button>
@@ -147,6 +148,46 @@
 </section>
 
 <!-- ============================ UNIVERSITIES ============================ -->
+<!-- ============================ STARTUPS ============================ -->
+<section id="tab-startups" class="tab">
+  <div class="su-head">
+    <div>
+      <h2>🚀 Startup radar</h2>
+      <p class="muted" id="su-sub">Loading…</p>
+    </div>
+    <button id="su-scan" class="admin-only" title="Run the daily scan now (YC, SEC filings, news)">Scan now</button>
+  </div>
+  <div id="su-trends" class="su-trends"></div>
+  <div class="toolbar">
+    <input id="su-q" type="search" placeholder="Search startups, founders, what they build (e.g. agents, payments, robotics, Boston)…">
+    <select id="su-sort">
+      <option value="recent">Newest activity</option><option value="amount">Biggest raise</option>
+      <option value="team">Largest team</option><option value="name">Name</option>
+    </select>
+    <label class="check"><input type="checkbox" id="su-hiring"> Hiring now</label>
+    <label class="check"><input type="checkbox" id="su-jobs"> Has jobs in the portal</label>
+    <span id="su-count" class="muted"></span>
+  </div>
+  <div class="filters">
+    <div class="chips" id="su-stage"></div>
+    <div class="chips" id="su-cat"></div>
+    <div class="chips" id="su-src"></div>
+    <div class="chips" id="su-age"></div>
+  </div>
+  <div class="su-layout">
+    <div>
+      <div id="su-list" class="su-list"></div>
+      <button id="su-more" class="hidden">Show more</button>
+    </div>
+    <aside class="su-side">
+      <h3>📰 Live feed</h3>
+      <div id="su-news" class="su-news"></div>
+      <h3>⭐ Pages worth following</h3>
+      <ul id="su-rec" class="su-rec"></ul>
+    </aside>
+  </div>
+</section>
+
 <section id="tab-unis" class="tab">
   <div class="uni-head">
     <div>
