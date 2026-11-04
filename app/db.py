@@ -77,6 +77,16 @@ APPLIED_STAGES = ("applied", "interviewing", "offer", "rejected")
 WRITE_LOCK = threading.RLock()
 
 
+def oom_first() -> None:
+    """Called by the short-lived helper processes (job-list build, startup scan): if the server ever runs out of
+    memory, Linux stops the helper instead of the website. The next refresh simply redoes that work."""
+    try:
+        with open("/proc/self/oom_score_adj", "w") as f:
+            f.write("800")
+    except OSError:
+        pass  # not Linux
+
+
 @contextmanager
 def conn():
     c = sqlite3.connect(DB_PATH, timeout=60)  # refresh, fast lane and page loads overlap: wait instead of "database is locked"
@@ -182,15 +192,20 @@ def fetch_log() -> list[dict]:
         return [dict(r) for r in c.execute("SELECT * FROM fetch_log ORDER BY source")]
 
 
-def list_jobs(max_age_days: int) -> list[dict]:
-    """Recent jobs, plus every job anyone has saved or applied to, however old."""
+def iter_jobs(max_age_days: int):
+    """Recent jobs, plus every job anyone has saved or applied to, however old: one row at a time, so the full
+    descriptions of ~130k jobs are never all in memory together (the server has 1 GB)."""
     cutoff = int(time.time()) - max_age_days * 86400
     with conn() as c:
-        rows = c.execute(
-            "SELECT * FROM jobs WHERE COALESCE(posted_at, first_seen) >= ? "
-            "OR id IN (SELECT job_id FROM marks WHERE status NOT IN ('new', 'hidden')) "
-            "ORDER BY COALESCE(posted_at, first_seen) DESC", (cutoff,))
-        return [dict(r) for r in rows]
+        for r in c.execute(
+                "SELECT * FROM jobs WHERE COALESCE(posted_at, first_seen) >= ? "
+                "OR id IN (SELECT job_id FROM marks WHERE status NOT IN ('new', 'hidden')) "
+                "ORDER BY COALESCE(posted_at, first_seen) DESC", (cutoff,)):
+            yield dict(r)
+
+
+def list_jobs(max_age_days: int) -> list[dict]:
+    return list(iter_jobs(max_age_days))
 
 
 # ---------------------------------------------------------------- each user's marks (status, notes)

@@ -15,6 +15,8 @@ if [ ! -f /swapfile ] && [ "$(awk '/MemTotal/{print $2}' /proc/meminfo)" -lt 400
   fallocate -l 2G /swapfile && chmod 600 /swapfile && mkswap /swapfile >/dev/null && swapon /swapfile
   echo '/swapfile none swap sw 0 0' >> /etc/fstab
 fi
+echo "▸ Switching off desktop services a cloud server doesn't use (frees ~20 MB)"
+systemctl disable --now ModemManager udisks2 fwupd >/dev/null 2>&1 || true
 echo "▸ Cloudflare tunnel tool"
 if ! command -v cloudflared >/dev/null; then
   curl -fsSL -o /tmp/cloudflared.deb "https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-$(dpkg --print-architecture).deb"
@@ -41,6 +43,10 @@ Environment=PORTAL_HOST=127.0.0.1
 Environment=TRUST_PROXY=1
 # the server doesn't push README updates to GitHub (that needs a GitHub token on the server)
 Environment=PORTAL_README=0
+# memory on the 1 GB server: fewer glibc malloc arenas (less fragmentation across threads), and if memory runs out
+# Linux stops a background helper (job-list build, startup scan) before it touches the website
+Environment=MALLOC_ARENA_MAX=2
+OOMScoreAdjust=-500
 ExecStart=$APP/venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8787 --proxy-headers --forwarded-allow-ips 127.0.0.1
 Restart=always
 RestartSec=5
@@ -56,6 +62,7 @@ After=network-online.target jobportal.service
 Wants=network-online.target
 [Service]
 ExecStart=/usr/bin/cloudflared --no-autoupdate --config /etc/cloudflared/config.yml tunnel run
+OOMScoreAdjust=-500
 Restart=always
 RestartSec=5
 [Install]

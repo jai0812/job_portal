@@ -470,7 +470,8 @@ TIER1_GROUPS = {"FAANG / MAANG", "Big tech", "Top tech", "AI labs (H-1B not veri
 TIER1_SEGMENTS = {"broad_banks", "global_banks", "ib_markets", "hedge_quant", "market_makers"}
 
 
-def _enrich(rows: list[dict]) -> list[dict]:
+def _enrich_iter(rows):
+    """Add the derived fields to each job as it streams past (descriptions are dropped as soon as they are read)."""
     unis = _university_matchers()
     legal = _uscis_counts()
     groups = {c["name"].lower(): c.get("group", "") for c in load_more_companies()}
@@ -517,7 +518,11 @@ def _enrich(rows: list[dict]) -> list[dict]:
             r["regions"], r["countries"] = ["us"], [geo.US]
         else:
             r["regions"], r["countries"] = place_info(r["location"])
-    return rows
+        yield r
+
+
+def _enrich(rows: list[dict]) -> list[dict]:
+    return list(_enrich_iter(rows))
 
 
 # Building the job list (~130k rows, H-1B / finance / region lookups) takes minutes on a small cloud server, so it is
@@ -531,34 +536,37 @@ _jobs_lock = threading.Lock()
 
 
 def _build_jobs():
-    rows = _enrich(db.list_jobs(int(load_sources().get("max_age_days", 45))))
+    """Write one gzipped JSON list per tab, streaming: each job is read, enriched, encoded once and written straight
+    into its tabs' files, so memory stays flat however many jobs there are."""
     now = int(time.time())
-    by_region = {r: [] for r in REGIONS}
-    for row in rows:
-        for k in ("status", "notes", "applied_at"):  # pre-accounts columns: each user's marks come from /api/jobs/mine
-            row.pop(k, None)
-        if row["source_type"] == "handshake":
-            by_region["handshake"].append(row)
-            continue
-        for r in row["regions"]:
-            by_region[r].append(row)
-    gz = {r: gzip.compress(json.dumps({"now": now, "region": r, "jobs": js}, separators=(",", ":")).encode(), 5)
-          for r, js in by_region.items()}
-    _jobs.update(gz=gz, built=now)
-    for r, data in gz.items():
-        try:
-            tmp = DATA_DIR / f"jobs_cache_{r}.tmp"
-            tmp.write_bytes(data)
-            tmp.replace(DATA_DIR / f"jobs_cache_{r}.json.gz")
-        except OSError:
-            pass
+    out, first = {}, {}
+    try:
+        for r in REGIONS:
+            out[r] = gzip.open(DATA_DIR / f"jobs_cache_{r}.tmp", "wb", 5)
+            out[r].write(json.dumps({"now": now, "region": r})[:-1].encode() + b',"jobs":[')
+            first[r] = True
+        for row in _enrich_iter(db.iter_jobs(int(load_sources().get("max_age_days", 45)))):
+            for k in ("status", "notes", "applied_at"):  # pre-accounts columns: each user's marks come from /api/jobs/mine
+                row.pop(k, None)
+            data = json.dumps(row, separators=(",", ":")).encode()
+            for r in (["handshake"] if row["source_type"] == "handshake" else row["regions"]):
+                out[r].write(data if first[r] else b"," + data)
+                first[r] = False
+        for r in REGIONS:
+            out[r].write(b"]}")
+            out[r].close()
+            (DATA_DIR / f"jobs_cache_{r}.tmp").replace(DATA_DIR / f"jobs_cache_{r}.json.gz")
+    finally:
+        for f in out.values():
+            f.close()
+    _jobs.update(gz={r: (DATA_DIR / f"jobs_cache_{r}.json.gz").read_bytes() for r in REGIONS}, built=now)
 
 
 def _build_jobs_isolated():
     """_build_jobs() in a short-lived child process, then load the files it wrote. The build briefly needs a few
     hundred MB, and a long-running Python process never hands that back: building inside the portal after every
     refresh made it grow until the 1 GB server ran out of memory (it was killed on 2026-11-04)."""
-    r = subprocess.run([sys.executable, "-c", "from app import main; main._build_jobs()"], cwd=ROOT,
+    r = subprocess.run([sys.executable, "-c", "from app import db; db.oom_first(); from app import main; main._build_jobs()"], cwd=ROOT,
                        capture_output=True, text=True, timeout=1800)
     if r.returncode != 0:
         raise RuntimeError((r.stderr or r.stdout).strip().splitlines()[-1] if (r.stderr or r.stdout).strip() else f"exit {r.returncode}")
@@ -630,7 +638,7 @@ def jobs(request: Request, region: str = "us"):
             break
         time.sleep(1)
     if _jobs["gz"] is None:
-        _build_jobs()
+        _build_jobs_isolated()
     data = _jobs["gz"][region]
     if "gzip" in request.headers.get("accept-encoding", ""):
         return Response(data, media_type="application/json",

@@ -645,5 +645,6 @@ if __name__ == "__main__":  # the child process run_isolated() starts:  python -
     ap.add_argument("--full", action="store_true")
     ap.add_argument("--sec-days", type=int, default=3)
     a = ap.parse_args()
+    db.oom_first()
     init()
     run(full=a.full, sec_days=a.sec_days)
