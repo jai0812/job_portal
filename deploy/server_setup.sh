@@ -16,7 +16,8 @@ if [ ! -f /swapfile ] && [ "$(awk '/MemTotal/{print $2}' /proc/meminfo)" -lt 400
   echo '/swapfile none swap sw 0 0' >> /etc/fstab
 fi
 echo "▸ Switching off desktop services a cloud server doesn't use (frees ~20 MB)"
-systemctl disable --now ModemManager udisks2 fwupd >/dev/null 2>&1 || true
+systemctl disable --now ModemManager >/dev/null 2>&1 || true
+systemctl mask --now udisks2 fwupd >/dev/null 2>&1 || true   # started on demand otherwise
 echo "▸ Cloudflare tunnel tool"
 if ! command -v cloudflared >/dev/null; then
   curl -fsSL -o /tmp/cloudflared.deb "https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-$(dpkg --print-architecture).deb"
