@@ -34,6 +34,8 @@
 import gzip
 import json
 import re
+import subprocess
+import sys
 import threading
 import time
 
@@ -552,6 +554,18 @@ def _build_jobs():
             pass
 
 
+def _build_jobs_isolated():
+    """_build_jobs() in a short-lived child process, then load the files it wrote. The build briefly needs a few
+    hundred MB, and a long-running Python process never hands that back: building inside the portal after every
+    refresh made it grow until the 1 GB server ran out of memory (it was killed on 2026-11-04)."""
+    r = subprocess.run([sys.executable, "-c", "from app import main; main._build_jobs()"], cwd=ROOT,
+                       capture_output=True, text=True, timeout=1800)
+    if r.returncode != 0:
+        raise RuntimeError((r.stderr or r.stdout).strip().splitlines()[-1] if (r.stderr or r.stdout).strip() else f"exit {r.returncode}")
+    gz = {reg: (DATA_DIR / f"jobs_cache_{reg}.json.gz").read_bytes() for reg in REGIONS}
+    _jobs.update(gz=gz, built=int((DATA_DIR / "jobs_cache_us.json.gz").stat().st_mtime))
+
+
 def rebuild_jobs():
     """Rebuild the job list in the background (coalesces calls that arrive while a build is running)."""
     with _jobs_lock:
@@ -563,7 +577,7 @@ def rebuild_jobs():
     def work():
         while True:
             try:
-                _build_jobs()
+                _build_jobs_isolated()
             except Exception as e:
                 print(f"job list build failed: {e}", flush=True)
             with _jobs_lock:
@@ -601,7 +615,7 @@ def startup_people(sid: str):
 def startups_refresh(body: dict = Body(default={})):
     if startups._status["running"]:
         return {"started": False, "reason": "already running"}
-    threading.Thread(target=startups.run, kwargs={"full": bool(body.get("full", True))}, daemon=True).start()
+    threading.Thread(target=startups.run_isolated, kwargs={"full": bool(body.get("full", True))}, daemon=True).start()
     return {"started": True}
 
 

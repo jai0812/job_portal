@@ -23,6 +23,8 @@ import hashlib
 import html
 import json
 import re
+import subprocess
+import sys
 import threading
 import time
 import xml.etree.ElementTree as ET
@@ -32,6 +34,7 @@ from email.utils import parsedate_to_datetime
 import httpx
 
 from . import db
+from .config import ROOT
 
 UA = {"User-Agent": "SharmaJai-Job-Portal/1.0 (+https://jobs.sharmajai.com; startup radar)"}
 YC_ALL = "https://yc-oss.github.io/api/companies/all.json"
@@ -578,6 +581,33 @@ def build() -> None:
         pass
 
 
+def run_isolated(full: bool = True, sec_days: int = 3) -> None:
+    """run() in a short-lived child process. A scan briefly needs a couple of hundred MB (the YC directory alone is
+    10 MB of JSON) and a long-running Python process never hands memory back, so scanning inside the portal pushed the
+    1 GB server out of memory. The child exits when it's done, and the page's copy is read back from its file."""
+    if _status["running"]:
+        return
+    _status["running"] = True
+    try:
+        args = [sys.executable, "-m", "app.startups"] + (["--full", "--sec-days", str(sec_days)] if full else [])
+        r = subprocess.run(args, cwd=ROOT, capture_output=True, text=True, timeout=3600)
+        out = [line for line in (r.stdout + r.stderr).splitlines() if line.strip()]
+        print("\n".join(out[-5:]) or f"startup radar exited with {r.returncode}", flush=True)
+        _status["log"] = out[-5:]
+        _status["last_news"] = int(time.time())
+        if full and r.returncode == 0:
+            _status["last"] = int(time.time())
+        try:
+            _payload["gz"] = (db.DB_PATH.parent / "startups_cache.json.gz").read_bytes()
+            _status["built"] = int(time.time())
+        except OSError:
+            pass
+    except subprocess.TimeoutExpired:
+        print("startup radar: the scan took over an hour and was stopped", flush=True)
+    finally:
+        _status["running"] = False
+
+
 def payload() -> bytes | None:
     if _payload["gz"] is None:
         try:
@@ -599,11 +629,21 @@ def loop(busy=lambda: False) -> None:
             if not busy():
                 hour = datetime.now(timezone.utc).hour
                 if not _status["last"]:
-                    run(full=True, sec_days=30)  # first run: a month of SEC filings
+                    run_isolated(full=True, sec_days=30)  # first run: a month of SEC filings
                 elif time.time() - _status["last"] > 20 * 3600 and 8 <= hour <= 12:  # ~4-8 AM US Eastern
-                    run(full=True)
+                    run_isolated(full=True)
                 elif time.time() - _status["last_news"] > 3 * 3600:
-                    run(full=False)
+                    run_isolated(full=False)
         except Exception as e:
             print(f"startup radar failed, will retry: {e}", flush=True)
         time.sleep(600)
+
+
+if __name__ == "__main__":  # the child process run_isolated() starts:  python -m app.startups [--full] [--sec-days N]
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--full", action="store_true")
+    ap.add_argument("--sec-days", type=int, default=3)
+    a = ap.parse_args()
+    init()
+    run(full=a.full, sec_days=a.sec_days)
