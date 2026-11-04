@@ -47,9 +47,10 @@ SOURCE_CATEGORY = {
 LEVEL_PATTERNS = [
     ("internship", r"\bintern\b|internship|co-?op\b|\bsummer 20\d\d|apprentice|fellowship"),
     ("experienced", r"senior|\bsr\.?\b|\bstaff\b|principal|\blead\b|manager|director|\bii\b|\biii\b|\biv\b|architect"
-                    r"|head of|\bvp\b|\b[3-9]\+? years"),
+                    r"|head of|\bvp\b|\bavp\b|vice president|\b[3-9]\+? years|\bsde[- ]?(2|3|ii|iii)\b|\b(engineer|developer)[- ]?(2|3)\b"),
     ("early_career", r"new grad|graduate|entry|junior|\bjr\.?\b|early career|associate|university|campus|\bi\b|level 1"
                      r"|rotational|analyst program|20(2[5-9]) start|recent grad|college grad"
+                     r"|fresher|trainee|graduate engineer|\bget\b|\bsde[- ]?(1|i)\b|\b(engineer|developer)[- ]?1\b|0[- ]?(-|to)[- ]?[12] (years|yrs)"
                      r"|\b(hr|human resources?|recruit\w*|talent acquisition|people|payroll|benefits) (assistant|coordinator|administrator)"),
 ]
 
@@ -201,6 +202,44 @@ def categories(title: str, company: str, source_category: str = "") -> list[str]
     return sorted(cats) or ["other"]
 
 
+# Years of experience a posting asks for. Titles ("Exp- 6- 10 Years", "(3-5 yrs)") are trusted as they are; in a
+# description the number has to sit next to an experience word, so "a 25-year-old company" doesn't count.
+_YEARS = r"(?<![\d.])(\d{1,2})\s*(?:\+|plus)?\s*(?:(?:-|–|to)\s*\d{1,2}\s*\+?\s*)?(?:years?|yrs?)\b"
+_TITLE_YEARS = re.compile(r"(?:exp\w*[\s:.-]*)?" + _YEARS, re.I)
+_DESC_YEARS = re.compile(
+    r"(?:(?:experience|exp|minimum|min\.|at least)\W{0,3}(?:\w+\W{1,3}){0,3}?" + _YEARS + r")"
+    r"|(?:" + _YEARS + r"(?:\W{1,3}\w+){0,4}?\W{1,3}(?:of\s+)?(?:\w+\s+){0,3}?(?:experience|exp\b|work|industry|professional|hands-on))", re.I)
+FRESHER = re.compile(r"\bfreshers?\b|\b0\s*(?:-|–|to)\s*[12]\s*(?:years?|yrs?)\b|no (prior )?experience (is )?required", re.I)
+# At banks and trading firms "Associate" is a rank above Analyst (usually 3+ years), not an entry-level title.
+_BANK_RANK = re.compile(r"\bassociate\s*($|[,)\-–|/:]|\d)", re.I)  # "Operations Associate", "Associate - Risk", "Associate 2"
+
+
+def min_years(title: str, description: str = "") -> int | None:
+    """The experience a posting asks for, in years (the largest minimum it states), or None."""
+    found = [int(m.group(1)) for m in _TITLE_YEARS.finditer(title or "")]
+    for m in _DESC_YEARS.finditer(description or ""):
+        n = m.group(1) or m.group(2)
+        if n is not None:
+            found.append(int(n))
+    found = [n for n in found if n <= 20]
+    if found:
+        return max(found)
+    return 0 if FRESHER.search(title or "") or FRESHER.search(description or "") else None
+
+
+def adjust_level(lvl: str, title: str, description: str = "", company: str = "") -> str:
+    """Early career means 0-2 years: a posting that asks for 3+ years is experienced whatever its title says."""
+    if lvl in ("internship", "experienced"):
+        return lvl
+    yrs = min_years(title, description)
+    if yrs is not None:
+        return "experienced" if yrs >= 3 else "early_career"
+    rules = _company_rules()
+    if lvl == "early_career" and _BANK_RANK.search(title or "") and rules["finance"] and rules["finance"].search(company or ""):
+        return "experienced"
+    return lvl
+
+
 def level(title: str, hint: str = "", seniority: str = "") -> str:
     t = title.lower()
     for name, pat in LEVEL_PATTERNS:
@@ -241,6 +280,7 @@ def build(*, source_type: str, source_name: str, company: str, title: str, locat
           posted_at: int | None = None, posted_precision: str = "exact", description: str = "", salary: str = "", level_hint: str = "",
           seniority: str = "", source_category: str = "", sponsorship_text: str = "", job_type: str = "") -> dict:
     company, title = (company or "").strip(), (title or "").strip()
+    title = re.sub(r"(\s*(\bNEW\b|🆕|🔥|✨|⭐))+\s*$", "", title)  # "new" badges some lists put after the title
     return {
         "id": job_id(url, company, title, location),
         "source_type": source_type,
@@ -252,7 +292,7 @@ def build(*, source_type: str, source_name: str, company: str, title: str, locat
         "posted_at": posted_at,
         "posted_precision": posted_precision,
         "categories": ",".join(categories(title, company, source_category)),
-        "level": level(title, level_hint, seniority),
+        "level": adjust_level(level(title, level_hint, seniority), title, description, company),
         "h1b": h1b(company, f"{sponsorship_text}\n{description}"),
         "cap_exempt": int(cap_exempt(company)),
         "top_company": int(top_company(company)),

@@ -37,6 +37,11 @@ def fetch(source: dict, max_age_days: int) -> list[dict]:
     hint = source.get("level", "")
     cutoff = time.time() - max_age_days * 86400
     with httpx.Client(headers=HEADERS, timeout=60, follow_redirects=True) as client:
+        if source.get("json"):  # a plain JSON job file: {"jobs": [...]} or [...]
+            raw = _get(client, owner, repo, branches, source["json"])
+            if raw is None:
+                raise RuntimeError(f"Couldn't read {source['json']}")
+            return _from_json(json.loads(raw), name, hint, cutoff, source.get("category", ""))
         raw = _get(client, owner, repo, branches, ".github/scripts/listings.json")
         if raw:
             return _from_listings(json.loads(raw), name, hint, cutoff)
@@ -68,6 +73,33 @@ def _from_listings(items: list[dict], name: str, hint: str, cutoff: float) -> li
             source_category=it.get("category", ""),
             sponsorship_text="" if sponsorship == "Other" else sponsorship,
         ))
+    return jobs
+
+
+def _from_json(data, name: str, hint: str, cutoff: float, category: str = "") -> list[dict]:
+    """Job files written by other people's scrapers: field names vary, so take the usual ones."""
+    items = data if isinstance(data, list) else next((v for v in data.values() if isinstance(v, list)), [])
+    pick = lambda it, *keys: next((it[k] for k in keys if it.get(k)), "")  # noqa: E731
+    jobs = []
+    for it in items:
+        if not isinstance(it, dict):
+            continue
+        when = str(pick(it, "posted_at", "posted", "date_posted", "date", "created_at"))
+        try:
+            posted = int(datetime.fromisoformat(when.replace("Z", "+00:00")).timestamp()) if when else None
+        except ValueError:
+            posted = None
+        if posted and posted < cutoff:
+            continue
+        title, url = pick(it, "title", "role", "position"), pick(it, "apply_url", "url", "link")
+        if not title or not url:
+            continue
+        kind = str(pick(it, "type", "job_type")).lower()
+        jobs.append(classify.build(
+            source_type="github", source_name=name, company=pick(it, "company", "company_name", "employer"), title=title,
+            location=pick(it, "location", "place", "city") or "India", url=url, posted_at=posted,
+            level_hint="internship" if "intern" in kind else hint, source_category=category,
+            description=str(pick(it, "snippet", "description", "summary"))[:3000]))
     return jobs
 
 

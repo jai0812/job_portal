@@ -5,6 +5,33 @@
 # `level` is a hint used when a job title doesn't say (internship | early_career | experienced).
 
 github:
+  # ---- India: fresher / entry-level lists, rebuilt daily from employers' own job boards
+  - name: India Fresher SDE Jobs (devsunite)
+    url: https://github.com/devsuniteofficial/india-fresher-sde-jobs
+    level: early_career
+    category: swe
+  - name: Software Jobs India (Hirly)
+    url: https://github.com/Hirly-Me/Software-Jobs-India
+  - name: Fresher Tech Jobs India (Rohan-droid7)
+    url: https://github.com/Rohan-droid7/jobs-fresher-india
+    level: early_career
+  - name: Engineering Internships India (akshat0011)
+    url: https://github.com/akshat0011/engineering-internship-india
+  - name: FresherFlow India
+    url: https://github.com/FresherFlow/India-Jobs-Internships
+    level: early_career
+  - name: India Data & AI Jobs (gopi-354)
+    url: https://github.com/gopi-354/jobhunt
+    json: docs/data/jobs.json
+    category: data
+  - name: India Job Radar (ChaitanyaKhanna14)
+    url: https://github.com/ChaitanyaKhanna14/job-radar
+    json: docs/data/jobs.json
+    level: early_career
+  - name: India Fresher Jobs (adi0205)
+    url: https://github.com/adi0205/fresher-jobs
+    json: data/jobs.json
+    level: early_career
   # ---------------- Canada (🇨🇦 tab): internships, co-ops and new grad
   - name: Canadian Tech Internships 2027 (negarprh)
     url: https://github.com/negarprh/Canadian-Tech-Internships-2027

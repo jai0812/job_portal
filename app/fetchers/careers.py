@@ -406,7 +406,38 @@ def tiktok(f: dict, sink: Sink) -> None:
             time.sleep(0.3)
 
 
-FETCHERS = {"amazon": amazon, "microsoft": microsoft, "eightfold": eightfold, "tiktok": tiktok, "workday": workday, "oracle": oracle, "smartrecruiters": smartrecruiters, "greenhouse": greenhouse,
+def darwinbox(f: dict, sink: Sink) -> None:
+    """Darwinbox, the HR system many Indian companies use. Its job list gives the experience range, which is passed on
+    as text so the level (0-2 years = early career) comes out right."""
+    base = f"https://{f['sub']}.darwinbox.in"
+    with _client() as c:
+        for page in range(1, 11):
+            d = c.get(f"{base}/ms/candidateapi/job", params={"page": page, "limit": 50},
+                      headers={"Accept": "application/json"}).json().get("message") or {}
+            posts = d.get("jobs") or []
+            for p in posts:
+                lo, hi = p.get("experience_from_num"), p.get("experience_to_num")
+                exp = f"Experience: {lo}-{hi} years" if lo not in (None, "") and hi not in (None, "") else \
+                      f"Experience: {lo}+ years" if lo not in (None, "") else ""
+                sink.add(p.get("title") or p.get("designation_display_name") or "", p.get("officelocation_show_arr") or "India",
+                         f"{base}/ms/candidate/careers/{p.get('id')}", p.get("job_posting_on") or _iso(p.get("created_on")),
+                         "day", exp, job_type=p.get("emp_type", ""))
+            if len(posts) < 50 or page * 50 >= (d.get("jobscount") or 0):
+                break
+
+
+def workable(f: dict, sink: Sink) -> None:
+    with _client() as c:
+        d = c.get(f"https://apply.workable.com/api/v1/widget/accounts/{f['account']}").json()
+        for p in d.get("jobs") or []:
+            where = ", ".join(x for x in (p.get("city"), p.get("state"), p.get("country")) if x) or \
+                    ("Remote" if p.get("telecommuting") else "")
+            exp = p.get("experience") or ""  # Workable's levels: Internship / Entry level / Associate / Mid-Senior level...
+            sink.add(p.get("title", ""), where, p.get("url", ""), _iso(p.get("published_on") or p.get("created_at")), "day",
+                     "No experience required" if exp in ("Internship", "Entry level") else "", job_type=p.get("employment_type", ""))
+
+
+FETCHERS = {"darwinbox": darwinbox, "workable": workable, "amazon": amazon, "microsoft": microsoft, "eightfold": eightfold, "tiktok": tiktok, "workday": workday, "oracle": oracle, "smartrecruiters": smartrecruiters, "greenhouse": greenhouse,
             "lever": lever, "ashby": ashby, "phenom": phenom}
 
 

@@ -104,7 +104,7 @@ async function loadStatus() {
 // ------------------------------------------------------------------ JOBS
 const CATS = [["", "All"], ["swe", "Software Engineering"], ["finance", "Finance & Banks"], ["data", "Data Science & ML"], ["it", "💻 IT Support"], ["other", "Other"]];
 const CATS_CANADA = [["", "All"], ["swe", "Software Engineering"], ["data", "Data Science & ML"], ["it", "💻 IT Support"], ["hr", "👥 HR & People"], ["finance", "Finance & Banks"], ["other", "Other"]];
-const LEVELS = [["", "All levels"], ["internship", "Internship"], ["early_career", "Early career / New grad"], ["experienced", "Experienced"], ["unspecified", "Unspecified"]];
+const LEVELS = [["", "All levels"], ["internship", "Internship"], ["early_career", "Early career · 0-2 yrs"], ["experienced", "Experienced · 3+ yrs"], ["unspecified", "Unspecified"]];
 const AGES = [["", "Any time"], [6, "≤ 6h"], [24, "≤ 24h"], [48, "≤ 2d"], [72, "≤ 3d"], [168, "≤ 7d"], [336, "≤ 14d"], [720, "≤ 30d"]];
 const H1B_LABEL = { yes: "Sponsors", likely: "Likely", no: "No sponsorship", citizen: "US citizens", unknown: "Unknown" };
 const LEVEL_LABEL = { internship: "Intern", early_career: "Early career", experienced: "Experienced", unspecified: "—" };
