@@ -21,7 +21,8 @@ companies:
   - {name: Observe.AI, group: India tech & fintech, feeds: [{type: greenhouse, board: observeai}]}
   - {name: Atlan, group: India tech & fintech, feeds: [{type: ashby, board: atlan}]}
   - {name: HackerRank, group: India tech & fintech, feeds: [{type: greenhouse, board: hackerrank}]}
-  # India product companies, startups and analytics firms (Darwinbox and Workable are common Indian hiring systems)
+  # India product companies, startups and analytics firms. (Darwinbox, which many Indian companies use, refuses
+  # requests from cloud servers, so Porter, Upstox, Cars24, LeadSquared and LatentView can't be read from here.)
   - {name: Swiggy, group: India tech & fintech, regions: [india], feeds: [{type: smartrecruiters, company: swiggy}]}
   - {name: Razorpay, group: India tech & fintech, regions: [india], feeds: [{type: greenhouse, board: razorpaysoftwareprivatelimited}]}
   - {name: Freshworks, group: India tech & fintech, regions: [india, us], feeds: [{type: smartrecruiters, company: freshworks}]}
@@ -29,16 +30,10 @@ companies:
   - {name: Sprinklr, group: India tech & fintech, regions: [india, us], feeds: [{type: workday, tenant: sprinklr, wd: wd1, site: careers}]}
   - {name: Glance, group: India tech & fintech, regions: [india], feeds: [{type: greenhouse, board: glance}]}
   - {name: FamPay, group: India tech & fintech, regions: [india], feeds: [{type: lever, company: fampay}]}
-  - {name: Porter, group: India tech & fintech, regions: [india], feeds: [{type: darwinbox, sub: porter}]}
-  - {name: Upstox, group: India tech & fintech, regions: [india], feeds: [{type: darwinbox, sub: upstox}]}
-  - {name: Cars24, group: India tech & fintech, regions: [india], feeds: [{type: darwinbox, sub: cars24}]}
-  - {name: LeadSquared, group: India tech & fintech, regions: [india, us], feeds: [{type: darwinbox, sub: leadsquaredhrms}]}
-  - {name: Darwinbox, group: India tech & fintech, regions: [india, us], feeds: [{type: darwinbox, sub: dbx}]}
   - {name: Apna, group: India tech & fintech, regions: [india], tech_only: true, feeds: [{type: workable, account: apna}]}
   - {name: Fractal, group: India tech & fintech, regions: [india, us], feeds: [{type: workday, tenant: fractal, wd: wd1, site: Careers}]}
   - {name: Quantiphi, group: India tech & fintech, regions: [india, us], feeds: [{type: workday, tenant: quantiphi, wd: wd1, site: Careers_at_Quantiphi}]}
   - {name: Tiger Analytics, group: India tech & fintech, regions: [india, us], feeds: [{type: workable, account: tiger-analytics}]}
-  - {name: LatentView Analytics, group: India tech & fintech, regions: [india, us], feeds: [{type: darwinbox, sub: latentview}]}
 
   # ---------------- FAANG / MAANG (Meta, Apple and Google can't be read directly: see the Apify search in sources.yaml)
   - {name: Amazon, group: FAANG / MAANG, uscis: [AMAZON], feeds: [{type: amazon, country: USA, categories: [software-development, machine-learning-science, data-science, research-science, business-intelligence, economics, finance-accounting, solutions-architect, systems-quality-security-engineering, hardware-development, project-program-product-management-technical]}, {type: amazon, country: IND}, {type: amazon, country: CAN, categories: [software-development, machine-learning-science, data-science, business-intelligence, solutions-architect, human-resources]}]}
