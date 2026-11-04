@@ -227,7 +227,7 @@ def min_years(title: str, description: str = "") -> int | None:
     return 0 if FRESHER.search(title or "") or FRESHER.search(description or "") else None
 
 
-def adjust_level(lvl: str, title: str, description: str = "", company: str = "") -> str:
+def adjust_level(lvl: str, title: str, description: str = "", company: str = "", finance: bool = False) -> str:
     """Early career means 0-2 years: a posting that asks for 3+ years is experienced whatever its title says."""
     if lvl in ("internship", "experienced"):
         return lvl
@@ -235,7 +235,8 @@ def adjust_level(lvl: str, title: str, description: str = "", company: str = "")
     if yrs is not None:
         return "experienced" if yrs >= 3 else "early_career"
     rules = _company_rules()
-    if lvl == "early_career" and _BANK_RANK.search(title or "") and rules["finance"] and rules["finance"].search(company or ""):
+    bank = finance or bool(rules["finance"] and rules["finance"].search(company or ""))  # finance: a firm in finance_firms.yaml
+    if lvl == "early_career" and _BANK_RANK.search(title or "") and bank:
         return "experienced"
     return lvl
 

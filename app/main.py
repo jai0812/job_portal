@@ -505,8 +505,8 @@ def _enrich(rows: list[dict]) -> list[dict]:
         desc = r.pop("description", "") or ""
         r["has_description"] = bool(desc)
         r["immediate"] = classify.immediate(r.get("title", ""), desc)
-        r["level"] = classify.adjust_level(r["level"], r["title"], desc, r["company"] or "")  # 0-2 years = early career
         uni, r["fin"], r["h1b_fy23"] = company_info(r["company"] or "")
+        r["level"] = classify.adjust_level(r["level"], r["title"], desc, r["company"] or "", bool(r["fin"]))  # 0-2 yrs = early
         # contract / part-time / temp, hours a week, W2 or C2C, and any recruiter contact written in the posting
         jt, hrs = r.pop("job_type", "") or classify.job_type(r["title"], desc), classify.hours(r["title"], desc)
         if jt or hrs:
