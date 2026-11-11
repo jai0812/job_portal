@@ -42,6 +42,22 @@ firms:
      uscis: [PNC], feeds: [{type: workday, tenant: pnc, wd: wd5, site: External}], careers: https://careers.pnc.com}
   - {name: Truist, segment: broad_banks, match: [Truist],
      uscis: [TRUIST], feeds: [{type: workday, tenant: truist, wd: wd1, site: Careers}], careers: https://careers.truist.com}
+  - {name: BNY, segment: broad_banks, match: [=BNY, BNY Mellon, Bank of New York Mellon],
+     feeds: [{type: oracle, host: eofe.fa.us2.oraclecloud.com, site_number: CX_1001, site: CX_1001}], careers: https://www.bny.com/corporate/global/en/careers.html}
+  - {name: Citizens, segment: broad_banks, match: [=Citizens, Citizens Financial Group, =Citizens Bank],
+     feeds: [{type: oracle, host: hcgn.fa.us2.oraclecloud.com, site_number: CX_1, site: CX_1}], careers: https://jobs.citizensbank.com}
+  - {name: M&T Bank, segment: broad_banks, match: [M&T Bank, =M&T],
+     feeds: [{type: workday, tenant: mtb, wd: wd5, site: MTB}, {type: workday, tenant: mtb, wd: wd5, site: Campus}], careers: https://www.mtb.com/careers}
+  - {name: Fifth Third, segment: broad_banks, match: [Fifth Third],
+     uscis: [FIFTH THIRD], feeds: [{type: workday, tenant: fifththird, wd: wd5, site: 53careers}], careers: https://www.53.com/content/fifth-third/en/careers.html}
+  - {name: USAA, segment: broad_banks, match: [=USAA],
+     uscis: [UNITED SERVICES AUTOMOBILE, USAA], feeds: [{type: workday, tenant: usaa, wd: wd1, site: USAAJOBSWD}], careers: https://www.usaajobs.com}
+  - {name: Navy Federal Credit Union, segment: broad_banks, match: [Navy Federal],
+     uscis: [NAVY FEDERAL], feeds: [{type: oracle, host: fa-etbx-saasfaprod1.fa.ocs.oraclecloud.com, site_number: nfcu, site: nfcu}], careers: https://www.navyfederal.org/about/careers.html}
+  - {name: KeyBank, segment: broad_banks, match: [KeyBank, KeyCorp], uscis: [KEYBANK], careers: https://www.key.com/about/careers.html}
+  - {name: Huntington Bank, segment: broad_banks, match: [Huntington National Bank, Huntington Bank, Huntington Bancshares], careers: https://www.huntington.com/careers}
+  - {name: Regions Bank, segment: broad_banks, match: [Regions Bank, Regions Financial], uscis: [REGIONS BANK], careers: https://careers.regions.com}
+  - {name: First Citizens Bank, segment: broad_banks, match: [First Citizens], uscis: [FIRST CITIZENS], careers: https://www.firstcitizens.com/careers}
 
   # ---------------- Global banks
   - {name: HSBC, segment: global_banks, match: [HSBC], uscis: [HSBC], careers: https://mycareer.hsbc.com}

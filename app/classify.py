@@ -282,6 +282,7 @@ def build(*, source_type: str, source_name: str, company: str, title: str, locat
           seniority: str = "", source_category: str = "", sponsorship_text: str = "", job_type: str = "") -> dict:
     company, title = (company or "").strip(), (title or "").strip()
     title = re.sub(r"(\s*(\bNEW\b|🆕|🔥|✨|⭐))+\s*$", "", title)  # "new" badges some lists put after the title
+    title = re.sub(r"^\s*(🆕|🔥|✨|⭐)+\s*", "", title)  # ... or before it
     return {
         "id": job_id(url, company, title, location),
         "source_type": source_type,

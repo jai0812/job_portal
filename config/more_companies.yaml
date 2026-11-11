@@ -241,3 +241,38 @@ companies:
   - {name: Experian, group: Other H-1B sponsors (tech roles only), tech_only: true, regions: [us, india, canada], feeds: [{type: smartrecruiters, company: Experian}]}
   - {name: Intuitive, group: Other H-1B sponsors (tech roles only), tech_only: true, regions: [us, india, canada], uscis: [INTUITIVE SURGICAL], feeds: [{type: smartrecruiters, company: Intuitive}]}
   - {name: NBCUniversal, group: Other H-1B sponsors (tech roles only), tech_only: true, regions: [us, india, canada], uscis: [NBCUNIVERSAL], feeds: [{type: smartrecruiters, company: NBCUniversal3}]}
+
+  # ---------------- Government & defense (for the 🇺🇸 US citizen jobs tab; see config/citizen.yaml)
+  # Most roles here need US citizenship or a security clearance. Tech roles only, US only, newest ~300 postings each,
+  # re-checked every 3 hours. Can't be read: Lockheed Martin (refuses automated requests), L3Harris, Peraton,
+  # General Dynamics Mission Systems, BAE Systems, MITRE, JHU APL, MIT Lincoln Laboratory — those are links on the tab.
+  - {name: Northrop Grumman, group: Government & defense, tech_only: true, regions: [us], every_hours: 3, feeds: [{type: workday, tenant: ngc, wd: wd1, site: Northrop_Grumman_External_Site, max: 300}]}
+  - {name: RTX, group: Government & defense, tech_only: true, regions: [us], every_hours: 3, feeds: [{type: workday, tenant: globalhr, wd: wd5, site: REC_RTX_Ext_Gateway, max: 300}]}
+  - {name: Boeing, group: Government & defense, tech_only: true, regions: [us], every_hours: 3, feeds: [{type: workday, tenant: boeing, wd: wd1, site: EXTERNAL_CAREERS, max: 300}]}
+  - {name: Booz Allen Hamilton, group: Government & defense, tech_only: true, regions: [us], every_hours: 3, feeds: [{type: workday, tenant: bah, wd: wd1, site: BAH_Jobs, max: 300}]}
+  - {name: SAIC, group: Government & defense, tech_only: true, regions: [us], every_hours: 3, feeds: [{type: oracle, host: eihu.fa.us8.oraclecloud.com, site_number: CX, site: CX}]}
+  - {name: CACI, group: Government & defense, tech_only: true, regions: [us], every_hours: 3, feeds: [{type: workday, tenant: caci, wd: wd1, site: External, max: 300}]}
+  - {name: Parsons, group: Government & defense, tech_only: true, regions: [us], every_hours: 3, feeds: [{type: workday, tenant: parsons, wd: wd5, site: Search, max: 300}]}
+  - {name: ICF, group: Government & defense, tech_only: true, regions: [us], every_hours: 3, feeds: [{type: workday, tenant: icf, wd: wd5, site: ICFExternal_Career_Site, max: 300}]}
+  - {name: Draper, group: Government & defense, tech_only: true, regions: [us], every_hours: 3, feeds: [{type: workday, tenant: draper, wd: wd5, site: Draper_Careers, max: 300}]}
+  - {name: The Aerospace Corporation, group: Government & defense, tech_only: true, regions: [us], every_hours: 3, feeds: [{type: workday, tenant: aero, wd: wd5, site: External, max: 300}]}
+  - {name: Blue Origin, group: Government & defense, tech_only: true, regions: [us], every_hours: 3, feeds: [{type: workday, tenant: blueorigin, wd: wd5, site: BlueOrigin, max: 300}]}
+  - {name: Sierra Nevada Corporation, group: Government & defense, tech_only: true, regions: [us], every_hours: 3, feeds: [{type: workday, tenant: snc, wd: wd1, site: SNC_External_Career_Site, max: 300}]}
+  - {name: Sierra Space, group: Government & defense, tech_only: true, regions: [us], every_hours: 3, feeds: [{type: workday, tenant: sierraspace, wd: wd1, site: Sierra_Space_External_Career_Site, max: 300}]}
+  - {name: Maxar, group: Government & defense, tech_only: true, regions: [us], every_hours: 3, feeds: [{type: workday, tenant: maxar, wd: wd1, site: Vantor, max: 300}]}
+  - {name: KBR, group: Government & defense, tech_only: true, regions: [us], every_hours: 3, feeds: [{type: workday, tenant: kbr, wd: wd5, site: KBR_Careers, max: 300}]}
+  - {name: GE Aerospace, group: Government & defense, tech_only: true, regions: [us], every_hours: 3, feeds: [{type: workday, tenant: geaerospace, wd: wd5, site: GE_ExternalSite, max: 300}]}
+  - {name: Honeywell, group: Government & defense, tech_only: true, regions: [us], every_hours: 3, feeds: [{type: oracle, host: ibqbjb.fa.ocs.oraclecloud.com, site_number: Honeywell, site: Honeywell}]}
+  - {name: Hadrian, group: Government & defense, tech_only: true, regions: [us], every_hours: 3, feeds: [{type: ashby, board: hadrian-automation}]}
+
+  # ---------------- Big 4 (Deloitte, EY and KPMG's career sites can't be read automatically: links on the citizen tab)
+  - {name: PwC, group: Big 4 & consulting, regions: [us], every_hours: 3, uscis: [PRICEWATERHOUSECOOPERS], feeds: [{type: workday, tenant: pwc, wd: wd3, site: US_Entry_Level_Careers, max: 300}, {type: workday, tenant: pwc, wd: wd3, site: Global_Campus_Careers, max: 300}, {type: workday, tenant: pwc, wd: wd3, site: Global_Experienced_Careers, max: 300}]}
+
+  # ---------------- Employers that came to Boston University career fairs (fall 2026) and weren't followed yet
+  - {name: Travelers, group: Recruits at BU, tech_only: true, regions: [us], every_hours: 3, feeds: [{type: workday, tenant: travelers, wd: wd5, site: External, max: 300}]}
+  - {name: Texas Instruments, group: Recruits at BU, tech_only: true, regions: [us], every_hours: 3, feeds: [{type: oracle, host: edbz.fa.us2.oraclecloud.com, site_number: CX, site: CX}]}
+  - {name: Abbott, group: Recruits at BU, tech_only: true, regions: [us], every_hours: 3, feeds: [{type: workday, tenant: abbott, wd: wd5, site: abbottcareers, max: 300}]}
+  - {name: IQVIA, group: Recruits at BU, tech_only: true, regions: [us], every_hours: 3, feeds: [{type: workday, tenant: iqvia, wd: wd1, site: IQVIA, max: 300}]}
+  - {name: Eversource Energy, group: Recruits at BU, tech_only: true, regions: [us], every_hours: 3, feeds: [{type: workday, tenant: eversource, wd: wd1, site: ExternalSite, max: 300}]}
+  - {name: Revvity, group: Recruits at BU, tech_only: true, regions: [us], every_hours: 3, feeds: [{type: workday, tenant: revvity, wd: wd103, site: External, max: 300}]}
+  - {name: CarGurus, group: Recruits at BU, tech_only: true, regions: [us], every_hours: 3, feeds: [{type: greenhouse, board: cargurus}]}

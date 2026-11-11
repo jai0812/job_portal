@@ -44,6 +44,7 @@
   <nav id="tabs">
     <button data-tab="jobs" class="active">🇺🇸 Jobs</button>
     <button data-tab="top">⭐ Top companies</button>
+    <button data-tab="citizen" class="feat-citizen">🇺🇸 US citizen jobs</button>
     <button data-tab="india">🇮🇳 India</button>
     <button data-tab="canada">🇨🇦 Canada</button>
     <button data-tab="canhr">👥 Canada HR</button>
@@ -61,6 +62,12 @@
 </header>
 
 <main>
+<!-- a note from the admin to this person, shown once after each sign-in until they close it -->
+<div id="welcome" class="welcome hidden" role="status">
+  <span class="welcome-wave" aria-hidden="true">👋</span>
+  <p id="welcome-text"></p>
+  <button id="welcome-x" title="Close" aria-label="Close this message">✕</button>
+</div>
 <!-- ============================ JOBS ============================ -->
 <section id="tab-jobs" class="tab active">
   <div class="region-head" id="region-head"></div>
@@ -91,7 +98,7 @@
     <div class="chips" id="f-fin"></div>
     <div class="chips" id="f-place"></div>
     <div class="row">
-      <label class="us-only">H-1B
+      <label class="us-only not-cit">H-1B
         <select id="f-h1b">
           <option value="">Any</option>
           <option value="sponsor">Has sponsored H-1B (USCIS data or posting)</option>
@@ -99,7 +106,7 @@
           <option value="not-no">Hide "no sponsorship" / citizens only</option>
         </select>
       </label>
-      <label class="check us-only"><input type="checkbox" id="f-cap"> Cap-exempt only</label>
+      <label class="check us-only not-cit"><input type="checkbox" id="f-cap"> Cap-exempt only</label>
       <label class="check"><input type="checkbox" id="f-top"> Top companies only</label>
       <label class="check" title="The posting asks for someone who can start right away"><input type="checkbox" id="f-imm"> ⚡ Immediate start</label>
       <label>Source <select id="f-source"><option value="">All</option></select></label>
@@ -132,7 +139,7 @@
         <th data-sort="location">Location</th>
         <th>Category</th>
         <th data-sort="level">Level</th>
-        <th data-sort="h1b">H-1B</th>
+        <th data-sort="h1b" id="th-h1b">H-1B</th>
         <th data-sort="source">Source</th>
         <th>Actions</th>
       </tr></thead>
@@ -233,7 +240,8 @@
   <h2>Users</h2>
   <p class="muted">Only you can create accounts. Each person signs in with the username and password you give them,
     sees the job tabs and their own Analytics, and marks applied / wait / decline for themselves. They can change
-    their password from the 🔑 button. Phone alerts, Settings, LinkedIn fetches and Ask ChatGPT stay yours.</p>
+    their password from the 🔑 button. Phone alerts, Settings, LinkedIn fetches and Ask ChatGPT stay yours.
+    <b>Extras:</b> tick 🇺🇸 to give someone the US citizen jobs tab; 💬 writes a welcome note they see after each sign-in.</p>
   <form id="user-form" class="user-form" autocomplete="off">
     <input id="nu-name" placeholder="Username (e.g. priya)" required pattern="[A-Za-z0-9._-]{3,32}" autocapitalize="none" spellcheck="false">
     <input id="nu-email" type="email" placeholder="Email (optional, can sign in with it)" autocapitalize="none" spellcheck="false">
@@ -241,7 +249,7 @@
     <button class="secondary" type="button" id="nu-gen" title="Make up a strong password">🎲 Generate</button>
     <button class="primary">Create account</button>
   </form>
-  <table class="users-table"><thead><tr><th>User</th><th>Role</th><th>Status</th><th>Applied</th><th>Last sign-in</th><th>Last activity</th><th></th></tr></thead>
+  <table class="users-table"><thead><tr><th>User</th><th>Role</th><th>Status</th><th>Applied</th><th>Last sign-in</th><th>Last activity</th><th>Extras</th><th></th></tr></thead>
     <tbody id="users-body"></tbody></table>
 </section>
 

@@ -1,0 +1,162 @@
+# The "🇺🇸 US citizen jobs" tab (switched on per user from the Users page).
+# A US citizen can apply to every US job, so this tab is the whole US list plus the things that matter only to
+# citizens: roles that require citizenship or a clearance, employers that never sponsor, government & defense.
+#
+# match: names used to recognise the employer in job listings from any source (case-insensitive, whole words;
+#        "=Name" means the company name must be exactly that). Default: the name itself.
+# url:   the employer's career site, shown as a link on the tab.
+
+# Employers where most roles need US citizenship, a security clearance, or "US person" status (ITAR).
+gov_defense:
+  - {name: Lockheed Martin, url: "https://www.lockheedmartinjobs.com"}
+  - {name: Northrop Grumman, url: "https://jobs.northropgrumman.com"}
+  - {name: RTX, match: [RTX, Raytheon, Collins Aerospace, Pratt & Whitney], url: "https://careers.rtx.com"}
+  - {name: General Dynamics, match: [General Dynamics, GDIT, Electric Boat, Bath Iron Works], url: "https://www.gd.com/careers"}
+  - {name: Boeing, url: "https://jobs.boeing.com"}
+  - {name: L3Harris, url: "https://careers.l3harris.com"}
+  - {name: Leidos, url: "https://careers.leidos.com"}
+  - {name: Booz Allen Hamilton, match: [Booz Allen], url: "https://careers.boozallen.com"}
+  - {name: SAIC, match: [SAIC, Science Applications International], url: "https://jobs.saic.com"}
+  - {name: CACI, url: "https://careers.caci.com"}
+  - {name: MITRE, url: "https://careers.mitre.org"}
+  - {name: Peraton, url: "https://careers.peraton.com"}
+  - {name: BAE Systems, url: "https://jobs.baesystems.com"}
+  - {name: Parsons, match: [=Parsons, Parsons Corporation], url: "https://www.parsons.com/careers"}
+  - {name: ICF, match: [=ICF, ICF International], url: "https://www.icf.com/careers"}
+  - {name: ManTech, url: "https://www.mantech.com/careers"}
+  - {name: Amentum, url: "https://www.amentumcareers.com"}
+  - {name: KBR, match: [=KBR, "KBR, Inc"], url: "https://www.kbr.com/en/careers"}
+  - {name: Guidehouse, url: "https://guidehouse.com/careers"}
+  - {name: Noblis, url: "https://careers.noblis.org"}
+  - {name: Accenture Federal Services, url: "https://www.accenture.com/us-en/careers/local/federal-careers"}
+  - {name: Deloitte Government, match: [Deloitte Government], url: "https://www2.deloitte.com/us/en/pages/careers/topics/government-and-public-services-careers.html"}
+  - {name: Draper, match: [=Draper, Draper Laboratory, Charles Stark Draper], url: "https://www.draper.com/careers"}
+  - {name: MIT Lincoln Laboratory, match: [Lincoln Laboratory], url: "https://www.ll.mit.edu/careers"}
+  - {name: Johns Hopkins Applied Physics Laboratory, match: [Applied Physics Lab, JHU APL, JHUAPL], url: "https://www.jhuapl.edu/careers"}
+  - {name: The Aerospace Corporation, match: [Aerospace Corporation], url: "https://aerospace.org/careers"}
+  - {name: Sandia National Laboratories, match: [Sandia National], url: "https://www.sandia.gov/careers"}
+  - {name: Los Alamos National Laboratory, match: [Los Alamos], url: "https://lanl.jobs"}
+  - {name: Lawrence Livermore National Laboratory, match: [Lawrence Livermore], url: "https://www.llnl.gov/join-our-team/careers"}
+  - {name: Oak Ridge National Laboratory, match: [Oak Ridge], url: "https://jobs.ornl.gov"}
+  - {name: Pacific Northwest National Laboratory, match: [Pacific Northwest National], url: "https://careers.pnnl.gov"}
+  - {name: Anduril, url: "https://www.anduril.com/careers"}
+  - {name: Shield AI, url: "https://shield.ai/careers"}
+  - {name: Saronic, url: "https://www.saronic.com/careers"}
+  - {name: Hadrian, match: [=Hadrian, Hadrian Automation], url: "https://www.hadrian.co/careers"}
+  - {name: Epirus, url: "https://www.epirusinc.com/careers"}
+  - {name: SpaceX, match: [=SpaceX, Space Exploration Technologies], url: "https://www.spacex.com/careers"}
+  - {name: Blue Origin, url: "https://www.blueorigin.com/careers"}
+  - {name: Sierra Nevada Corporation, match: [Sierra Nevada Corporation, =SNC], url: "https://www.sncorp.com/careers"}
+  - {name: Sierra Space, url: "https://www.sierraspace.com/careers"}
+  - {name: Maxar, match: [Maxar, =Vantor], url: "https://www.maxar.com/careers"}
+  - {name: Huntington Ingalls Industries, match: [Huntington Ingalls], url: "https://careers.huntingtoningalls.com"}
+  - {name: Leonardo DRS, url: "https://www.leonardodrs.com/careers"}
+  - {name: Kratos, match: [Kratos Defense], url: "https://www.kratosdefense.com/careers"}
+  - {name: Mercury Systems, url: "https://www.mrcy.com/company/careers"}
+  - {name: V2X, match: [=V2X, V2X Inc], url: "https://careers.gov2x.com"}
+  - {name: Textron, url: "https://www.textron.com/careers"}
+  - {name: Honeywell Aerospace, url: "https://careers.honeywell.com"}
+  - {name: GE Aerospace, url: "https://careers.geaerospace.com"}
+  - {name: Viasat, url: "https://careers.viasat.com"}
+  - {name: SIG SAUER, url: "https://www.sigsauer.com/careers"}
+  - {name: Federal Reserve, url: "https://www.federalreserve.gov/careers.htm"}
+  - {name: U.S. federal agencies, match: [U.S. Department, US Department, Department of Defense, Department of Transportation,
+      National Security Agency, Central Intelligence Agency, Federal Bureau of Investigation, U.S. Navy, US Navy, U.S. Army,
+      U.S. Air Force, U.S. Coast Guard, Naval Shipyard, Volpe Center, =NASA, =NSA, =CIA, =FBI], url: "https://www.usajobs.gov"}
+
+big4:
+  - {name: Deloitte, url: "https://apply.deloitte.com/careers"}
+  - {name: PwC, match: [PwC, PricewaterhouseCoopers], url: "https://www.pwc.com/us/en/careers.html"}
+  - {name: EY, match: [=EY, Ernst & Young, Ernst and Young], url: "https://careers.ey.com"}
+  - {name: KPMG, url: "https://www.kpmguscareers.com"}
+
+# The "Big 3" strategy consulting firms.
+mbb:
+  - {name: McKinsey & Company, match: [McKinsey], url: "https://www.mckinsey.com/careers/search-jobs"}
+  - {name: Boston Consulting Group, match: [Boston Consulting Group, =BCG, BCG X, "Boston Consulting Group (BCG)"], url: "https://careers.bcg.com"}
+  - {name: Bain & Company, match: [Bain & Company, Bain and Company], url: "https://www.bain.com/careers"}
+
+# Job boards that only make sense for citizens (the portal can't read these: links only).
+boards:
+  - {name: USAJOBS (every federal job), url: "https://www.usajobs.gov/search/results/?hp=public&p=1"}
+  - {name: USAJOBS · recent graduates & students (Pathways), url: "https://www.usajobs.gov/search/results/?hp=graduates&hp=student"}
+  - {name: ClearanceJobs, url: "https://www.clearancejobs.com/jobs"}
+  - {name: ClearedJobs.Net, url: "https://clearedjobs.net"}
+  - {name: Intelligence Careers (NSA, CIA, NGA, DIA...), url: "https://www.intelligencecareers.gov"}
+  - {name: Mass.gov state jobs, url: "https://www.mass.gov/careers"}
+  - {name: Boston University Handshake (career fairs & events), url: "https://bu.joinhandshake.com/stu/career_fairs"}
+
+# Employers that came to Boston University career fairs. Source: the public employer lists of BU's Handshake fairs
+# (read without signing in on 2026-11-11). Re-check each semester; the next fairs appear on the Handshake link above.
+#   eng = Engineering & Applied Sciences Career Fair, Oct 1 2026
+#   biz = Questrom Graduate Career Night Fair, Sep 24 2026
+bu_recruiters:
+  - {name: Abbott, match: [=Abbott, Abbott Laboratories, Abbott Diagnostics], fair: eng, url: "https://www.abbott.com/careers/working-with-us.html"}
+  - {name: Affiliated Engineers, fair: eng, url: "https://www.aeieng.com"}
+  - {name: Amgen, fair: eng, url: "https://careers.amgen.com"}
+  - {name: Applied Materials, fair: eng, url: "https://careers.appliedmaterials.com"}
+  - {name: BR+A Consulting Engineers, match: ["Bard, Rao + Athanas", BR+A], fair: eng, url: "https://www.brplusa.com"}
+  - {name: Beghou, fair: eng, url: "https://www.beghou.com"}
+  - {name: Boston Red Sox, fair: eng, url: "https://www.mlb.com/redsox/team/jobs"}
+  - {name: Boston Scientific, fair: eng, url: "https://www.bostonscientific.com/en-US/careers/students.html"}
+  - {name: CarGurus, fair: eng, url: "https://careers.cargurus.com"}
+  - {name: Carillon Technologies, fair: eng, url: "https://www.carillontechnologies.com"}
+  - {name: Chartwell, match: [=Chartwell, Chartwell Consulting], fair: eng, url: "https://www.chartwell-consulting.com/en/"}
+  - {name: Cisco, match: [=Cisco, Cisco Systems, Cisco Meraki], fair: eng, url: "https://www.cisco.com/careers"}
+  - {name: Commonwealth of Massachusetts, match: [Commonwealth of Massachusetts], fair: eng, url: "https://www.mass.gov/careers"}
+  - {name: Costello Medical, fair: eng, url: "https://www.costellomedical.com"}
+  - {name: Draper, match: [=Draper, Draper Laboratory, Charles Stark Draper], fair: eng, url: "https://www.draper.com/careers"}
+  - {name: E-J Electric Installation, fair: eng, url: "https://www.ej1899.com"}
+  - {name: Epic, match: [=Epic, Epic Systems], fair: eng, url: "https://careers.epic.com"}
+  - {name: Eversource Energy, match: [Eversource], fair: eng, url: "https://jobs.eversource.com/student-programs"}
+  - {name: GE Aerospace, fair: eng, url: "https://invent.ge/usstudents"}
+  - {name: General Dynamics Electric Boat, match: [Electric Boat], fair: eng, url: "https://www.ebcareers.com"}
+  - {name: Granite Telecommunications, match: [Granite Telecommunications, =Granite], fair: eng, url: "https://www.granitenet.com"}
+  - {name: Harpak-ULMA, fair: eng, url: "https://www.harpak-ulma.com"}
+  - {name: HPR (Hyannis Port Research), match: [=HPR, Hyannis Port Research], fair: eng, url: "https://www.hyannisportresearch.com"}
+  - {name: Jaros, Baum & Bolles, match: ["Jaros, Baum & Bolles", JB&B], fair: eng, url: "https://www.jbb.com"}
+  - {name: John Hancock, match: [John Hancock, Manulife], fair: eng, url: "https://careers.manulife.com"}
+  - {name: Johns Hopkins Applied Physics Laboratory, match: [Applied Physics Lab, JHU APL, JHUAPL], fair: eng, url: "https://www.jhuapl.edu/careers"}
+  - {name: KKR, fair: eng, url: "https://www.kkr.com/careers"}
+  - {name: Massachusetts Water Resources Authority, match: [Massachusetts Water Resources Authority, =MWRA], fair: eng, url: "https://www.mwra.com"}
+  - {name: MIT Lincoln Laboratory, match: [Lincoln Laboratory], fair: eng, url: "https://www.ll.mit.edu/careers"}
+  - {name: Netcracker Technology, match: [Netcracker], fair: eng, url: "https://www.netcracker.com/careers/"}
+  - {name: U.S. Army Medicine, match: [Army Medicine, Army Medical], fair: eng, url: "https://www.goarmy.com/amedd.html"}
+  - {name: Pirouette Pharma, fair: eng, url: "https://pirouettepharma.com"}
+  - {name: Portsmouth Naval Shipyard, fair: eng, url: "https://www.navsea.navy.mil/Home/Shipyards/Portsmouth"}
+  - {name: Red Hat, fair: eng, url: "https://redhat.com/jobs"}
+  - {name: Revvity, fair: eng, url: "https://www.revvity.com"}
+  - {name: Sanofi, fair: eng, url: "https://jobs.sanofi.com/en/early-talent"}
+  - {name: Schweitzer Engineering Laboratories, fair: eng, url: "https://www.selinc.com"}
+  - {name: SIG SAUER, fair: eng, url: "https://www.sigsauer.com/careers"}
+  - {name: SOPHiA GENETICS, fair: eng, url: "https://www.sophiagenetics.com"}
+  - {name: StataDX, fair: eng, url: "https://www.statadx.com"}
+  - {name: Texas Instruments, fair: eng, url: "https://careers.ti.com/en/sites/CX/pages/students-new-grads"}
+  - {name: The Roux Institute at Northeastern University, match: [Roux Institute], fair: eng, url: "https://roux.northeastern.edu"}
+  - {name: Thorlabs, fair: eng, url: "https://www.thorlabs.com"}
+  - {name: Travelers, match: [=Travelers, The Travelers Companies, Travelers Insurance], fair: eng, url: "https://travelers.com/careers"}
+  - {name: Turner Construction, fair: eng, url: "https://www.turnerconstruction.com/careers"}
+  - {name: U.S. Coast Guard, match: [U.S. Coast Guard, US Coast Guard], fair: eng, url: "https://www.gocoastguard.com"}
+  - {name: U.S. DOT Volpe Center, match: [Volpe Center, Volpe National], fair: eng, url: "https://www.volpe.dot.gov"}
+  - {name: U.S. Navy (NUPOC), match: [U.S. Navy, US Navy], fair: eng, url: "https://www.navy.com"}
+  - {name: Ultrasonium, fair: eng, url: "https://ultrasonium.com"}
+  - {name: Wolf Greenfield, fair: eng, url: "https://www.wolfgreenfield.com"}
+  - {name: Zagaran, fair: eng, url: "https://zagaran.com/students"}
+  - {name: ALKU, fair: biz, url: "https://alku.com/lifeatalku"}
+  - {name: Catalant Technologies, match: [Catalant], fair: biz, url: "https://catalant.com"}
+  - {name: Cianbro, fair: biz, url: "https://www.cianbro.com"}
+  - {name: Citizens, match: [=Citizens, Citizens Financial Group, =Citizens Bank], fair: biz, url: "https://jobs.citizensbank.com/college-grad"}
+  - {name: Core Firms, fair: biz, url: "https://corefirms.com"}
+  - {name: CVS Health, match: [CVS Health, =CVS], fair: biz, url: "https://jobs.cvshealth.com/us/en/students"}
+  - {name: ECG Management Consultants, fair: biz, url: "https://careers.ecgmc.com"}
+  - {name: IQVIA, fair: biz, url: "https://jobs.iqvia.com"}
+  - {name: KnitWell Group, fair: biz, url: "https://jobs.knitwellgroup.com"}
+  - {name: Laminar, match: [=Laminar], fair: biz, url: "https://runlaminar.com"}
+  - {name: Massachusetts State Treasury, match: [Massachusetts State Treasurer], fair: biz, url: "https://www.masstreasury.org/jobs"}
+  - {name: Recon Analytics, fair: biz, url: "https://reconanalytics.com"}
+  - {name: Resourcesoft, fair: biz, url: "https://resourcesoft.com"}
+  - {name: TD Bank, match: [=TD, TD Bank, TD Securities], fair: biz, url: "https://jobs.td.com/en/job-opportunities/"}
+
+fairs:
+  eng: "Engineering & Applied Sciences Career Fair · Oct 1, 2026"
+  biz: "Questrom Graduate Career Night · Sep 24, 2026"

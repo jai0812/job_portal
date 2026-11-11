@@ -73,6 +73,22 @@ github:
   - name: SpeedyApply 2027 SWE College Jobs
     url: https://github.com/speedyapply/2027-SWE-College-Jobs
     level: early_career
+  - name: SpeedyApply 2027 SWE New Grad (USA)
+    url: https://github.com/speedyapply/2027-SWE-College-Jobs
+    path: NEW_GRAD_USA.md
+    level: early_career
+    category: swe
+  - name: DreamWork New Grad Software Engineer Jobs
+    url: https://github.com/dreamworkhq/New-Grad-Software-Engineer-Jobs
+    level: early_career
+    category: swe
+  - name: 2027 Cyber Jobs (clearance & US-citizen roles flagged)
+    url: https://github.com/HackedRico/2027-cyber-jobs
+    level: early_career
+    category: swe
+  - name: aprameyak 2027 Tech Jobs
+    url: https://github.com/aprameyak/2027-tech-jobs
+    level: early_career
   - name: SpeedyApply AI & ML College Jobs
     url: https://github.com/speedyapply/2027-AI-College-Jobs
     level: early_career

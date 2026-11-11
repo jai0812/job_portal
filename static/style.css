@@ -359,6 +359,31 @@ tr.is-declined td:not(.cb-col):not(.age) { text-decoration: line-through; text-d
 
 /* ---------- accounts */
 body:not(.is-admin) .admin-only { display: none !important; }
+body:not(.has-citizen) .feat-citizen { display: none !important; }
+
+/* welcome note from the admin (closed with ✕) */
+.welcome { display: flex; align-items: center; gap: 12px; margin: 0 0 14px; padding: 14px 16px; border-radius: 12px;
+  background: color-mix(in srgb, var(--accent) 10%, var(--panel)); border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line)); }
+.welcome.hidden { display: none; }
+.welcome-wave { font-size: 26px; line-height: 1; }
+.welcome p { margin: 0; flex: 1; font-size: 15px; font-weight: 600; line-height: 1.45; white-space: pre-line; }
+.welcome button { border: 0; background: transparent; color: var(--muted); font-size: 16px; cursor: pointer; padding: 6px 8px; border-radius: 8px; }
+.welcome button:hover { background: var(--chip); color: var(--ink); }
+
+/* US citizen jobs tab */
+.tag.cz-us { color: var(--accent); font-weight: 600; }
+.tag.cz-gov { color: var(--good); font-weight: 600; }
+.tag.cz-no { color: var(--warn); }
+.tag.cz-bu { color: var(--accent); }
+.cit-sites { margin: 8px 0 4px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); padding: 8px 12px; }
+.cit-sites summary { cursor: pointer; font-weight: 600; }
+.cit-group h4 { margin: 12px 0 4px; font-size: 13px; }
+.cit-group p { margin: 0 0 6px; font-size: 12px; }
+.cit-links { display: flex; flex-wrap: wrap; gap: 6px; }
+.cit-links a { font-size: 12px; padding: 3px 9px; border-radius: 99px; background: var(--chip); white-space: nowrap; }
+.cit-links a:hover { background: color-mix(in srgb, var(--accent) 16%, var(--chip)); }
+.users-table .extras { white-space: nowrap; }
+.users-table .extras button { padding: 2px 8px; }
 .me { font-size: 13px; color: var(--muted, #8a8f98); margin: 0 4px; white-space: nowrap; }
 #chpass { padding: 4px 8px; }
 .user-form { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 16px; }

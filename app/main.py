@@ -43,7 +43,7 @@ from fastapi import Body, FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse, RedirectResponse, Response
 from fastapi.staticfiles import StaticFiles
 
-from . import alerts, auth, classify, db, finance, geo, h1b, patterns, readme, refresh, startups
+from . import alerts, auth, citizen, classify, db, finance, geo, h1b, patterns, readme, refresh, startups
 from .config import DATA_DIR, ROOT, env, load_more_companies, load_sources, load_universities, save_sources
 
 app = FastAPI(title="Job Portal", docs_url=None, redoc_url=None, openapi_url=None)
@@ -163,12 +163,31 @@ def login(request: Request, body: dict = Body(...)):
     return response
 
 
+# ---------------------------------------------------------------- per-user extras
+
+FEATURES = {"citizen": "US citizen jobs tab"}
+
+
+def _features(user: dict) -> list[str]:
+    return [f for f in (user.get("features") or "").split(",") if f in FEATURES]
+
+
+@app.get("/api/citizen")
+def citizen_links(request: Request):
+    """Career-site links for the US citizen jobs tab (people with that extra, and the admin)."""
+    user = me(request)
+    if user["role"] != "admin" and "citizen" not in _features(user):
+        raise HTTPException(403, "That tab isn't switched on for your account.")
+    return citizen.public()
+
+
 # ---------------------------------------------------------------- accounts (admin creates them; nobody signs up)
 
 def _user_row(u: dict, stats: dict) -> dict:
     s = stats.get(u["id"], {})
     return {"id": u["id"], "username": u["username"], "email": u.get("email") or "", "role": u["role"], "active": bool(u["active"]),
             "created_at": u["created_at"], "last_login": u["last_login"], "applied": s.get("applied") or 0,
+            "features": _features(u), "welcome": u.get("welcome") or "",
             "last_active": s.get("last_active")}
 
 
@@ -196,7 +215,8 @@ def create_user(body: dict = Body(...)):
 
 @app.post("/api/users/{user_id}")
 def change_user(user_id: int, request: Request, body: dict = Body(...)):
-    """Reset a password and/or turn an account on or off (both sign that person out everywhere)."""
+    """Reset a password and/or turn an account on or off (both sign that person out everywhere); switch an extra
+    (features) on or off; set the welcome note shown to that person after each sign-in."""
     u = db.all_users().get(user_id)
     if not u:
         raise HTTPException(404, "No such user.")
@@ -209,6 +229,10 @@ def change_user(user_id: int, request: Request, body: dict = Body(...)):
         if u["id"] == me(request)["id"] and not body["active"]:
             raise HTTPException(400, "You can't turn off your own account.")
         fields["active"] = int(bool(body["active"]))
+    if "features" in body:
+        fields["features"] = ",".join(f for f in FEATURES if f in (body["features"] or []))
+    if "welcome" in body:
+        fields["welcome"] = str(body["welcome"] or "").strip()[:400]
     db.update_user(user_id, **fields)
     return list_users()
 
@@ -419,7 +443,9 @@ def status(request: Request):
     user = me(request)
     return {
         "auth": auth.enabled(),
-        "me": {"username": user["username"], "role": user["role"]},
+        # features: extras the admin switched on for this person; welcome: the admin's note, shown once per sign-in
+        "me": {"username": user["username"], "role": user["role"], "features": _features(user),
+               "welcome": user.get("welcome") or "", "login": user.get("last_login") or 0},
         "apify": bool(env("APIFY_TOKEN")),
         "sources": cfg.get("github") or [],
         "apify_searches": (cfg.get("apify") or {}).get("searches") or [],
@@ -507,6 +533,10 @@ def _enrich_iter(rows):
         r["has_description"] = bool(desc)
         r["immediate"] = classify.immediate(r.get("title", ""), desc)
         uni, r["fin"], r["h1b_fy23"] = company_info(r["company"] or "")
+        if r.get("h1b") != "citizen" and citizen.citizen_only(r.get("title", ""), desc):
+            r["h1b"] = "citizen"  # the posting's own words: citizenship / clearance required
+        if cz := citizen.tags(r["company"] or ""):
+            r["cz"] = cz  # gov (government & defense), big4, mbb, bu (recruits at Boston University)
         r["level"] = classify.adjust_level(r["level"], r["title"], desc, r["company"] or "", bool(r["fin"]))  # 0-2 yrs = early
         # contract / part-time / temp, hours a week, W2 or C2C, and any recruiter contact written in the posting
         jt, hrs = r.pop("job_type", "") or classify.job_type(r["title"], desc), classify.hours(r["title"], desc)

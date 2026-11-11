@@ -59,21 +59,25 @@ function toast(msg, ms = 2600) {
 
 let STATUS = {};
 const isAdmin = () => !STATUS.me || STATUS.me.role === "admin";
+// Extras the admin switches on per person (Users page). The admin sees every extra, to check what others see.
+const hasFeat = (f) => isAdmin() || ((STATUS.me && STATUS.me.features) || []).includes(f);
 
 // ------------------------------------------------------------------ tabs
-const REGION_TABS = { jobs: "us", top: "us", opt: "us", india: "india", canada: "canada", canhr: "canada", world: "other", handshake: "handshake" };
+const REGION_TABS = { jobs: "us", top: "us", opt: "us", citizen: "us", india: "india", canada: "canada", canhr: "canada", world: "other", handshake: "handshake" };
 const ADMIN_TABS = new Set(["ask", "users", "settings", "handshake", "opt"]);
 const usLike = () => F.region === "us" || F.region === "handshake";  // Handshake jobs are (almost all) American
 function showTab(name) {
   if (ADMIN_TABS.has(name) && !isAdmin()) name = "jobs";
+  if (name === "citizen" && !hasFeat("citizen")) name = "jobs";
   $$("#tabs button").forEach((b) => b.classList.toggle("active", b.dataset.tab === name));
   const section = name in REGION_TABS ? "jobs" : name;
   $$(".tab").forEach((t) => t.classList.toggle("active", t.id === `tab-${section}`));
   if (name in REGION_TABS) {
-    const region = REGION_TABS[name], topset = name === "top", opt = name === "opt";
+    const region = REGION_TABS[name], topset = name === "top", opt = name === "opt", cit = name === "citizen";
     const cat = name === "canhr" ? "hr" : F.cat === "hr" ? "" : F.cat;  // the HR tab is the Canada tab with HR picked
-    if (F.region !== region || F.topset !== topset || F.opt !== opt || F.cat !== cat) {
-      Object.assign(F, { region, topset, opt, cat, place: "" });
+    if (F.region !== region || F.topset !== topset || F.opt !== opt || F.cit !== cit || F.cat !== cat) {
+      Object.assign(F, { region, topset, opt, cit, cat, place: "" });
+      if (cit) { F.h1b = ""; F.cap = false; $("#f-h1b").value = ""; $("#f-cap").checked = false; loadCitizen(); }  // visa filters don't apply to a citizen
       SHOWN = 200;
       showRegion();
     }
@@ -92,6 +96,8 @@ window.addEventListener("hashchange", () => { const t = location.hash.slice(1); 
 async function loadStatus() {
   STATUS = await api("/api/status");
   document.body.classList.toggle("is-admin", isAdmin());
+  document.body.classList.toggle("has-citizen", hasFeat("citizen"));
+  showWelcome();
   $("#llm-pills").innerHTML = (STATUS.auth ? `<span class="me" title="Signed in">👤 ${esc(STATUS.me.username)}</span>
       <button id="chpass" title="Change your password">🔑</button><button id="signout" title="Sign out of the portal">Sign out</button>` : "");
   if (STATUS.auth) {
@@ -140,8 +146,73 @@ function optHead(forJt, forTier) {
       ["", "Tier 1 · top tech & big banks", "Tier 2 · known employers", "Tier 3 · startups & agencies"][t], n(forTier, (j) => j.tier === t))).join("")}</div>`;
 }
 
+// ---- US citizen jobs tab (an extra, switched on per person): the whole US list, since a citizen can apply to all
+// of it, plus what only matters to citizens. j.cz comes from config/citizen.yaml: gov, big4, mbb, bu.
+const BANK_SEGS = new Set(["broad_banks", "global_banks", "ib_markets"]);
+const czHas = (j, t) => !!j.cz && j.cz.split(",").includes(t);
+const CZ = [
+  ["", "All US jobs", () => true],
+  ["edge", "⭐ Citizen advantage", (j) => j.h1b === "citizen" || j.h1b === "no" || czHas(j, "gov")],
+  ["citizen", "🇺🇸 Citizens only · clearance", (j) => j.h1b === "citizen"],
+  ["gov", "🛡️ Government & defense", (j) => czHas(j, "gov")],
+  ["no", "🚫 No visa sponsorship", (j) => j.h1b === "no"],
+  ["bank", "🏦 Banks", (j) => !!j.fin && BANK_SEGS.has(j.fin.segment)],
+  ["big4", "Big 4", (j) => czHas(j, "big4")],
+  ["mbb", "Big 3 consulting", (j) => czHas(j, "mbb")],
+  ["bu", "🎓 Recruits at BU", (j) => czHas(j, "bu")],
+];
+const czTest = (v) => (CZ.find(([k]) => k === v) || CZ[0])[2];
+let CIT = null;  // career-site links from /api/citizen
+async function loadCitizen() {
+  if (CIT) return;
+  try { CIT = await api("/api/citizen"); if (F.cit) renderJobs(); } catch {}
+}
+function citLinks() {
+  if (!CIT) return "";
+  const link = (e) => `<a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.name)} ↗</a>`;
+  const group = (title, list, note = "") => (list && list.length ? `<div class="cit-group"><h4>${title}</h4>${note ? `<p class="muted">${note}</p>` : ""}<div class="cit-links">${list.map(link).join("")}</div></div>` : "");
+  const fairs = Object.entries(CIT.fairs || {}).map(([k, label]) => group(`🎓 Came to BU · ${esc(label)}`, (CIT.bu_recruiters || []).filter((e) => e.fair === k))).join("");
+  return `<details class="cit-sites" ${CIT_OPEN ? "open" : ""}><summary>🔗 Career sites: BU recruiters, Big 4, Big 3, banks, government & defense, federal job boards</summary>
+    ${group("Citizen-only job boards", CIT.boards, "The portal can't read these, so open them directly. USAJOBS is every federal job; Pathways is its recent-graduate programme.")}
+    ${fairs}
+    ${group("Big 4", CIT.big4)}${group("Big 3 consulting", CIT.mbb)}
+    ${group("🛡️ Government & defense", CIT.gov_defense, "Most roles here need US citizenship or a security clearance. Many sponsor the clearance for new graduates.")}
+    ${group("🏦 Banks", CIT.banks)}</details>`;
+}
+let CIT_OPEN = false;
+function citHead(forCz) {
+  const chip = ([v, label, test]) => `<button class="chip ${F.cz === v ? "on" : ""}" data-k="cz" data-v="${v}">${label}<small>${forCz.filter(test).length.toLocaleString()}</small></button>`;
+  return `<h2>🇺🇸 US citizen jobs</h2>
+    <p class="muted">Every US job in the portal — as a citizen you can apply to all of them, with no visa filter in the way.
+      <b>Citizen advantage</b> is where you compete with far fewer people: roles that require citizenship or a security clearance,
+      government & defense employers, and postings that say they won't sponsor a visa.</p>
+    <div class="chips">${CZ.map(chip).join("")}</div>${citLinks()}`;
+}
+function edgeCell(j) {
+  if (j.h1b === "citizen") return `<span class="tag cz-us">🇺🇸 Citizens only</span><span class="age-date">per the posting</span>`;
+  if (czHas(j, "gov")) return `<span class="tag cz-gov">🛡️ Gov / defense</span><span class="age-date">usually citizens only</span>`;
+  if (j.h1b === "no") return `<span class="tag cz-no">No sponsorship</span><span class="age-date">fewer applicants</span>`;
+  return `<span class="tag unknown">Open to all</span>`;
+}
+const edgeRank = (j) => (j.h1b === "citizen" ? 3 : czHas(j, "gov") ? 2 : j.h1b === "no" ? 1 : 0);
+
+// ---- Welcome note: written by the admin for one person (Users page), shown after each sign-in until closed with ✕.
+function showWelcome() {
+  const me = STATUS.me || {}, key = `welcome-seen-${me.username}`;
+  let seen = "";
+  try { seen = localStorage.getItem(key) || ""; } catch {}
+  const show = !!me.welcome && seen !== String(me.login);
+  $("#welcome").classList.toggle("hidden", !show);
+  if (!show) return;
+  $("#welcome-text").textContent = me.welcome;
+  $("#welcome-x").onclick = () => {
+    $("#welcome").classList.add("hidden");
+    try { localStorage.setItem(key, String(me.login)); } catch {}
+  };
+}
+
 let PATTERNS = [];
-const F = { region: "us", topset: false, opt: false, jt: "", tier: "", place: "", cat: "", level: "", age: "", stype: "", fin: "", q: "", h1b: "", cap: false, top: false, source: "", status: "active" };
+const F = { region: "us", topset: false, opt: false, cit: false, cz: "", jt: "", tier: "", place: "", cat: "", level: "", age: "", stype: "", fin: "", q: "", h1b: "", cap: false, top: false, source: "", status: "active" };
 const REGION_INFO = {
   us: ["🇺🇸 United States", "US jobs from GitHub lists, LinkedIn and employers' own career sites (finance firms, FAANG / MAANG, big tech and top tech companies)."],
   india: ["🇮🇳 India", "Jobs in India from Indian tech & fintech companies, big tech India teams (Amazon, NVIDIA, Salesforce, Adobe, Intel, Target), global banks & finance firms' India offices, and LinkedIn India searches."],
@@ -301,6 +372,7 @@ function matches(j, skip) {
   if (F.region === "handshake" ? j.source_type !== "handshake" : !(j.regions || ["us"]).includes(F.region)) return false;
   if (F.topset && !j.top_company) return false;
   if (F.opt && (!optOk(j) || (skip !== "jt" && F.jt && j.jt !== F.jt) || (skip !== "tier" && F.tier && j.tier !== Number(F.tier)))) return false;
+  if (F.cit && skip !== "cz" && F.cz && !czTest(F.cz)(j)) return false;
   if (skip !== "place" && F.place && !placesOf(j).includes(F.place)) return false;
   if (skip !== "cat" && F.cat && !j.categories.split(",").includes(F.cat)) return false;
   if (skip !== "level" && F.level && j.level !== F.level) return false;
@@ -340,7 +412,7 @@ function chips(el, items, key, counter) {
 const sorters = {
   posted: (j) => ageOf(j), company: (j) => j.company.toLowerCase(), title: (j) => j.title.toLowerCase(),
   location: (j) => j.location.toLowerCase(), level: (j) => j.level, source: (j) => j.source_name,
-  h1b: (j) => (["no", "citizen"].includes(j.h1b) ? -1 : j.h1b === "yes" ? 1e9 : j.h1b_fy23 || (j.h1b === "likely" ? 0.5 : 0)) * -1,
+  h1b: (j) => F.cit ? -edgeRank(j) : (["no", "citizen"].includes(j.h1b) ? -1 : j.h1b === "yes" ? 1e9 : j.h1b_fy23 || (j.h1b === "likely" ? 0.5 : 0)) * -1,
   fin: (j) => (j.fin ? j.fin.segment_label + " " + j.fin.name : "~"),
 };
 
@@ -350,7 +422,11 @@ function renderJobs() {
   const [rtitle, rdesc] = F.region === "canada" && F.cat === "hr" ? HR_INFO : REGION_INFO[F.region];
   $$(".us-only").forEach((el) => el.classList.toggle("hidden", !usLike()));
   $("#hs-panel").classList.toggle("hidden", F.region !== "handshake");
-  $("#region-head").innerHTML = F.topset ? topHead() : F.opt ? optHead(base("jt"), base("tier"))
+  $$(".not-cit").forEach((el) => el.classList.toggle("hidden", !usLike() || F.cit));
+  $("#th-h1b").textContent = F.cit ? "Citizen edge" : "H-1B";
+  const sites = $("#region-head .cit-sites");
+  if (sites) CIT_OPEN = sites.open;  // keep the links panel open across re-renders
+  $("#region-head").innerHTML = F.topset ? topHead() : F.cit ? citHead(base("cz")) : F.opt ? optHead(base("jt"), base("tier"))
     : F.region === "us" ? "" : `<h2>${rtitle}</h2><p class="muted">${esc(rdesc)}</p>`;
   bindTopHead();
   $$("#region-head [data-k]").forEach((b) => (b.onclick = () => { F[b.dataset.k] = b.dataset.v; SHOWN = 200; renderJobs(); }));
@@ -379,7 +455,8 @@ function renderJobs() {
   const jr = STATUS.jobright_url || "https://jobright.ai/jobs/search?value={q}";
   $("#jobs tbody").innerHTML = rows.slice(0, SHOWN).map((j) => {
     const cats = j.categories.split(",").map((c) => `<span class="tag">${CAT_LABEL[c] || c}</span>`).join("");
-    const badges = (j.top_company ? `<span class="tag top">★ Top</span>` : "") + (j.cap_exempt ? `<span class="tag cap">Cap-exempt</span>` : "");
+    const badges = (j.top_company ? `<span class="tag top">★ Top</span>` : "") + (j.cap_exempt && !F.cit ? `<span class="tag cap">Cap-exempt</span>` : "")
+      + (F.cit ? (czHas(j, "big4") ? `<span class="tag">Big 4</span>` : "") + (czHas(j, "mbb") ? `<span class="tag">Big 3</span>` : "") + (czHas(j, "bu") ? `<span class="tag cz-bu" title="Came to a Boston University career fair">🎓 BU fair</span>` : "") : "");
     const jrUrl = jr.replace("{q}", encodeURIComponent(`${j.title} ${j.company}`));
     return `<tr class="${rowClass(j)}" data-id="${j.id}">
       ${appliedBox(j)}
@@ -390,7 +467,7 @@ function renderJobs() {
       <td class="loc">${esc(j.location)}${F.region === "other" ? `<span class="age-date">${esc(placesOf(j).join(", "))}</span>` : ""}</td>
       <td>${cats}</td>
       <td>${LEVEL_LABEL[j.level] || j.level}</td>
-      ${usLike() ? `<td class="h1b">${h1bCell(j)}</td>` : ""}
+      ${usLike() ? `<td class="h1b">${F.cit ? edgeCell(j) : h1bCell(j)}</td>` : ""}
       ${sourceCell(j)}
       <td><div class="actions">
         ${j.url ? `<a class="btn primary-link" href="${esc(j.url)}" target="_blank" rel="noopener">Apply ↗</a>` : ""}
@@ -472,6 +549,7 @@ $("#f-status").onchange = (e) => { F.status = e.target.value; renderJobs(); };
 
 let APIFY = null;
 async function loadApify() {
+  if (!isAdmin()) return;  // admin-only endpoint
   try { APIFY = await api("/api/apify"); } catch { APIFY = null; }
   const b = $("#btn-apify");
   if (APIFY && APIFY.configured && !APIFY.error)
@@ -1041,6 +1119,8 @@ function renderUsers(users) {
     <td><b>${esc(u.username)}</b>${u.email ? `<br><span class="muted">${esc(u.email)}</span>` : ""}</td><td>${u.role === "admin" ? "Admin (you)" : "User"}</td>
     <td>${u.active ? '<span class="tag yes">Active</span>' : '<span class="tag no">Off</span>'}</td>
     <td>${u.applied}</td><td>${when(u.last_login)}</td><td>${when(u.last_active)}</td>
+    <td class="extras">${u.role === "admin" ? "" : `<label class="check" title="Give this person the US citizen jobs tab"><input type="checkbox" data-u="citizen" ${u.features.includes("citizen") ? "checked" : ""}> 🇺🇸</label>
+      <button data-u="welcome" data-note="${esc(u.welcome)}" title="${u.welcome ? esc(u.welcome) : "Write a note this person sees after each sign-in"}">💬${u.welcome ? " ✓" : ""}</button>`}</td>
     <td class="acts">${u.role === "admin" ? "" : `<button data-u="reset">Reset password</button>
       <button data-u="toggle">${u.active ? "Turn off" : "Turn on"}</button><button data-u="del" class="danger">Delete</button>`}</td></tr>`).join("");
 }
@@ -1069,6 +1149,14 @@ $("#users-body").addEventListener("click", async (e) => {
       renderUsers(await api(`/api/users/${id}`, { method: "POST", body: { password: pw } }));
       navigator.clipboard?.writeText(pw).catch(() => {});
       toast(`Password reset for ${name} (copied). They're signed out everywhere.`, 4000);
+    } else if (b.dataset.u === "citizen") {
+      renderUsers(await api(`/api/users/${id}`, { method: "POST", body: { features: b.checked ? ["citizen"] : [] } }));
+      toast(b.checked ? `${name} now has the 🇺🇸 US citizen jobs tab` : `US citizen jobs tab removed for ${name}`);
+    } else if (b.dataset.u === "welcome") {
+      const note = prompt(`Welcome note for ${name} — shown after each sign-in until they close it. Leave empty to remove it.`, b.dataset.note);
+      if (note === null) return;
+      renderUsers(await api(`/api/users/${id}`, { method: "POST", body: { welcome: note } }));
+      toast(note.trim() ? `${name} will see it the next time they sign in` : `Welcome note removed for ${name}`);
     } else if (b.dataset.u === "toggle") {
       const on = b.textContent === "Turn on";
       renderUsers(await api(`/api/users/${id}`, { method: "POST", body: { active: on } }));
@@ -1268,7 +1356,8 @@ $("#su-scan").onclick = async () => {
 (async () => {
   await loadStatus();
   const start = location.hash.slice(1);
-  if (start in REGION_TABS) Object.assign(F, { region: REGION_TABS[start], topset: start === "top", opt: start === "opt" && isAdmin(), cat: start === "canhr" ? "hr" : "" });
+  if (start in REGION_TABS) Object.assign(F, { region: REGION_TABS[start], topset: start === "top", opt: start === "opt" && isAdmin(), cit: start === "citizen" && hasFeat("citizen"), cat: start === "canhr" ? "hr" : "" });
+  if (F.cit) loadCitizen();
   try { FIN_SEGMENTS = Object.entries((await api("/api/finance")).segments); } catch {}
   await loadPatterns();
   if (isAdmin()) loadApify();
