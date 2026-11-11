@@ -241,7 +241,7 @@
   <p class="muted">Only you can create accounts. Each person signs in with the username and password you give them,
     sees the job tabs and their own Analytics, and marks applied / wait / decline for themselves. They can change
     their password from the 🔑 button. Phone alerts, Settings, LinkedIn fetches and Ask ChatGPT stay yours.
-    <b>Extras:</b> tick 🇺🇸 to give someone the US citizen jobs tab; 💬 writes a welcome note they see after each sign-in.</p>
+    <b>Extras:</b> tick 🇺🇸 to give someone the US citizen jobs tab; 💬 writes a welcome note they see after each sign-in (or, if you choose "big", in the centre of the page every time they open it).</p>
   <form id="user-form" class="user-form" autocomplete="off">
     <input id="nu-name" placeholder="Username (e.g. priya)" required pattern="[A-Za-z0-9._-]{3,32}" autocapitalize="none" spellcheck="false">
     <input id="nu-email" type="email" placeholder="Email (optional, can sign in with it)" autocapitalize="none" spellcheck="false">
@@ -289,6 +289,12 @@
   </div>
 </section>
 </main>
+
+<!-- the admin's note in its "big" form: centre of the page, every time the page opens -->
+<dialog id="bignote" class="bignote">
+  <p id="bignote-text"></p>
+  <form method="dialog"><button class="primary" autofocus>OK, got it</button></form>
+</dialog>
 
 <dialog id="dlg-pass">
   <form method="dialog" id="pass-form">

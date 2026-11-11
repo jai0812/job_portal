@@ -187,7 +187,7 @@ def _user_row(u: dict, stats: dict) -> dict:
     s = stats.get(u["id"], {})
     return {"id": u["id"], "username": u["username"], "email": u.get("email") or "", "role": u["role"], "active": bool(u["active"]),
             "created_at": u["created_at"], "last_login": u["last_login"], "applied": s.get("applied") or 0,
-            "features": _features(u), "welcome": u.get("welcome") or "",
+            "features": _features(u), "welcome": u.get("welcome") or "", "welcome_big": bool(u.get("welcome_big")),
             "last_active": s.get("last_active")}
 
 
@@ -233,6 +233,8 @@ def change_user(user_id: int, request: Request, body: dict = Body(...)):
         fields["features"] = ",".join(f for f in FEATURES if f in (body["features"] or []))
     if "welcome" in body:
         fields["welcome"] = str(body["welcome"] or "").strip()[:400]
+    if "welcome_big" in body:  # big, in the centre, every time the page opens (instead of a banner once per sign-in)
+        fields["welcome_big"] = int(bool(body["welcome_big"]))
     db.update_user(user_id, **fields)
     return list_users()
 
@@ -445,7 +447,8 @@ def status(request: Request):
         "auth": auth.enabled(),
         # features: extras the admin switched on for this person; welcome: the admin's note, shown once per sign-in
         "me": {"username": user["username"], "role": user["role"], "features": _features(user),
-               "welcome": user.get("welcome") or "", "login": user.get("last_login") or 0},
+               "welcome": user.get("welcome") or "", "welcome_big": bool(user.get("welcome_big")),
+               "login": user.get("last_login") or 0},
         "apify": bool(env("APIFY_TOKEN")),
         "sources": cfg.get("github") or [],
         "apify_searches": (cfg.get("apify") or {}).get("searches") or [],

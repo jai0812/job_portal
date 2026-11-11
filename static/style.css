@@ -370,6 +370,14 @@ body:not(.has-citizen) .feat-citizen { display: none !important; }
 .welcome button { border: 0; background: transparent; color: var(--muted); font-size: 16px; cursor: pointer; padding: 6px 8px; border-radius: 8px; }
 .welcome button:hover { background: var(--chip); color: var(--ink); }
 
+/* the same note in its big form: a dialog in the centre of the page */
+dialog.bignote { width: min(680px, 92vw); padding: 36px 28px 26px; text-align: center; border: 2px solid var(--accent); border-radius: 18px;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, .45); }
+dialog.bignote::backdrop { background: rgba(0, 0, 0, .6); }
+dialog.bignote p { margin: 0 0 24px; font-size: clamp(26px, 5.2vw, 46px); font-weight: 800; line-height: 1.2; letter-spacing: -.01em; white-space: pre-line; overflow-wrap: anywhere; }
+dialog.bignote form { display: block; }
+dialog.bignote button { font-size: 16px; padding: 10px 26px; }
+
 /* US citizen jobs tab */
 .tag.cz-us { color: var(--accent); font-weight: 600; }
 .tag.cz-gov { color: var(--good); font-weight: 600; }

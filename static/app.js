@@ -197,8 +197,17 @@ function edgeCell(j) {
 const edgeRank = (j) => (j.h1b === "citizen" ? 3 : czHas(j, "gov") ? 2 : j.h1b === "no" ? 1 : 0);
 
 // ---- Welcome note: written by the admin for one person (Users page), shown after each sign-in until closed with ✕.
+let BIGNOTE_SHOWN = false;
 function showWelcome() {
   const me = STATUS.me || {}, key = `welcome-seen-${me.username}`;
+  if (me.welcome && me.welcome_big) {  // the big form: centre of the page, every time the page opens
+    $("#welcome").classList.add("hidden");
+    if (BIGNOTE_SHOWN) return;
+    BIGNOTE_SHOWN = true;
+    $("#bignote-text").textContent = me.welcome;
+    $("#bignote").showModal();
+    return;
+  }
   let seen = "";
   try { seen = localStorage.getItem(key) || ""; } catch {}
   const show = !!me.welcome && seen !== String(me.login);
@@ -1120,7 +1129,7 @@ function renderUsers(users) {
     <td>${u.active ? '<span class="tag yes">Active</span>' : '<span class="tag no">Off</span>'}</td>
     <td>${u.applied}</td><td>${when(u.last_login)}</td><td>${when(u.last_active)}</td>
     <td class="extras">${u.role === "admin" ? "" : `<label class="check" title="Give this person the US citizen jobs tab"><input type="checkbox" data-u="citizen" ${u.features.includes("citizen") ? "checked" : ""}> 🇺🇸</label>
-      <button data-u="welcome" data-note="${esc(u.welcome)}" title="${u.welcome ? esc(u.welcome) : "Write a note this person sees after each sign-in"}">💬${u.welcome ? " ✓" : ""}</button>`}</td>
+      <button data-u="welcome" data-note="${esc(u.welcome)}" title="${u.welcome ? esc(u.welcome) + (u.welcome_big ? " (big, every time the page opens)" : " (banner, once per sign-in)") : "Write a note this person sees after each sign-in"}">💬${u.welcome ? (u.welcome_big ? " ✓ big" : " ✓") : ""}</button>`}</td>
     <td class="acts">${u.role === "admin" ? "" : `<button data-u="reset">Reset password</button>
       <button data-u="toggle">${u.active ? "Turn off" : "Turn on"}</button><button data-u="del" class="danger">Delete</button>`}</td></tr>`).join("");
 }
@@ -1155,8 +1164,9 @@ $("#users-body").addEventListener("click", async (e) => {
     } else if (b.dataset.u === "welcome") {
       const note = prompt(`Welcome note for ${name} — shown after each sign-in until they close it. Leave empty to remove it.`, b.dataset.note);
       if (note === null) return;
-      renderUsers(await api(`/api/users/${id}`, { method: "POST", body: { welcome: note } }));
-      toast(note.trim() ? `${name} will see it the next time they sign in` : `Welcome note removed for ${name}`);
+      const big = !!note.trim() && confirm(`Show it BIG in the centre of the page every time ${name} opens the portal?\n\nOK = big, every time\nCancel = a banner at the top, once after each sign-in`);
+      renderUsers(await api(`/api/users/${id}`, { method: "POST", body: { welcome: note, welcome_big: big } }));
+      toast(!note.trim() ? `Welcome note removed for ${name}` : big ? `${name} will see it every time they open the portal` : `${name} will see it the next time they sign in`);
     } else if (b.dataset.u === "toggle") {
       const on = b.textContent === "Turn on";
       renderUsers(await api(`/api/users/${id}`, { method: "POST", body: { active: on } }));
