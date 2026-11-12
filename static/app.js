@@ -188,6 +188,13 @@ function citHead(forCz) {
       government & defense employers, and postings that say they won't sponsor a visa.</p>
     <div class="chips">${CZ.map(chip).join("")}</div>${citLinks()}`;
 }
+// Canada HR tab: one-click "start right away" filter with its count (the same switch as the ⚡ Immediate start box).
+function hrQuick(rows) {
+  const imm = rows.filter((j) => j.immediate), day = (j) => ageOf(j) <= 86400 * 2;
+  return `<div class="chips"><button class="chip ${F.imm ? "" : "on"}" id="hr-all">All HR jobs<small>${rows.length.toLocaleString()}</small></button>
+    <button class="chip ${F.imm ? "on" : ""}" id="hr-imm" title="The posting says the job starts as soon as possible / immediately">⚡ Immediate start<small>${imm.length.toLocaleString()}</small></button>
+    <span class="muted hr-note">${imm.filter(day).length} immediate-start HR jobs posted in the last 2 days · Job Bank is re-checked every hour</span></div>`;
+}
 function edgeCell(j) {
   if (j.h1b === "citizen") return `<span class="tag cz-us">🇺🇸 Citizens only</span><span class="age-date">per the posting</span>`;
   if (czHas(j, "gov")) return `<span class="tag cz-gov">🛡️ Gov / defense</span><span class="age-date">usually citizens only</span>`;
@@ -391,7 +398,7 @@ function matches(j, skip) {
   if (F.source && j.source_name !== F.source) return false;
   if (F.cap && usLike() && !j.cap_exempt) return false;
   if (F.top && !j.top_company) return false;
-  if (F.imm && !j.immediate) return false;
+  if (skip !== "imm" && F.imm && !j.immediate) return false;
   if (usLike()) {  // H-1B filters only mean something for US jobs
     if (F.h1b === "sponsor" && !hasSponsored(j)) return false;
     if (F.h1b === "yes" && j.h1b !== "yes") return false;
@@ -436,8 +443,9 @@ function renderJobs() {
   const sites = $("#region-head .cit-sites");
   if (sites) CIT_OPEN = sites.open;  // keep the links panel open across re-renders
   $("#region-head").innerHTML = F.topset ? topHead() : F.cit ? citHead(base("cz")) : F.opt ? optHead(base("jt"), base("tier"))
-    : F.region === "us" ? "" : `<h2>${rtitle}</h2><p class="muted">${esc(rdesc)}</p>`;
+    : F.region === "us" ? "" : `<h2>${rtitle}</h2><p class="muted">${esc(rdesc)}</p>${F.region === "canada" && F.cat === "hr" ? hrQuick(base("imm")) : ""}`;
   bindTopHead();
+  [["#hr-all", false], ["#hr-imm", true]].forEach(([id, on]) => { const b = $(id); if (b) b.onclick = () => { F.imm = on; $("#f-imm").checked = on; SHOWN = 200; renderJobs(); }; });
   $$("#region-head [data-k]").forEach((b) => (b.onclick = () => { F[b.dataset.k] = b.dataset.v; SHOWN = 200; renderJobs(); }));
   if (usLike() && !F.topset) $("#f-place").innerHTML = "";
   else {

@@ -200,11 +200,12 @@ company_feeds: true
 company_max_age_days: 30
 company_regions: [us, india, canada, other]
 
-# Job Bank (jobbank.gc.ca), Canada's government job board: HR, recruiting, software and data searches.
-# Each search only shows the newest ~30 postings, so it's checked every couple of hours and adds up over time.
+# Job Bank (jobbank.gc.ca), Canada's government job board: HR, recruiting, payroll, software and data searches.
+# Each search shows the last two days of postings, so it's checked every hour and adds up over time. Each new
+# posting's own page is read once for its start date ("as soon as possible" = ⚡ Immediate start), hours and terms.
 jobbank:
   enabled: true
-  every_hours: 2
+  every_hours: 1
 
 # Refresh all sources automatically while the portal is running (minutes, 0 = off).
 # Apify is excluded from auto-refresh because it costs money; use the "Fetch LinkedIn (Apify)" button.

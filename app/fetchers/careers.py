@@ -100,6 +100,11 @@ class Sink:
 
 # ---------------------------------------------------------------- one function per career-site system
 
+# Extra Workday searches for Canada: big employers post thousands of jobs, so their HR openings are asked for by
+# name instead of hoping they fall inside the newest few hundred postings. Only HR titles are kept from these.
+CANADA_HR_SEARCHES = ("human resources", "talent acquisition", "recruiter", "payroll", "people and culture")
+
+
 def workday(f: dict, sink: Sink) -> None:
     base = f"https://{f['tenant']}.{f['wd']}.myworkdayjobs.com"
     api = f"{base}/wday/cxs/{f['tenant']}/{f['site']}/jobs"
@@ -118,12 +123,19 @@ def workday(f: dict, sink: Sink) -> None:
         if (sink.regions - done):
             passes.append((None, {}))
         for region, facet in passes:
+            if region == "canada":  # HR openings first, so they are in before the per-employer cap fills up
+                for text in CANADA_HR_SEARCHES:
+                    try:
+                        _workday_pass(c, base, api, f["site"], facet, region, sink, cap=200, text=text, title=classify.HR_TITLE)
+                    except (httpx.HTTPError, ValueError):
+                        break  # a site that can't search still gets its normal pass below
             # In the unfiltered pass, skip places we can't place ("2 Locations"): the country passes covered those.
             _workday_pass(c, base, api, f["site"], facet, region, sink, known_only=region is None and bool(done),
                           cap=f.get("max"))
 
 
-def _workday_pass(c, base, api, site, facets, region, sink, known_only=False, cap=None) -> None:
+def _workday_pass(c, base, api, site, facets, region, sink, known_only=False, cap=None, text="", title=None) -> None:
+    """text: search words; title: keep only postings whose title matches this pattern (used with text)."""
     offset, total, old_pages = 0, MAX_PER_FEED, 0
     limit = cap or MAX_PER_FEED * (2 if sink.only else 1)  # look further when most rows will be filtered out
     while offset < min(total, limit):
@@ -131,7 +143,7 @@ def _workday_pass(c, base, api, site, facets, region, sink, known_only=False, ca
             break
         if not region and all(sink.full(r) for r in sink.regions):
             break
-        r = c.post(api, json={"appliedFacets": facets, "limit": 20, "offset": offset, "searchText": ""})
+        r = c.post(api, json={"appliedFacets": facets, "limit": 20, "offset": offset, "searchText": text})
         r.raise_for_status()
         data = r.json()
         if offset == 0:  # Workday only reports the total on the first page
@@ -140,14 +152,15 @@ def _workday_pass(c, base, api, site, facets, region, sink, known_only=False, ca
         if not posts:
             break
         fresh = [sink.add(p.get("title", ""), p.get("locationsText", ""), f"{base}/en-US/{site}{p.get('externalPath', '')}",
-                          _workday_age(p.get("postedOn", "")), "day", region=region, known_only=known_only) for p in posts]
-        # Results are roughly newest-first; stop after three pages with nothing new enough.
-        old_pages = 0 if any(fresh) else old_pages + 1
+                          _workday_age(p.get("postedOn", "")), "day", region=region, known_only=known_only)
+                 for p in posts if not title or title.search(p.get("title", ""))]
+        # Results are roughly newest-first; stop after three pages with nothing new enough. (Searches come back
+        # best-match first, with old and new mixed, so those are read to the end.)
+        old_pages = 0 if any(fresh) or text else old_pages + 1
         if old_pages >= 3:
             break
         offset += 20
         time.sleep(0.3)  # Workday throttles rapid paging
-
 
 def _workday_facet(facets: list, names) -> dict:
     """Find the country filter value (e.g. "India") in a Workday site's facet list."""

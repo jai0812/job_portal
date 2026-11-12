@@ -188,6 +188,12 @@ def upsert_jobs(jobs: list[dict]) -> list[dict]:
     return new
 
 
+def described_urls(prefix: str) -> set[str]:
+    """Job links starting with `prefix` that already have their description stored (so it isn't fetched twice)."""
+    with conn() as c:
+        return {r[0] for r in c.execute("SELECT url FROM jobs WHERE url LIKE ? AND description != ''", (prefix + "%",))}
+
+
 def log_fetch(source: str, count: int, error: str = "") -> None:
     with WRITE_LOCK, conn() as c:
         c.execute("INSERT OR REPLACE INTO fetch_log VALUES (?,?,?,?)", (source, int(time.time()), count, error))

@@ -66,3 +66,29 @@ companies:
   - {name: Enbridge, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workday, tenant: enbridge, wd: wd3, site: enbridge_careers}]}
   - {name: Cenovus, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workday, tenant: cenovus, wd: wd3, site: careers}]}
   - {name: University of British Columbia, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workday, tenant: ubc, wd: wd10, site: ubcstaffjobs}]}
+
+  # ---------------- More Canadian employers with HR openings (added 2026-11-11 for the Canada HR tab). Tech + HR roles.
+  # On every Workday site that collects Canada, the portal also searches for HR roles by name (human resources,
+  # talent acquisition, recruiter, payroll, people and culture), so HR openings aren't lost among thousands of postings.
+  - {name: Loblaw, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workday, tenant: myview, wd: wd3, site: paradox_careers}]}
+  - {name: AtkinsRéalis, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workday, tenant: slihrms, wd: wd3, site: Careers}]}
+  - {name: TMX Group, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workday, tenant: tmx, wd: wd3, site: TMX_Careers}]}
+  - {name: Definity, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: oracle, host: hdks.fa.ca2.oraclecloud.com, site_number: CX_1, site: CX_1}]}
+  - {name: Maple Leaf Sports & Entertainment, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workday, tenant: mlse, wd: wd3, site: MLSE}]}
+  - {name: Stantec, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: oracle, host: hdhl.fa.us6.oraclecloud.com, site_number: CX_1, site: CX_1}]}
+  - {name: Bird Construction, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workday, tenant: bird, wd: wd3, site: BirdConstructionCareers}]}
+  - {name: Alberta Motor Association, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workday, tenant: albertamotorassociation, wd: wd3, site: ama}]}
+  - {name: Intelcom, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workday, tenant: intelcomgroup, wd: wd3, site: Intelcom}]}
+  - {name: Dexterra Group, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: smartrecruiters, company: dexterra}]}
+  - {name: PETRONAS Canada, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workday, tenant: petronascanada, wd: wd3, site: PETRONASCanada}]}
+  - {name: CPP Investments, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workday, tenant: cppib, wd: wd10, site: cppinvestments}]}
+  - {name: Thomson Reuters, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workday, tenant: thomsonreuters, wd: wd5, site: External_Career_Site}]}
+  - {name: Brookfield, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workday, tenant: brookfield, wd: wd5, site: brookfield}]}
+  - {name: Aviva Canada, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workday, tenant: aviva, wd: wd1, site: External}]}
+  - {name: BDO Canada, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workday, tenant: bdo, wd: wd3, site: BDO}]}
+  - {name: Genetec, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workable, account: genetec-inc}]}
+  - {name: SOTI, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workday, tenant: soti, wd: wd3, site: SOTI-Next-Gen}]}
+  - {name: Plusgrade, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workday, tenant: plusgrade, wd: wd10, site: Plusgrade_External_Site}]}
+  - {name: OMERS, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workday, tenant: omers, wd: wd3, site: OMERS_External}]}
+  - {name: Clio, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workday, tenant: clio, wd: wd3, site: ClioCareerSite}]}
+  - {name: Element Fleet Management, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workday, tenant: elementfleet, wd: wd3, site: External_Career_Site}]}

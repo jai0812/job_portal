@@ -68,6 +68,7 @@ H1B_PATTERNS = [
 IMMEDIATE = re.compile(
     r"immediate(ly)?[ -](start|join|joiner|joining|hire|hiring|opening|need|requirement|availability|available)"
     r"|(start|join|joining|available)\s+(date\s*[:\-]?\s*)?(immediately|asap|right away)|\basap\b"
+    r"|(starts?|starting|start date|available|availability)\s*[:\-]?\s*(is\s+)?as soon as possible"  # Job Bank Canada's wording
     r"|urgent(ly)?\s+(hiring|requirement|need|opening|position)"
     r"|notice period[^.]{0,25}?\b(0|immediate|15)\b|\b(0|zero)\s*-\s*(15|30)\s*days?\s*notice|can join (within|in) (15|30) days", re.I)
 

@@ -266,7 +266,7 @@ companies:
   - {name: Hadrian, group: Government & defense, tech_only: true, regions: [us], every_hours: 3, feeds: [{type: ashby, board: hadrian-automation}]}
 
   # ---------------- Big 4 (Deloitte, EY and KPMG's career sites can't be read automatically: links on the citizen tab)
-  - {name: PwC, group: Big 4 & consulting, regions: [us], every_hours: 3, uscis: [PRICEWATERHOUSECOOPERS], feeds: [{type: workday, tenant: pwc, wd: wd3, site: US_Entry_Level_Careers, max: 300}, {type: workday, tenant: pwc, wd: wd3, site: Global_Campus_Careers, max: 300}, {type: workday, tenant: pwc, wd: wd3, site: Global_Experienced_Careers, max: 300}]}
+  - {name: PwC, group: Big 4 & consulting, regions: [us, canada], every_hours: 3, uscis: [PRICEWATERHOUSECOOPERS], feeds: [{type: workday, tenant: pwc, wd: wd3, site: US_Entry_Level_Careers, max: 300}, {type: workday, tenant: pwc, wd: wd3, site: Global_Campus_Careers, max: 300}, {type: workday, tenant: pwc, wd: wd3, site: Global_Experienced_Careers, max: 300}]}
 
   # ---------------- Employers that came to Boston University career fairs (fall 2026) and weren't followed yet
   - {name: Travelers, group: Recruits at BU, tech_only: true, regions: [us], every_hours: 3, feeds: [{type: workday, tenant: travelers, wd: wd5, site: External, max: 300}]}
