@@ -82,8 +82,6 @@ companies:
   - {name: Dexterra Group, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: smartrecruiters, company: dexterra}]}
   - {name: PETRONAS Canada, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workday, tenant: petronascanada, wd: wd3, site: PETRONASCanada}]}
   - {name: CPP Investments, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workday, tenant: cppib, wd: wd10, site: cppinvestments}]}
-  - {name: Thomson Reuters, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workday, tenant: thomsonreuters, wd: wd5, site: External_Career_Site}]}
-  - {name: Brookfield, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workday, tenant: brookfield, wd: wd5, site: brookfield}]}
   - {name: Aviva Canada, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workday, tenant: aviva, wd: wd1, site: External}]}
   - {name: BDO Canada, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workday, tenant: bdo, wd: wd3, site: BDO}]}
   - {name: Genetec, group: Canada employers, tech_only: true, regions: [canada], every_hours: 3, feeds: [{type: workable, account: genetec-inc}]}
