@@ -43,7 +43,10 @@ async function api(path, opts = {}) {
     init.headers["Content-Type"] = "application/json";
   }
   const r = await fetch(path, init);
-  if (r.status === 401) { location.href = "/login"; throw new Error("Please sign in"); }
+  if (r.status === 401) {  // a guest reached for a members' feature; a member's session ran out
+    if (isGuest()) showJoin("default"); else location.href = "/login";
+    throw new Error("Please sign in");
+  }
   const data = await r.json().catch(() => ({}));
   if (!r.ok) throw new Error(data.detail || r.statusText);
   return data;
@@ -58,16 +61,20 @@ function toast(msg, ms = 2600) {
 }
 
 let STATUS = {};
-const isAdmin = () => !STATUS.me || STATUS.me.role === "admin";
+// Guests (not signed in) browse a slim job list: no apply links, no H-1B / finance / source columns, no tracking.
+const isGuest = () => !!STATUS.guest;
+const isAdmin = () => !isGuest() && (!STATUS.me || STATUS.me.role === "admin");
 // Extras the admin switches on per person (Users page). The admin sees every extra, to check what others see.
 const hasFeat = (f) => isAdmin() || ((STATUS.me && STATUS.me.features) || []).includes(f);
 
 // ------------------------------------------------------------------ tabs
 const REGION_TABS = { jobs: "us", top: "us", opt: "us", citizen: "us", india: "india", canada: "canada", canhr: "canada", world: "other", handshake: "handshake" };
 const ADMIN_TABS = new Set(["ask", "users", "settings", "handshake", "opt"]);
+const GUEST_TABS = new Set(["jobs", "top", "india", "canada", "canhr", "world"]);
 const usLike = () => F.region === "us" || F.region === "handshake";  // Handshake jobs are (almost all) American
 function showTab(name) {
   if (ADMIN_TABS.has(name) && !isAdmin()) name = "jobs";
+  if (isGuest() && !GUEST_TABS.has(name)) return showJoin(name);  // Startups, Analytics, Universities: members only
   if (name === "citizen" && !hasFeat("citizen")) name = "jobs";
   $$("#tabs button").forEach((b) => b.classList.toggle("active", b.dataset.tab === name));
   const section = name in REGION_TABS ? "jobs" : name;
@@ -96,9 +103,16 @@ window.addEventListener("hashchange", () => { const t = location.hash.slice(1); 
 async function loadStatus() {
   STATUS = await api("/api/status");
   document.body.classList.toggle("is-admin", isAdmin());
+  document.body.classList.toggle("is-guest", isGuest());
   document.body.classList.toggle("has-citizen", hasFeat("citizen"));
   showWelcome();
+  if (isGuest()) {
+    $("#llm-pills").innerHTML = `<a class="btn" href="/docs">How it works</a><a class="btn" href="/login">Sign in</a>
+      ${STATUS.signup ? `<a class="btn primary" href="/signup">Create free account</a>` : ""}`;
+    return;
+  }
   $("#llm-pills").innerHTML = (STATUS.auth ? `<span class="me" title="Signed in">👤 ${esc(STATUS.me.username)}</span>
+      <a class="btn" href="/docs" title="How the portal works">Docs</a>
       <button id="chpass" title="Change your password">🔑</button><button id="signout" title="Sign out of the portal">Sign out</button>` : "");
   if (STATUS.auth) {
     $("#signout").onclick = async () => { await api("/api/logout", { method: "POST" }); location.href = "/login"; };
@@ -357,11 +371,17 @@ async function showRegion() {
   await ensureRegion(want);
   if (F.region !== want) return;  // switched tabs meanwhile
   JOBS = STORE[want];
-  const sources = [...new Set(JOBS.map((j) => j.source_name))].sort();
+  const sources = isGuest() ? [] : [...new Set(JOBS.map((j) => j.source_name))].sort();
   $("#f-source").innerHTML = `<option value="">All</option>` + sources.map((s) => `<option ${s === F.source ? "selected" : ""}>${esc(s)}</option>`).join("");
   renderJobs();
 }
 async function loadJobs() {
+  if (isGuest()) {  // nothing of their own to merge in
+    MARKS = {};
+    NOW = Date.now() / 1000;
+    JOBS_BUILT = STATUS.built;
+    return showRegion();
+  }
   const mine = await api("/api/jobs/mine");
   MARKS = mine.marks;
   NOW = mine.now;
@@ -455,7 +475,9 @@ function renderJobs() {
     chips($("#f-place"), [["", F.topset ? "All top companies" : F.region === "other" ? "All countries" : "All cities"], ...places], "place",
       (v) => (v ? counts[v] || 0 : forPlace.length));
   }
-  $("#jobs thead th[data-sort=h1b]").classList.toggle("hidden", !usLike());
+  const G = isGuest();
+  $("#jobs thead th[data-sort=h1b]").classList.toggle("hidden", !usLike() || G);
+  ["th.cb-col", "th[data-sort=fin]", "th[data-sort=source]"].forEach((sel) => $(`#jobs thead ${sel}`).classList.toggle("hidden", G));
   chips($("#f-fin"), [["", "All companies"], ["any", "Any finance firm"], ...FIN_SEGMENTS], "fin",
     (v) => (v === "" ? forFin.length : forFin.filter((j) => j.fin && (v === "any" || j.fin.segment === v)).length));
   chips($("#f-stype"), STYPES.filter(([v]) => (v !== "jobbank" || F.region === "canada") && (v !== "handshake" || F.region === "handshake")), "stype", (v) => (v ? forSt.filter((j) => j.source_type === v).length : forSt.length));
@@ -476,21 +498,21 @@ function renderJobs() {
       + (F.cit ? (czHas(j, "big4") ? `<span class="tag">Big 4</span>` : "") + (czHas(j, "mbb") ? `<span class="tag">Big 3</span>` : "") + (czHas(j, "bu") ? `<span class="tag cz-bu" title="Came to a Boston University career fair">🎓 BU fair</span>` : "") : "");
     const jrUrl = jr.replace("{q}", encodeURIComponent(`${j.title} ${j.company}`));
     return `<tr class="${rowClass(j)}" data-id="${j.id}">
-      ${appliedBox(j)}
+      ${G ? "" : appliedBox(j)}
       ${postedCell(j)}
       <td class="company">${esc(j.company)}<br>${badges}${F.opt && j.tier ? `<span class="tag">Tier ${j.tier}</span>` : ""}</td>
-      ${finCell(j)}
+      ${G ? "" : finCell(j)}
       <td>${esc(j.title)}${j.immediate ? ` <span class="tag imm" title="The posting asks for someone who can start right away">⚡ Immediate start</span>` : ""}${jtTag(j)}${j.salary ? `<br><span class="muted">${esc(j.salary)}</span>` : ""}${F.opt ? contactLine(j) : ""}</td>
       <td class="loc">${esc(j.location)}${F.region === "other" ? `<span class="age-date">${esc(placesOf(j).join(", "))}</span>` : ""}</td>
       <td>${cats}</td>
       <td>${LEVEL_LABEL[j.level] || j.level}</td>
-      ${usLike() ? `<td class="h1b">${F.cit ? edgeCell(j) : h1bCell(j)}</td>` : ""}
-      ${sourceCell(j)}
-      <td><div class="actions">
+      ${usLike() && !G ? `<td class="h1b">${F.cit ? edgeCell(j) : h1bCell(j)}</td>` : ""}
+      ${G ? "" : sourceCell(j)}
+      <td><div class="actions">${G ? `<a class="btn primary-link locked" href="/signup" data-join="apply" title="Create a free account to apply">🔒 Apply</a></div></td></tr>` : `
         ${j.url ? `<a class="btn primary-link" href="${esc(j.url)}" target="_blank" rel="noopener">Apply ↗</a>` : ""}
         <a class="btn" href="${esc(jrUrl)}" target="_blank" rel="noopener" title="Look up on JobRight">JR</a>
         ${statusSelect(j)}
-      </div></td></tr>`;
+      </div></td></tr>`}`;
   }).join("");
   $("#more").classList.toggle("hidden", rows.length <= SHOWN);
 }
@@ -605,6 +627,7 @@ $("#btn-refresh").onclick = () => startRefresh(false);
 // The server refreshes sources on its own (fast lane every 10 min, everything every 30); pick up new data without a page reload.
 let LAST_FETCH = 0, JOBS_BUILT = 0;
 setInterval(async () => {
+  if (isGuest()) return;
   try {
     const s = await api("/api/refresh");
     if (s.jobs_built > JOBS_BUILT) { await loadStatus(); loadJobs(); }  // a fresh job list is ready on the server
@@ -662,7 +685,7 @@ function topHead() {
   const pats = PATTERNS.filter((p) => present.has(p.company)).slice(0, 12);
   return `<h2>⭐ Top companies</h2>
     <p class="muted">FAANG / MAANG, big tech, top AI labs and the biggest finance names. Their own career sites (and the GitHub lists) are re-checked every 10 minutes.
-      Below: when each one actually posts, measured from the last 60 days (ET). Set up alerts in <a href="#settings">Settings → Phone &amp; email alerts</a>.</p>
+      Below: when each one actually posts, measured from the last 60 days (ET).${isAdmin() ? ` Set up alerts in <a href="#settings">Settings → Phone &amp; email alerts</a>.` : ""}</p>
     ${pats.length ? `<div class="pat-cards">${pats.map((p) => `
       <button class="pat ${F.place === p.company ? "on" : ""}" data-co="${esc(p.company)}" title="${p.samples} postings measured · ${p.strength} pattern">
         <span class="pat-name">${esc(p.company)}</span>
@@ -1370,18 +1393,47 @@ $("#su-scan").onclick = async () => {
   toast(r.started ? "Scanning — takes a few minutes; reopen the tab after" : "A scan is already running");
 };
 
+// ------------------------------------------------------------------ guests: what a free account adds
+const JOIN = {
+  apply: ["Create a free account to apply",
+    "Apply links open the employer's own posting. With an account you also see which employers have sponsored H-1B visas, and the portal remembers every job you apply to."],
+  analytics: ["Your analytics need an account",
+    "Analytics shows every job you've marked as applied: how many a day, which companies and roles, and where you're waiting to hear back."],
+  startups: ["The startup radar is for members",
+    "A daily scan of new Y Combinator companies, SEC Form D filings and funding news: what each startup does, its stage, its founders and whether it's hiring."],
+  unis: ["Universities are for members",
+    "Jobs at universities, which are usually exempt from the H-1B lottery, with each university's own career site."],
+  default: ["That needs a free account",
+    "Create an account with your email to see apply links, H-1B sponsorship history and the finance-firm column, and to track your applications."],
+};
+function showJoin(key) {
+  const [title, text] = JOIN[key] || JOIN.default;
+  $("#join-title").textContent = title;
+  $("#join-text").textContent = text;
+  $("#join-signup").classList.toggle("hidden", !STATUS.signup);
+  $("#dlg-join").showModal();
+}
+document.addEventListener("click", (e) => {
+  const a = e.target.closest("[data-join]");
+  if (!a || !isGuest()) return;
+  e.preventDefault();
+  showJoin(a.dataset.join);
+});
+
 // ------------------------------------------------------------------ boot
 (async () => {
   await loadStatus();
   const start = location.hash.slice(1);
   if (start in REGION_TABS) Object.assign(F, { region: REGION_TABS[start], topset: start === "top", opt: start === "opt" && isAdmin(), cit: start === "citizen" && hasFeat("citizen"), cat: start === "canhr" ? "hr" : "" });
   if (F.cit) loadCitizen();
-  try { FIN_SEGMENTS = Object.entries((await api("/api/finance")).segments); } catch {}
+  if (!isGuest()) try { FIN_SEGMENTS = Object.entries((await api("/api/finance")).segments); } catch {}
   await loadPatterns();
   if (isAdmin()) loadApify();
   loadJobs();
-  loadUnis();
-  pollRefresh();
-  loadProfile();
+  if (!isGuest()) {
+    loadUnis();
+    pollRefresh();
+    loadProfile();
+  }
   if (start) showTab(start);
 })();

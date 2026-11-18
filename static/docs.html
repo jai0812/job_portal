@@ -1,0 +1,706 @@
+<!doctype html>
+<!-- Job Portal · built by JAI SHARMA -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Documentation · SharmaJai Job Portal</title>
+<meta name="description" content="How SharmaJai Job Portal works: every tab, filter and column, where the jobs come from, how often they're checked, how H-1B and experience levels are decided, and how the system is built.">
+<meta name="theme-color" content="#e7eaee">
+<link rel="icon" href="/logo-mark.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/overpass-normal-400-900.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/site.css">
+</head>
+<body>
+<a class="skip" href="#doc">Skip to content</a>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="/home"><img src="/logo-mark.svg" alt="" width="28" height="28">SharmaJai Job Portal</a>
+    <nav class="nav" aria-label="Main">
+      <a href="/home">Home</a>
+      <a href="/jobs">Browse jobs</a>
+      <a class="keep" href="/login">Sign in</a>
+      <a class="sign small" href="/signup"><span class="lg">Create free account</span><span class="sm">Sign up</span></a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap docs">
+  <!-- ================================================================== table of contents -->
+  <nav class="toc" id="toc" aria-label="Documentation">
+    <button class="toc-toggle" id="toc-toggle" aria-expanded="false" aria-controls="toc-body">Contents <span aria-hidden="true">▾</span></button>
+    <div class="toc-body" id="toc-body">
+      <h2>Using the portal</h2>
+      <ol>
+        <li><a href="#start">What the portal is</a></li>
+        <li><a href="#accounts">Guests and accounts</a></li>
+        <li><a href="#tour">A two-minute tour</a></li>
+        <li><a href="#tabs">The tabs</a></li>
+        <li><a href="#columns">Columns in the job list</a></li>
+        <li><a href="#filters">Filters and search</a></li>
+        <li><a href="#tracking">Tracking your applications</a></li>
+        <li><a href="#startups">Startup radar</a></li>
+      </ol>
+      <h2>How the data works</h2>
+      <ol>
+        <li><a href="#sources">Where jobs come from</a></li>
+        <li><a href="#schedule">How often it's checked</a></li>
+        <li><a href="#h1b">The H-1B column</a></li>
+        <li><a href="#levels">Experience levels</a></li>
+        <li><a href="#tags">Fields, immediate start, duplicates</a></li>
+      </ol>
+      <h2>How it's built</h2>
+      <ol>
+        <li><a href="#architecture">Architecture</a></li>
+        <li><a href="#request">What happens when you open a tab</a></li>
+        <li><a href="#data">Data model</a></li>
+        <li><a href="#memory">Running on a small server</a></li>
+        <li><a href="#security">Security</a></li>
+        <li><a href="#privacy">Privacy</a></li>
+      </ol>
+      <h2>Reference</h2>
+      <ol>
+        <li><a href="#faq">Questions</a></li>
+        <li><a href="#glossary">Glossary</a></li>
+      </ol>
+    </div>
+  </nav>
+
+  <main class="doc" id="doc">
+    <div class="doc-hero">
+      <p class="kicker">Documentation</p>
+      <h1>How the portal works.</h1>
+      <p>Everything on the site explained: what each tab, column and filter does, where the jobs come from and how often,
+        how sponsorship and experience levels are decided, and how the system behind it is built.</p>
+      <div class="doc-meta"><span><span data-stat="total">—</span> open jobs</span><span>· <span data-stat="career_sites">500+</span> career sites</span>
+        <span>· <span data-stat="github_lists">40+</span> job lists</span><span>· last checked <span id="last-check">recently</span></span></div>
+    </div>
+
+    <!-- ================================================================ start -->
+    <section id="start">
+      <h2>What the portal is <a class="anchor" href="#start" aria-label="Link to this section">#</a></h2>
+      <p>SharmaJai Job Portal collects job postings from employers' own career sites and from community-kept job lists, checks
+        them all day, and shows them in one fast list per country. It was built for students and early-career job seekers,
+        and especially for international students in the United States, who need to know whether an employer sponsors visas
+        before they spend an evening on an application.</p>
+      <p>Four things set it apart from a general job board:</p>
+      <div class="cards">
+        <div class="card"><h4>It reads the source</h4><p>Jobs come from the systems employers publish them on (Workday, Greenhouse, Lever and others), so they appear minutes after they're posted, not days later on a reposting site.</p></div>
+        <div class="card"><h4>It answers the visa question</h4><p>Every US employer carries its H-1B record from USCIS data, and a posting's own words about sponsorship always win.</p></div>
+        <div class="card"><h4>It's honest about level</h4><p>"Early career" means 0–2 years. Titles that say Junior but ask for five years are moved where they belong.</p></div>
+        <div class="card"><h4>It remembers for you</h4><p>Mark what you've applied to, what you're waiting on and what you've declined, and see it all in your own analytics.</p></div>
+      </div>
+    </section>
+
+    <!-- ================================================================ accounts -->
+    <section id="accounts">
+      <h2>Guests and accounts <a class="anchor" href="#accounts" aria-label="Link to this section">#</a></h2>
+      <p>You don't need an account to look around. Open <a href="/jobs">Browse jobs</a> and every job tab is there. An account
+        is free and needs only an email address and a password; it unlocks the parts that help you decide and apply.</p>
+      <div class="tbl-wrap"><table class="tbl">
+        <thead><tr><th>Feature</th><th>Guest</th><th>Free account</th></tr></thead>
+        <tbody>
+          <tr><td>Job tabs: US, Top companies, India, Canada, Canada HR, Other countries</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+          <tr><td>Filters: field, level, posted within, city, immediate start, search</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+          <tr><td>When top companies usually post</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+          <tr><td>Apply links to the employer's posting</td><td class="no">—</td><td class="yes">Yes</td></tr>
+          <tr><td>H-1B column, sponsorship and cap-exempt filters</td><td class="no">—</td><td class="yes">Yes</td></tr>
+          <tr><td>Finance-firm and source columns and filters</td><td class="no">—</td><td class="yes">Yes</td></tr>
+          <tr><td>Mark applied, wait, declined, interviewing…</td><td class="no">—</td><td class="yes">Yes</td></tr>
+          <tr><td>Analytics of your applications</td><td class="no">—</td><td class="yes">Yes</td></tr>
+          <tr><td>Startup radar, Universities, quick-copy bar</td><td class="no">—</td><td class="yes">Yes</td></tr>
+        </tbody>
+      </table></div>
+
+      <figure class="dia">
+        <svg viewBox="0 0 880 170" role="img" aria-labelledby="flow-guest-t">
+          <title id="flow-guest-t">From visitor to member: open the home page, browse jobs as a guest, press Apply, create an account, see the full list.</title>
+          <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="ar" d="M0 0L10 5L0 10z"/></marker></defs>
+          <rect class="bx" x="10" y="45" width="140" height="70" rx="8"/><text class="t-h" x="80" y="76" text-anchor="middle">Home page</text><text class="t-m" x="80" y="96" text-anchor="middle">jobs.sharmajai.com</text>
+          <rect class="bx" x="190" y="45" width="150" height="70" rx="8"/><text class="t-h" x="265" y="76" text-anchor="middle">Browse as guest</text><text class="t-m" x="265" y="96" text-anchor="middle">fewer columns</text>
+          <rect class="bx-s" x="380" y="45" width="130" height="70" rx="8"/><text class="t-s" x="445" y="76" text-anchor="middle">🔒 Apply</text><text class="t-m" x="445" y="96" text-anchor="middle" style="fill:var(--sign-ink)">asks you to join</text>
+          <rect class="bx" x="550" y="45" width="150" height="70" rx="8"/><text class="t-h" x="625" y="76" text-anchor="middle">Create account</text><text class="t-m" x="625" y="96" text-anchor="middle">email + password</text>
+          <rect class="bx-d" x="740" y="45" width="130" height="70" rx="8"/><text class="t-d" x="805" y="76" text-anchor="middle">Full list</text><text class="t-d" x="805" y="96" text-anchor="middle" style="opacity:.7">apply · track</text>
+          <path class="ln" d="M150 80H186" marker-end="url(#ah)"/><path class="ln" d="M340 80H376" marker-end="url(#ah)"/><path class="ln" d="M510 80H546" marker-end="url(#ah)"/><path class="ln" d="M700 80H736" marker-end="url(#ah)"/>
+          <path class="ln-m" d="M80 115V150H805V119" stroke-dasharray="4 4" marker-end="url(#ah)"/><text class="t-m" x="440" y="145" text-anchor="middle">already have an account: Sign in</text>
+        </svg>
+        <figcaption>Anyone can browse; pressing Apply, or opening Analytics, Startups or Universities, asks you to create an account.</figcaption>
+      </figure>
+
+      <h3 id="create">Create an account</h3>
+      <ol>
+        <li>Press <b>Create free account</b> on any page.</li>
+        <li>Type your email and press <kbd>Enter</kbd>.</li>
+        <li>Choose a password of 8 or more characters and press <kbd>Enter</kbd>. You're signed in straight away.</li>
+      </ol>
+      <figure class="shot"><img src="/img/docs-signup.jpg" alt="The create-account page: a single field asking for your email" loading="lazy" width="1600" height="1000" style="border-radius:10px;border:1px solid var(--slab)">
+        <figcaption>One field asks for your email, then the same field asks for a password. <kbd>Backspace</kbd> in an empty password field goes back.</figcaption></figure>
+      <h3 id="signin">Sign in, passwords and sessions</h3>
+      <ul>
+        <li>Sign in with your email or your username (made from your email, e.g. <code>priya.k</code>).</li>
+        <li>Change your password with the 🔑 button at the top right of the job page. That signs you out on other devices.</li>
+        <li>A sign-in lasts 12 hours. After five wrong passwords in 15 minutes, sign-in pauses for 15 minutes.</li>
+        <li>Forgot your password? The site owner can reset it for you; there's no email reset yet.</li>
+      </ul>
+      <figure class="shot"><img src="/img/docs-join.jpg" alt="A guest pressing Apply sees a box explaining what a free account adds" loading="lazy" width="1600" height="1000" style="border-radius:10px;border:1px solid var(--slab)">
+        <figcaption>As a guest, every row has a locked Apply button. Pressing it explains what an account adds.</figcaption></figure>
+    </section>
+
+    <!-- ================================================================ tour -->
+    <section id="tour">
+      <h2>A two-minute tour <a class="anchor" href="#tour" aria-label="Link to this section">#</a></h2>
+      <p>The tour plays real screenshots of the portal, from a fresh posting to a tracked application. Click a step to stop
+        on it.</p>
+      <div class="laptop-grid" style="margin-top:20px">
+        <div class="laptop" id="laptop" data-tour="#steps">
+          <div class="lid"><div class="screen">
+            <img src="/img/tour-1.jpg" alt="The United States job list, newest first" class="on" width="1280" height="800" loading="lazy">
+            <img src="/img/tour-2.jpg" alt="Filters set to Software Engineering, early career, posted in the last 24 hours" loading="lazy" width="1280" height="800">
+            <img src="/img/tour-3.jpg" alt="The H-1B column, source and Apply buttons" loading="lazy" width="1280" height="800">
+            <img src="/img/tour-4.jpg" alt="The status menu: Applied, Wait, Decline, Clear" loading="lazy" width="1280" height="800">
+            <img src="/img/tour-5.jpg" alt="The Analytics tab with applications per day" loading="lazy" width="1280" height="800">
+            <svg class="cursor" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 8-6 1.6L10 19z" fill="#fff" stroke="#111" stroke-width="1.5" stroke-linejoin="round"/></svg>
+            <span class="tap" aria-hidden="true"></span>
+          </div></div>
+          <div class="base"></div>
+        </div>
+        <ol class="steps" id="steps">
+          <li><button type="button"><span class="n">1</span><span><b>Open a job tab</b><span class="t">Newest first. The green time is how long ago it was posted.</span></span><span class="bar"><i></i></span></button></li>
+          <li><button type="button"><span class="n">2</span><span><b>Narrow it down</b><span class="t">Software Engineering, Early career, posted in the last 24 hours: 242 jobs.</span></span><span class="bar"><i></i></span></button></li>
+          <li><button type="button"><span class="n">3</span><span><b>Check sponsorship</b><span class="t">"Has sponsored" with the USCIS count, or the posting's own words.</span></span><span class="bar"><i></i></span></button></li>
+          <li><button type="button"><span class="n">4</span><span><b>Apply, then mark it</b><span class="t">Click the box for Applied; hold it for Wait or Decline.</span></span><span class="bar"><i></i></span></button></li>
+          <li><button type="button"><span class="n">5</span><span><b>Watch your progress</b><span class="t">Applications per day, streaks, interview rate and more.</span></span><span class="bar"><i></i></span></button></li>
+        </ol>
+      </div>
+      <p class="fine">Screenshots taken from the portal with a demo account and real job data, November 2026.</p>
+    </section>
+
+    <!-- ================================================================ tabs -->
+    <section id="tabs">
+      <h2>The tabs <a class="anchor" href="#tabs" aria-label="Link to this section">#</a></h2>
+      <p>The bar at the top of the job page switches between job markets and tools. Each job tab downloads only its own
+        list, so switching is fast after the first visit.</p>
+
+      <h3 id="tab-us">🇺🇸 Jobs (United States)</h3>
+      <p>Every US posting, newest first: software, data and machine learning, finance and banking, IT support and more. This
+        is where the H-1B column, finance-firm filters and cap-exempt filter matter most.</p>
+
+      <h3 id="tab-top">⭐ Top companies</h3>
+      <p>FAANG / MAANG, big tech, the main AI labs and the largest banks and trading firms. Their career sites are checked
+        every 10 minutes. The cards above the list show <b>when each company actually posts</b>: the hours (Eastern time)
+        and weekdays its new jobs appeared over the last 60 days, and what share of postings fall in that window.</p>
+      <figure class="shot"><img src="/img/docs-top.jpg" alt="The Top companies tab with posting-time cards for Figma, DoorDash, Pinterest and others" loading="lazy" width="1600" height="1000" style="border-radius:10px;border:1px solid var(--slab)">
+        <figcaption>Each card: the busiest posting window, the top weekdays, and an hour-by-hour bar chart. Click a card to filter the list to that company.</figcaption></figure>
+
+      <h3 id="tab-india">🇮🇳 India</h3>
+      <p>Jobs in India from Indian tech and fintech companies (Swiggy, Razorpay, Freshworks, Groww, Paytm and others), the
+        India teams of global companies, banks' India offices and India-focused fresher lists. Filter by city: Bengaluru,
+        Hyderabad, Pune, Delhi NCR, Mumbai, Chennai and more. Fresher and "0–2 years" roles count as early career.</p>
+
+      <h3 id="tab-canada">🇨🇦 Canada and 👥 Canada HR</h3>
+      <p>Canadian jobs from Canadian employers' career sites, the Canada teams of global companies, Canadian job lists and
+        Job Bank, the Government of Canada's job board. <b>Canada HR</b> is the same list set to HR, recruiting, payroll
+        and people roles, with a one-click <b>⚡ Immediate start</b> filter: the portal opens each Job Bank posting once
+        and reads its start date.</p>
+      <figure class="shot"><img src="/img/docs-canhr.jpg" alt="The Canada HR tab filtered to immediate-start jobs" loading="lazy" width="1600" height="1000" style="border-radius:10px;border:1px solid var(--slab)">
+        <figcaption>Canada HR with ⚡ Immediate start on. Postings also show hours per week and pay when the employer gives them.</figcaption></figure>
+
+      <h3 id="tab-world">🌍 Other countries</h3>
+      <p>Everything outside the US, India and Canada: the UK, Europe, Singapore, the Gulf, Australia and more. Filter by
+        country with the chips above the list.</p>
+
+      <h3 id="tab-startups">🚀 Startups <small>(account)</small></h3>
+      <p>The startup radar: newly funded and newly launched startups. See <a href="#startups">Startup radar</a>.</p>
+
+      <h3 id="tab-analytics">📊 Analytics <small>(account)</small></h3>
+      <p>Your applications in numbers. See <a href="#tracking">Tracking your applications</a>.</p>
+
+      <h3 id="tab-unis">Universities <small>(account)</small></h3>
+      <p>Jobs at major universities, with each university's career site. Universities are usually exempt from the H-1B
+        lottery cap, so they can hire on an H-1B at any time of year.</p>
+      <figure class="shot"><img src="/img/docs-unis.jpg" alt="The Universities tab" loading="lazy" width="1600" height="1000" style="border-radius:10px;border:1px solid var(--slab)"></figure>
+    </section>
+
+    <!-- ================================================================ columns -->
+    <section id="columns">
+      <h2>Columns in the job list <a class="anchor" href="#columns" aria-label="Link to this section">#</a></h2>
+      <p>Click a column heading to sort by it; click again to reverse. Guests see Posted, Company, Role, Location, Category,
+        Level and a locked Apply.</p>
+      <div class="tbl-wrap"><table class="tbl">
+        <thead><tr><th>Column</th><th>What it shows</th></tr></thead>
+        <tbody>
+          <tr><td>Applied</td><td>Your status for the job. Click to mark Applied; hold (or right-click) for Applied, Wait or Decline.</td></tr>
+          <tr><td>Posted</td><td>How long ago it was posted (green when under a day), in words, and the date. When a site gives only the day, it says so ("date not given" means the site gave none, so the time the portal found it is used).</td></tr>
+          <tr><td>Company</td><td>The employer. <b>★ Top</b> marks the top companies; <b>Cap-exempt</b> marks employers usually exempt from the H-1B cap.</td></tr>
+          <tr><td>Finance firm</td><td>For banks, asset managers, trading firms and other finance employers: which kind (Broad bank, Investment banking &amp; markets, Hedge fund / quant…) and the firm's name.</td></tr>
+          <tr><td>Role</td><td>The job title, plus <b>⚡ Immediate start</b>, contract or part-time with hours a week, and pay when the posting gives them.</td></tr>
+          <tr><td>Location</td><td>As the employer wrote it. Country and city filters read it for you.</td></tr>
+          <tr><td>Category</td><td>SWE, DS/ML, Finance, IT, HR or Other. A job can be in more than one.</td></tr>
+          <tr><td>Level</td><td>Intern, Early career (0–2 years), Experienced (3+ years) or — when unclear. See <a href="#levels">Experience levels</a>.</td></tr>
+          <tr><td>H-1B</td><td>The employer's sponsorship record (US jobs). See <a href="#h1b">The H-1B column</a>.</td></tr>
+          <tr><td>Source</td><td>Where the portal found it: a company career site, a GitHub list, Job Bank or LinkedIn, plus "+ N more lists" when several sources carry the same job, and when it was first found.</td></tr>
+          <tr><td>Actions</td><td><b>Apply ↗</b> opens the employer's posting. <b>JR</b> looks the job up on JobRight. The dropdown sets any stage.</td></tr>
+        </tbody>
+      </table></div>
+      <figure class="shot"><img src="/img/tour-3.jpg" alt="Rows showing the H-1B, Source and Actions columns" loading="lazy" width="1600" height="1000" style="border-radius:10px;border:1px solid var(--slab)"></figure>
+    </section>
+
+    <!-- ================================================================ filters -->
+    <section id="filters">
+      <h2>Filters and search <a class="anchor" href="#filters" aria-label="Link to this section">#</a></h2>
+      <p>Filters combine. Each chip shows how many jobs you'd get if you picked it, counting all your other filters.</p>
+      <dl class="gloss">
+        <dt>Search</dt><dd>Words in the company, title or location. Every word must match: <code>data toronto</code> finds data jobs in Toronto.</dd>
+        <dt>Category</dt><dd>Software Engineering, Finance &amp; Banks, Data Science &amp; ML, IT Support, Other (and HR &amp; People in Canada).</dd>
+        <dt>Level</dt><dd>Internship, Early career · 0–2 yrs, Experienced · 3+ yrs, Unspecified.</dd>
+        <dt>Posted within</dt><dd>6 hours, 24 hours, 2, 3, 7, 14 or 30 days.</dd>
+        <dt>City / country</dt><dd>On the India, Canada and Other countries tabs: the most common cities or countries in the list.</dd>
+        <dt>⚡ Immediate start</dt><dd>Only jobs whose posting says they start right away.</dd>
+        <dt>Top companies only</dt><dd>Only the companies on the Top companies tab.</dd>
+        <dt>Source <small>(account)</small></dt><dd>GitHub lists, company career sites, Job Bank Canada or LinkedIn, or one particular list.</dd>
+        <dt>Finance firm <small>(account)</small></dt><dd>Any finance firm, or one kind: broad banks, global banks, investment banking, asset managers, private markets, hedge funds, market makers, exchanges, payments, financial data, fintech.</dd>
+        <dt>H-1B <small>(account)</small></dt><dd>Has sponsored H-1B (USCIS data or the posting) · Posting says it sponsors · Hide "no sponsorship" and citizens-only jobs.</dd>
+        <dt>Cap-exempt only <small>(account)</small></dt><dd>Universities, nonprofit research institutes and similar employers.</dd>
+        <dt>Status <small>(account)</small></dt><dd>Not hidden · Not applied yet · Applied (any stage) · Saved · Wait · Declined · Interviewing · Offer · Rejected · Hidden.</dd>
+      </dl>
+      <figure class="shot"><img src="/img/tour-2.jpg" alt="Filters: Software Engineering, Early career and 24 hours selected" loading="lazy" width="1600" height="1000" style="border-radius:10px;border:1px solid var(--slab)">
+        <figcaption>Three chips turn about 150,000 US jobs into 242 entry-level software roles from the last day.</figcaption></figure>
+    </section>
+
+    <!-- ================================================================ tracking -->
+    <section id="tracking">
+      <h2>Tracking your applications <a class="anchor" href="#tracking" aria-label="Link to this section">#</a></h2>
+      <p>Your marks are yours alone: other people never see them, and they follow you to any device you sign in on.</p>
+      <h3>Marking a job</h3>
+      <ul>
+        <li><b>Click</b> the box in the Applied column: Applied (with today's date). Click again to clear it.</li>
+        <li><b>Hold</b> the box (or right-click): <b>Applied</b>, <b>Wait</b> (a checkpoint you'll come back to), <b>Decline</b> (you decided against it), or <b>Clear</b>.</li>
+        <li>The <b>stage dropdown</b> on the right sets any stage: saved, interviewing, offer, rejected, hidden.</li>
+      </ul>
+      <figure class="shot"><img src="/img/tour-4.jpg" alt="The hold menu with Applied, Wait, Decline and Clear" loading="lazy" width="1600" height="1000" style="border-radius:10px;border:1px solid var(--slab)"></figure>
+      <h3>Analytics</h3>
+      <p>The Analytics tab reads only your own marks: total applications, the last 7 days against the 7 before, your daily
+        average and streak, interview rate, how many checkpoints and declines you have, and what share went to H-1B
+        sponsors. Below that: applications per day, by sector, by finance-firm kind and by pipeline stage.</p>
+      <figure class="shot"><img src="/img/tour-5.jpg" alt="The Analytics tab" loading="lazy" width="1600" height="1000" style="border-radius:10px;border:1px solid var(--slab)"></figure>
+      <h3>Quick-copy bar</h3>
+      <p>Applications ask for the same things again and again: your LinkedIn, GitHub, portfolio, a sentence about yourself.
+        Scroll the job list and a bar slides up from the bottom: click any saved value to copy it. <b>Notes &amp; edit</b>
+        opens your links, saved answers and a notes box. They're saved to your account.</p>
+      <figure class="shot"><img src="/img/docs-qbar.jpg" alt="The quick-copy bar opened, with links, saved answers and notes" loading="lazy" width="1600" height="1000" style="border-radius:10px;border:1px solid var(--slab)"></figure>
+    </section>
+
+    <!-- ================================================================ startups -->
+    <section id="startups">
+      <h2>Startup radar <a class="anchor" href="#startups" aria-label="Link to this section">#</a></h2>
+      <p>A separate view of what's happening in startups, useful for applying and for keeping up. Every day the portal reads:</p>
+      <ul>
+        <li><b>Y Combinator's company directory</b>: new batches, team sizes, what each company does, founders and their LinkedIn pages.</li>
+        <li><b>SEC Form D filings</b>: young US companies that just raised money, with the amount.</li>
+        <li><b>Funding news</b> from TechCrunch, Crunchbase News, Sifted, EU-Startups, BetaKit and Inc42, and <b>Launch HN</b> posts.</li>
+      </ul>
+      <p>Each startup gets a category (AI &amp; ML, fintech, health &amp; bio, developer tools…) and a stage: <b>early</b>
+        (under $5M raised), <b>second round</b> (Series A–B, under $40M) or <b>advanced</b> (Series C and later). Founders
+        and public company email addresses (like jobs@ or careers@) are shown when the startup publishes them. News is
+        checked every 3 hours, everything else daily.</p>
+      <figure class="shot"><img src="/img/docs-startups.jpg" alt="The Startup radar: categories, biggest rounds, filters" loading="lazy" width="1600" height="1000" style="border-radius:10px;border:1px solid var(--slab)"></figure>
+    </section>
+
+    <!-- ================================================================ sources -->
+    <section id="sources">
+      <h2>Where jobs come from <a class="anchor" href="#sources" aria-label="Link to this section">#</a></h2>
+      <h3>Employers' career sites (<span data-stat="career_sites">500+</span>)</h3>
+      <p>Most employers publish jobs through a handful of hiring systems, and those systems serve the same list to
+        everyone. The portal has an adapter for each one:</p>
+      <div class="tbl-wrap"><table class="tbl">
+        <thead><tr><th>System</th><th>Used by, for example</th></tr></thead>
+        <tbody>
+          <tr><td>Workday</td><td>Banks, insurers, defense and many large employers (country filters let the portal ask for US, India and Canada separately)</td></tr>
+          <tr><td>Oracle Recruiting</td><td>JPMorgan Chase, Texas Instruments, Citizens</td></tr>
+          <tr><td>Greenhouse · Lever · Ashby</td><td>Most tech companies and startups</td></tr>
+          <tr><td>SmartRecruiters · Phenom · Workable</td><td>Mid-size employers, staffing firms, Indian companies</td></tr>
+          <tr><td>Eightfold</td><td>Netflix and others</td></tr>
+          <tr><td>Company APIs</td><td>Amazon, Microsoft and TikTok publish their own job feeds</td></tr>
+        </tbody>
+      </table></div>
+      <p>Big non-tech employers (retailers, insurers, hospitals) post thousands of jobs, so for them the portal keeps only
+        software, data, IT and HR roles. In Canada it also asks each large employer for HR roles by name.</p>
+      <h3>Job lists on GitHub (<span data-stat="github_lists">40+</span>)</h3>
+      <p>Students and companies keep public lists of new-grad roles and internships (Simplify, SpeedyApply, Zapply and many
+        more, including India and Canada lists). These are often the first place a new posting shows up. The portal reads
+        each list's table or data file, keeps the list's own flags (closed, US citizens only, no sponsorship) and links to
+        the employer's posting.</p>
+      <h3>Job Bank Canada</h3>
+      <p>The Government of Canada's job board, searched for HR, payroll, software and data occupations. It's checked every
+        hour, with a full pass through every search every 6 hours, keeping to the 5 seconds between requests the site asks
+        for.</p>
+      <h3>What isn't read</h3>
+      <p>A few sites refuse automated requests (some defense contractors and a regional hiring system used in India). The
+        portal respects that and doesn't try to get around it; those employers' jobs still appear when a job list carries
+        them.</p>
+    </section>
+
+    <!-- ================================================================ schedule -->
+    <section id="schedule">
+      <h2>How often it's checked <a class="anchor" href="#schedule" aria-label="Link to this section">#</a></h2>
+      <figure class="dia">
+        <svg viewBox="0 0 900 330" role="img" aria-labelledby="sched-t">
+          <title id="sched-t">One hour of checks: the fast lane every 10 minutes, a full refresh every 30 minutes, Job Bank Canada every hour, and the job list rebuilt after each check that finds something.</title>
+          <g class="t-m">
+            <text x="200" y="300" text-anchor="middle">:00</text><text x="316" y="300" text-anchor="middle">:10</text><text x="432" y="300" text-anchor="middle">:20</text>
+            <text x="548" y="300" text-anchor="middle">:30</text><text x="664" y="300" text-anchor="middle">:40</text><text x="780" y="300" text-anchor="middle">:50</text><text x="890" y="300" text-anchor="end">:60</text>
+          </g>
+          <path class="ln-m" d="M200 278H890"/>
+          <g class="ln-m" stroke-dasharray="2 5"><path d="M200 30V278"/><path d="M316 30V278"/><path d="M432 30V278"/><path d="M548 30V278"/><path d="M664 30V278"/><path d="M780 30V278"/></g>
+          <text class="t" x="10" y="54">Fast lane</text><text class="t-m" x="10" y="70">32 companies + lists</text>
+          <g><rect class="bx-s" x="196" y="44" width="40" height="22" rx="4"/><rect class="bx-s" x="312" y="44" width="40" height="22" rx="4"/><rect class="bx-s" x="428" y="44" width="40" height="22" rx="4"/>
+             <rect class="bx-s" x="544" y="44" width="40" height="22" rx="4"/><rect class="bx-s" x="660" y="44" width="40" height="22" rx="4"/><rect class="bx-s" x="776" y="44" width="40" height="22" rx="4"/></g>
+          <text class="t" x="10" y="114">Full refresh</text><text class="t-m" x="10" y="130">every source that's due</text>
+          <rect class="bx" x="200" y="104" width="150" height="22" rx="4"/><rect class="bx" x="548" y="104" width="150" height="22" rx="4"/>
+          <text class="t-m" x="275" y="119" text-anchor="middle">lists · universities</text><text class="t-m" x="623" y="119" text-anchor="middle">+ employers due</text>
+          <text class="t" x="10" y="174">Job Bank Canada</text><text class="t-m" x="10" y="190">every hour</text>
+          <rect class="bx" x="200" y="164" width="300" height="22" rx="4"/><text class="t-m" x="350" y="179" text-anchor="middle">searches, then each new posting's page</text>
+          <text class="t" x="10" y="234">Job list rebuilt</text><text class="t-m" x="10" y="250">after a check finds jobs</text>
+          <g><rect class="bx-d" x="240" y="224" width="70" height="22" rx="4"/><rect class="bx-d" x="472" y="224" width="70" height="22" rx="4"/><rect class="bx-d" x="700" y="224" width="70" height="22" rx="4"/></g>
+          <g class="t-d"><text x="275" y="239" text-anchor="middle">build</text><text x="507" y="239" text-anchor="middle">build</text><text x="735" y="239" text-anchor="middle">build</text></g>
+        </svg>
+        <figcaption>An example hour. Large employers with every-few-hours schedules join the 30-minute refresh when they're due. Open job pages look for a new list every 2 minutes and swap it in without a reload.</figcaption>
+      </figure>
+      <div class="tbl-wrap"><table class="tbl">
+        <thead><tr><th>What</th><th>How often</th></tr></thead>
+        <tbody>
+          <tr><td>Top companies' career sites (32)</td><td>Every 10 minutes</td></tr>
+          <tr><td>All GitHub job lists</td><td>Every 10 minutes</td></tr>
+          <tr><td>Other career sites, universities</td><td>Every 30 minutes, or every 2–3 hours for very large employers</td></tr>
+          <tr><td>Job Bank Canada</td><td>Every hour (newest results); every 6 hours (every page)</td></tr>
+          <tr><td>Startup radar</td><td>News every 3 hours, full scan once a day</td></tr>
+          <tr><td>How long jobs stay</td><td>45 days from posting (30 for company career sites). Jobs you've saved or applied to stay in your Analytics for good.</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <!-- ================================================================ H-1B -->
+    <section id="h1b">
+      <h2>The H-1B column <a class="anchor" href="#h1b" aria-label="Link to this section">#</a></h2>
+      <p>The column answers one question: <i>is this employer likely to sponsor a work visa?</i> It's decided in this order,
+        and the first answer found wins:</p>
+      <figure class="dia">
+        <svg viewBox="0 0 860 400" role="img" aria-labelledby="h1b-t">
+          <title id="h1b-t">How the H-1B column is decided: the posting's own words first, then USCIS approval data, then a known-sponsor list, otherwise unknown.</title>
+          <defs><marker id="ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="ar" d="M0 0L10 5L0 10z"/></marker></defs>
+          <rect class="bx-d" x="20" y="20" width="230" height="50" rx="8"/><text class="t-d" x="135" y="50" text-anchor="middle">A US job posting</text>
+          <path class="ln" d="M135 70V96" marker-end="url(#ah2)"/>
+          <polygon class="bx" points="135,100 265,150 135,200 5,150"/><text class="t" x="135" y="145" text-anchor="middle">Does the posting say</text><text class="t" x="135" y="162" text-anchor="middle">anything about visas?</text>
+          <path class="ln" d="M265 150H330" marker-end="url(#ah2)"/><text class="t-m" x="296" y="142" text-anchor="middle">yes</text>
+          <rect class="bx-s" x="334" y="110" width="276" height="80" rx="8"/><text class="t-s" x="472" y="136" text-anchor="middle">Show the posting's words</text>
+          <text class="t-m" x="472" y="156" text-anchor="middle" style="fill:var(--sign-ink)">"will sponsor" → Sponsors</text><text class="t-m" x="472" y="172" text-anchor="middle" style="fill:var(--sign-ink)">"no sponsorship" · "citizens only"</text>
+          <path class="ln" d="M135 200V226" marker-end="url(#ah2)"/><text class="t-m" x="150" y="217">no</text>
+          <polygon class="bx" points="135,230 265,280 135,330 5,280"/><text class="t" x="135" y="275" text-anchor="middle">Approvals in the USCIS</text><text class="t" x="135" y="292" text-anchor="middle">data (FY2023)?</text>
+          <path class="ln" d="M265 280H330" marker-end="url(#ah2)"/><text class="t-m" x="296" y="272" text-anchor="middle">yes</text>
+          <rect class="bx-s" x="334" y="244" width="236" height="72" rx="8"/><text class="t-s" x="452" y="272" text-anchor="middle">✓ Has sponsored</text><text class="t-m" x="452" y="292" text-anchor="middle" style="fill:var(--sign-ink)">with the number of approvals</text>
+          <path class="ln" d="M135 330V354H600" /><text class="t-m" x="150" y="347">no</text>
+          <polygon class="bx" points="680,314 800,354 680,394 560,354"/><text class="t" x="680" y="350" text-anchor="middle">On the known-</text><text class="t" x="680" y="366" text-anchor="middle">sponsor list?</text>
+          <path class="ln" d="M680 314V290" marker-end="url(#ah2)"/><text class="t-m" x="694" y="305">yes</text>
+          <rect class="bx" x="620" y="246" width="120" height="40" rx="8"/><text class="t" x="680" y="271" text-anchor="middle">Likely</text>
+          <path class="ln" d="M800 354H838V290" marker-end="url(#ah2)"/><text class="t-m" x="818" y="346">no</text>
+          <rect class="bx" x="780" y="246" width="76" height="40" rx="8"/><text class="t" x="818" y="271" text-anchor="middle">Unknown</text>
+        </svg>
+        <figcaption>The posting always wins: a well-known sponsor that writes "no sponsorship for this role" shows No sponsorship.</figcaption>
+      </figure>
+      <ul>
+        <li><b>The USCIS numbers</b> are initial plus continuing H-1B approvals for fiscal year 2023 from the USCIS H-1B
+          Employer Data Hub, the latest full year published. Employers file under legal names ("Amazon.com Services LLC"),
+          so the portal matches each company to its legal names; for banks and well-known employers those names are
+          listed by hand.</li>
+        <li><b>A record is not a promise.</b> An employer that sponsored 2,000 people may still hire this particular role
+          without sponsorship. Use the number to decide where to spend your time, then check the posting.</li>
+        <li><b>Cap-exempt</b> employers (universities, nonprofit research institutes, some hospitals) aren't limited by the
+          yearly H-1B lottery. They're marked in the Company column and have their own filter.</li>
+      </ul>
+    </section>
+
+    <!-- ================================================================ levels -->
+    <section id="levels">
+      <h2>Experience levels <a class="anchor" href="#levels" aria-label="Link to this section">#</a></h2>
+      <p>Early career means <b>0–2 years</b>. Job titles alone can't be trusted ("Junior Developer, 5+ years"), so the
+        portal reads both the title and the description:</p>
+      <figure class="dia">
+        <svg viewBox="0 0 860 470" role="img" aria-labelledby="lvl-t">
+          <title id="lvl-t">How the level is decided: title words first, then the years of experience the posting asks for, then the bank Associate rule.</title>
+          <defs><marker id="ah3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="ar" d="M0 0L10 5L0 10z"/></marker></defs>
+          <rect class="bx-d" x="300" y="12" width="260" height="44" rx="8"/><text class="t-d" x="430" y="39" text-anchor="middle">Title + description</text>
+          <path class="ln" d="M430 56V76" marker-end="url(#ah3)"/>
+          <rect class="bx" x="230" y="80" width="400" height="64" rx="8"/><text class="t-h" x="430" y="106" text-anchor="middle">1 · Words in the title</text>
+          <text class="t-m" x="430" y="126" text-anchor="middle">intern · senior, lead, II · new grad, junior</text>
+          <path class="ln" d="M230 112H130V160" marker-end="url(#ah3)"/><text class="t-m" x="180" y="104" text-anchor="middle">intern</text>
+          <rect class="bx-s" x="60" y="164" width="140" height="40" rx="8"/><text class="t-s" x="130" y="189" text-anchor="middle">Internship</text>
+          <path class="ln" d="M630 112H730V160" marker-end="url(#ah3)"/><text class="t-m" x="680" y="104" text-anchor="middle">senior words</text>
+          <rect class="bx-s" x="660" y="164" width="140" height="40" rx="8"/><text class="t-s" x="730" y="189" text-anchor="middle">Experienced</text>
+          <path class="ln" d="M430 144V176" marker-end="url(#ah3)"/><text class="t-m" x="444" y="164">entry words, or none</text>
+          <rect class="bx" x="230" y="180" width="400" height="64" rx="8"/><text class="t-h" x="430" y="206" text-anchor="middle">2 · Years of experience asked for</text>
+          <text class="t-m" x="430" y="226" text-anchor="middle">"3+ years" · "Exp: 5-8 yrs" · "min. 2 years"</text>
+          <path class="ln" d="M630 212H730V254" marker-end="url(#ah3)"/><text class="t-m" x="680" y="230" text-anchor="middle">3 or more</text>
+          <rect class="bx-s" x="660" y="258" width="140" height="40" rx="8"/><text class="t-s" x="730" y="283" text-anchor="middle">Experienced</text>
+          <path class="ln" d="M230 212H130V254" marker-end="url(#ah3)"/><text class="t-m" x="180" y="230" text-anchor="middle">0 to 2</text>
+          <rect class="bx-s" x="60" y="258" width="140" height="40" rx="8"/><text class="t-s" x="130" y="283" text-anchor="middle">Early career</text>
+          <path class="ln" d="M430 244V276" marker-end="url(#ah3)"/><text class="t-m" x="444" y="264">not stated</text>
+          <rect class="bx" x="230" y="280" width="400" height="64" rx="8"/><text class="t-h" x="430" y="306" text-anchor="middle">3 · Bank "Associate" rank</text>
+          <text class="t-m" x="430" y="326" text-anchor="middle">at banks, Associate is a rank above Analyst</text>
+          <path class="ln" d="M630 312H730V352" marker-end="url(#ah3)"/><text class="t-m" x="680" y="330" text-anchor="middle">yes</text>
+          <rect class="bx-s" x="660" y="356" width="140" height="40" rx="8"/><text class="t-s" x="730" y="381" text-anchor="middle">Experienced</text>
+          <path class="ln" d="M430 344V398" marker-end="url(#ah3)"/><text class="t-m" x="444" y="372">no</text>
+          <rect class="bx" x="250" y="402" width="360" height="52" rx="8"/><text class="t" x="430" y="425" text-anchor="middle">Keep the title's answer, or the list's own</text><text class="t" x="430" y="442" text-anchor="middle">label; otherwise Unspecified</text>
+        </svg>
+        <figcaption>"Fresher" and "0–2 years" count as early career. The largest minimum a posting states is the one that counts.</figcaption>
+      </figure>
+    </section>
+
+    <!-- ================================================================ tags -->
+    <section id="tags">
+      <h2>Fields, immediate start, duplicates <a class="anchor" href="#tags" aria-label="Link to this section">#</a></h2>
+      <h3>Fields (Category)</h3>
+      <p>Decided from the title: <b>SWE</b> (software, developer, back end, DevOps, SRE…), <b>DS/ML</b> (data science,
+        machine learning, AI, analytics…), <b>Finance</b> (quant, trading, investment, banking, risk, accounting…),
+        <b>IT</b> (help desk, service desk, desktop support, IT technician…), <b>HR</b> (recruiter, talent acquisition,
+        payroll, people operations…), otherwise <b>Other</b>. A list's own category (for example a data-only list) is
+        added too.</p>
+      <h3>⚡ Immediate start</h3>
+      <p>Marked when the title or description says the job starts right away: "immediate start", "start date: as soon as
+        possible", "ASAP", "urgently hiring", "immediate joiner", or a notice period of 0–15 days. For Job Bank Canada the
+        portal opens each new posting once to read its start date.</p>
+      <h3>Contract and part-time</h3>
+      <p>When the career site labels a job contract, part-time or temporary, or the posting gives hours per week, the Role
+        column says so ("Contract · 30 h/wk · W2").</p>
+      <h3>One job, many sources</h3>
+      <p>The same posting often appears on an employer's site and on three GitHub lists. The portal identifies a job by its
+        cleaned-up application link, so it's one row, with "+ N more lists" in the Source column. A source with more detail
+        (a description, a salary) fills in what another left out.</p>
+    </section>
+
+    <!-- ================================================================ architecture -->
+    <section id="architecture">
+      <h2>Architecture <a class="anchor" href="#architecture" aria-label="Link to this section">#</a></h2>
+      <p>The whole portal runs as one Python web application with a SQLite database, on a small always-on cloud server.
+        Background threads fetch and classify jobs; short-lived helper processes build the job lists; the web app serves
+        those prebuilt lists straight from memory.</p>
+      <figure class="dia wide">
+        <svg class="big" viewBox="0 0 1000 560" role="img" aria-labelledby="arch-t">
+          <title id="arch-t">Architecture: sources feed the fetchers on the server; fetchers, classifier and database feed a list builder; prebuilt lists in memory are served by the web app through Cloudflare to your browser.</title>
+          <defs><marker id="ah4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ar" d="M0 0L10 5L0 10z"/></marker></defs>
+          <!-- sources -->
+          <text class="t-m" x="10" y="26">SOURCES</text>
+          <rect class="bx" x="10" y="40" width="200" height="92" rx="8"/><text class="t-h" x="22" y="64">Career sites</text><text class="t-m" x="22" y="84">Workday · Oracle · Lever</text><text class="t-m" x="22" y="101">Greenhouse · Ashby</text><text class="t-m" x="22" y="118">+ 7 more job systems</text>
+          <rect class="bx" x="10" y="150" width="200" height="76" rx="8"/><text class="t-h" x="22" y="174">GitHub job lists</text><text class="t-m" x="22" y="194">tables or JSON files</text><text class="t-m" x="22" y="211">US · India · Canada</text>
+          <rect class="bx" x="10" y="244" width="200" height="76" rx="8"/><text class="t-h" x="22" y="268">Job Bank Canada</text><text class="t-m" x="22" y="288">search pages, then</text><text class="t-m" x="22" y="305">each start date</text>
+          <rect class="bx" x="10" y="338" width="200" height="76" rx="8"/><text class="t-h" x="22" y="362">Startup sources</text><text class="t-m" x="22" y="382">YC · SEC Form D</text><text class="t-m" x="22" y="399">news · Launch HN</text>
+          <rect class="bx" x="10" y="432" width="200" height="60" rx="8"/><text class="t-h" x="22" y="456">USCIS data</text><text class="t-m" x="22" y="476">H-1B approvals 2023</text>
+          <!-- server -->
+          <rect class="bx-g" x="236" y="12" width="560" height="536" rx="14"/><text class="t-m" x="252" y="34">SERVER · always-on cloud VM · 1 GB memory</text>
+          <rect class="bx" x="262" y="44" width="236" height="76" rx="8"/><text class="t-h" x="276" y="68">Scheduler</text><text class="t-m" x="276" y="89">fast lane: 10 min</text><text class="t-m" x="276" y="106">full refresh: 30 min</text>
+          <rect class="bx" x="262" y="150" width="236" height="76" rx="8"/><text class="t-h" x="276" y="174">Fetchers</text><text class="t-m" x="276" y="194">an adapter per system</text><text class="t-m" x="276" y="211">parallel, polite pauses</text>
+          <rect class="bx" x="262" y="264" width="236" height="76" rx="8"/><text class="t-h" x="276" y="288">Classifier</text><text class="t-m" x="276" y="308">level · field · H-1B</text><text class="t-m" x="276" y="325">country · start date</text>
+          <rect class="bx" x="262" y="380" width="236" height="96" rx="8"/><text class="t-h" x="276" y="404">SQLite database</text><text class="t-m" x="276" y="424">jobs · users · marks</text><text class="t-m" x="276" y="441">startups · fetch log</text><text class="t-m" x="276" y="458">reads never wait</text>
+          <rect class="bx-s" x="540" y="380" width="230" height="96" rx="8"/><text class="t-s" x="554" y="404">List builder</text><text class="t-m" x="554" y="424" style="fill:var(--sign-ink)">short-lived helper</text><text class="t-m" x="554" y="441" style="fill:var(--sign-ink)">reads each job once</text><text class="t-m" x="554" y="458" style="fill:var(--sign-ink)">a gzip list per tab</text>
+          <rect class="bx" x="540" y="264" width="230" height="76" rx="8"/><text class="t-h" x="554" y="288">Prebuilt lists</text><text class="t-m" x="554" y="308">one per country</text><text class="t-m" x="554" y="325">guest copies · board</text>
+          <rect class="bx-d" x="540" y="150" width="230" height="76" rx="8"/><text class="t-d" x="554" y="174" style="font-size:14px">Web app (FastAPI)</text><text class="t-d" x="554" y="194" style="opacity:.75">pages · sign-in</text><text class="t-d" x="554" y="211" style="opacity:.75">marks · analytics</text>
+          <!-- outside -->
+          <rect class="bx" x="820" y="150" width="170" height="76" rx="8"/><text class="t-h" x="834" y="174">Cloudflare</text><text class="t-m" x="834" y="194">encrypted tunnel</text><text class="t-m" x="834" y="211">no open ports</text>
+          <rect class="bx-s" x="820" y="290" width="170" height="96" rx="8"/><text class="t-s" x="834" y="316">Your browser</text><text class="t-m" x="834" y="336" style="fill:var(--sign-ink)">filters and search</text><text class="t-m" x="834" y="353" style="fill:var(--sign-ink)">run here, so</text><text class="t-m" x="834" y="370" style="fill:var(--sign-ink)">they're instant</text>
+          <!-- arrows -->
+          <path class="ln" d="M210 86C236 86 236 180 258 182" marker-end="url(#ah4)"/>
+          <path class="ln" d="M210 188H258" marker-end="url(#ah4)"/>
+          <path class="ln" d="M210 282C236 282 236 196 258 194" marker-end="url(#ah4)"/>
+          <path class="ln-m" d="M210 376C246 376 246 220 258 210" stroke-dasharray="4 4" marker-end="url(#ah4)"/>
+          <path class="ln-m" d="M210 462C246 462 246 330 258 320" stroke-dasharray="4 4" marker-end="url(#ah4)"/>
+          <path class="ln" d="M380 120V146" marker-end="url(#ah4)"/>
+          <path class="ln" d="M380 226V260" marker-end="url(#ah4)"/>
+          <path class="ln" d="M380 340V376" marker-end="url(#ah4)"/>
+          <path class="ln" d="M498 428H536" marker-end="url(#ah4)"/>
+          <path class="ln" d="M655 380V344" marker-end="url(#ah4)"/>
+          <path class="ln" d="M655 264V230" marker-end="url(#ah4)"/>
+          <path class="ln" d="M770 188H816" marker-end="url(#ah4)"/><path class="ln" d="M816 196H774" marker-end="url(#ah4)"/>
+          <path class="ln" d="M905 226V286" marker-end="url(#ah4)"/><path class="ln" d="M913 286V230" marker-end="url(#ah4)"/>
+          <path class="ln-m" d="M540 214H520V404H502" stroke-dasharray="4 4" marker-end="url(#ah4)"/><text class="t-m" x="512" y="250" transform="rotate(-90 512 250)" text-anchor="middle">your marks</text>
+          <!-- a job travelling from a career site to your browser -->
+          <g class="moving">
+            <circle class="dot" r="6"><animateMotion dur="7s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"
+              path="M210 188H380V428H655V188H905V330"/></circle>
+            <circle class="dot" r="6"><animateMotion dur="7s" begin="3.5s" repeatCount="indefinite" path="M210 86C236 86 236 180 258 182H380V428H655V188H905V330"/></circle>
+          </g>
+        </svg>
+        <figcaption>The yellow dots follow one job: from a career site through the fetchers, classifier and database, into a list built by the helper process, and out through the web app and Cloudflare to your screen.</figcaption>
+      </figure>
+      <div class="cards">
+        <div class="card"><h4>Scheduler</h4><p>Background threads inside the web app: the 10-minute fast lane, the 30-minute refresh, the Job Bank sweep, the startup radar, and a self-check that restarts the app if it ever stops answering.</p></div>
+        <div class="card"><h4>Fetchers</h4><p>Up to six career sites are read at once; each site's own pages are read one at a time with short pauses. One broken site never stops the others; it's logged and retried next time.</p></div>
+        <div class="card"><h4>Classifier</h4><p>Plain rules, no AI guessing: word lists and patterns for level, field, immediate start and job type, plus lookups for H-1B records, finance firms, countries and cities.</p></div>
+        <div class="card"><h4>Database</h4><p>One SQLite file in write-ahead-log mode, so the job list can be read while fetchers write. Writes go in short batches, one at a time. A backup is taken every night.</p></div>
+        <div class="card"><h4>List builder</h4><p>After each refresh, a helper process reads every recent job once, adds the derived fields and writes one compressed list per tab, plus slimmer copies for guests and the home page board.</p></div>
+        <div class="card"><h4>Web app</h4><p>FastAPI on Uvicorn. It serves pages, the prebuilt lists (already compressed, so there's nothing to compute), and your own marks and analytics from the database.</p></div>
+      </div>
+    </section>
+
+    <!-- ================================================================ request -->
+    <section id="request">
+      <h2>What happens when you open a tab <a class="anchor" href="#request" aria-label="Link to this section">#</a></h2>
+      <figure class="dia">
+        <svg viewBox="0 0 860 420" role="img" aria-labelledby="seq-t">
+          <title id="seq-t">Sequence: the browser asks for the page, who you are, the prebuilt list from memory, and your own marks from the database, then merges them; every two minutes it checks for a newer list.</title>
+          <defs><marker id="ah5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ar" d="M0 0L10 5L0 10z"/></marker></defs>
+          <rect class="bx-s" x="20" y="14" width="140" height="40" rx="8"/><text class="t-s" x="90" y="39" text-anchor="middle">Your browser</text>
+          <rect class="bx" x="250" y="14" width="140" height="40" rx="8"/><text class="t-h" x="320" y="39" text-anchor="middle">Web app</text>
+          <rect class="bx" x="480" y="14" width="160" height="40" rx="8"/><text class="t-h" x="560" y="39" text-anchor="middle">Lists in memory</text>
+          <rect class="bx" x="710" y="14" width="130" height="40" rx="8"/><text class="t-h" x="775" y="39" text-anchor="middle">Database</text>
+          <g class="ln-m" stroke-dasharray="3 5"><path d="M90 54V410"/><path d="M320 54V410"/><path d="M560 54V410"/><path d="M775 54V410"/></g>
+          <path class="ln" d="M90 84H316" marker-end="url(#ah5)"/><text class="t" x="100" y="78">1 · GET /jobs</text>
+          <path class="ln-m" d="M320 104H94" marker-end="url(#ah5)"/><text class="t-m" x="200" y="120" text-anchor="middle">the page and its script</text>
+          <path class="ln" d="M90 144H316" marker-end="url(#ah5)"/><text class="t" x="100" y="138">2 · who am I?</text>
+          <path class="ln-m" d="M320 164H94" marker-end="url(#ah5)"/><text class="t-m" x="200" y="180" text-anchor="middle">member, or guest</text>
+          <path class="ln" d="M90 204H316" marker-end="url(#ah5)"/><text class="t" x="100" y="198">3 · the US list</text>
+          <path class="ln" d="M320 214H556" marker-end="url(#ah5)"/><text class="t-m" x="440" y="208" text-anchor="middle">already built</text>
+          <path class="ln-m" d="M556 234H94" marker-end="url(#ah5)"/><text class="t-m" x="330" y="250" text-anchor="middle">compressed list (guests get the slim copy)</text>
+          <path class="ln" d="M90 274H316" marker-end="url(#ah5)"/><text class="t" x="100" y="268">4 · my marks</text>
+          <path class="ln" d="M320 284H771" marker-end="url(#ah5)"/>
+          <path class="ln-m" d="M771 304H94" marker-end="url(#ah5)"/><text class="t-m" x="430" y="320" text-anchor="middle">your statuses, notes and dates</text>
+          <rect class="bx-s" x="20" y="334" width="140" height="34" rx="6"/><text class="t-s" x="90" y="356" text-anchor="middle">5 · merge, show</text>
+          <path class="ln" d="M90 394H316" marker-end="url(#ah5)"/><text class="t" x="100" y="388">6 · every 2 min: newer list?</text>
+        </svg>
+        <figcaption>The list itself never touches the database when you open a tab: it was built ahead of time and is sent as-is. Only your own marks are read per request.</figcaption>
+      </figure>
+      <p>Because the whole list arrives at once, filtering, sorting and searching happen in your browser with no waiting.
+        The US list is a few megabytes compressed; it downloads once per visit and each tab after that is instant.</p>
+    </section>
+
+    <!-- ================================================================ data model -->
+    <section id="data">
+      <h2>Data model <a class="anchor" href="#data" aria-label="Link to this section">#</a></h2>
+      <figure class="dia">
+        <svg viewBox="0 0 860 330" role="img" aria-labelledby="er-t">
+          <title id="er-t">Data model: a user has many marks; each mark points to one job; jobs carry their source and derived fields; a fetch log records each source's last run.</title>
+          <rect class="bx" x="20" y="20" width="230" height="210" rx="8"/><rect class="bx-d" x="20" y="20" width="230" height="36" rx="8"/><text class="t-d" x="36" y="43" style="font-size:14px">users</text>
+          <g class="t-m"><text x="36" y="80">id</text><text x="36" y="100">username · email</text><text x="36" y="120">pw_hash (scrypt)</text><text x="36" y="140">role: admin | user</text><text x="36" y="160">sv (session version)</text><text x="36" y="180">profile (quick-copy bar)</text><text x="36" y="200">created_at · last_login</text></g>
+          <rect class="bx" x="315" y="20" width="230" height="170" rx="8"/><rect class="bx-d" x="315" y="20" width="230" height="36" rx="8"/><text class="t-d" x="331" y="43" style="font-size:14px">marks</text>
+          <g class="t-m"><text x="331" y="80">user_id → users</text><text x="331" y="100">job_id → jobs</text><text x="331" y="120">status: applied, waiting…</text><text x="331" y="140">notes · applied_at</text><text x="331" y="160">updated_at</text></g>
+          <rect class="bx" x="610" y="20" width="230" height="290" rx="8"/><rect class="bx-d" x="610" y="20" width="230" height="36" rx="8"/><text class="t-d" x="626" y="43" style="font-size:14px">jobs</text>
+          <g class="t-m"><text x="626" y="80">id (from the apply link)</text><text x="626" y="100">company · title · location</text><text x="626" y="120">url · salary · description</text><text x="626" y="140">posted_at · first_seen</text><text x="626" y="160">categories · level · h1b</text><text x="626" y="180">source_type · source_name</text><text x="626" y="200">sources (every list it's on)</text><text x="626" y="220">job_type · top · cap_exempt</text><text x="626" y="250" style="fill:var(--ink)">derived when lists are built:</text><text x="626" y="270">country · city · H-1B count</text><text x="626" y="290">finance firm · immediate start</text></g>
+          <path class="ln" d="M250 100H315"/><text class="t-m" x="262" y="92">1</text><text class="t-m" x="298" y="92">∞</text>
+          <path class="ln" d="M545 100H610"/><text class="t-m" x="557" y="92">∞</text><text class="t-m" x="596" y="92">1</text>
+          <rect class="bx" x="20" y="260" width="250" height="50" rx="8"/><text class="t-h" x="36" y="282">fetch_log</text><text class="t-m" x="36" y="300">source · last run · count · error</text>
+          <rect class="bx" x="300" y="230" width="270" height="80" rx="8"/><text class="t-h" x="316" y="252">startups · startup_news</text><text class="t-m" x="316" y="272">name · stage · category · amount</text><text class="t-m" x="316" y="292">founders · sources · first seen</text>
+        </svg>
+        <figcaption>Your marks are separate from jobs, so every person has their own statuses on the same shared list.</figcaption>
+      </figure>
+    </section>
+
+    <!-- ================================================================ memory -->
+    <section id="memory">
+      <h2>Running on a small server <a class="anchor" href="#memory" aria-label="Link to this section">#</a></h2>
+      <p>The portal runs on a free cloud server with 1 GB of memory. Building a list of 150,000 jobs used to need about
+        500 MB inside the web app, and Python never hands memory back. Two design choices keep it small:</p>
+      <figure class="dia">
+        <svg viewBox="0 0 860 260" role="img" aria-labelledby="mem-t">
+          <title id="mem-t">Memory over time: the web app stays small; helper processes for list builds and startup scans start, use about 90 megabytes, and exit, returning their memory.</title>
+          <path class="ln-m" d="M70 220H840"/><path class="ln-m" d="M70 30V220"/>
+          <text class="t-m" x="60" y="44" text-anchor="end">500 MB</text><text class="t-m" x="60" y="134" text-anchor="end">250 MB</text><text class="t-m" x="60" y="222" text-anchor="end">0</text>
+          <text class="t-m" x="840" y="242" text-anchor="end">time →</text>
+          <path d="M70 186H840" stroke="var(--ink)" stroke-width="3" fill="none"/><text class="t" x="80" y="208">web app ≈ 80–300 MB, steady</text>
+          <rect class="bx-s" x="190" y="152" width="110" height="34" rx="4"/><text class="t-s" x="245" y="174" text-anchor="middle">list build</text>
+          <rect class="bx-s" x="420" y="152" width="110" height="34" rx="4"/><text class="t-s" x="475" y="174" text-anchor="middle">list build</text>
+          <rect class="bx" x="560" y="140" width="150" height="46" rx="4"/><text class="t" x="635" y="168" text-anchor="middle">startup scan</text>
+          <rect class="bx-s" x="730" y="152" width="100" height="34" rx="4"/><text class="t-s" x="780" y="174" text-anchor="middle">list build</text>
+          <path d="M70 44H840" stroke="var(--muted)" stroke-dasharray="6 6" fill="none"/><text class="t-m" x="80" y="38">before: one process that grew with every build until the server ran out</text>
+        </svg>
+        <figcaption>Each helper exits when it's done, and its memory goes back to the server at once.</figcaption>
+      </figure>
+      <ul>
+        <li><b>Helper processes.</b> List builds and startup scans run in short-lived processes. If memory ever runs out, the
+          server stops a helper first, never the website, and the next run redoes the work.</li>
+        <li><b>Streaming.</b> The list builder reads one job at a time, drops its description as soon as it has been read, and
+          writes it straight into each tab's compressed file. Peak memory went from about 500 MB to about 90 MB, with
+          byte-for-byte the same output.</li>
+        <li><b>Prebuilt and precompressed.</b> Lists are compressed once when they're built, so serving a tab costs almost
+          nothing, however many people open it.</li>
+      </ul>
+    </section>
+
+    <!-- ================================================================ security -->
+    <section id="security">
+      <h2>Security <a class="anchor" href="#security" aria-label="Link to this section">#</a></h2>
+      <div class="cards">
+        <div class="card"><h4>Passwords</h4><p>Never stored. Only a salted scrypt hash, which is slow on purpose so guessing is expensive. Unknown accounts take as long to check as real ones.</p></div>
+        <div class="card"><h4>Sign-in limits</h4><p>Five wrong passwords in 15 minutes pauses sign-in for that network and that account for 15 minutes; a site-wide limit slows down guessing spread across many networks.</p></div>
+        <div class="card"><h4>Sessions</h4><p>A signed cookie that scripts can't read, sent only to this site, only over HTTPS, valid 12 hours. Changing your password signs you out everywhere.</p></div>
+        <div class="card"><h4>Requests from other sites</h4><p>Anything that changes data must come from the portal's own pages; requests from other websites are refused.</p></div>
+        <div class="card"><h4>New accounts</h4><p>At most 5 new accounts an hour from one network and 120 an hour overall, plus a hidden field that catches form-filling bots.</p></div>
+        <div class="card"><h4>Who can do what</h4><p>Checked on the server, not just hidden on the page: guests get only the slim lists, members only their own marks, and admin tools answer only the admin.</p></div>
+        <div class="card"><h4>The page itself</h4><p>A strict content policy allows only the portal's own scripts, styles and fonts; the page can't be framed by other sites; HTTPS is enforced.</p></div>
+        <div class="card"><h4>The server</h4><p>No open web ports: traffic arrives through an encrypted Cloudflare tunnel. The app runs as its own limited user, restarts itself if it stops, and the database is backed up nightly.</p></div>
+      </div>
+    </section>
+
+    <!-- ================================================================ privacy -->
+    <section id="privacy">
+      <h2>Privacy <a class="anchor" href="#privacy" aria-label="Link to this section">#</a></h2>
+      <p><b>What's stored when you create an account:</b> your email, a username made from it, a hash of your password, when
+        you signed up and last signed in, the statuses, notes and dates you set on jobs, and anything you save in the
+        quick-copy bar.</p>
+      <p><b>What isn't:</b> no tracking scripts, no ads, no analytics services, no third-party fonts or code on any page.
+        Your email is used only to sign you in; the portal doesn't send email.</p>
+      <p><b>Guests:</b> nothing is stored about you. Your browser may remember small preferences (like whether the
+        quick-copy bar is pinned) on your own device.</p>
+      <p>To delete your account and everything attached to it, ask the site owner.</p>
+    </section>
+
+    <!-- ================================================================ FAQ -->
+    <section id="faq">
+      <h2>Questions <a class="anchor" href="#faq" aria-label="Link to this section">#</a></h2>
+      <details class="faq"><summary>Is it really free?</summary><p>Yes. No card, no trial, no paid tier. Browsing needs no account at all.</p></details>
+      <details class="faq"><summary>Why can't I see the Apply button as a guest?</summary><p>Apply links, the H-1B column and tracking are what an account is for. Creating one takes an email address and a password.</p></details>
+      <details class="faq"><summary>A job says "Has sponsored" but the posting says no sponsorship. Which is right?</summary><p>The posting. The column always shows the posting's own words when it has them; "Has sponsored" means the employer has sponsored H-1B visas in general, not necessarily for this role.</p></details>
+      <details class="faq"><summary>Why does a job say "date not given"?</summary><p>Some lists don't publish when a job was posted. The portal then uses the time it first found the job, which is usually within minutes of it appearing.</p></details>
+      <details class="faq"><summary>An apply link is closed. Why is the job still here?</summary><p>Employers close postings without notice. Jobs leave the list 45 days after posting; mark it Declined or Hidden to remove it from your view now.</p></details>
+      <details class="faq"><summary>Can I use it on my phone?</summary><p>Yes. Every page works on a phone; the job table scrolls sideways for the wider columns.</p></details>
+      <details class="faq"><summary>Why is "Early career" missing a job titled Junior?</summary><p>If the posting asks for 3 or more years, it's Experienced, whatever the title says. See <a href="#levels">Experience levels</a>.</p></details>
+      <details class="faq"><summary>I forgot my password.</summary><p>Ask the site owner to reset it. There's no email reset yet.</p></details>
+      <details class="faq"><summary>Can you add a company or a job list?</summary><p>Most employers can be added in minutes when their career site uses one of the supported systems. Ask the site owner.</p></details>
+    </section>
+
+    <!-- ================================================================ glossary -->
+    <section id="glossary">
+      <h2>Glossary <a class="anchor" href="#glossary" aria-label="Link to this section">#</a></h2>
+      <dl class="gloss">
+        <dt>H-1B</dt><dd>The main US work visa for professional jobs. The employer files ("sponsors") it for you.</dd>
+        <dt>H-1B cap · lottery</dt><dd>The yearly limit on new H-1B visas, decided by lottery each spring.</dd>
+        <dt>Cap-exempt</dt><dd>Employers not limited by the cap (universities, nonprofit research institutes, some hospitals); they can sponsor an H-1B at any time of year.</dd>
+        <dt>USCIS</dt><dd>US Citizenship and Immigration Services, which publishes the H-1B approvals per employer used in the H-1B column.</dd>
+        <dt>FY2023</dt><dd>US government fiscal year 2023 (October 2022 – September 2023), the latest full year of employer data.</dd>
+        <dt>OPT · STEM OPT</dt><dd>Work permission for F-1 students after graduation: 12 months, plus 24 more for STEM degrees with an E-Verify employer.</dd>
+        <dt>Early career</dt><dd>On this portal: roles asking for 0–2 years of experience.</dd>
+        <dt>Fast lane</dt><dd>The 10-minute check of the top companies and all job lists.</dd>
+        <dt>Job Bank</dt><dd>The Government of Canada's national job board.</dd>
+        <dt>NOC</dt><dd>Canada's National Occupational Classification; Job Bank searches use its codes (for example 12101, HR officers).</dd>
+        <dt>Form D</dt><dd>A filing US companies make with the SEC when they raise money privately; the startup radar reads these.</dd>
+        <dt>Workday · Greenhouse · Lever</dt><dd>Hiring systems employers use to publish jobs and take applications.</dd>
+      </dl>
+    </section>
+
+    <div class="call" style="margin-top:44px;border-radius:12px;border:2px solid var(--ink)">
+      <div class="wrap" style="width:auto;padding:36px 28px">
+        <div><h2 style="font-size:clamp(28px,4vw,44px)">Ready when you are.</h2><p>Browse every job now, or create a free account to apply and track.</p></div>
+        <div class="acts"><a class="sign" href="/signup">Create free account</a><a class="sign plain" href="/jobs">Browse jobs</a></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<footer class="foot" style="padding-top:0">
+  <div class="wrap">
+    <nav class="foot-links" aria-label="Footer"><a href="/home">Home</a><a href="/jobs">Browse jobs</a><a href="/signup">Create free account</a><a href="/login">Sign in</a></nav>
+    <p class="fine">Built by Jai Sharma. H-1B figures: USCIS H-1B Employer Data Hub, fiscal year 2023. Job postings belong to their employers.</p>
+  </div>
+</footer>
+<script src="/docs.js"></script>
+<script src="/tour.js"></script>
+</body>
+</html>

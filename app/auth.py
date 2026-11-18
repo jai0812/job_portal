@@ -1,8 +1,10 @@
 # Job Portal · built by JAI SHARMA
 """Accounts and sign-in for running the portal on the internet.
 
-The admin (you) signs in with a username and password and creates accounts for other people from the
-Users tab; nobody can sign up on their own. Off on a local Mac until a password is set (scripts/set_password.py).
+The admin (you) signs in with a username and password and can create accounts from the Users tab; anyone can
+also sign up with an email address (main.signup; switch off with public_signup: false in config/sources.yaml).
+Visitors who aren't signed in can browse a slim job list without apply links. Off on a local Mac until a password
+is set (scripts/set_password.py).
 
 - passwords are never stored: only salted scrypt hashes (slow by design, so guessing is expensive)
 - lockout after repeated wrong attempts, per visitor, per account and overall

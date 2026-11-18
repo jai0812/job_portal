@@ -40,7 +40,7 @@
 </head>
 <body>
 <header class="top">
-  <div class="brand"><img src="logo-mark.svg" alt="" width="22" height="22">SharmaJai Job Portal</div>
+  <a class="brand" href="/"><img src="logo-mark.svg" alt="" width="22" height="22">SharmaJai Job Portal</a>
   <nav id="tabs">
     <button data-tab="jobs" class="active">🇺🇸 Jobs</button>
     <button data-tab="top">⭐ Top companies</button>
@@ -51,9 +51,9 @@
     <button data-tab="world">🌍 Other countries</button>
     <button data-tab="handshake" class="admin-only">🤝 Handshake</button>
     <button data-tab="opt" class="admin-only">⏱️ Part-time / Contract</button>
-    <button data-tab="startups">🚀 Startups</button>
-    <button data-tab="analytics">📊 Analytics</button>
-    <button data-tab="unis">Universities</button>
+    <button data-tab="startups" class="lockable">🚀 Startups</button>
+    <button data-tab="analytics" class="lockable">📊 Analytics</button>
+    <button data-tab="unis" class="lockable">Universities</button>
     <button data-tab="ask" class="admin-only">🤖 Ask ChatGPT</button>
     <button data-tab="users" class="admin-only">👤 Users</button>
     <button data-tab="settings" class="admin-only">Settings</button>
@@ -70,6 +70,11 @@
 </div>
 <!-- ============================ JOBS ============================ -->
 <section id="tab-jobs" class="tab active">
+  <div class="guest-bar" id="guest-bar">
+    <p><b>You're browsing as a guest.</b> A free account adds apply links, H-1B sponsorship history, the finance-firm
+      and source columns, and a tracker for every job you apply to.</p>
+    <a class="btn primary" href="/signup">Create free account</a><a class="btn" href="/login">Sign in</a>
+  </div>
   <div class="region-head" id="region-head"></div>
   <div id="hs-panel" class="hs-panel hidden">
     <ol>
@@ -87,18 +92,18 @@
     <button id="btn-apify" class="admin-only">Fetch LinkedIn (Apify)</button>
     <button id="btn-add-job" class="admin-only">+ Add job</button>
     <a class="btn" href="https://jobright.ai/jobs" target="_blank" rel="noopener">Open JobRight ↗</a>
-    <span id="refresh-state" class="muted"></span>
+    <span id="refresh-state" class="muted member-only"></span>
   </div>
 
   <div class="filters">
     <div class="chips" id="f-cat"></div>
     <div class="chips" id="f-level"></div>
     <div class="chips" id="f-age"></div>
-    <div class="chips" id="f-stype"></div>
-    <div class="chips" id="f-fin"></div>
+    <div class="chips member-only" id="f-stype"></div>
+    <div class="chips member-only" id="f-fin"></div>
     <div class="chips" id="f-place"></div>
     <div class="row">
-      <label class="us-only not-cit">H-1B
+      <label class="us-only not-cit member-only">H-1B
         <select id="f-h1b">
           <option value="">Any</option>
           <option value="sponsor">Has sponsored H-1B (USCIS data or posting)</option>
@@ -106,11 +111,11 @@
           <option value="not-no">Hide "no sponsorship" / citizens only</option>
         </select>
       </label>
-      <label class="check us-only not-cit"><input type="checkbox" id="f-cap"> Cap-exempt only</label>
+      <label class="check us-only not-cit member-only"><input type="checkbox" id="f-cap"> Cap-exempt only</label>
       <label class="check"><input type="checkbox" id="f-top"> Top companies only</label>
       <label class="check" title="The posting asks for someone who can start right away"><input type="checkbox" id="f-imm"> ⚡ Immediate start</label>
-      <label>Source <select id="f-source"><option value="">All</option></select></label>
-      <label>Status
+      <label class="member-only">Source <select id="f-source"><option value="">All</option></select></label>
+      <label class="member-only">Status
         <select id="f-status">
           <option value="active">Not hidden</option>
           <option value="todo">Not applied yet</option>
@@ -238,7 +243,8 @@
 <!-- ============================ SETTINGS ============================ -->
 <section id="tab-users" class="tab">
   <h2>Users</h2>
-  <p class="muted">Only you can create accounts. Each person signs in with the username and password you give them,
+  <p class="muted">Anyone can create an account with their email from the home page (switch that off with
+    <code>public_signup: false</code> in <code>config/sources.yaml</code>), and you can create accounts here. Each person
     sees the job tabs and their own Analytics, and marks applied / wait / decline for themselves. They can change
     their password from the 🔑 button. Phone alerts, Settings, LinkedIn fetches and Ask ChatGPT stay yours.
     <b>Extras:</b> tick 🇺🇸 to give someone the US citizen jobs tab; 💬 writes a welcome note they see after each sign-in (or, if you choose "big", in the centre of the page every time they open it).</p>
@@ -291,6 +297,23 @@
 </main>
 
 <!-- the admin's note in its "big" form: centre of the page, every time the page opens -->
+<!-- guests: what a free account adds (opened by a locked Apply button or tab) -->
+<dialog id="dlg-join" class="join">
+  <h3 id="join-title">Create a free account</h3>
+  <p id="join-text"></p>
+  <ul class="join-list">
+    <li>Apply links straight to the employer's posting</li>
+    <li>H-1B sponsorship history for every US employer (USCIS data)</li>
+    <li>Track applied, waiting and declined jobs, with your own analytics</li>
+    <li>Startup radar and university jobs</li>
+  </ul>
+  <div class="join-actions">
+    <a class="btn primary" id="join-signup" href="/signup">Create free account</a>
+    <a class="btn" href="/login">Sign in</a>
+    <form method="dialog"><button class="link-btn">Keep browsing</button></form>
+  </div>
+</dialog>
+
 <dialog id="bignote" class="bignote">
   <p id="bignote-text"></p>
   <form method="dialog"><button class="primary" autofocus>OK, got it</button></form>

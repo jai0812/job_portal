@@ -1,0 +1,262 @@
+<!doctype html>
+<!-- Job Portal · built by JAI SHARMA -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SharmaJai Job Portal · jobs from the source, minutes after they're posted</title>
+<meta name="description" content="Free job portal for students and early-career job seekers in the US, India and Canada. Jobs straight from employers' career sites, checked every 10 minutes, with H-1B sponsorship history for every US employer.">
+<meta property="og:title" content="SharmaJai Job Portal">
+<meta property="og:description" content="Jobs from employers' own career sites, checked every 10 minutes, with H-1B sponsorship history. Browse free.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#e7eaee">
+<link rel="icon" href="/logo-mark.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/overpass-normal-400-900.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="/home"><img src="/logo-mark.svg" alt="" width="28" height="28">SharmaJai Job Portal</a>
+    <nav class="nav" aria-label="Main">
+      <a href="/jobs">Browse jobs</a>
+      <a href="#how">How it works</a>
+      <a href="/docs">Docs</a>
+      <a class="keep" href="/login">Sign in</a>
+      <a class="sign small" href="/signup"><span class="lg">Create free account</span><span class="sm">Sign up</span></a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<!-- ============================================================ hero -->
+<section class="hero">
+  <div class="wrap">
+    <p class="kicker"><span class="lamp live" aria-hidden="true"></span><span id="fresh">Checked every 10 minutes</span></p>
+    <div class="hero-top">
+    <h1>Jobs from the source, <em>minutes</em> after they're posted.</h1>
+    <div>
+    <p class="lede">SharmaJai Job Portal reads <b><span data-stat="career_sites">500+</span> employers' own career sites</b> and
+      <b><span data-stat="github_lists">40+</span> curated job lists</b> around the clock, then shows what most job boards leave out:
+      which employers have sponsored H-1B visas, which roles really are entry level, and which ones start right away.</p>
+    <div class="hero-actions">
+      <a class="sign" href="/jobs">Browse jobs, no account needed
+        <span class="arrow" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+      <a class="sign plain" href="/signup">Create free account
+        <span class="arrow" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M8 3v10M3 8h10" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></span></a>
+    </div>
+    </div>
+    </div>
+
+    <!-- The board: the newest jobs the portal found, flipping like an airport departures board. -->
+    <div class="board" id="board" role="region" aria-label="Newest jobs found">
+      <div class="board-head"><span class="lamp live" aria-hidden="true"></span><span>New postings</span>
+        <span class="page" id="board-page"></span><span class="clock" id="board-clock"></span></div>
+      <div class="board-cols" id="board-cols" aria-hidden="true"></div>
+      <div class="board-rows" id="board-rows" aria-hidden="true"></div>
+      <ol class="vh" id="board-list"></ol>
+      <div class="board-foot"><span id="board-total"><span data-stat="total">Thousands of</span> open jobs</span>
+        <span>· <span data-stat="companies">7,000+</span> employers</span><span>· US · India · Canada · 40+ countries</span>
+        <a href="/jobs">See every job →</a></div>
+    </div>
+    <p class="board-legend"><span><b>Found</b>: when the portal found the posting</span>
+      <span><b class="go">H-1B</b>: the employer has sponsored H-1B visas</span>
+      <span><b class="sg">Start now</b>: the posting says it starts right away</span></p>
+  </div>
+</section>
+
+<!-- ============================================================ guest vs member -->
+<section class="section" id="free">
+  <div class="wrap reveal">
+    <p class="kicker">Free, both ways</p>
+    <h2 class="h2">Look around first. Sign up when you want to apply.</h2>
+    <p class="lede">Every job tab is open to anyone. An account costs nothing: an email address and a password. It unlocks the
+      parts that help you decide and apply, and it remembers where you've applied.</p>
+    <div class="compare">
+      <div>
+        <h3>Browsing as a guest</h3>
+        <p class="sub">No account</p>
+        <ul>
+          <li><svg viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="7" fill="none" stroke="currentColor" stroke-width="2"/></svg>Every job tab: United States, top companies, India, Canada, Canada HR, other countries</li>
+          <li><svg viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="7" fill="none" stroke="currentColor" stroke-width="2"/></svg>Filters for field, experience level, how recent, city and immediate start</li>
+          <li><svg viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="7" fill="none" stroke="currentColor" stroke-width="2"/></svg>Search by company, role or place</li>
+          <li><svg viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="7" fill="none" stroke="currentColor" stroke-width="2"/></svg>When the top companies usually post, from the last 60 days</li>
+        </ul>
+        <a class="sign small plain" href="/jobs">Browse jobs</a>
+      </div>
+      <div>
+        <h3>With a free account</h3>
+        <p class="sub">Everything a guest gets, plus</p>
+        <ul>
+          <li><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5l4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span><span class="plus">Apply links</span> straight to the employer's own posting</span></li>
+          <li><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5l4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span><span class="plus">H-1B history</span> for every US employer, from USCIS approval data</span></li>
+          <li><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5l4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span><span class="plus">Your tracker</span>: mark jobs applied, waiting or declined, and see your own analytics</span></li>
+          <li><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5l4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span><span class="plus">Finance-firm and source columns</span>, cap-exempt employers and the sponsorship filter</span></li>
+          <li><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5l4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span><span class="plus">Startup radar</span> and <span class="plus">university jobs</span></span></li>
+          <li><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5l4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span><span class="plus">Quick-copy bar</span> for the links and answers you paste into every application</span></li>
+        </ul>
+        <a class="sign small" href="/signup">Create free account</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ the questions it answers -->
+<section class="section" id="questions">
+  <div class="wrap reveal">
+    <p class="kicker">Made for international students first</p>
+    <h2 class="h2">It answers the questions you'd otherwise look up for every single job.</h2>
+    <div class="qgrid">
+      <article class="q">
+        <h3>Has this employer ever sponsored an H-1B?</h3>
+        <p>If the posting says so, you see its own words. If not, you see how many H-1B approvals the employer had in the latest
+          USCIS data, matched to its legal names.</p>
+        <div class="demo" aria-hidden="true"><span class="chip-demo ok">✓ Has sponsored · 2,431 approvals FY23</span><span class="chip-demo no">No sponsorship · per the posting</span></div>
+      </article>
+      <article class="q">
+        <h3>Is it really entry level?</h3>
+        <p>Early career means 0–2 years. A "Junior" title that asks for 3+ years moves to Experienced, and so does a bank's
+          "Associate" rank.</p>
+        <div class="demo" aria-hidden="true"><span class="chip-demo">Internship</span><span class="chip-demo on">Early career · 0-2 yrs</span><span class="chip-demo">Experienced · 3+ yrs</span></div>
+      </article>
+      <article class="q">
+        <h3>Can I start right away?</h3>
+        <p>Jobs whose posting says they start as soon as possible are marked <b>⚡ Immediate start</b>, including the start date
+          Job Bank Canada lists for each posting.</p>
+        <div class="demo" aria-hidden="true"><span class="chip-demo on">⚡ Immediate start</span><span>Start date: as soon as possible</span></div>
+      </article>
+      <article class="q">
+        <h3>When does this company usually post?</h3>
+        <p>For the top companies, the portal measures the hours and weekdays their new postings appear, so you know when to look.</p>
+        <div class="demo" aria-hidden="true"><span class="bars"><i style="height:14%"></i><i style="height:10%"></i><i style="height:22%"></i><i style="height:48%"></i><i class="hot" style="height:92%"></i><i class="hot" style="height:100%"></i><i style="height:66%"></i><i style="height:38%"></i><i style="height:30%"></i><i style="height:18%"></i><i style="height:12%"></i><i style="height:8%"></i></span><span>Tue · Wed · 10am–1pm ET</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ how it works -->
+<section class="section" id="how">
+  <div class="wrap reveal">
+    <p class="kicker">Where the jobs come from</p>
+    <h2 class="h2">Straight from employers, not reposted from other boards.</h2>
+    <p class="lede">The portal reads the systems employers publish their jobs on, plus the community-kept lists students
+      already trust, and keeps reading them all day.</p>
+    <div class="flow">
+      <div class="stage">
+        <span class="when">Sources</span>
+        <h3>Career sites and lists</h3>
+        <p><span data-stat="career_sites">500+</span> employers' own career sites, <span data-stat="github_lists">40+</span> GitHub job lists, and Job Bank, the Government of Canada's job board.</p>
+        <div class="pill-row"><span>Workday</span><span>Greenhouse</span><span>Lever</span><span>Ashby</span><span>Oracle</span><span>+7 more</span></div>
+        <span class="to" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </div>
+      <div class="stage">
+        <span class="when">Every 10 to 30 minutes</span>
+        <h3>Checked</h3>
+        <p>Top companies and the job lists every 10 minutes, everyone else every 30 minutes or every few hours.</p>
+        <span class="to" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </div>
+      <div class="stage">
+        <span class="when">Every posting</span>
+        <h3>Tagged</h3>
+        <p>Field, experience level, country and city, H-1B history, finance firm, immediate start. Duplicates from different
+          sources become one job.</p>
+        <span class="to" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </div>
+      <div class="stage">
+        <span class="when">Your screen</span>
+        <h3>Your list</h3>
+        <p>One list per country, rebuilt after every check and loaded in seconds. With an account, new jobs appear without reloading.</p>
+      </div>
+    </div>
+    <a class="sign small plain more-link" href="/docs#architecture">Read how the system is built</a>
+  </div>
+</section>
+
+<!-- ============================================================ laptop -->
+<section class="section" id="tour">
+  <div class="wrap reveal">
+    <p class="kicker">Two minutes, start to finish</p>
+    <h2 class="h2">From a fresh posting to a tracked application.</h2>
+    <div class="laptop-grid">
+      <div class="laptop" id="laptop" data-tour="#steps">
+        <div class="lid"><div class="screen" id="screen">
+          <img src="/img/tour-1.jpg" alt="The United States job list, newest first" class="on" width="1280" height="800">
+          <img src="/img/tour-2.jpg" alt="Filters set to Software Engineering, early career, posted in the last 24 hours" loading="lazy" width="1280" height="800">
+          <img src="/img/tour-3.jpg" alt="A member's view with the H-1B column and Apply buttons" loading="lazy" width="1280" height="800">
+          <img src="/img/tour-4.jpg" alt="The status menu: Applied, Wait, Decline" loading="lazy" width="1280" height="800">
+          <img src="/img/tour-5.jpg" alt="The Analytics tab with applications per day" loading="lazy" width="1280" height="800">
+          <svg class="cursor" id="cursor" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 8-6 1.6L10 19z" fill="#fff" stroke="#111" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          <span class="tap" id="tap" aria-hidden="true"></span>
+        </div></div>
+        <div class="base"></div>
+      </div>
+      <ol class="steps" id="steps">
+        <li><button type="button" data-step="0"><span class="n">1</span><span><b>Open a job tab</b><span class="t">Newest postings first, from the United States, India, Canada or anywhere else.</span></span><span class="bar"><i></i></span></button></li>
+        <li><button type="button" data-step="1"><span class="n">2</span><span><b>Narrow it down</b><span class="t">Pick your field, Early career, and Posted in the last 24 hours.</span></span><span class="bar"><i></i></span></button></li>
+        <li><button type="button" data-step="2"><span class="n">3</span><span><b>Check sponsorship</b><span class="t">The H-1B column shows the employer's record before you spend time applying.</span></span><span class="bar"><i></i></span></button></li>
+        <li><button type="button" data-step="3"><span class="n">4</span><span><b>Apply, then mark it</b><span class="t">Apply on the employer's site, come back and tick Applied, or hold for Wait or Decline.</span></span><span class="bar"><i></i></span></button></li>
+        <li><button type="button" data-step="4"><span class="n">5</span><span><b>Watch your progress</b><span class="t">Analytics counts your applications by day, company and role.</span></span><span class="bar"><i></i></span></button></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ markets -->
+<section class="section" id="markets">
+  <div class="wrap reveal">
+    <p class="kicker">Where you can look</p>
+    <h2 class="h2">One portal, five job markets.</h2>
+    <div class="markets">
+      <a class="market" href="/jobs#jobs"><span class="code">USA</span><span class="name">United States</span><span class="n"><span data-region="us">—</span> jobs</span>
+        <span class="what">Tech, data, finance and banks, with H-1B history.</span></a>
+      <a class="market" href="/jobs#top"><span class="code">TOP</span><span class="name">Top companies</span><span class="n">FAANG, banks, AI labs</span>
+        <span class="what">With the hours and days each one usually posts.</span></a>
+      <a class="market" href="/jobs#india"><span class="code">IND</span><span class="name">India</span><span class="n"><span data-region="india">—</span> jobs</span>
+        <span class="what">Fresher and 0–2 year roles from Indian and global employers.</span></a>
+      <a class="market" href="/jobs#canada"><span class="code">CAN</span><span class="name">Canada &amp; Canada HR</span><span class="n"><span data-region="canada">—</span> jobs</span>
+        <span class="what">Including HR and recruiting roles, many starting right away.</span></a>
+      <a class="market" href="/jobs#world"><span class="code">INT</span><span class="name">Other countries</span><span class="n"><span data-region="other">—</span> jobs</span>
+        <span class="what">The UK, Europe, Singapore, the Gulf and more.</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ call -->
+<section class="call">
+  <div class="wrap">
+    <div>
+      <h2>Create your free account.</h2>
+      <p>An email address and a password. No card, no ads, no emails you didn't ask for.</p>
+    </div>
+    <div class="acts">
+      <a class="sign" href="/signup">Create free account
+        <span class="arrow" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+      <a class="sign plain" href="/jobs">Browse first</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <a class="doc-callout" href="/docs">
+      <svg class="book" viewBox="0 0 56 56" aria-hidden="true"><rect x="6" y="8" width="44" height="40" rx="4" fill="var(--sign)" stroke="currentColor" stroke-width="2.5"/><path d="M28 12v32M12 18h10M12 24h10M12 30h7M34 18h10M34 24h10M34 30h7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+      <div><h2>Read the documentation</h2>
+        <p>Every tab, filter and column explained, where the data comes from, how often it's checked, and how the system is
+          built, with diagrams.</p></div>
+      <span class="sign small">Open the docs</span>
+    </a>
+    <nav class="foot-links" aria-label="Footer">
+      <a href="/jobs">Browse jobs</a><a href="/signup">Create free account</a><a href="/login">Sign in</a>
+      <a href="/docs">Documentation</a><a href="/docs#faq">Questions</a><a href="/docs#privacy">Privacy</a>
+    </nav>
+    <p class="fine">Built by Jai Sharma. H-1B figures come from the USCIS H-1B Employer Data Hub (fiscal year 2023). Job postings
+      belong to their employers; apply on the employer's own site.</p>
+  </div>
+</footer>
+<script src="/home.js"></script>
+<script src="/tour.js"></script>
+</body>
+</html>

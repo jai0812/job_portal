@@ -295,6 +295,13 @@ table.recent td { vertical-align: middle; }
 .spot-go:active { transform: scale(.94); }
 .spot-go:disabled { opacity: .6; cursor: wait; }
 .spot-msg { min-height: 20px; margin: 10px 0 0 26px; color: #fff; font-size: 14px; text-shadow: 0 1px 6px rgba(0, 0, 0, .8); }
+.spot-title { margin: 0 0 12px 26px; color: #fff; font-size: 15px; font-weight: 600; letter-spacing: .01em; text-shadow: 0 1px 6px rgba(0, 0, 0, .8); }
+.spot-links { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 6px 0 0 26px; font-size: 14px; }
+.spot-links a { color: #fff; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(255, 255, 255, .5);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, .85); }
+.spot-links a:hover { text-decoration-color: #fff; }
+.spot-links a[hidden] { display: none; }
+.spot-trap { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 .shake { animation: spot-shake .35s; }
 @keyframes spot-shake { 20%, 60% { transform: translateX(-8px); } 40%, 80% { transform: translateX(8px); } }
 @media (max-width: 700px) {
@@ -379,6 +386,24 @@ dialog.bignote form { display: block; }
 dialog.bignote button { font-size: 16px; padding: 10px 26px; }
 
 .hr-note { font-size: 12px; align-self: center; margin-left: 4px; }
+
+/* guests (not signed in) */
+.guest-bar { display: none; }
+body.is-guest .guest-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin: 0 0 12px; padding: 12px 14px;
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line)); border-radius: 12px; background: color-mix(in srgb, var(--accent) 7%, var(--panel)); }
+.guest-bar p { margin: 0; flex: 1 1 340px; }
+body.is-guest .member-only, body.is-guest #qbar, body.is-guest #q-fab { display: none !important; }
+body.is-guest #tabs .lockable::after { content: " 🔒"; font-size: 11px; }
+a.brand { color: inherit; text-decoration: none; }
+#llm-pills a.btn { text-decoration: none; }
+.btn.locked { opacity: .9; }
+dialog.join { width: min(500px, 92vw); padding: 24px 24px 18px; border-radius: 16px; }
+dialog.join::backdrop { background: rgba(0, 0, 0, .45); }
+dialog.join h3 { margin: 0 0 8px; font-size: 20px; }
+dialog.join p { margin: 0 0 12px; color: var(--muted); }
+.join-list { margin: 0 0 16px; padding-left: 18px; line-height: 1.7; }
+.join-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.join-actions form { display: inline; margin-left: auto; }
 
 /* US citizen jobs tab */
 .tag.cz-us { color: var(--accent); font-weight: 600; }

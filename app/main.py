@@ -40,7 +40,7 @@ import threading
 import time
 
 from fastapi import Body, FastAPI, HTTPException, Request
-from fastapi.responses import JSONResponse, RedirectResponse, Response
+from fastapi.responses import FileResponse, JSONResponse, RedirectResponse, Response
 from fastapi.staticfiles import StaticFiles
 
 from . import alerts, auth, citizen, classify, db, finance, geo, h1b, patterns, readme, refresh, startups
@@ -62,7 +62,11 @@ if auth.enabled() and len(env("SESSION_SECRET")) < 32:
 def me(request: Request) -> dict:
     return request.state.user
 
-OPEN_PATHS = {"/login", "/login.html", "/login.js", "/style.css", "/logo-mark.svg", "/login-bg.gif", "/api/login", "/favicon.ico"}
+# What a visitor who isn't signed in may use. Pages and their files (home, docs, the job list, the sign-in page) are
+# public; of the API only these. A guest's job list has no apply links (see _build_jobs).
+GUEST_API = {("GET", "/api/status"), ("GET", "/api/jobs"), ("GET", "/api/patterns"), ("GET", "/api/public/board"),
+             ("POST", "/api/login"), ("POST", "/api/signup")}
+CACHED = ("/fonts/", "/img/")  # fonts and documentation pictures don't change: let browsers keep them for a month
 HEADERS = {
     "X-Content-Type-Options": "nosniff",
     "X-Frame-Options": "DENY",
@@ -102,9 +106,8 @@ async def guard(request: Request, call_next):
     if auth.enabled():
         user = auth.session_user(request.cookies.get(auth.COOKIE, ""))
         request.state.user = user
-        if path not in OPEN_PATHS and not user:
-            response = (JSONResponse({"detail": "Please sign in"}, status_code=401) if path.startswith("/api/")
-                        else RedirectResponse("/login", status_code=303))
+        if not user and path.startswith("/api/") and (request.method, path) not in GUEST_API:
+            response = JSONResponse({"detail": "Please sign in"}, status_code=401)
         elif user and user["role"] != "admin" and _admin_only(request.method, path):
             response = JSONResponse({"detail": "Only the admin can do that."}, status_code=403)
         elif request.method not in ("GET", "HEAD", "OPTIONS") and not _same_site(request):
@@ -116,6 +119,8 @@ async def guard(request: Request, call_next):
         response = await call_next(request)
     if path == "/login-bg.gif" and response.status_code == 200:  # 2.5 MB picture: download it once, not every visit
         response.headers["Cache-Control"] = "public, max-age=604800"
+    elif path.startswith(CACHED) and response.status_code == 200:
+        response.headers["Cache-Control"] = "public, max-age=2592000"
     for k, v in HEADERS.items():
         response.headers.setdefault(k, v)
     if _is_https(request):
@@ -130,6 +135,101 @@ def _same_site(request: Request) -> bool:
         return False
     origin = request.headers.get("origin")
     return not origin or origin.split("://", 1)[-1] == request.headers.get("host", "")
+
+
+# ---------------------------------------------------------------- public pages
+
+STATIC = ROOT / "static"
+
+
+def _guests_allowed() -> bool:
+    return bool(load_sources().get("guest_browsing", True))
+
+
+def _signup_open() -> bool:
+    return bool(load_sources().get("public_signup", True))
+
+
+@app.get("/")
+def home(request: Request):
+    """Signed in: the portal. Everyone else: the home page."""
+    return FileResponse(STATIC / ("index.html" if me(request) or not auth.enabled() else "home.html"))
+
+
+@app.get("/home")
+def home_page():
+    return FileResponse(STATIC / "home.html")
+
+
+@app.get("/docs")
+def docs_page():
+    return FileResponse(STATIC / "docs.html")
+
+
+@app.get("/jobs")
+def jobs_page(request: Request):
+    """The job list. Guests see it too (fewer columns, no apply links) unless guest_browsing is off."""
+    if auth.enabled() and not me(request) and not _guests_allowed():
+        return RedirectResponse("/login", status_code=303)
+    return FileResponse(STATIC / "index.html")
+
+
+@app.get("/signup")
+def signup_page():
+    return RedirectResponse("/login.html#signup" if auth.enabled() else "/", status_code=303)
+
+
+# ---------------------------------------------------------------- sign up (anyone, with an email address)
+
+SIGNUPS_PER_IP, SIGNUPS_ALL, SIGNUP_WINDOW = 5, 120, 3600  # new accounts per visitor and in total, per hour
+_signups: dict[str, list[float]] = {}
+_signup_lock = threading.Lock()
+EMAIL_RE = re.compile(r"[^@\s]{1,64}@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}")
+
+
+def _username_for(email: str) -> str:
+    """priya.k@gmail.com -> priya.k (or priya.k2, priya.k3… when taken)."""
+    base = re.sub(r"[^a-z0-9._-]", "", email.split("@")[0].lower())[:24].strip("._-")
+    base = base if len(base) >= 3 else f"user{base}"
+    name, n = base, 1
+    while db.user_by_name(name):
+        n += 1
+        name = f"{base}{n}"
+    return name
+
+
+@app.post("/api/signup")
+def signup(request: Request, body: dict = Body(...)):
+    if not auth.enabled():
+        return {"ok": True}
+    if me(request):
+        return {"ok": True}
+    if not _signup_open():
+        raise HTTPException(403, "New accounts are closed right now. Ask the admin for one.")
+    if body.get("website"):  # a field people never see: only form-filling bots type in it
+        raise HTTPException(400, "Couldn't create the account.")
+    email = str(body.get("email", "")).strip().lower()[:254]
+    password = str(body.get("password", ""))[:256]
+    if not EMAIL_RE.fullmatch(email):
+        raise HTTPException(400, "That email doesn't look right. Check it and try again.")
+    if problem := auth.password_problem(password):
+        raise HTTPException(400, problem)
+    ip, now = _client_ip(request), time.time()
+    with _signup_lock:  # one at a time: the email check and the insert can't interleave
+        for key in (ip, "*"):
+            _signups[key] = [t for t in _signups.get(key, []) if now - t < SIGNUP_WINDOW]
+        if len(_signups[ip]) >= SIGNUPS_PER_IP or len(_signups["*"]) >= SIGNUPS_ALL:
+            raise HTTPException(429, "Too many new accounts from here in the last hour. Try again later.")
+        if db.user_by_name(email):
+            raise HTTPException(400, "An account with this email already exists. Sign in instead.")
+        uid = db.create_user(_username_for(email), auth.hash_password(password), email=email)
+        _signups[ip].append(now)
+        _signups["*"].append(now)
+    db.update_user(uid, last_login=int(now))
+    response = JSONResponse({"ok": True})
+    response.set_cookie(auth.COOKIE, auth.new_session(db.all_users()[uid]), max_age=auth.SESSION_HOURS * 3600,
+                        httponly=True, samesite="strict", secure=_is_https(request), path="/")
+    return response
 
 
 @app.get("/login")
@@ -355,8 +455,7 @@ def _alerts_loop():
 @app.on_event("startup")
 def _startup():
     try:
-        gz = {r: (DATA_DIR / f"jobs_cache_{r}.json.gz").read_bytes() for r in REGIONS}
-        _jobs.update(gz=gz, built=int((DATA_DIR / "jobs_cache_us.json.gz").stat().st_mtime))
+        _load_lists()
     except OSError:
         pass
     rebuild_jobs()
@@ -443,6 +542,10 @@ def test_alert():
 def status(request: Request):
     cfg = load_sources()
     user = me(request)
+    if not user:  # a guest: just enough to browse jobs
+        return {"auth": True, "guest": True, "me": None, "signup": _signup_open(), "browse": _guests_allowed(),
+                "max_age_days": cfg.get("max_age_days", 45), "built": _jobs["built"],
+                "jobright_url": cfg.get("jobright_url", "https://jobright.ai/jobs")}
     return {
         "auth": auth.enabled(),
         # features: extras the admin switched on for this person; welcome: the admin's note, shown once per sign-in
@@ -568,31 +671,109 @@ _jobs = {"gz": None, "built": 0, "building": False, "again": False}  # gz: {regi
 _jobs_lock = threading.Lock()
 
 
+# Guests (not signed in) get their own copy of each list: no apply links, no H-1B / finance / source columns.
+GUEST_REGIONS = ("us", "india", "canada", "other")
+GUEST_FIELDS = ("id", "company", "title", "location", "posted_at", "posted_precision", "first_seen", "categories",
+                "level", "regions", "countries", "immediate", "top_company", "salary", "source_type")
+BOARD_SIZE, BOARD_POOL = 60, 600  # jobs on the home page's board, picked from this many newest finds
+
+
+def _board(pool: list) -> list[dict]:
+    """The home page's board: newest first, at most two jobs per company, tech / finance / HR roles first."""
+    picked, per_company, seen = [], {}, set()
+    for main_field in (True, False):
+        for _, _, j in sorted(pool, key=lambda x: (x[0], x[1]), reverse=True):
+            key = (j["company"].lower(), j["title"].lower())
+            if key in seen or per_company.get(key[0], 0) >= 2 or (main_field and not j.get("_m")):
+                continue  # first pass: tech / finance / HR roles only; second pass fills any space left
+            seen.add(key)
+            per_company[key[0]] = per_company.get(key[0], 0) + 1
+            picked.append(j)
+            if len(picked) >= BOARD_SIZE:
+                break
+        if len(picked) >= BOARD_SIZE:
+            break
+    for j in picked:
+        j.pop("_m", None)
+    return sorted(picked, key=lambda j: j["found"] or 0, reverse=True)
+
+
+def _public_stats(by_region: dict, companies: set, now: int, distinct: int) -> dict:
+    cfg = load_sources()
+    employers = sum(1 for c in load_more_companies() if c.get("feeds"))
+    firms = sum(1 for f in finance.config()["firms"] if f.get("feeds"))
+    unis = sum(1 for u in load_universities() if u.get("feed"))
+    return {"jobs": by_region, "total": distinct,
+            "companies": len(companies), "career_sites": employers + firms + unis, "github_lists": len(cfg.get("github") or []),
+            "fast_lane_minutes": cfg.get("fast_lane_minutes", 10), "max_age_days": cfg.get("max_age_days", 45),
+            "last_fetch": max([l["last_run"] for l in db.fetch_log()] or [0]), "built": now}
+
+
 def _build_jobs():
-    """Write one gzipped JSON list per tab, streaming: each job is read, enriched, encoded once and written straight
-    into its tabs' files, so memory stays flat however many jobs there are."""
+    """Write one gzipped JSON list per tab (plus a slim copy for guests, and the home page's board), streaming:
+    each job is read, enriched, encoded once and written straight into its tabs' files, so memory stays flat
+    however many jobs there are."""
+    import heapq
     now = int(time.time())
+    files = [(r, False) for r in REGIONS] + [(r, True) for r in GUEST_REGIONS]
+    name = lambda r, guest: f"jobs_cache_{r}{'_guest' if guest else ''}"
     out, first = {}, {}
+    counts, companies, board, distinct = dict.fromkeys(REGIONS, 0), set(), [], 0
     try:
-        for r in REGIONS:
-            out[r] = gzip.open(DATA_DIR / f"jobs_cache_{r}.tmp", "wb", 5)
-            out[r].write(json.dumps({"now": now, "region": r})[:-1].encode() + b',"jobs":[')
-            first[r] = True
+        for r, guest in files:
+            out[r, guest] = gzip.open(DATA_DIR / f"{name(r, guest)}.tmp", "wb", 5)
+            out[r, guest].write(json.dumps({"now": now, "region": r, "guest": guest})[:-1].encode() + b',"jobs":[')
+            first[r, guest] = True
         for row in _enrich_iter(db.iter_jobs(int(load_sources().get("max_age_days", 45)))):
             for k in ("status", "notes", "applied_at"):  # pre-accounts columns: each user's marks come from /api/jobs/mine
                 row.pop(k, None)
+            regions = ["handshake"] if row["source_type"] == "handshake" else row["regions"]
             data = json.dumps(row, separators=(",", ":")).encode()
-            for r in (["handshake"] if row["source_type"] == "handshake" else row["regions"]):
-                out[r].write(data if first[r] else b"," + data)
-                first[r] = False
-        for r in REGIONS:
-            out[r].write(b"]}")
-            out[r].close()
-            (DATA_DIR / f"jobs_cache_{r}.tmp").replace(DATA_DIR / f"jobs_cache_{r}.json.gz")
+            for r in regions:
+                out[r, False].write(data if first[r, False] else b"," + data)
+                first[r, False] = False
+                counts[r] += 1
+            if row["source_type"] in ("handshake", "university", "manual"):
+                continue
+            companies.add((row["company"] or "").lower())
+            distinct += 1  # each job once, even when it's listed in two countries
+            slim = json.dumps({k: row.get(k) for k in GUEST_FIELDS}, separators=(",", ":")).encode()
+            for r in regions:
+                if r in GUEST_REGIONS:
+                    out[r, True].write(slim if first[r, True] else b"," + slim)
+                    first[r, True] = False
+            if (row.get("posted_at") or now) > now - 3 * 86400:  # the board: newest finds that are also recent postings
+                item = (row["first_seen"] or 0, row["id"], {
+                    "company": row["company"], "title": row["title"], "location": row["location"], "region": regions[0],
+                    "found": row["first_seen"], "level": row["level"], "immediate": row.get("immediate", False),
+                    "sponsor": row.get("h1b") == "yes" or (row.get("h1b") not in ("no", "citizen") and (row.get("h1b_fy23") or 0) > 0),
+                    "_m": bool({"swe", "data", "finance", "hr", "it"} & set(row["categories"].split(",")))})
+                (heapq.heappush if len(board) < BOARD_POOL else heapq.heappushpop)(board, item)
+        for (r, guest), f in out.items():
+            f.write(b"]}")
+            f.close()
+            (DATA_DIR / f"{name(r, guest)}.tmp").replace(DATA_DIR / f"{name(r, guest)}.json.gz")
     finally:
         for f in out.values():
             f.close()
-    _jobs.update(gz={r: (DATA_DIR / f"jobs_cache_{r}.json.gz").read_bytes() for r in REGIONS}, built=now)
+    public = {"jobs": _board(board), "stats": _public_stats(counts, companies, now, distinct)}
+    tmp = DATA_DIR / "public_board.tmp"
+    tmp.write_text(json.dumps(public, separators=(",", ":")))
+    tmp.replace(DATA_DIR / "public_board.json")
+    _load_lists()
+
+
+def _load_lists():
+    """Read the prebuilt lists (written by _build_jobs, in this process or a child) into memory."""
+    gz = {reg: (DATA_DIR / f"jobs_cache_{reg}.json.gz").read_bytes() for reg in REGIONS}
+    guest = {}
+    for reg in GUEST_REGIONS:  # a list built before guest browsing existed has no guest copy: guests wait for the next build
+        f = DATA_DIR / f"jobs_cache_{reg}_guest.json.gz"
+        if f.exists():
+            guest[reg] = f.read_bytes()
+    board = DATA_DIR / "public_board.json"
+    _jobs.update(gz=gz, guest=guest, public=board.read_bytes() if board.exists() else None,
+                 built=int((DATA_DIR / "jobs_cache_us.json.gz").stat().st_mtime))
 
 
 def _build_jobs_isolated():
@@ -603,8 +784,7 @@ def _build_jobs_isolated():
                        capture_output=True, text=True, timeout=1800)
     if r.returncode != 0:
         raise RuntimeError((r.stderr or r.stdout).strip().splitlines()[-1] if (r.stderr or r.stdout).strip() else f"exit {r.returncode}")
-    gz = {reg: (DATA_DIR / f"jobs_cache_{reg}.json.gz").read_bytes() for reg in REGIONS}
-    _jobs.update(gz=gz, built=int((DATA_DIR / "jobs_cache_us.json.gz").stat().st_mtime))
+    _load_lists()
 
 
 def rebuild_jobs():
@@ -664,7 +844,20 @@ def startups_refresh(body: dict = Body(default={})):
 def jobs(request: Request, region: str = "us"):
     if region not in REGIONS:
         raise HTTPException(400, "Unknown region.")
-    if region == "handshake" and me(request)["role"] != "admin":
+    user = me(request)
+    if not user:  # a guest: the slim list, without apply links or the members' columns
+        if not _guests_allowed():
+            raise HTTPException(401, "Please sign in")
+        if region not in GUEST_REGIONS:
+            raise HTTPException(401, "Please sign in")
+        data = (_jobs.get("guest") or {}).get(region)
+        if data is None:
+            raise HTTPException(503, "The job list is being prepared. Try again in a few minutes.")
+        if "gzip" not in request.headers.get("accept-encoding", ""):
+            return Response(gzip.decompress(data), media_type="application/json", headers={"Cache-Control": "no-store"})
+        return Response(data, media_type="application/json",
+                        headers={"Content-Encoding": "gzip", "Cache-Control": "no-store", "Vary": "Accept-Encoding"})
+    if region == "handshake" and user["role"] != "admin":
         raise HTTPException(403, "Only the admin can do that.")
     for _ in range(600):  # very first start, nothing cached yet: wait for the background build
         if _jobs["gz"] is not None or not _jobs["building"]:
@@ -677,6 +870,13 @@ def jobs(request: Request, region: str = "us"):
         return Response(data, media_type="application/json",
                         headers={"Content-Encoding": "gzip", "Cache-Control": "no-store", "Vary": "Accept-Encoding"})
     return Response(gzip.decompress(data), media_type="application/json", headers={"Cache-Control": "no-store"})
+
+
+@app.get("/api/public/board")
+def public_board():
+    """The home page's board: the newest jobs found and a few totals (no links)."""
+    data = _jobs.get("public") or b'{"jobs": [], "stats": {}}'
+    return Response(data, media_type="application/json", headers={"Cache-Control": "public, max-age=60"})
 
 
 @app.get("/api/jobs/mine")

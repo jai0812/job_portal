@@ -5,15 +5,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Sign in</title>
+<title>Sign in · SharmaJai Job Portal</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body class="login-body">
-<!-- One Spotlight-style field: username first, then the same field asks for the password. -->
+<!-- One Spotlight-style field. Sign in: username or email, then password. Create account (#signup): email, then password. -->
 <form id="login" class="spot" autocomplete="on" novalidate>
+  <p class="spot-title" id="title">Sign in</p>
   <div class="spot-row">
     <div class="spot-field" id="spot-field">
-      <input id="username" name="username" class="spot-input" placeholder="Username" aria-label="Username or email"
+      <input id="username" name="username" class="spot-input" placeholder="Email or username" aria-label="Email or username"
              autocomplete="username" autocapitalize="none" spellcheck="false" autofocus>
       <input id="password" name="password" class="spot-input" type="password" placeholder="Password" aria-label="Password"
              autocomplete="current-password" hidden>
@@ -23,7 +24,14 @@
         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
   </div>
+  <!-- people never see this field; form-filling bots type in it and are turned away -->
+  <input class="spot-trap" id="website" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
   <p id="msg" class="spot-msg" role="alert"></p>
+  <p class="spot-links">
+    <a href="#signup" id="to-signup">New here? Create a free account</a>
+    <a href="#" id="to-signin" hidden>Have an account? Sign in</a>
+    <a href="/home">Home</a><a href="/jobs">Browse jobs</a><a href="/docs">How it works</a>
+  </p>
 </form>
 <script src="login.js"></script>
 </body>

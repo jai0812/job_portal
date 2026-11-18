@@ -207,6 +207,11 @@ jobbank:
   enabled: true
   every_hours: 1
 
+# Visitors who aren't signed in can browse the job tabs (no apply links, no H-1B / finance / source columns), and
+# anyone can create an account with their email address. Set either to false to switch it off.
+guest_browsing: true
+public_signup: true
+
 # Refresh all sources automatically while the portal is running (minutes, 0 = off).
 # Apify is excluded from auto-refresh because it costs money; use the "Fetch LinkedIn (Apify)" button.
 auto_refresh_minutes: 30
