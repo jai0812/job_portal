@@ -6,8 +6,18 @@
 </p>
 
 <p align="center">
-  <b>One private dashboard for the whole job hunt:</b> every new opening from 200+ sources, real H‑1B sponsorship data,<br>
-  separate views for the US, India and the rest of the world, and analytics on your own applications.
+  <a href="https://jobs.sharmajai.com"><img src="assets/thumbnail.png" width="100%" alt="SharmaJai Job Portal: jobs from employers' own career sites, minutes after they're posted"></a>
+</p>
+
+<p align="center">
+  <b>Jobs from employers' own career sites, minutes after they're posted.</b><br>
+  526 career sites and 43 job lists, checked every 10–30 minutes · H‑1B sponsorship history for every US employer ·<br>
+  the US, India, Canada and 40+ countries · free to browse, free account to apply and track.
+</p>
+
+<p align="center">
+  <a href="https://jobs.sharmajai.com"><b>Open the live site ↗</b></a> &nbsp;·&nbsp;
+  <a href="https://jobs.sharmajai.com/docs"><b>Read the documentation ↗</b></a>
 </p>
 
 <p align="center">
@@ -15,7 +25,11 @@
   <img alt="FastAPI" src="https://img.shields.io/badge/FastAPI-backend-009688?logo=fastapi&logoColor=white">
   <img alt="SQLite" src="https://img.shields.io/badge/SQLite-storage-003B57?logo=sqlite&logoColor=white">
   <img alt="No build step" src="https://img.shields.io/badge/frontend-plain%20JS%2C%20no%20build-f7df1e?logo=javascript&logoColor=black">
-  <img alt="Runs locally" src="https://img.shields.io/badge/runs-on%20your%20own%20Mac-4a5ad0">
+  <img alt="Live" src="https://img.shields.io/badge/live-jobs.sharmajai.com-ffc629?labelColor=121418">
+</p>
+
+<p align="center">
+  <a href="https://jobs.sharmajai.com"><img src="assets/devices.png" width="100%" alt="The home page on a laptop and a phone"></a>
 </p>
 
 ---
@@ -126,6 +140,12 @@ Optional extras:
 | Restart automatically if it ever stops | `./desktop/install.sh --watchdog` |
 
 ## 🆕 What's new
+
+**November 2026**
+- **🌐 Open to everyone**: a home page with a live board of the newest jobs, full [documentation](https://jobs.sharmajai.com/docs) with architecture diagrams, guest browsing of every job tab, and free sign-up with an email address (apply links, H‑1B data and tracking need an account).
+- **🇺🇸 US citizen jobs tab** (per-user extra): citizens-only and clearance roles, government & defense, Big 4, Big 3 consulting, banks and Boston University career-fair employers.
+- **👥 Canada HR**: every active Job Bank HR posting, with each posting's start date read for ⚡ Immediate start.
+- **🧠 Small-server memory**: job lists are built by streaming in short-lived processes (peak ≈ 90 MB instead of ≈ 500 MB).
 
 **Late October 2026**
 - **👤 Accounts**: you're the admin; make accounts for friends from the new Users tab. Everyone gets the job tabs and their own Analytics; sign-in is a username and password (the authenticator code is gone).
