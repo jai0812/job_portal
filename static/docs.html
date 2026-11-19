@@ -97,7 +97,7 @@
     <section id="accounts">
       <h2>Guests and accounts <a class="anchor" href="#accounts" aria-label="Link to this section">#</a></h2>
       <p>You don't need an account to look around. Open <a href="/jobs">Browse jobs</a> and every job tab is there. An account
-        is free and needs only an email address and a password; it unlocks the parts that help you decide and apply.</p>
+        is free: one click with Google, or an email address and a password. It unlocks the parts that help you decide and apply.</p>
       <div class="tbl-wrap"><table class="tbl">
         <thead><tr><th>Feature</th><th>Guest</th><th>Free account</th></tr></thead>
         <tbody>
@@ -120,7 +120,7 @@
           <rect class="bx" x="10" y="45" width="140" height="70" rx="8"/><text class="t-h" x="80" y="76" text-anchor="middle">Home page</text><text class="t-m" x="80" y="96" text-anchor="middle">jobs.sharmajai.com</text>
           <rect class="bx" x="190" y="45" width="150" height="70" rx="8"/><text class="t-h" x="265" y="76" text-anchor="middle">Browse as guest</text><text class="t-m" x="265" y="96" text-anchor="middle">fewer columns</text>
           <rect class="bx-s" x="380" y="45" width="130" height="70" rx="8"/><text class="t-s" x="445" y="76" text-anchor="middle">🔒 Apply</text><text class="t-m" x="445" y="96" text-anchor="middle" style="fill:var(--sign-ink)">asks you to join</text>
-          <rect class="bx" x="550" y="45" width="150" height="70" rx="8"/><text class="t-h" x="625" y="76" text-anchor="middle">Create account</text><text class="t-m" x="625" y="96" text-anchor="middle">email + password</text>
+          <rect class="bx" x="550" y="45" width="150" height="70" rx="8"/><text class="t-h" x="625" y="76" text-anchor="middle">Create account</text><text class="t-m" x="625" y="96" text-anchor="middle">Google or email</text>
           <rect class="bx-d" x="740" y="45" width="130" height="70" rx="8"/><text class="t-d" x="805" y="76" text-anchor="middle">Full list</text><text class="t-d" x="805" y="96" text-anchor="middle" style="opacity:.7">apply · track</text>
           <path class="ln" d="M150 80H186" marker-end="url(#ah)"/><path class="ln" d="M340 80H376" marker-end="url(#ah)"/><path class="ln" d="M510 80H546" marker-end="url(#ah)"/><path class="ln" d="M700 80H736" marker-end="url(#ah)"/>
           <path class="ln-m" d="M80 115V150H805V119" stroke-dasharray="4 4" marker-end="url(#ah)"/><text class="t-m" x="440" y="145" text-anchor="middle">already have an account: Sign in</text>
@@ -130,15 +130,19 @@
 
       <h3 id="create">Create an account</h3>
       <ol>
-        <li>Press <b>Create free account</b> on any page.</li>
-        <li>Type your email and press <kbd>Enter</kbd>.</li>
-        <li>Choose a password of 8 or more characters and press <kbd>Enter</kbd>. You're signed in straight away.</li>
+        <li>Press <b>Create free account</b> on any page. Sign in and Create account are two tabs on the same page.</li>
+        <li>Press <b>Sign up with Google</b> and pick your Google account. That's all: the account is made with your Google
+          email and you're signed in.</li>
+        <li>Or type your email and a password of 8 or more characters, and press <b>Create free account</b>.</li>
       </ol>
       <figure class="shot"><img src="/img/docs-signup.jpg" alt="The create-account page: a single field asking for your email" loading="lazy" width="1600" height="1000" style="border-radius:10px;border:1px solid var(--slab)">
-        <figcaption>One field asks for your email, then the same field asks for a password. <kbd>Backspace</kbd> in an empty password field goes back.</figcaption></figure>
+        <figcaption>The Create account tab: Google in one click, or an email and a password. <b>Show</b> reveals what you typed.</figcaption></figure>
       <h3 id="signin">Sign in, passwords and sessions</h3>
       <ul>
-        <li>Sign in with your email or your username (made from your email, e.g. <code>priya.k</code>).</li>
+        <li>Sign in with Google, or with your email or username (made from your email, e.g. <code>priya.k</code>) and password.</li>
+        <li>Made your account with your email, then sign in with Google using that same address? It's the same account; Google
+          is simply added as a way in.</li>
+        <li>Made your account with Google? You can add a password any time with the 🔑 button.</li>
         <li>Change your password with the 🔑 button at the top right of the job page. That signs you out on other devices.</li>
         <li>A sign-in lasts 12 hours. After five wrong passwords in 15 minutes, sign-in pauses for 15 minutes.</li>
         <li>Forgot your password? The site owner can reset it for you; there's no email reset yet.</li>
@@ -633,6 +637,7 @@
         <div class="card"><h4>Sessions</h4><p>A signed cookie that scripts can't read, sent only to this site, only over HTTPS, valid 12 hours. Changing your password signs you out everywhere.</p></div>
         <div class="card"><h4>Requests from other sites</h4><p>Anything that changes data must come from the portal's own pages; requests from other websites are refused.</p></div>
         <div class="card"><h4>New accounts</h4><p>At most 5 new accounts an hour from one network and 120 an hour overall, plus a hidden field that catches form-filling bots.</p></div>
+        <div class="card"><h4>Sign in with Google</h4><p>The standard OpenID Connect flow with a one-time state, a nonce and PKCE. Only Google accounts with a verified email are accepted, and the portal never sees your Google password.</p></div>
         <div class="card"><h4>Who can do what</h4><p>Checked on the server, not just hidden on the page: guests get only the slim lists, members only their own marks, and admin tools answer only the admin.</p></div>
         <div class="card"><h4>The page itself</h4><p>A strict content policy allows only the portal's own scripts, styles and fonts; the page can't be framed by other sites; HTTPS is enforced.</p></div>
         <div class="card"><h4>The server</h4><p>No open web ports: traffic arrives through an encrypted Cloudflare tunnel. The app runs as its own limited user, restarts itself if it stops, and the database is backed up nightly.</p></div>
@@ -642,8 +647,9 @@
     <!-- ================================================================ privacy -->
     <section id="privacy">
       <h2>Privacy <a class="anchor" href="#privacy" aria-label="Link to this section">#</a></h2>
-      <p><b>What's stored when you create an account:</b> your email, a username made from it, a hash of your password, when
-        you signed up and last signed in, the statuses, notes and dates you set on jobs, and anything you save in the
+      <p><b>What's stored when you create an account:</b> your email, a username made from it, a hash of your password (if you
+        set one), the ID of your Google account (if you sign in with Google; the portal asks Google only for your name and
+        email, and keeps the email), when you signed up and last signed in, the statuses, notes and dates you set on jobs, and anything you save in the
         quick-copy bar.</p>
       <p><b>What isn't:</b> no tracking scripts, no ads, no analytics services, no third-party fonts or code on any page.
         Your email is used only to sign you in; the portal doesn't send email.</p>

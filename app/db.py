@@ -49,7 +49,8 @@ CREATE TABLE IF NOT EXISTS users (
     email       TEXT,                            -- optional: can sign in with this instead of the username
     features    TEXT NOT NULL DEFAULT '',        -- extras the admin switched on for this person, comma-separated: citizen
     welcome     TEXT NOT NULL DEFAULT '',        -- a note from the admin, shown once after each sign-in
-    welcome_big INTEGER NOT NULL DEFAULT 0       -- 1 = show the note big, in the centre, every time the page opens
+    welcome_big INTEGER NOT NULL DEFAULT 0,      -- 1 = show the note big, in the centre, every time the page opens
+    google_sub  TEXT                             -- the Google account this person signs in with (Sign in with Google)
 );
 -- Each user's own status / notes per job (the jobs table's status columns are from before accounts existed).
 CREATE TABLE IF NOT EXISTS marks (
@@ -113,7 +114,7 @@ def init() -> None:
         c.execute("UPDATE jobs SET applied_at = first_seen WHERE applied_at IS NULL AND status IN ('applied','interviewing','offer','rejected')")
         user_cols = {r["name"] for r in c.execute("PRAGMA table_info(users)")}
         for col, decl in (("email", "TEXT"), ("features", "TEXT NOT NULL DEFAULT ''"), ("welcome", "TEXT NOT NULL DEFAULT ''"),
-                          ("welcome_big", "INTEGER NOT NULL DEFAULT 0")):
+                          ("welcome_big", "INTEGER NOT NULL DEFAULT 0"), ("google_sub", "TEXT")):
             if col not in user_cols:
                 c.execute(f"ALTER TABLE users ADD COLUMN {col} {decl}")
         done = {r[0] for r in c.execute("SELECT key FROM meta")}
@@ -301,6 +302,10 @@ def admin_user() -> dict:
     return min((u for u in all_users().values() if u["role"] == "admin"), key=lambda u: u["id"])
 
 
+def user_by_google(sub: str) -> dict | None:
+    return next((u for u in all_users().values() if sub and u.get("google_sub") == sub), None)
+
+
 def create_user(username: str, pw_hash: str, role: str = "user", email: str = "") -> int:
     with conn() as c:
         cur = c.execute("INSERT INTO users (username, pw_hash, role, created_at, email) VALUES (?,?,?,?,?)",
@@ -311,7 +316,7 @@ def create_user(username: str, pw_hash: str, role: str = "user", email: str = ""
 
 def update_user(user_id: int, **fields) -> None:
     """pw_hash / active changes also sign the user out everywhere (sv + 1)."""
-    allowed = {k: v for k, v in fields.items() if k in ("pw_hash", "active", "last_login", "profile", "features", "welcome", "welcome_big")}
+    allowed = {k: v for k, v in fields.items() if k in ("pw_hash", "active", "last_login", "profile", "features", "welcome", "welcome_big", "google_sub")}
     if not allowed:
         return
     bump = ", sv = sv + 1" if {"pw_hash", "active"} & allowed.keys() else ""

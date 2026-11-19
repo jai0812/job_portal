@@ -43,7 +43,7 @@ from fastapi import Body, FastAPI, HTTPException, Request
 from fastapi.responses import FileResponse, JSONResponse, RedirectResponse, Response
 from fastapi.staticfiles import StaticFiles
 
-from . import alerts, auth, citizen, classify, db, finance, geo, h1b, patterns, readme, refresh, startups
+from . import alerts, auth, citizen, classify, db, finance, geo, google_login, h1b, patterns, readme, refresh, startups
 from .config import DATA_DIR, ROOT, env, load_more_companies, load_sources, load_universities, save_sources
 
 app = FastAPI(title="Job Portal", docs_url=None, redoc_url=None, openapi_url=None)
@@ -65,7 +65,7 @@ def me(request: Request) -> dict:
 # What a visitor who isn't signed in may use. Pages and their files (home, docs, the job list, the sign-in page) are
 # public; of the API only these. A guest's job list has no apply links (see _build_jobs).
 GUEST_API = {("GET", "/api/status"), ("GET", "/api/jobs"), ("GET", "/api/patterns"), ("GET", "/api/public/board"),
-             ("POST", "/api/login"), ("POST", "/api/signup")}
+             ("GET", "/api/auth/options"), ("POST", "/api/login"), ("POST", "/api/signup")}
 CACHED = ("/fonts/", "/img/")  # fonts and documentation pictures don't change: let browsers keep them for a month
 HEADERS = {
     "X-Content-Type-Options": "nosniff",
@@ -175,8 +175,21 @@ def jobs_page(request: Request):
 
 
 @app.get("/signup")
-def signup_page():
-    return RedirectResponse("/login.html#signup" if auth.enabled() else "/", status_code=303)
+def signup_page(request: Request):
+    return _auth_page(request)
+
+
+def _auth_page(request: Request):
+    """The sign-in / create-account page (the same page; it reads the address to know which)."""
+    if not auth.enabled() or me(request):
+        return RedirectResponse("/", status_code=303)
+    return FileResponse(STATIC / "login.html")
+
+
+@app.get("/api/auth/options")
+def auth_options():
+    """What the sign-in page offers: Google, and whether new accounts are open."""
+    return {"google": google_login.enabled(), "signup": _signup_open()}
 
 
 # ---------------------------------------------------------------- sign up (anyone, with an email address)
@@ -216,9 +229,7 @@ def signup(request: Request, body: dict = Body(...)):
         raise HTTPException(400, problem)
     ip, now = _client_ip(request), time.time()
     with _signup_lock:  # one at a time: the email check and the insert can't interleave
-        for key in (ip, "*"):
-            _signups[key] = [t for t in _signups.get(key, []) if now - t < SIGNUP_WINDOW]
-        if len(_signups[ip]) >= SIGNUPS_PER_IP or len(_signups["*"]) >= SIGNUPS_ALL:
+        if _signups_full(ip, now):
             raise HTTPException(429, "Too many new accounts from here in the last hour. Try again later.")
         if db.user_by_name(email):
             raise HTTPException(400, "An account with this email already exists. Sign in instead.")
@@ -227,14 +238,88 @@ def signup(request: Request, body: dict = Body(...)):
         _signups["*"].append(now)
     db.update_user(uid, last_login=int(now))
     response = JSONResponse({"ok": True})
+    _set_session(response, request, uid)
+    return response
+
+
+def _signups_full(ip: str, now: float) -> bool:
+    """Call holding _signup_lock. True when this network, or everyone together, made too many accounts this hour."""
+    for key in (ip, "*"):
+        _signups[key] = [t for t in _signups.get(key, []) if now - t < SIGNUP_WINDOW]
+    return len(_signups[ip]) >= SIGNUPS_PER_IP or len(_signups["*"]) >= SIGNUPS_ALL
+
+
+def _set_session(response, request: Request, uid: int) -> None:
     response.set_cookie(auth.COOKIE, auth.new_session(db.all_users()[uid]), max_age=auth.SESSION_HOURS * 3600,
                         httponly=True, samesite="strict", secure=_is_https(request), path="/")
+
+
+# ---------------------------------------------------------------- Sign in with Google (see google_login.py)
+
+def _callback_url(request: Request) -> str:
+    return google_login.redirect_uri("https" if _is_https(request) else request.url.scheme, request.headers.get("host", ""))
+
+
+@app.get("/auth/google")
+def google_start(request: Request, mode: str = "signin"):
+    back = "/signup" if mode == "signup" else "/login"
+    if not auth.enabled() or me(request):
+        return RedirectResponse("/", status_code=303)
+    if not google_login.enabled():
+        return RedirectResponse(f"{back}?error=google_off", status_code=303)
+    url, cookie = google_login.start(_callback_url(request), mode)
+    response = RedirectResponse(url, status_code=303)
+    # Lax, not Strict: the cookie has to come back on the redirect from Google, which is a cross-site navigation
+    response.set_cookie(google_login.COOKIE, cookie, max_age=google_login.MAX_AGE, httponly=True, samesite="lax",
+                        secure=_is_https(request), path="/auth/google")
+    return response
+
+
+@app.get("/auth/google/callback")
+def google_callback(request: Request, code: str = "", state: str = "", error: str = ""):
+    mode = google_login.mode_of(request.cookies.get(google_login.COOKIE, ""))
+    try:
+        if error:  # the person pressed Cancel at Google, or Google refused
+            raise google_login.LoginError("cancelled")
+        g = google_login.finish(_callback_url(request), request.cookies.get(google_login.COOKIE, ""), code, state)
+        mode = g["mode"]
+        user = db.user_by_google(g["sub"]) or db.user_by_name(g["email"])
+        if user:
+            if not user["active"]:
+                raise google_login.LoginError("off")
+            if user.get("google_sub") != g["sub"]:
+                db.update_user(user["id"], google_sub=g["sub"])  # Google has verified this email belongs to them
+            uid = user["id"]
+        else:
+            if not _signup_open():
+                raise google_login.LoginError("closed")
+            now = time.time()
+            with _signup_lock:
+                ip = _client_ip(request)
+                if _signups_full(ip, now):
+                    raise google_login.LoginError("too_many")
+                uid = db.create_user(_username_for(g["email"]), "", email=g["email"])  # no password: Google only
+                db.update_user(uid, google_sub=g["sub"])
+                _signups[ip].append(now)
+                _signups["*"].append(now)
+        db.update_user(uid, last_login=int(time.time()))
+    except google_login.LoginError as e:
+        response = RedirectResponse(f"{'/signup' if mode == 'signup' else '/login'}?error={e.code}", status_code=303)
+        response.delete_cookie(google_login.COOKIE, path="/auth/google")
+        return response
+    # A plain page that moves on by itself: the session cookie is SameSite=Strict, so it's only sent once the next
+    # step starts from this site rather than as part of the redirect chain that began at Google.
+    response = Response('<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0;url=/">'
+                        '<title>Signing you in…</title><p style="font:16px system-ui;padding:24px">Signing you in… '
+                        '<a href="/">continue</a></p>', media_type="text/html")
+    _set_session(response, request, uid)
+    response.delete_cookie(google_login.COOKIE, path="/auth/google")
     return response
 
 
 @app.get("/login")
-def login_page():
-    return RedirectResponse("/login.html" if auth.enabled() else "/", status_code=303)
+def login_page(request: Request):
+    return _auth_page(request)
 
 
 @app.post("/api/login")
@@ -352,7 +437,7 @@ def remove_user(user_id: int, request: Request):
 def change_my_password(request: Request, body: dict = Body(...)):
     """Anyone can change their own password (they need the current one)."""
     user = me(request)
-    if not auth.verify(user["pw_hash"], str(body.get("current", ""))):
+    if user["pw_hash"] and not auth.verify(user["pw_hash"], str(body.get("current", ""))):  # Google-only accounts have none yet
         raise HTTPException(400, "Your current password is wrong.")
     if problem := auth.password_problem(str(body.get("new", ""))):
         raise HTTPException(400, problem)

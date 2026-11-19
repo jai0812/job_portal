@@ -1,38 +1,79 @@
 <!doctype html>
 <!-- Job Portal · built by JAI SHARMA -->
-<html lang="en" class="login-html">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Sign in · SharmaJai Job Portal</title>
-<link rel="stylesheet" href="style.css">
+<meta name="theme-color" content="#e7eaee">
+<link rel="icon" href="/logo-mark.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/overpass-normal-400-900.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/site.css">
 </head>
-<body class="login-body">
-<!-- One Spotlight-style field. Sign in: username or email, then password. Create account (#signup): email, then password. -->
-<form id="login" class="spot" autocomplete="on" novalidate>
-  <p class="spot-title" id="title">Sign in</p>
-  <div class="spot-row">
-    <div class="spot-field" id="spot-field">
-      <input id="username" name="username" class="spot-input" placeholder="Email or username" aria-label="Email or username"
-             autocomplete="username" autocapitalize="none" spellcheck="false" autofocus>
-      <input id="password" name="password" class="spot-input" type="password" placeholder="Password" aria-label="Password"
-             autocomplete="current-password" hidden>
+<body class="auth-body">
+<div class="auth">
+  <!-- left: what's waiting inside (newest jobs, and what an account adds) -->
+  <aside class="auth-side" aria-label="About the portal">
+    <a class="brand" href="/home"><img src="/logo-mark.svg" alt="" width="28" height="28">SharmaJai Job Portal</a>
+    <div class="side-body">
+      <p class="side-kicker"><span class="lamp live" aria-hidden="true"></span><span id="side-fresh">New postings</span></p>
+      <h2 class="side-title" id="side-title">Jobs from the source, minutes after they're posted.</h2>
+      <ol class="side-feed" id="feed" aria-label="Newest jobs found"></ol>
+      <ul class="side-perks" id="perks">
+        <li><b>Apply links</b> straight to the employer's posting</li>
+        <li><b>H-1B history</b> for every US employer, from USCIS data</li>
+        <li><b>Your tracker</b>: applied, waiting, declined, and your own analytics</li>
+        <li><b>Startup radar</b> and university jobs</li>
+      </ul>
     </div>
-    <button class="spot-go" id="go" aria-label="Continue">
-      <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none"
-        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </button>
-  </div>
-  <!-- people never see this field; form-filling bots type in it and are turned away -->
-  <input class="spot-trap" id="website" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-  <p id="msg" class="spot-msg" role="alert"></p>
-  <p class="spot-links">
-    <a href="#signup" id="to-signup">New here? Create a free account</a>
-    <a href="#" id="to-signin" hidden>Have an account? Sign in</a>
-    <a href="/home">Home</a><a href="/jobs">Browse jobs</a><a href="/docs">How it works</a>
-  </p>
-</form>
-<script src="login.js"></script>
+    <p class="side-foot"><span data-stat="career_sites">526</span> career sites · <span data-stat="github_lists">43</span> job lists · checked every 10 minutes</p>
+  </aside>
+
+  <!-- right: the card -->
+  <main class="auth-main">
+    <div class="auth-card">
+      <div class="seg" role="tablist" aria-label="Sign in or create an account">
+        <a role="tab" id="tab-in" href="/login" aria-selected="true">Sign in</a>
+        <a role="tab" id="tab-up" href="/signup" aria-selected="false">Create account</a>
+      </div>
+
+      <h1 id="title">Welcome back</h1>
+      <p class="auth-lede" id="lede">Sign in to see apply links, H-1B data and your applications.</p>
+
+      <div id="google-wrap" hidden>
+        <a class="g-btn" id="google" href="/auth/google?mode=signin">
+          <svg viewBox="0 0 48 48" width="22" height="22" aria-hidden="true">
+            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+            <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+          </svg>
+          <span id="google-label">Continue with Google</span>
+        </a>
+        <div class="or"><span id="or-label">or with your email</span></div>
+      </div>
+
+      <form id="form" novalidate>
+        <label class="fld" for="email"><span id="email-label">Email or username</span>
+          <input id="email" name="username" autocomplete="username" autocapitalize="none" spellcheck="false" required></label>
+        <label class="fld" for="password"><span>Password</span>
+          <span class="pw"><input id="password" name="password" type="password" autocomplete="current-password" required>
+            <button type="button" class="pw-show" id="pw-show" aria-controls="password" aria-pressed="false">Show</button></span></label>
+        <p class="hint" id="pw-hint" hidden>At least 8 characters.</p>
+        <!-- people never see this field; form-filling bots type in it and are turned away -->
+        <input class="trap" id="website" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <p class="auth-msg" id="msg" role="alert"></p>
+        <button class="sign auth-go" id="go" type="submit"><span id="go-label">Sign in</span>
+          <span class="arrow" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+      </form>
+
+      <p class="switch" id="switch">New here? <a href="/signup" id="switch-link">Create a free account</a></p>
+      <p class="fine" id="forgot">Forgot your password? Ask the site owner to reset it.</p>
+    </div>
+    <p class="auth-links"><a href="/home">Home</a><a href="/jobs">Browse jobs without an account</a><a href="/docs">How it works</a></p>
+  </main>
+</div>
+<script src="/login.js"></script>
 </body>
 </html>
