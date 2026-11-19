@@ -509,7 +509,7 @@ function renderJobs() {
       ${usLike() && !G ? `<td class="h1b">${F.cit ? edgeCell(j) : h1bCell(j)}</td>` : ""}
       ${G ? "" : sourceCell(j)}
       <td><div class="actions">${G ? `<a class="btn primary-link locked" href="/signup" data-join="apply" title="Create a free account to apply">🔒 Apply</a></div></td></tr>` : `
-        ${j.url ? `<a class="btn primary-link" href="${esc(j.url)}" target="_blank" rel="noopener">Apply ↗</a>` : ""}
+        ${j.url ? `<a class="btn primary-link" href="${esc(j.url)}" target="_blank" rel="noopener" data-act="apply" title="Opens the posting and marks the job Applied">Apply ↗</a>` : ""}
         <a class="btn" href="${esc(jrUrl)}" target="_blank" rel="noopener" title="Look up on JobRight">JR</a>
         ${statusSelect(j)}
       </div></td></tr>`}`;
@@ -551,6 +551,17 @@ tbody.addEventListener("contextmenu", (e) => {
   const btn = e.target.closest("[data-act=st]");
   if (btn) { e.preventDefault(); clearTimeout(ST_TIMER); ST_HELD = true; openStMenu(btn); }
 });
+// Apply ↗ opens the employer's posting in a new tab and marks the job Applied (a job already at a later stage,
+// like Interviewing, keeps it). A middle-click, which also opens a tab, counts too.
+function applyClicked(e) {
+  const a = e.target.closest("a[data-act=apply]");
+  if (!a || (e.type === "auxclick" && e.button !== 1)) return;
+  const id = a.closest("tr").dataset.id;
+  const j = (a.closest("#uni-table") ? STORE.us || [] : JOBS).find((x) => x.id === id);
+  if (j && stateOf(j) !== "applied") setStatus(id, "applied");
+}
+tbody.addEventListener("click", applyClicked);
+tbody.addEventListener("auxclick", applyClicked);
 tbody.addEventListener("click", (e) => {
   const btn = e.target.closest("[data-act=st]");
   if (!btn) return;
@@ -837,7 +848,7 @@ function renderUnis() {
       <td>${types}</td>
       ${sourceCell(j)}
       <td><div class="actions">
-        ${j.url ? `<a class="btn" href="${esc(j.url)}" target="_blank" rel="noopener">Apply ↗</a>` : ""}
+        ${j.url ? `<a class="btn" href="${esc(j.url)}" target="_blank" rel="noopener" data-act="apply" title="Opens the posting and marks the job Applied">Apply ↗</a>` : ""}
         ${statusSelect(j)}
       </div></td></tr>`;
   }).join("");
